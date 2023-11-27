@@ -20,6 +20,14 @@ tasks.register('specs', Exec) {
                 def json = new JsonSlurper().parseText(specFile.text)
                 // Modify the 'openapi' field
                 json.openapi = '3.0.0'
+
+                json["paths"].each { Map.Entry endpoint ->
+                    endpoint.value.each { Map.Entry httpMethod ->
+                        // overwrite operationId
+                        httpMethod.value["operationId"] = httpMethod.value["x-methodName"]
+                    }
+                }
+
                 // Overwrite the file with updated content
                 specFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
             }

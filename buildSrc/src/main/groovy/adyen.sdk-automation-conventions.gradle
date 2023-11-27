@@ -10,19 +10,19 @@ ext {
     templates = 'templates'
     services = [
             // Payments
-            new Service(name: 'Checkout', version: 70),
+            new Service(name: 'Checkout', version: 71),
             new Service(name: 'Payout', version: 68),
             new Service(name: 'Recurring', version: 68),
             new Service(name: 'BinLookup', version: 54),
             // Point of Sale
             new Service(name: 'POSTerminalManagement', spec: 'TfmAPI', version: 1),
             // Management
-            new Service(name: 'Management', version: 1),
+            new Service(name: 'Management', version: 3),
             new Service(name: 'BalanceControl', version: 1),
             // Adyen for Platforms
             new Service(name: 'LegalEntityManagement', spec: 'LegalEntity', version: 3),
             new Service(name: 'BalancePlatform', version: 2),
-            new Service(name: 'Transfers', spec: 'Transfer', version: 3),
+            new Service(name: 'Transfers', spec: 'Transfer', version: 4),
             new Service(name: 'DataProtection', version: 1),
             // Classic Payments
             new Service(name: 'Payment', version: 68),
