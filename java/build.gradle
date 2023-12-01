@@ -1,3 +1,63 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
     id 'adyen.sdk-automation-conventions'
+}
+
+project.ext {
+    generator = 'java'
+//    @TODO small/single-file services config
+//    configFile = 'templates/libraries/jersey3/config.yaml'
+}
+
+tasks.withType(GenerateTask).configureEach {
+    library.set("jersey3")
+
+    def svcId = project.ext.serviceName.toLowerCase()
+    def modelNs = "com.adyen.model.${svcId}"
+    modelPackage.set(modelNs.replace('/', '.'))
+    // @TODO per service?
+//    apiPackage.set("com.adyen.service")
+    apiPackage.set("com.adyen.service.${svcId}")
+    additionalProperties.putAll([
+            'dateLibrary'    : 'java8',
+            'openApiNullable': 'false',
+    ])
+    // @TODO per service?
+    // --additional-properties=smallServiceName=$(smallServiceName)
+    // --additional-properties=resourceClass=$(resourceClass)Resource
+}
+
+// Deployment
+project.ext.services.each { Service svc ->
+    def deploy = tasks.register("deploy$svc.name", Copy) {
+        description "Copy $svc.name files into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+
+        into layout.projectDirectory.dir("repo")
+
+        // models
+        def modelsPath = "src/main/java/com/adyen/model"
+        def modelSource = "services/$svc.id/${modelsPath}"
+        from(layout.buildDirectory.dir(modelSource)) {
+            include "**/*.java"
+            into modelsPath
+        }
+
+        // serializer
+        def servicePath = "src/main/java/com/adyen/service"
+        def serviceSource = "services/$svc.id/${servicePath}"
+        from(layout.buildDirectory.file("${serviceSource}/JSON.java")) {
+            into "${modelsPath}/${svc.id}"
+        }
+
+        // service
+        from(layout.buildDirectory.dir("${serviceSource}/$svc.id")) {
+            include "*.java"
+            into "${servicePath}/${svc.id}"
+        }
+    }
+
+    tasks.named(svc.id) { dependsOn deploy }
 }

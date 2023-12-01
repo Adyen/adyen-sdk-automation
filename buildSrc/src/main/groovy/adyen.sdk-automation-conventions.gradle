@@ -70,6 +70,10 @@ project.ext.services.each { Service svc ->
         additionalProperties.set([
                 'serviceName': project.ext.serviceName,
         ])
+        globalProperties.set([
+                'modelDocs' : 'false',
+                'modelTests': 'false'
+        ])
 
         if (project.ext.has('configFile')) {
             configFile.set("$projectDir/repo/$project.ext.configFile")
