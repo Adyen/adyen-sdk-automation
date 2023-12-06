@@ -29,7 +29,7 @@ tasks.withType(GenerateTask).configureEach {
 
 smallServices.each { Service svc ->
     tasks.named("generate${svc.name}", GenerateTask) {
-        configFile.set("$projectDir/repo/templates/libraries/jersey3/config.yaml")
+        configFile.set("$projectDir/config.yaml")
         apiPackage.set("com.adyen.service")
         additionalProperties.putAll([
                 'smallServiceName': "${svc.name}Api",
