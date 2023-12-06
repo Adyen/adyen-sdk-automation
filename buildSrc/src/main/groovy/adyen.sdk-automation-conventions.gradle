@@ -1,4 +1,18 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+class Service {
+    String name, spec
+    int version
+    boolean small
+
+    String getId() { name.toLowerCase() }
+
+    String getSpec() { spec ?: "${name}Service" }
+
+    String getFilename() { "${getSpec()}-v${version}.json" }
+}
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -12,22 +26,23 @@ ext {
             // Payments
             new Service(name: 'Checkout', version: 71),
             new Service(name: 'Payout', version: 68),
-            new Service(name: 'Recurring', version: 68),
-            new Service(name: 'BinLookup', version: 54),
+            new Service(name: 'Recurring', version: 68, small: true),
+            new Service(name: 'BinLookup', version: 54, small: true),
             // Point of Sale
-            new Service(name: 'POSTerminalManagement', spec: 'TfmAPIService', version: 1),
+            new Service(name: 'POSTerminalManagement', spec: 'TfmAPIService', version: 1, small: true),
             // Management
             new Service(name: 'Management', version: 3),
-            new Service(name: 'BalanceControl', version: 1),
+            new Service(name: 'BalanceControl', version: 1, small: true),
             // Adyen for Platforms
             new Service(name: 'LegalEntityManagement', spec: 'LegalEntityService', version: 3),
             new Service(name: 'BalancePlatform', version: 2),
             new Service(name: 'Transfers', spec: 'TransferService', version: 4),
-            new Service(name: 'DataProtection', version: 1),
+            new Service(name: 'DataProtection', version: 1, small: true),
             // Classic Payments
-            new Service(name: 'Payment', version: 68),
+            new Service(name: 'Payment', version: 68, small: true),
             // Others
-            new Service(name: 'StoredValue', version: 46),
+            new Service(name: 'StoredValue', version: 46, small: true),
+            new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true),
             // Webhooks
             new Service(name: 'ConfigurationWebhook', spec: 'BalancePlatformConfigurationNotification', version: 1),
             new Service(name: 'ACSWebhook', spec: 'BalancePlatformAcsNotification', version: 1),
@@ -39,14 +54,7 @@ ext {
     serviceName = ''
 }
 
-class Service {
-    String name, spec
-    int version
-
-    String getSpec() { spec ?: "${name}Service" }
-
-    String getId() { name.toLowerCase() }
-}
+project.ext.smallServices = project.ext.services.findAll { it.small }
 
 // Generate a full client for each service
 project.ext.services.each { Service svc ->
@@ -59,7 +67,7 @@ project.ext.services.each { Service svc ->
         project.ext.serviceName = svc.name
 
         generatorName.set(project.ext.generator as String)
-        inputSpec.set("$rootDir/schema/json/${svc.spec}-v${svc.version}.json")
+        inputSpec.set("$rootDir/schema/json/${svc.filename}")
         outputDir.set("$buildDir/services/${svc.id}")
         templateDir.set("$projectDir/repo/$project.ext.templates")
         validateSpec.set(false)
@@ -122,4 +130,24 @@ tasks.register('addPMTable', Copy) {
     dependsOn(":pmTable")
     from(rootProject.file('PaymentMethodOverview.md'))
     into layout.projectDirectory.dir("repo")
+}
+
+project.ext.smallServices.each { Service svc ->
+    def ungroup = tasks.register("ungroup${svc.name}") {
+        description "Remove tags from ${svc.name}"
+        doLast {
+            def specFile = file("$rootDir/schema/json/${svc.filename}")
+            def json = new JsonSlurper().parse(specFile)
+
+            json["paths"].each { Map.Entry endpoint ->
+                endpoint.value.each { Map.Entry httpMethod ->
+                    httpMethod.value.remove('tags')
+                }
+            }
+
+            specFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+        }
+    }
+
+    tasks.named(svc.id) { dependsOn ungroup }
 }
