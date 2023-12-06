@@ -29,7 +29,7 @@ ext {
             new Service(name: 'Recurring', version: 68, small: true),
             new Service(name: 'BinLookup', version: 54, small: true),
             // Point of Sale
-            new Service(name: 'POSTerminalManagement', spec: 'TfmAPIService', version: 1, small: true),
+            new Service(name: 'PosTerminalManagement', spec: 'TfmAPIService', version: 1, small: true),
             // Management
             new Service(name: 'Management', version: 3),
             new Service(name: 'BalanceControl', version: 1, small: true),
@@ -44,14 +44,15 @@ ext {
             new Service(name: 'StoredValue', version: 46, small: true),
             new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true),
             // Webhooks
-            new Service(name: 'ConfigurationWebhook', spec: 'BalancePlatformConfigurationNotification', version: 1),
-            new Service(name: 'ACSWebhook', spec: 'BalancePlatformAcsNotification', version: 1),
-            new Service(name: 'ReportWebhook', spec: 'BalancePlatformReportNotification', version: 1),
-            new Service(name: 'TransferWebhook', spec: 'BalancePlatformTransferNotification', version: 4),
-            new Service(name: 'TransactionWebhook', spec: 'BalancePlatformTransactionNotification', version: 4),
-            new Service(name: 'ManagementWebhook', spec: 'ManagementNotificationService', version: 3),
+            new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 1),
+            new Service(name: 'ACSWebhooks', spec: 'BalancePlatformAcsNotification', version: 1),
+            new Service(name: 'ReportWebhooks', spec: 'BalancePlatformReportNotification', version: 1),
+            new Service(name: 'TransferWebhooks', spec: 'BalancePlatformTransferNotification', version: 4),
+            new Service(name: 'TransactionWebhooks', spec: 'BalancePlatformTransactionNotification', version: 4),
+            new Service(name: 'ManagementWebhooks', spec: 'ManagementNotificationService', version: 3),
     ]
     serviceName = ''
+    removeTags = true
 }
 
 project.ext.smallServices = project.ext.services.findAll { it.small }
@@ -135,6 +136,8 @@ tasks.register('addPMTable', Copy) {
 project.ext.smallServices.each { Service svc ->
     def ungroup = tasks.register("ungroup${svc.name}") {
         description "Remove tags from ${svc.name}"
+        dependsOn ':specs'
+        onlyIf { project.ext.removeTags }
         doLast {
             def specFile = file("$rootDir/schema/json/${svc.filename}")
             def json = new JsonSlurper().parse(specFile)
@@ -149,5 +152,5 @@ project.ext.smallServices.each { Service svc ->
         }
     }
 
-    tasks.named(svc.id) { dependsOn ungroup }
+    tasks.named("generate$svc.name") { dependsOn ungroup }
 }

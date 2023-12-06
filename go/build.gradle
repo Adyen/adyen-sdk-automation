@@ -8,10 +8,14 @@ project.ext {
     generator = 'go'
     templates = 'templates/custom'
     configFile = 'templates/config.yaml'
+    // This setting works in isolation (e.g. CI). Specs are shared and other projects remove tags.
+    removeTags = false
 }
 
+def services = project.ext.services as List<Service>
+
 // Service renaming
-tasks.named('generatePOSTerminalManagement') {
+tasks.named('generatePosTerminalManagement') {
     project.ext.serviceName = 'PosTerminalManagementApi'
 }
 tasks.named('generateLegalEntityManagement') {
@@ -31,11 +35,11 @@ tasks.withType(GenerateTask).configureEach {
 }
 
 // Deployment
-project.ext.services.each { Service svc ->
-    def generateTask = "generate$svc.name" 
+services.each { Service svc ->
+    def generateTask = "generate$svc.name"
     def deploy = tasks.register("deploy$svc.name", Copy) {
         description "Copy $svc.name files into the repo."
-        dependsOn generateTask 
+        dependsOn generateTask
         outputs.upToDateWhen { false }
 
         from layout.buildDirectory.dir("services/$svc.id")
@@ -58,6 +62,21 @@ tasks.named('generateLegalEntityManagement', GenerateTask) {
     packageName.set('legalentity')
 }
 
+// Rename webhooks
+tasks.named('generateACSWebhooks', GenerateTask) { packageName.set('acswebhook') }
+tasks.named('generateConfigurationWebhooks', GenerateTask) { packageName.set('configurationwebhook') }
+tasks.named('generateManagementWebhooks', GenerateTask) { packageName.set('managementwebhook') }
+tasks.named('generateReportWebhooks', GenerateTask) { packageName.set('reportwebhook') }
+tasks.named('generateTransactionWebhooks', GenerateTask) { packageName.set('transactionwebhook') }
+tasks.named('generateTransferWebhooks', GenerateTask) { packageName.set('transferwebhook') }
+
+tasks.named("deployACSWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/acswebhook') }
+tasks.named("deployConfigurationWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/configurationWebhook') }
+tasks.named("deployManagementWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/managementwebhook') }
+tasks.named("deployReportWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/reportwebhooks') }
+tasks.named("deployTransactionWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/transactionwebhooks') }
+tasks.named("deployTransferWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/transferwebhooks') }
+
 tasks.named('deployLegalEntityManagement', Copy) {
     into layout.projectDirectory.dir("repo/src/legalentity")
 }
@@ -66,10 +85,10 @@ tasks.named('deployPayment', Copy) {
     into layout.projectDirectory.dir("repo/src/payments")
 }
 
-// Small services don't need a "index"
-['BalanceControl', 'BinLookup', 'Recurring', 'DataProtection', 'StoredValue', 'POSTerminalManagement'].each {
-    tasks.named("deploy$it", Copy) {
-        exclude 'client.go'
+// These don't need a "index"
+services.findAll({ it.small || it.name.endsWith('Webhooks') }).each { Service svc ->
+    tasks.named("deploy${svc.name}", Copy) {
+        exclude 'client.go', 'api_default.go'
     }
 }
 
