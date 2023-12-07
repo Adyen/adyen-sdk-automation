@@ -45,7 +45,7 @@ ext {
             new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true),
             // Webhooks
             new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 1),
-            new Service(name: 'ACSWebhooks', spec: 'BalancePlatformAcsNotification', version: 1),
+            new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1),
             new Service(name: 'ReportWebhooks', spec: 'BalancePlatformReportNotification', version: 1),
             new Service(name: 'TransferWebhooks', spec: 'BalancePlatformTransferNotification', version: 4),
             new Service(name: 'TransactionWebhooks', spec: 'BalancePlatformTransactionNotification', version: 4),
