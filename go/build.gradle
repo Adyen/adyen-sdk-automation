@@ -74,19 +74,11 @@ tasks.named('generateLegalEntityManagement', GenerateTask) {
 }
 
 // Rename webhooks
-tasks.named('generateACSWebhooks', GenerateTask) { packageName.set('acswebhook') }
-tasks.named('generateConfigurationWebhooks', GenerateTask) { packageName.set('configurationwebhook') }
-tasks.named('generateManagementWebhooks', GenerateTask) { packageName.set('managementwebhook') }
-tasks.named('generateReportWebhooks', GenerateTask) { packageName.set('reportwebhook') }
-tasks.named('generateTransactionWebhooks', GenerateTask) { packageName.set('transactionwebhook') }
-tasks.named('generateTransferWebhooks', GenerateTask) { packageName.set('transferwebhook') }
-
-tasks.named("deployACSWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/acswebhook') }
-tasks.named("deployConfigurationWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/configurationWebhook') }
-tasks.named("deployManagementWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/managementwebhook') }
-tasks.named("deployReportWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/reportwebhooks') }
-tasks.named("deployTransactionWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/transactionwebhooks') }
-tasks.named("deployTransferWebhooks", Copy) {into layout.projectDirectory.dir('repo/src/transferwebhooks') }
+services.findAll { it.name.endsWith('Webhooks') }.each { Service svc ->
+    def singular = svc.id.dropRight(1)
+    tasks.named("generate${svc.name}", GenerateTask) { packageName.set(singular) }
+    tasks.named("deploy${svc.name}", Copy) { into layout.projectDirectory.dir("repo/src/${singular}") }
+}
 
 tasks.named('deployLegalEntityManagement', Copy) {
     into layout.projectDirectory.dir("repo/src/legalentity")
