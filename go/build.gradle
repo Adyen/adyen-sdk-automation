@@ -15,11 +15,22 @@ project.ext {
 def services = project.ext.services as List<Service>
 
 // Service renaming
-tasks.named('generatePosTerminalManagement') {
+tasks.named('generatePosTerminalManagement', GenerateTask) {
     project.ext.serviceName = 'PosTerminalManagementApi'
+    additionalProperties.set([
+            'serviceName': 'PosTerminalManagementApi',
+    ])
 }
-tasks.named('generateLegalEntityManagement') {
+tasks.named('generateLegalEntityManagement', GenerateTask) {
     project.ext.serviceName = 'LegalEntity'
+    additionalProperties.set([
+            'serviceName': 'LegalEntity',
+    ])
+}
+tasks.named('generatePayout', GenerateTask) {
+    additionalProperties.set([
+            'serviceName': '',
+    ])
 }
 
 tasks.withType(GenerateTask).configureEach {
