@@ -4,9 +4,21 @@ plugins {
     id 'adyen.sdk-automation-conventions'
 }
 
+project.ext {
+    removeTags = false
+}
+
+// Service renaming
+def serviceMapping = project.ext.services.collectEntries { [it.id, it.name] }
+serviceMapping.putAll([
+        'payment'              : 'Payments',
+        'posterminalmanagement': 'POSTerminalManagement'
+])
+
 tasks.withType(GenerateTask).configureEach {
-    modelPackage.set("Model\\${project.ext.serviceName}")
-    apiPackage.set("Service\\${project.ext.serviceName}")
+    def serviceName = serviceMapping[ext.serviceId as String]
+    modelPackage.set("Model\\${serviceName}")
+    apiPackage.set("Service\\${serviceName}")
     additionalProperties.putAll([
             'variableNamingConvention': 'camelCase',
             'invokerPackage'          : 'Adyen',
@@ -22,17 +34,38 @@ project.ext.services.each { Service svc ->
         outputs.upToDateWhen { false }
 
         into layout.projectDirectory.dir("repo/src/Adyen")
-        def source = "services/$svc.id/lib"
+        def sourcePath = "services/$svc.id/lib"
 
-        from(layout.buildDirectory.dir(source)) {
+        from(layout.buildDirectory.dir(sourcePath)) {
             include "Model/**/*.php"
             include "Service/**/*.php"
         }
 
-        from(layout.buildDirectory.file("$source/ObjectSerializer.php")) {
-            into "Model/$svc.name"
+        from(layout.buildDirectory.file("$sourcePath/ObjectSerializer.php")) {
+            into "Model/" + serviceMapping[svc.id]
         }
     }
 
     tasks.named(svc.id) { dependsOn deploy }
+}
+
+// Tests
+tasks.named('deployAcsWebhooks', Copy) {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Model/AcsWebhooks/Amount.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Model/AcsWebhooks/ObjectSerializer.php").exists()
+    }
+}
+tasks.named('deployCheckout') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Model/Checkout/Amount.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Service/Checkout/PaymentsApi.php").exists()
+    }
+}
+tasks.named('payment') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Model/Payments/Amount.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Model/Payments/ObjectSerializer.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Service/Payments/PaymentsApi.php").exists()
+    }
 }

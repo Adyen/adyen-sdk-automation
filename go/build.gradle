@@ -32,6 +32,11 @@ tasks.named('generatePayout', GenerateTask) {
             'serviceName': '',
     ])
 }
+tasks.named('generatePayment', GenerateTask) {
+    additionalProperties.set([
+            'serviceName': '',
+    ])
+}
 
 tasks.withType(GenerateTask).configureEach {
     enablePostProcessFile.set(true)

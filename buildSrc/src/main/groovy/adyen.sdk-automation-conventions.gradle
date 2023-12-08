@@ -65,6 +65,7 @@ project.ext.services.each { Service svc ->
         dependsOn ':specs'
 
         // Current service being processed
+        ext.serviceId = svc.id
         project.ext.serviceName = svc.name
 
         generatorName.set(project.ext.generator as String)
