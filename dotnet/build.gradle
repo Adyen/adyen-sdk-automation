@@ -1,3 +1,5 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
     id 'adyen.sdk-automation-conventions'
 }
@@ -5,4 +7,56 @@ plugins {
 project.ext {
     generator = 'csharp-netcore'
     templates = 'templates/csharp'
+}
+
+def services = project.ext.services as List<Service>
+
+services.each { Service svc ->
+    def serviceName = project.ext.serviceNaming[svc.id] as String
+
+    // Generation
+    tasks.named("generate${svc.name}", GenerateTask) {
+        apiPackage.set(svc.small ? 'Service' : "Service.${svc.name}")
+        apiNameSuffix.set('Service')
+        modelPackage.set("Model.${svc.name}")
+        reservedWordsMappings.put('Version', 'Version')
+        additionalProperties.putAll([
+                'packageName': 'Adyen',
+                'serviceName': serviceName,
+        ])
+    }
+
+    // Deployment
+    def deployModels = tasks.register("deploy${svc.name}Models", Sync) {
+        description "Deploy $svc.name models into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+
+        from layout.buildDirectory.dir("services/$svc.id/src/Adyen/Model.${serviceName}")
+        into layout.projectDirectory.dir("repo/Adyen/Model/" + serviceName)
+    }
+
+    def deployServices = tasks.register("deploy${svc.name}Services", Sync) {
+        description "Deploy $svc.name into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+
+        from layout.buildDirectory.dir("services/$svc.id/src/Adyen/Service.${serviceName}")
+        into layout.projectDirectory.dir("repo/Adyen/Service/" + serviceName)
+    }
+
+    def deploySmallService = tasks.register("deploy${svc.name}SmallService", Copy) {
+        description "Copy $svc.name into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+
+        from layout.buildDirectory.file("services/$svc.id/src/Adyen/Service/DefaultService.cs")
+        rename 'DefaultService.cs', "${serviceName}Service.cs"
+        filter {
+            it.replace('DefaultService', "${serviceName}Service")
+        }
+        into layout.projectDirectory.dir("repo/Adyen/Service")
+    }
+
+    tasks.named(svc.id) { dependsOn deployModels, deployServices, deploySmallService }
 }

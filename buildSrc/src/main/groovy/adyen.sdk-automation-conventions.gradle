@@ -55,7 +55,12 @@ ext {
     removeTags = true
 }
 
-project.ext.smallServices = project.ext.services.findAll { it.small }
+def services = project.ext.services as List<Service>
+
+ext {
+    smallServices = services.findAll { it.small }
+    serviceNaming = services.collectEntries { [it.id, it.name] }
+}
 
 // Generate a full client for each service
 project.ext.services.each { Service svc ->
