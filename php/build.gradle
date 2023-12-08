@@ -8,8 +8,11 @@ project.ext {
     removeTags = false
 }
 
+def services = project.ext.services as List<Service>
+def smallServices = project.ext.smallServices as List<Service>
+
 // Service renaming
-def serviceMapping = project.ext.services.collectEntries { [it.id, it.name] }
+def serviceMapping = services.collectEntries { [it.id, it.name] }
 serviceMapping.putAll([
         'payment'              : 'Payments',
         'posterminalmanagement': 'POSTerminalManagement'
@@ -26,8 +29,14 @@ tasks.withType(GenerateTask).configureEach {
     ])
 }
 
+smallServices.each { Service svc ->
+    tasks.named("generate${svc.name}", GenerateTask) {
+        apiPackage.set("Service")
+    }
+}
+
 // Deployment
-project.ext.services.each { Service svc ->
+services.findAll({ !it.small }).each { Service svc ->
     def deploy = tasks.register("deploy$svc.name", Copy) {
         description "Copy $svc.name files into the repo."
         dependsOn "generate$svc.name"
@@ -49,7 +58,48 @@ project.ext.services.each { Service svc ->
     tasks.named(svc.id) { dependsOn deploy }
 }
 
+smallServices.each { Service svc ->
+    def serviceName = serviceMapping[svc.id] as String
+    def deploy = tasks.register("deploy$svc.name", Copy) {
+        description "Copy $svc.name files into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+
+        into layout.projectDirectory.dir("repo/src/Adyen")
+
+        // Service
+        def clazzName = "${serviceName}Api"
+        from(layout.buildDirectory.file("services/$svc.id/lib/Service/GeneralApi.php")) {
+            rename 'GeneralApi.php', "${clazzName}.php"
+            filter {
+                it.replace('class GeneralApi', "class ${clazzName}")
+                        .replace('GeneralApi constructor', "${clazzName} constructor")
+            }
+            into "Service"
+        }
+
+        // Models
+        from(layout.buildDirectory.dir("services/$svc.id/lib/Model")){
+            include '**/*.php'
+            into "Model"
+        }
+
+        // Serializer
+        from(layout.buildDirectory.file("services/$svc.id/lib/ObjectSerializer.php")) {
+            into "Model/" + serviceName
+        }
+    }
+
+    tasks.named(svc.id) { dependsOn deploy }
+}
+
 // Tests
+tasks.named('binlookup') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Model/BinLookup/Amount.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Service/BinLookupApi.php").exists()
+    }
+}
 tasks.named('deployAcsWebhooks', Copy) {
     doLast {
         assert file("${layout.projectDirectory}/repo/src/Adyen/Model/AcsWebhooks/Amount.php").exists()
