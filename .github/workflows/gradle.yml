@@ -52,4 +52,4 @@ jobs:
         title: ${{ steps.vars.outputs.pr_title }}
         body: ${{ steps.vars.outputs.pr_body }}
         commit-message: |
-          ${{ contains(fromJSON('["go", "php", "node"]'), matrix.project) && '[skip ci]' }}[create-pull-request] automated change
+          ${{ contains(fromJSON('["go", "php", "node"]'), matrix.project) && '[reformat]' }}[adyen-sdk-automation] automated change

@@ -14,7 +14,7 @@ For a single specific service:
 ./gradlew php:checkout
 ```
 
-To clean up *most* (except for `repo` folders) of the generated artifacts:
+To clean up all the generated artifacts, repository modifications and spec patches:
 
 ```
 ./gradlew clean

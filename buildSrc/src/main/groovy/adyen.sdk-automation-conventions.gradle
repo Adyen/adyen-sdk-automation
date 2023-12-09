@@ -62,8 +62,9 @@ ext {
 // Generate a full client for each service
 services.each { Service svc ->
     def generate = tasks.register("generate$svc.name", GenerateTask) {
+        group 'generate'
         description "Generate a $project.name client for $svc.name."
-        dependsOn 'clone'
+        dependsOn 'cloneRepo'
         dependsOn ':specs'
 
         // Current service being processed
@@ -93,6 +94,7 @@ services.each { Service svc ->
     }
 
     tasks.register(svc.id) {
+        group 'service'
         description "Base task for $svc.name."
         dependsOn generate
     }
@@ -100,7 +102,7 @@ services.each { Service svc ->
 
 tasks.register('services') {
     description 'Generate code for multiple services.'
-    dependsOn project.ext.services.collect { it.id }
+    dependsOn services.collect { it.id }
 }
 
 tasks.named('generateCheckout', GenerateTask) {
@@ -110,7 +112,8 @@ tasks.named('generateCheckout', GenerateTask) {
     ])
 }
 
-tasks.register('clone', Exec) {
+tasks.register('cloneRepo', Exec) {
+    group 'setup'
     def uri = "https://github.com/Adyen/adyen-$project.name-api-library.git"
     def dest = 'repo'
     description "Clone this project's repository."
@@ -125,12 +128,28 @@ tasks.withType(GenerateTask).configureEach {
     outputs.cacheIf { false }
 }
 
+def cleanTracked = tasks.register('cleanTracked', Exec) {
+    group 'clean'
+    description 'Discard changes to existing files'
+    commandLine 'git', 'checkout', '.'
+    workingDir 'repo'
+}
+def cleanUntracked = tasks.register('cleanUntracked', Exec) {
+    group 'clean'
+    description 'Discard unknown files'
+    commandLine 'git', 'clean', '-f', '-d'
+    workingDir 'repo'
+}
+
 tasks.register('clean', Delete) {
+    group 'clean'
+    description 'Clean this project state'
     delete buildDir
+    dependsOn cleanTracked, cleanUntracked
 }
 
 tasks.register('addPMTable', Copy) {
-    dependsOn("clone")
+    dependsOn("cloneRepo")
     dependsOn(":pmTable")
     from(rootProject.file('PaymentMethodOverview.md'))
     into layout.projectDirectory.dir("repo")
@@ -138,6 +157,7 @@ tasks.register('addPMTable', Copy) {
 
 project.ext.smallServices.each { Service svc ->
     def ungroup = tasks.register("ungroup${svc.name}") {
+        group 'specs'
         description "Remove tags from ${svc.name}"
         dependsOn ':specs'
         onlyIf { project.ext.removeTags }

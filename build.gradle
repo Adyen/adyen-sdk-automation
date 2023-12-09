@@ -6,6 +6,7 @@ def specsDir = "$projectDir/schema"
 def checkoutDir = "$projectDir/schema/json/CheckoutService-v71.json"
 
 tasks.register('specs', Exec) {
+    group 'setup'
     description 'Clone OpenAPI spec (and apply local patches).'
     commandLine 'git', 'clone', '--depth', '1', uri, specsDir
     outputs.dir specsDir
@@ -36,6 +37,7 @@ tasks.register('specs', Exec) {
 }
 
 tasks.register('pmTable', Task) {
+    group 'specs'
     description 'Generate Checkout Payment Method Table'
     dependsOn('specs')
     onlyIf { file(checkoutDir).exists() }
@@ -76,5 +78,7 @@ tasks.register('pmTable', Task) {
 }
 
 tasks.register('clean', Delete) {
+    group 'clean'
+    description 'Delete OpenAPI specifications'
     delete specsDir
 }

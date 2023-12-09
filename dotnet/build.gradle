@@ -28,6 +28,7 @@ services.each { Service svc ->
 
     // Deployment
     def deployModels = tasks.register("deploy${svc.name}Models", Sync) {
+        group 'deploy'
         description "Deploy $svc.name models into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }
@@ -37,6 +38,7 @@ services.each { Service svc ->
     }
 
     def deployServices = tasks.register("deploy${svc.name}Services", Sync) {
+        group 'deploy'
         description "Deploy $svc.name into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }
@@ -46,6 +48,7 @@ services.each { Service svc ->
     }
 
     def deploySmallService = tasks.register("deploy${svc.name}SmallService", Copy) {
+        group 'deploy'
         description "Copy $svc.name into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }

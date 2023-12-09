@@ -38,6 +38,7 @@ smallServices.each { Service svc ->
 // Deployment
 services.findAll({ !it.small }).each { Service svc ->
     def deploy = tasks.register("deploy$svc.name", Copy) {
+        group 'deploy'
         description "Copy $svc.name files into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }
@@ -61,6 +62,7 @@ services.findAll({ !it.small }).each { Service svc ->
 smallServices.each { Service svc ->
     def serviceName = serviceNaming[svc.id]
     def deploy = tasks.register("deploy$svc.name", Copy) {
+        group 'deploy'
         description "Copy $svc.name files into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }
