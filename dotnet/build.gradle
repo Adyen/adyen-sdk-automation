@@ -60,3 +60,24 @@ services.each { Service svc ->
 
     tasks.named(svc.id) { dependsOn deployModels, deployServices, deploySmallService }
 }
+
+// Tests
+tasks.named('binlookup') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/Adyen/Model/BinLookup/Amount.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/Service/BinLookupService.cs").exists()
+    }
+}
+tasks.named('checkout') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/Adyen/Model/Checkout/Amount.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/Service/Checkout/PaymentsService.cs").exists()
+    }
+}
+tasks.named('acswebhooks') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/Adyen/Model/AcsWebhooks/Amount.cs").exists()
+        assert !file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooks").exists()
+        assert !file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooksService.cs").exists()
+    }
+}

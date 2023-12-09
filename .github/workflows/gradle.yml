@@ -8,6 +8,9 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-sdk-automation
+
 jobs:
   generate:
     strategy:
@@ -48,3 +51,5 @@ jobs:
         branch: sdk-automation/models
         title: ${{ steps.vars.outputs.pr_title }}
         body: ${{ steps.vars.outputs.pr_body }}
+        commit-message: |
+          ${{ contains(fromJSON('["go", "php", "node"]'), matrix.project) && '[skip ci]' }}[create-pull-request] automated change

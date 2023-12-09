@@ -19,51 +19,48 @@ repositories {
     mavenCentral()
 }
 
+List<Service> services = [
+        // Payments
+        new Service(name: 'Checkout', version: 71),
+        new Service(name: 'Payout', version: 68),
+        new Service(name: 'Recurring', version: 68, small: true),
+        new Service(name: 'BinLookup', version: 54, small: true),
+        // Point of Sale
+        new Service(name: 'PosTerminalManagement', spec: 'TfmAPIService', version: 1, small: true),
+        // Management
+        new Service(name: 'Management', version: 3),
+        new Service(name: 'BalanceControl', version: 1, small: true),
+        // Adyen for Platforms
+        new Service(name: 'LegalEntityManagement', spec: 'LegalEntityService', version: 3),
+        new Service(name: 'BalancePlatform', version: 2),
+        new Service(name: 'Transfers', spec: 'TransferService', version: 4),
+        new Service(name: 'DataProtection', version: 1, small: true),
+        // Classic Payments
+        new Service(name: 'Payment', version: 68, small: true),
+        // Others
+        new Service(name: 'StoredValue', version: 46, small: true),
+        new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true),
+        // Webhooks
+        new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 1),
+        new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1),
+        new Service(name: 'ReportWebhooks', spec: 'BalancePlatformReportNotification', version: 1),
+        new Service(name: 'TransferWebhooks', spec: 'BalancePlatformTransferNotification', version: 4),
+        new Service(name: 'TransactionWebhooks', spec: 'BalancePlatformTransactionNotification', version: 4),
+        new Service(name: 'ManagementWebhooks', spec: 'ManagementNotificationService', version: 3),
+]
+
 ext {
     generator = project.name
     templates = 'templates'
-    services = [
-            // Payments
-            new Service(name: 'Checkout', version: 71),
-            new Service(name: 'Payout', version: 68),
-            new Service(name: 'Recurring', version: 68, small: true),
-            new Service(name: 'BinLookup', version: 54, small: true),
-            // Point of Sale
-            new Service(name: 'PosTerminalManagement', spec: 'TfmAPIService', version: 1, small: true),
-            // Management
-            new Service(name: 'Management', version: 3),
-            new Service(name: 'BalanceControl', version: 1, small: true),
-            // Adyen for Platforms
-            new Service(name: 'LegalEntityManagement', spec: 'LegalEntityService', version: 3),
-            new Service(name: 'BalancePlatform', version: 2),
-            new Service(name: 'Transfers', spec: 'TransferService', version: 4),
-            new Service(name: 'DataProtection', version: 1, small: true),
-            // Classic Payments
-            new Service(name: 'Payment', version: 68, small: true),
-            // Others
-            new Service(name: 'StoredValue', version: 46, small: true),
-            new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true),
-            // Webhooks
-            new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 1),
-            new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1),
-            new Service(name: 'ReportWebhooks', spec: 'BalancePlatformReportNotification', version: 1),
-            new Service(name: 'TransferWebhooks', spec: 'BalancePlatformTransferNotification', version: 4),
-            new Service(name: 'TransactionWebhooks', spec: 'BalancePlatformTransactionNotification', version: 4),
-            new Service(name: 'ManagementWebhooks', spec: 'ManagementNotificationService', version: 3),
-    ]
     serviceName = ''
     removeTags = true
-}
-
-def services = project.ext.services as List<Service>
-
-ext {
+    setProperty('services', services)
     smallServices = services.findAll { it.small }
     serviceNaming = services.collectEntries { [it.id, it.name] }
 }
 
 // Generate a full client for each service
-project.ext.services.each { Service svc ->
+services.each { Service svc ->
     def generate = tasks.register("generate$svc.name", GenerateTask) {
         description "Generate a $project.name client for $svc.name."
         dependsOn 'clone'

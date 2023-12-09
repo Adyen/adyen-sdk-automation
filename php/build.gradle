@@ -10,16 +10,16 @@ project.ext {
 
 def services = project.ext.services as List<Service>
 def smallServices = project.ext.smallServices as List<Service>
+def serviceNaming = project.ext.serviceNaming as Map<String, String>
 
 // Service renaming
-def serviceMapping = services.collectEntries { [it.id, it.name] }
-serviceMapping.putAll([
+serviceNaming.putAll([
         'payment'              : 'Payments',
         'posterminalmanagement': 'POSTerminalManagement'
 ])
 
 tasks.withType(GenerateTask).configureEach {
-    def serviceName = serviceMapping[ext.serviceId as String]
+    def serviceName = serviceNaming[ext.serviceId as String]
     modelPackage.set("Model\\${serviceName}")
     apiPackage.set("Service\\${serviceName}")
     additionalProperties.putAll([
@@ -51,7 +51,7 @@ services.findAll({ !it.small }).each { Service svc ->
         }
 
         from(layout.buildDirectory.file("$sourcePath/ObjectSerializer.php")) {
-            into "Model/" + serviceMapping[svc.id]
+            into "Model/" + serviceNaming[svc.id]
         }
     }
 
@@ -59,7 +59,7 @@ services.findAll({ !it.small }).each { Service svc ->
 }
 
 smallServices.each { Service svc ->
-    def serviceName = serviceMapping[svc.id] as String
+    def serviceName = serviceNaming[svc.id]
     def deploy = tasks.register("deploy$svc.name", Copy) {
         description "Copy $svc.name files into the repo."
         dependsOn "generate$svc.name"
