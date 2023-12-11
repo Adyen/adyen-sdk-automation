@@ -1,3 +1,5 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
     id 'adyen.sdk-automation-conventions'
 }
@@ -5,4 +7,103 @@ plugins {
 project.ext {
     generator = 'typescript-node'
     templates = 'templates/typescript'
+}
+
+def services = project.ext.services as List<Service>
+
+// Service renaming
+Map<String, String> serviceNaming = (project.ext.serviceNaming as Map<String, String>)
+        .collectEntries {
+            [it.key, it.value.substring(0, 1).toLowerCase() + it.value.substring(1)]
+        }
+
+// Service renaming
+serviceNaming.putAll([
+        'posterminalmanagement': 'terminalManagement'
+])
+
+services.each { Service svc ->
+    String serviceName = serviceNaming[svc.id]
+
+    // Generation
+    tasks.named("generate${svc.name}", GenerateTask) {
+        apiPackage.set(serviceName)
+        apiNameSuffix.set('Service')
+        configFile.set("$projectDir/config.yaml")
+        additionalProperties.putAll([
+                'modelPropertyNaming': 'original',
+                'serviceName'        : serviceName,
+        ])
+    }
+
+    // Deployment
+    def deployModels = tasks.register("deploy${svc.name}Models", Sync) {
+        group 'deploy'
+        description "Deploy $svc.name models into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+
+        from layout.buildDirectory.dir("services/$svc.id/model")
+        into layout.projectDirectory.dir("repo/src/typings/" + serviceName)
+    }
+
+    def deployServices = tasks.register("deploy${svc.name}Services", Sync) {
+        group 'deploy'
+        description "Deploy $svc.name into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+        onlyIf { !svc.small && !svc.webhook }
+
+        from layout.buildDirectory.dir("services/$svc.id/${serviceName}")
+        include '*Api.ts'
+        into layout.projectDirectory.dir("repo/src/services/" + serviceName)
+
+        from(layout.buildDirectory.dir("services/$svc.id")) {
+            include 'index.ts'
+        }
+    }
+
+    def deploySmallService = tasks.register("deploy${svc.name}SmallService", Copy) {
+        group 'deploy'
+        description "Copy $svc.name into the repo."
+        dependsOn "generate$svc.name"
+        outputs.upToDateWhen { false }
+        onlyIf { svc.small }
+
+        from layout.buildDirectory.file("services/$svc.id/${serviceName}/defaultApiRoot.ts")
+        rename 'defaultApiRoot.ts', "${serviceName}Api.ts"
+        into layout.projectDirectory.dir('repo/src/services')
+    }
+
+    tasks.named(svc.id) { dependsOn deployModels, deployServices, deploySmallService }
+}
+
+// Tests
+tasks.named('binlookup') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/typings/binLookup/amount.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/binLookupApi.ts").exists()
+    }
+}
+tasks.named('checkout') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/typings/checkout/amount.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/checkout/paymentsApi.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/checkout/index.ts").exists()
+    }
+}
+tasks.named('balanceplatform') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/typings/balancePlatform/amount.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/balancePlatform/accountHoldersApi.ts").exists()
+        assert !file("${layout.projectDirectory}/repo/src/services/balanceplatform/accountHoldersApi.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/balancePlatform/index.ts").exists()
+    }
+}
+tasks.named('acswebhooks') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/typings/acsWebhooks/amount.ts").exists()
+        assert !file("${layout.projectDirectory}/repo/src/services/acsWebhooks").exists()
+        assert !file("${layout.projectDirectory}/repo/src/services/acsWebhooksApi.ts").exists()
+    }
 }

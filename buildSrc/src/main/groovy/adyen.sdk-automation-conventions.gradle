@@ -12,6 +12,8 @@ class Service {
     String getSpec() { spec ?: "${name}Service" }
 
     String getFilename() { "${getSpec()}-v${version}.json" }
+
+    boolean isWebhook() { name.endsWith('Webhooks') }
 }
 
 repositories {
