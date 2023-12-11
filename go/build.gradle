@@ -8,7 +8,6 @@ project.ext {
     generator = 'go'
     templates = 'templates/custom'
     configFile = 'templates/config.yaml'
-    // This setting works in isolation (e.g. CI). Specs are shared and other projects remove tags.
     removeTags = false
 }
 

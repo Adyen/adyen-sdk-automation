@@ -165,6 +165,7 @@ project.ext.smallServices.each { Service svc ->
         group 'specs'
         description "Remove tags from ${svc.name}"
         dependsOn ':specs'
+        // The `removeTags` setting only works in isolation (e.g. CI). Locally, specs are shared between all projects.
         onlyIf { project.ext.removeTags }
         doLast {
             def specFile = file("$rootDir/schema/json/${svc.filename}")
