@@ -59,6 +59,9 @@ ext {
     setProperty('services', services)
     smallServices = services.findAll { it.small }
     serviceNaming = services.collectEntries { [it.id, it.name] }
+    serviceNamingCamel = services.collectEntries {
+        [it.id, it.name.substring(0, 1).toLowerCase() + it.name.substring(1)]
+    }
 }
 
 // Generate a full client for each service

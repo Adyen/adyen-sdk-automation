@@ -12,12 +12,7 @@ project.ext {
 def services = project.ext.services as List<Service>
 
 // Service renaming
-Map<String, String> serviceNaming = (project.ext.serviceNaming as Map<String, String>)
-        .collectEntries {
-            [it.key, it.value.substring(0, 1).toLowerCase() + it.value.substring(1)]
-        }
-
-// Service renaming
+Map<String, String> serviceNaming = project.ext.serviceNamingCamel
 serviceNaming.putAll([
         'posterminalmanagement': 'terminalManagement'
 ])
