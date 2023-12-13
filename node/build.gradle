@@ -1,8 +1,8 @@
-import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
-
 plugins {
     id 'adyen.sdk-automation-conventions'
 }
+
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 project.ext {
     generator = 'typescript-node'

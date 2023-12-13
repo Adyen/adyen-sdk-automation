@@ -1,25 +1,15 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        // or, via Gradle Plugin Portal:
-        // url "https://plugins.gradle.org/m2/"
-    }
-    dependencies {
-        classpath "org.openapitools:openapi-generator-gradle-plugin:6.0.1"
-    }
-}
-
 plugins {
     // Support convention plugins written in Groovy. Convention plugins are build scripts in 'src/main' that automatically become available as plugins in the main build.
     id 'groovy-gradle-plugin'
 }
 
 repositories {
+    mavenCentral()
     // Use the plugin portal to apply community plugins in convention plugins.
     gradlePluginPortal()
 }
 
 dependencies {
-    implementation "org.openapitools:openapi-generator-gradle-plugin:6.0.1"
+    implementation 'org.openapitools:openapi-generator-gradle-plugin:6.0.1'
+    testImplementation 'junit:junit:4.13'
 }

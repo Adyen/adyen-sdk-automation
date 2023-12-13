@@ -30,3 +30,9 @@ For local testing of some library:
 ```shell
 rm -rf go/repo && ln -s ~/workspace/adyen-go-api-library go/repo
 ```
+
+To run unit tests:
+
+```
+./gradlew :buildSrc:test
+```
