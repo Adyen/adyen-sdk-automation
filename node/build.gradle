@@ -2,6 +2,8 @@ plugins {
     id 'adyen.sdk-automation-conventions'
 }
 
+
+import com.adyen.sdk.Service
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 project.ext {

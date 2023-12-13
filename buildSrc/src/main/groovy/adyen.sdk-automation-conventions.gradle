@@ -2,23 +2,10 @@ plugins {
     id 'org.openapi.generator'
 }
 
+import com.adyen.sdk.Service
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
-
-class Service {
-    String name, spec
-    int version
-    boolean small
-
-    String getId() { name.toLowerCase() }
-
-    String getSpec() { spec ?: "${name}Service" }
-
-    String getFilename() { "${getSpec()}-v${version}.json" }
-
-    boolean isWebhook() { name.endsWith('Webhooks') }
-}
 
 repositories {
     // Use Maven Central for resolving dependencies.

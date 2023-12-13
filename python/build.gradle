@@ -1,3 +1,4 @@
+import com.adyen.sdk.Service
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
