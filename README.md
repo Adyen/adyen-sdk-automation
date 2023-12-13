@@ -14,10 +14,22 @@ For a single specific service:
 ./gradlew php:checkout
 ```
 
-To clean up all the generated artifacts, repository modifications and spec patches:
+To clean up spec patches:
 
 ```
-./gradlew clean
+./gradlew cleanSpecs
+```
+
+To clean up all the generated artifacts and repository modifications:
+
+```
+./gradlew cleanRepo
+```
+
+Typical usage during development:
+
+```
+./gradlew :node:cleanRepo :node:checkout
 ```
 
 ### Development

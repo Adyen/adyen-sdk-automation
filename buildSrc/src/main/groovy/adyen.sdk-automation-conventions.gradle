@@ -137,24 +137,22 @@ tasks.withType(GenerateTask).configureEach {
     outputs.cacheIf { false }
 }
 
-def cleanTracked = tasks.register('cleanTracked', Exec) {
-    group 'clean'
-    description 'Discard changes to existing files'
-    commandLine 'git', 'checkout', '.'
-    workingDir 'repo'
-}
-def cleanUntracked = tasks.register('cleanUntracked', Exec) {
-    group 'clean'
-    description 'Discard unknown files'
-    commandLine 'git', 'clean', '-f', '-d'
-    workingDir 'repo'
-}
-
-tasks.register('clean', Delete) {
+tasks.register('cleanRepo', Delete) {
     group 'clean'
     description 'Clean this project state'
-    delete buildDir
-    dependsOn cleanTracked, cleanUntracked
+    delete layout.buildDirectory
+    doLast {
+        exec {
+            // cleanTracked: discard changes to existing files
+            commandLine 'git', 'checkout', '.'
+            workingDir 'repo'
+        }
+        exec {
+            // cleanUntracked: discard unknown files
+            commandLine 'git', 'clean', '-f', '-d'
+            workingDir 'repo'
+        }
+    }
 }
 
 tasks.register('addPMTable', Copy) {
