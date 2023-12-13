@@ -23,7 +23,6 @@ services.each { Service svc ->
     // Generation
     tasks.named("generate${svc.name}", GenerateTask) {
         apiPackage.set(serviceName)
-        apiNameSuffix.set('Service')
         configFile.set("$projectDir/config.yaml")
         additionalProperties.putAll([
                 'modelPropertyNaming': 'original',

@@ -84,6 +84,7 @@ services.each { Service svc ->
         inputSpec.set("$rootDir/schema/json/${svc.filename}")
         outputDir.set("$buildDir/services/${svc.id}")
         templateDir.set("$projectDir/repo/$project.ext.templates")
+        engine.set('mustache')
         validateSpec.set(false)
         skipValidateSpec.set(true)
         reservedWordsMappings.set([
@@ -115,6 +116,10 @@ tasks.register('services') {
 }
 
 tasks.named('generateCheckout', GenerateTask) {
+    if (project.name == 'node') {
+        // generator v5 does not support inlineSchemaNameMappings
+        return
+    }
     inlineSchemaNameMappings.set([
             'PaymentRequest_paymentMethod'        : 'CheckoutPaymentMethod',
             'DonationPaymentRequest_paymentMethod': 'DonationPaymentMethod',
