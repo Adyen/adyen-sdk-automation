@@ -29,7 +29,13 @@ To clean up all the generated artifacts and repository modifications:
 Typical usage during development:
 
 ```
-./gradlew :node:cleanRepo :node:checkout
+./gradlew :dotnet:cleanRepo :dotnet:checkout
+```
+
+For Node.js, set the generator version via CLI:
+
+```
+./gradlew :node:cleanRepo :node:checkout -PopenapiGeneratorVersion=5.4.0
 ```
 
 ### Development

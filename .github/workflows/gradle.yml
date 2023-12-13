@@ -30,10 +30,13 @@ jobs:
         token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
         repository: Adyen/adyen-${{ matrix.project }}-api-library
         path: ${{ matrix.project }}/repo
-    - name: Generate code for ${{ matrix.project }}
+    - name: Setup Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-      with:
-        arguments: ${{ matrix.project }}:services
+    - name: Override properties
+      if: matrix.project == 'node'
+      run: cp ${{ matrix.project }}/gradle.properties buildSrc
+    - name: Generate code for ${{ matrix.project }}
+      run: ./gradlew ${{ matrix.project }}:services
     - name: Set PR variables
       id: vars
       run: |
