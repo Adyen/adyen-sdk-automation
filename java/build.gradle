@@ -13,19 +13,17 @@ def services = project.ext.services as List<Service>
 def smallServices = project.ext.smallServices as List<Service>
 
 tasks.withType(GenerateTask).configureEach {
-    def svcId = project.ext.serviceName.toLowerCase()
-    def modelNs = "com.adyen.model.${svcId}"
+    def serviceId = project.ext.serviceName.toLowerCase()
+    def modelNamespace = "com.adyen.model.${serviceId}"
 
     library.set("jersey3")
-    modelPackage.set(modelNs.replace('/', '.'))
-    apiPackage.set("com.adyen.service.${svcId}")
+    modelPackage.set(modelNamespace.replace('/', '.'))
+    apiPackage.set("com.adyen.service.${serviceId}")
     apiNameSuffix.set('Api')
     additionalProperties.putAll([
             'dateLibrary'    : 'java8',
             'openApiNullable': 'false',
     ])
-    // @TODO check if this is still used per service (or on models)
-    // --additional-properties=resourceClass=$(resourceClass)Resource
 }
 
 smallServices.each { Service svc ->
