@@ -62,6 +62,12 @@ services.<Service> each { Service svc ->
     tasks.named(svc.id) { dependsOn deployServices, deploySmallService }
 }
 
+tasks.named('deployDataProtectionSmallService', Copy) {
+    filter {
+        it.replace("'DataProtection'", "'DataProtectionService'")
+    }
+}
+
 // Tests
 tasks.named('checkout') {
     doLast {
