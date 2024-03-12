@@ -34,7 +34,7 @@ List<Service> services = [
         new Service(name: 'StoredValue', version: 46, small: true),
         new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true),
         // Webhooks
-        new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 1),
+        new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 2),
         new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1),
         new Service(name: 'ReportWebhooks', spec: 'BalancePlatformReportNotification', version: 1),
         new Service(name: 'TransferWebhooks', spec: 'BalancePlatformTransferNotification', version: 4),
