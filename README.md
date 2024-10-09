@@ -2,17 +2,12 @@
 
 This is a set of Gradle build scripts to generate code for `Adyen/adyen-*-api-library` repositories. 
 
-To generate all services (see [`adyen.sdk-automation-conventions.gradle`](/buildSrc/src/main/groovy/adyen.sdk-automation-conventions.gradle)) in all libraries:
-
-> *Note:* The following models/services are not generated for Platform & Financial Services (legacy VIAS):
-> * AccountAPI
-> * FundAPI
-> * Classic Platforms - Notifications
+To generate all services in all libraries, run:
 
 ```
 ./gradlew services
 ```
-
+*Note:*  Ensure that the service is in the following list: [`adyen.sdk-automation-conventions.gradle`](/buildSrc/src/main/groovy/adyen.sdk-automation-conventions.gradle).
 
 
 For a single specific service:
