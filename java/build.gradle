@@ -12,70 +12,91 @@ project.ext {
 def services = project.ext.services as List<Service>
 def smallServices = project.ext.smallServices as List<Service>
 
-tasks.withType(GenerateTask).configureEach {
-    def serviceId = project.ext.serviceName.toLowerCase()
+// Deployment: generate models/services
+services.each { Service svc ->
+
+    // Generation
+    def serviceName = project.ext.serviceNaming[svc.id] as String
+    def serviceId = serviceName.toLowerCase()
     def modelNamespace = "com.adyen.model.${serviceId}"
 
-    library.set("jersey3")
-    modelPackage.set(modelNamespace.replace('/', '.'))
-    apiPackage.set("com.adyen.service.${serviceId}")
-    apiNameSuffix.set('Api')
-    additionalProperties.putAll([
-            'dateLibrary'    : 'java8',
-            'openApiNullable': 'false',
-    ])
-}
-
-smallServices.each { Service svc ->
     tasks.named("generate${svc.name}", GenerateTask) {
-        configFile.set("$projectDir/config.yaml")
-        apiPackage.set("com.adyen.service")
+        library.set("jersey3")
+        modelPackage.set(modelNamespace.replace('/', '.'))
+        apiPackage.set("com.adyen.service.${serviceId}")
+        apiNameSuffix.set('Api')
         additionalProperties.putAll([
-                'smallServiceName': "${svc.name}Api",
+                'dateLibrary'    : 'java8',
+                'openApiNullable': 'false',
         ])
     }
-}
 
-// Deployment
-services.each { Service svc ->
-    def deploy = tasks.register("deploy$svc.name", Copy) {
+    // Copy models
+    def deployModels = tasks.register("deploy${svc.name}Models", Sync) {
         group 'deploy'
-        description "Copy $svc.name files into the repo."
+        description "Deploy $svc.name models into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }
 
-        into layout.projectDirectory.dir("repo")
+        from layout.buildDirectory.dir("services/$svc.id/src/main/java/com/adyen/model/${serviceId}")
+        into layout.projectDirectory.dir("repo/src/main/java/com/adyen/model/" + serviceId)
+    }
 
-        // models
-        def modelsPath = "src/main/java/com/adyen/model"
-        def modelSource = "services/$svc.id/${modelsPath}"
-        from(layout.buildDirectory.dir(modelSource)) {
-            include "**/*.java"
-            into modelsPath
-        }
+    // Copy services
+    def deployServices = tasks.register("deploy${svc.name}Services", Sync) {
+        group 'deploy'
+        description "Deploy $svc.name services into the repo."
+        dependsOn "deploy${svc.name}Models"
+        outputs.upToDateWhen { false }
 
-        // serializer
-        def serializerPath = "src/main/java/com/adyen"
-        def serializerSource = "services/$svc.id/${serializerPath}"
-        from(layout.buildDirectory.file("${serializerSource}/JSON.java")) {
-            into "${modelsPath}/${svc.id}"
-        }
+        from layout.buildDirectory.dir("services/$svc.id/src/main/java/com/adyen/service/${serviceId}")
+        into layout.projectDirectory.dir("repo/src/main/java/com/adyen/service/" + serviceId)
+    }
 
-        // service
-        def servicePath = "src/main/java/com/adyen/service"
-        def serviceSource = "services/$svc.id/${servicePath}"
-        from(layout.buildDirectory.dir("${serviceSource}/$svc.id")) {
-            include "*.java"
-            into "${servicePath}/${svc.id}"
-        }
+    // Copy serializers
+    def deploySerializers = tasks.register("deploy${svc.name}Serializers", Copy) {
+        group 'deploy'
+        description "Deploy $svc.name serializers into the repo."
+        dependsOn "deploy${svc.name}Services"
+        outputs.upToDateWhen { false }
 
-        // small service
-        from(layout.buildDirectory.dir(serviceSource)) {
-            include "*Single.java"
-            into servicePath
-            rename { svc.name + "Api.java" }
+        // move serializer (JSON.java ) into model folder
+        def jsonJavaFile = layout.buildDirectory.file("services/$svc.id/src/main/java/com/adyen/service/JSON.java")
+
+        from jsonJavaFile
+        into layout.buildDirectory.file("services/$svc.id/src/main/java/com/adyen/model/${serviceId}")
+
+        doLast {
+            if (jsonJavaFile.get().asFile.exists()) {
+                delete(jsonJavaFile)
+            } else {
+                println(jsonJavaFile)
+                println("Source file ${jsonJavaFile} not found for deletion.")
+            }
         }
     }
 
-    tasks.named(svc.id) { dependsOn deploy }
+    tasks.named(svc.id) { dependsOn deployModels, deployServices, deploySerializers }
 }
+
+// Tests
+tasks.named('binlookup') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/binlookup/Amount.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/BinLookupServiceApi.java").exists()
+    }
+}
+tasks.named('checkout') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/checkout/Amount.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/checkout/PaymentsApi.java").exists()
+    }
+}
+tasks.named('acswebhooks') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/acswebhooks/Amount.java").exists()
+        assert !file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/acswebhooks").exists()
+        assert !file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/AcsWebhooksApi.java").exists()
+    }
+}
+
