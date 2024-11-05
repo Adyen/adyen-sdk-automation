@@ -10,7 +10,6 @@ project.ext {
 }
 
 def services = project.ext.services as List<Service>
-def smallServices = project.ext.smallServices as List<Service>
 
 // Deployment: generate models/services
 services.each { Service svc ->
