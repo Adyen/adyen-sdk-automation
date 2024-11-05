@@ -45,10 +45,19 @@ For Node.js, set the generator version via CLI:
 Shared logic goes into `buildSrc`. Subprojects can extend and customize predefined tasks via extension
 properties (`project.ext`) or reconfiguration (`tasks.named`).
 
-For local testing of some library:
+For local testing you can create a symbolic link to generate the source code inside the library:
 
 ```shell
 rm -rf go/repo && ln -s ~/workspace/adyen-go-api-library go/repo
+
+rm -rf java/repo && ln -s ~/workspace/adyen-java-api-library java/repo
+```
+
+Remove the symbolic link afterwards:
+```shell
+rm go/repo
+
+rm java/repo
 ```
 
 To run unit tests:
