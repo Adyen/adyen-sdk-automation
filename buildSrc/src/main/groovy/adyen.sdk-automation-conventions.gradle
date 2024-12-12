@@ -30,6 +30,7 @@ List<Service> services = [
         new Service(name: 'BalancePlatform', version: 2),
         new Service(name: 'Transfers', spec: 'TransferService', version: 4),
         new Service(name: 'DataProtection', version: 1, small: true),
+        new Service(name: 'SessionAuthentication', spec: 'SessionAuthenticationService', version: 1),
         // Classic Payments
         new Service(name: 'Payment', version: 68, small: true),
         // Others
