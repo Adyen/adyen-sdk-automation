@@ -43,8 +43,8 @@ List<Service> services = [
         new Service(name: 'TransactionWebhooks', spec: 'BalancePlatformTransactionNotification', version: 4),
         new Service(name: 'ManagementWebhooks', spec: 'ManagementNotificationService', version: 3),
         new Service(name: 'DisputeWebhooks', spec: 'BalancePlatformDisputeNotification', version: 1),
-        new Service(name: 'NegativeBalanceWarningWebhooks', spec: 'BalancePlatformNegativeBalanceCompensationWarningNotification', version: 1)
-
+        new Service(name: 'NegativeBalanceWarningWebhooks', spec: 'BalancePlatformNegativeBalanceCompensationWarningNotification', version: 1),
+        new Service(name: 'BalancePlatformBalanceWebhooks', spec: 'BalancePlatformBalanceNotification', version: 1)
 ]
 
 ext {
