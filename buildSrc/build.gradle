@@ -13,3 +13,12 @@ dependencies {
     implementation "org.openapitools:openapi-generator-gradle-plugin:${openapiGeneratorVersion}"
     testImplementation 'junit:junit:4.13.2'
 }
+
+gradlePlugin {
+    plugins {
+        adyenSdkConvention {
+            id = 'adyen.sdk-automation-conventions'
+            implementationClass = 'com.adyen.sdk.AdyenSdkAutomationConventionsPlugin'
+        }
+    }
+}
