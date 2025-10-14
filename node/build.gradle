@@ -11,6 +11,29 @@ plugins {
 import com.adyen.sdk.Service
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
+// convert to camelCase, dealing with case where acronyms are capitalised
+// FileUtil.ts -> fileUtil.ts
+// SCAAssociationManagementApi.ts -> scaAssociationManagementApi.ts
+def decapitalize(String name) {
+    if (name == null || name.isEmpty()) {
+        return name
+    }
+    int n = 0
+    for (char c : name.toCharArray()) {
+        if (Character.isUpperCase(c)) {
+            n++
+        } else {
+            break
+        }
+    }
+
+    if (n > 1 && n < name.length()) {
+        return name.substring(0, n - 1).toLowerCase() + name.substring(n - 1)
+    } else {
+        return name.substring(0, 1).toLowerCase() + name.substring(1)
+    }
+}
+
 project.ext {
     generator = 'typescript'
 }
@@ -18,7 +41,9 @@ project.ext {
 def services = project.ext.services as List<Service>
 
 // Service renaming
-Map<String, String> serviceNaming = project.ext.serviceNamingCamel
+Map<String, String> serviceNaming = services.collectEntries {
+    [it.id, decapitalize(it.name)]
+}
 
 services.each { Service svc ->
     // service name starting lowercase
@@ -63,7 +88,7 @@ services.each { Service svc ->
                 def name = fileCopyDetails.name
                 if (name && name.length() > 0) {
                     // copy and rename to start with lowercase
-                    fileCopyDetails.name = name[0].toLowerCase() + name.substring(1)
+                    fileCopyDetails.name = decapitalize(name)
                 }
             }
 
@@ -75,7 +100,7 @@ services.each { Service svc ->
                 } else if (fileName == "webhookHandler.ts") {
                     // rename to create specific handler (i.e. reportWebhooksHandler.ts)
                     def handlerName = "${svc.name}Handler.ts"
-                    return handlerName[0].toLowerCase() + handlerName.substring(1)
+                    return decapitalize(handlerName)
                 }
                 return fileName
             }
@@ -106,7 +131,7 @@ services.each { Service svc ->
                 def name = fileCopyDetails.name
                 if (name && name.length() > 0) {
                     // copy and rename to start with lowercase
-                    fileCopyDetails.name = name[0].toLowerCase() + name.substring(1)
+                    fileCopyDetails.name = decapitalize(name)
                 }
             }
             includeEmptyDirs = false
