@@ -1,0 +1,9 @@
+files:
+  WebhookHandler.mustache:
+    folder: src/Adyen/SupportingFiles
+    destinationFilename: WebhookHandler.cs
+    templateType: SupportingFiles
+  HmacKeyToken.mustache:
+    folder: src/Adyen/SupportingFiles
+    destinationFilename: HmacKeyToken.cs
+    templateType: SupportingFiles
