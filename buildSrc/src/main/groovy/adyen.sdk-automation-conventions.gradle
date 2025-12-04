@@ -46,7 +46,9 @@ List<Service> services = [
         new Service(name: 'DisputeWebhooks', spec: 'BalancePlatformDisputeNotification', version: 1, tag: 'Webhooks'),
         new Service(name: 'NegativeBalanceWarningWebhooks', spec: 'BalancePlatformNegativeBalanceCompensationWarningNotification', version: 1, tag: 'Webhooks'),
         new Service(name: 'BalanceWebhooks', spec: 'BalancePlatformBalanceNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks')
+        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks'),
+
+        new Service(name: 'TerminalModels', version: 1, tag: 'Payments'),
 ]
 
 ext {
