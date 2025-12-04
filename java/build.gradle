@@ -28,10 +28,60 @@ tasks.withType(GenerateTask).configureEach {
             "containerDefaultToNull" : "true"
     ])
 
+    if (serviceId == 'terminalmodels') {
+        // custom generation for Terminal API
+
+        // override enum naming strategy
+        additionalProperties.put('enumPropertyNaming', 'MACRO_CASE')
+        // generate models only
+        globalProperties.set([
+                'modelDocs' : 'false',
+                'modelTests': 'false',
+                'models': ''
+        ])
+        // rename models for backward-compatibility
+        modelNameMappings = [
+                "Alignment"            : "AlignmentType",
+                "CharacterHeight"      : "CharacterHeightType",
+                "CharacterStyle"       : "CharacterStyleType",
+                "CharacterWidth"       : "CharacterWidthType",
+                "Device"               : "DeviceType",
+                "DocumentQualifier"    : "DocumentQualifierType",
+                "ErrorCondition"       : "ErrorConditionType",
+                "EventToNotify"        : "EventToNotifyType",
+                "GlobalStatus"         : "GlobalStatusType",
+                "IdentificationSupport": "IdentificationSupportType",
+                "InfoQualify"          : "InfoQualifyType",
+                "InputCommand"         : "InputCommandType",
+                "LoyaltyHandling"      : "LoyaltyHandlingType",
+                "MenuEntryTag"         : "MenuEntryTagType",
+                "MessageCategory"      : "MessageCategoryType",
+                "MessageClass"         : "MessageClassType",
+                "OutputFormat"         : "OutputFormatType",
+                "PeriodUnit"           : "PeriodUnit",
+                "PINFormat"            : "PINFormatType",
+                "PrinterStatus"        : "PrinterStatusType",
+                "ResponseMode"         : "ResponseModeType",
+                "Result"               : "ResultType",
+                "ReversalReason"       : "ReversalReasonType",
+                "SoundAction"          : "SoundActionType",
+                "SoundFormat"          : "SoundFormatType",
+                "TrackFormat"          : "TrackFormatType",
+                "TransactionAction"    : "TransactionActionType",
+                "TypeCode"             : "TypeCodeType",
+                "TransactionIDType"    : "TransactionIdentification",
+        ]
+        // rename attributes for backward-compatibility
+        nameMappings = [
+                "POIData"            : "poIData",
+        ]
+    }
+
     // for webhooks apply extra config.yaml (to generate WebhookHandler)
     if (serviceId.endsWith("webhooks")) {
         configFile.set("$projectDir/config.yaml")
     }
+
 }
 
 // Deployment: copy and rename models/services
@@ -39,6 +89,8 @@ services.each { Service svc ->
 
     def serviceName = project.ext.serviceNaming[svc.id] as String
     def serviceId = serviceName.toLowerCase()
+
+
 
     // words replacement to enforce naming conventions (after code generation)
     def replaceReservedWords = { File directory ->
@@ -70,6 +122,7 @@ services.each { Service svc ->
         doFirst {
             delete layout.projectDirectory.dir("repo/src/main/java/com/adyen/model/${serviceId}")
         }
+
 
         // copy newly generated models
         from layout.buildDirectory.dir("services/$svc.id/src/main/java/com/adyen/model")
