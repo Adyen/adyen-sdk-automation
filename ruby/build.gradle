@@ -30,9 +30,15 @@ services.<Service> each { Service svc ->
                 'supportingFiles': ''
         ])
 
-        // when generating Classic Payment add prefix for service classes
+        // when generating Classic Payment add prefix (namespace) for service classes
+        // this is necessary to avoid collision with Checkout payments_api
         if (serviceName == 'payment') {
             additionalProperties.classicPrefix = 'Classic'
+        }
+        // when generating Recurring add prefix (namespace) for service classes
+        // this is necessary to avoid collision with Checkout recurring_api
+        if (serviceName == 'recurring') {
+            additionalProperties.classicPrefix = 'Legacy'
         }
     }
 
@@ -76,5 +82,19 @@ tasks.named('binlookup') {
     doLast {
         assert file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup/bin_lookup_api.rb").exists()
         assert file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup").exists()
+    }
+}
+
+// check namespace generation
+tasks.named('recurring') {
+    doLast {
+        // classic payment has prefix
+        def paymentService = file("${layout.projectDirectory}/repo/lib/adyen/services/payment.rb").text
+        assert paymentService.contains("Adyen::ClassicPaymentsApi"), "payment.rb doesn't include ClassicPaymentsApi"
+        assert paymentService.contains("Adyen::ClassicModificationsApi"), "payment.rb doesn't include ClassicModificationsApi"
+
+        // legacy recurring has prefix
+        def recurringService = file("${layout.projectDirectory}/repo/lib/adyen/services/recurring.rb").text
+        assert recurringService.contains("Adyen::LegacyRecurringApi"), "recurring.rb doesn't include LegacyRecurringApi"
     }
 }
