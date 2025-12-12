@@ -40,9 +40,13 @@ jobs:
       uses: gradle/actions/setup-gradle@v4
     - name: Override properties
       if: matrix.project == 'node' || matrix.project == 'java'
-      run: cp ${{ matrix.project }}/gradle.properties buildSrc
+      env:
+        PROJECT: ${{ matrix.project }}
+      run: cp $PROJECT/gradle.properties buildSrc
     - name: Generate code for ${{ matrix.project }}
-      run: ./gradlew ${{ matrix.project }}:services
+      env:
+        PROJECT: ${{ matrix.project }}
+      run: ./gradlew $PROJECT:services
     - name: Set PR variables
       id: vars
       run: |
@@ -92,20 +96,27 @@ jobs:
           distribution: 'temurin'
 
       - name: ${{ matrix.project }} generate code for ${{ matrix.tag }}
-        run: ./gradlew ${{ matrix.project }}:${{ matrix.tag }}
+        env:
+          PROJECT: ${{ matrix.project }}
+          TAG: ${{ matrix.tag }}
+        run: ./gradlew $PROJECT:$TAG
 
       - name: Set PR variables
         id: vars
+        env:
+          TAG: ${{ matrix.tag }}
         run: |
           cd schema
-          echo pr_title="[${{ matrix.tag }}] Code generation: update services and models" >> "$GITHUB_OUTPUT"
+          echo "pr_title=[$TAG] Code generation: update services and models" >> "$GITHUB_OUTPUT"
           echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \
             by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
 
       - name: Check for changes
         id: changes
+        env:
+          PROJECT: ${{ matrix.project }}
         run: |
-          cd ${{ matrix.project }}/repo
+          cd $PROJECT/repo
           if git diff --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
