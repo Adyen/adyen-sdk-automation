@@ -257,6 +257,11 @@ project.ext.services.each { Service svc ->
                     if (schema.key.equals("DisputeNotificationRequest")) {
                         schema.value["x-webhook-root"] = true
                     }
+                    // add 'x-webhook-root' to RelayedAuthorisationRequest model (missing 'data' attributes)
+                    // bespoke fix as the model doesn't adopt the standard schema
+                    if (schema.key.equals("RelayedAuthorisationRequest")) {
+                        schema.value["x-webhook-root"] = true
+                    }
 
                     // Workaround
                     // Mark one model `{{#x-has-at-least-one-webhook-root}}` as true. I could not extend this property at the root-level.
