@@ -59,6 +59,12 @@ For local testing of some library:
 rm -rf go/repo && ln -s ~/workspace/adyen-go-api-library go/repo
 ```
 
+Alternatively, you can [bootstrap.sh](./bootstrap.sh) to set up all libraries:
+
+```shell
+./bootstrap.sh
+```
+
 To run unit tests:
 
 ```
