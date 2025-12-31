@@ -6,8 +6,8 @@ plugins {
 }
 
 project.ext {
-    generator = 'csharp-netcore'
-    templates = 'templates/csharp'
+    generator = 'csharp'
+    templates = 'templates-v7/csharp/libraries/generichost'
 }
 
 def services = project.ext.services as List<Service>
@@ -15,73 +15,311 @@ def services = project.ext.services as List<Service>
 services.each { Service svc ->
     def serviceName = project.ext.serviceNaming[svc.id] as String
 
+    // Function to replace reserved words for a given directory.
+    def replaceReservedWords = { File directory ->
+        fileTree(directory).matching { include '**/*.cs' }.forEach { File file ->
+            def text = file.text
+
+            // See list of reserved words: https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/csharp.md#reserved-words
+            def replaceFromTo = [
+                'VarEnvironment'     : 'Environment',
+                'varEnvironment'     : 'environment',
+                'VarVersion'         : 'Version',
+                'varVersion'         : 'version',
+                'VarTimeZone'        : 'TimeZone',
+                'varTimeZone'        : 'timeZone',
+                'VarConfiguration'   : 'Configuration',
+                'varConfiguration'   : 'configuration',
+                'wWWAuthenticate'    : 'wwwAuthenticate',
+            ]
+
+            // Replaces reserved words with the name without the `Var` or `var`-prefix.
+            replaceFromTo.each { from, to ->
+                if (text.contains(from)) {
+                    //println "Replacing ${from} → ${to} in ${file.name}"
+                    text = text.replace(from, to)
+                }
+            }
+
+            file.text = text
+        }
+    }
+
     // Generation
     tasks.named("generate${svc.name}", GenerateTask) {
-        apiPackage.set(svc.small ? 'Service' : "Service.${svc.name}")
-        apiNameSuffix.set('Service')
-        modelPackage.set("Model.${svc.name}")
-        reservedWordsMappings.put('Version', 'Version')
+        println "Generating ${svc.name}..."
+
+        // Sets suffix of api.
+        apiNameSuffix.set("Service")
+
+        // Sets apiPackage name for Services.
+        apiPackage.set("${svc.name}.Services")
+
+        // Sets modelPackageName.
+        modelPackage.set("${svc.name}.Models")
+
+        // Use typeMappings, Set<> is not a valid object in .NET.
+        typeMappings.set(['set': 'HashSet'])
+
+        // Use additionalProperties
         additionalProperties.putAll([
-                'packageName': 'Adyen',
-                'serviceName': serviceName,
+                // Target framework version.
+                'targetFramework'               : 'net8.0',
+
+                // Use library: generichost.
+                'library'                       : 'generichost',
+
+                // Your C# package name (convention: CamelCase).
+                'packageName'                   : 'Adyen',
+
+                // The name of your core-folder.
+                'corePackageName'               : 'Core',
+
+                // Service -suffix
+                'apiName'                       : svc.name,
+
+                // Make API response's headers case-insensitive
+                'caseInsensitiveResponseHeaders': 'false',
+
+                // Override Equals and GetHashCode methods
+                'equatable'                     : 'false',
+
+                // Name of the API service.
+                'serviceName'                   : serviceName,
+
+                // Use nullable annotations in the project, only supported on C# 8 & ASP.NET Core 3.1+
+                // Starting in .NET 6.0 the default is true.
+                'nullableReferenceTypes'        : 'true',
+
+                // Use DateTime to model date properties even if DateOnly supported. (.NET 6.0+ only)
+                'useDateTimeOffset'             : 'true',
+
+                // Use the discriminator's mapping in oneOf to speed up the model lookup.
+                // IMPORTANT NOTE: Validation (e.g. one and only one match in oneOf's schemas) will be skipped.
+                'useOneOfDiscriminatorLookup'   : 'true',
+
+                // Source generation is a feature that lets the compiler generate optimized code at build time, making JSON (de)serialization faster.
+                // This flag uses the SourceGenerationContext.mustache template to:
+                // 1. `WriteIndented = true` -> Prettify, by indenting the JSON
+                // 2. `GenerationMode = JsonSourceGenerationMode.Metadata | JsonSourceGenerationMode.Serialization`
+                //     This sets the generation mode using a bitwise OR between two flags:
+                //     - Metadata: Generates metadata needed to support reflection-free serialization.
+                //     - Serialization: Generates methods for serializing objects to JSON.
+                //'useSourceGeneration': 'false',
         ])
-    }
 
-    // Deployment
-    def deployModels = tasks.register("deploy${svc.name}Models", Sync) {
-        group 'deploy'
-        description "Deploy $svc.name models into the repo."
-        dependsOn "generate$svc.name"
-        outputs.upToDateWhen { false }
-
-        from layout.buildDirectory.dir("services/$svc.id/src/Adyen/Model.${serviceName}")
-        into layout.projectDirectory.dir("repo/Adyen/Model/" + serviceName)
-    }
-
-    def deployServices = tasks.register("deploy${svc.name}Services", Sync) {
-        group 'deploy'
-        description "Deploy $svc.name into the repo."
-        dependsOn "generate$svc.name"
-        outputs.upToDateWhen { false }
-
-        from layout.buildDirectory.dir("services/$svc.id/src/Adyen/Service.${serviceName}")
-        into layout.projectDirectory.dir("repo/Adyen/Service/" + serviceName)
-    }
-
-    def deploySmallService = tasks.register("deploy${svc.name}SmallService", Copy) {
-        group 'deploy'
-        description "Copy $svc.name into the repo."
-        dependsOn "generate$svc.name"
-        outputs.upToDateWhen { false }
-
-        from layout.buildDirectory.file("services/$svc.id/src/Adyen/Service/DefaultService.cs")
-        rename 'DefaultService.cs', "${serviceName}Service.cs"
-        filter {
-            it.replace('DefaultService', "${serviceName}Service")
+        if (serviceName.endsWith("Webhooks")) {
+            println("Set Config to generate WebhookHandler for ${serviceName}")
+            configFile.set("$projectDir/config.yaml")
         }
-        into layout.projectDirectory.dir("repo/Adyen/Service")
     }
 
-    tasks.named(svc.id) { dependsOn deployModels, deployServices, deploySmallService }
+    def deployModels = tasks.register("generate${svc.name}Models", Sync) {
+        println "Moving ${svc.name}-Models..."
+        group "deploy"
+        description "Move ${svc.name} models into the repo."
+        dependsOn "generate${svc.name}"
+        outputs.upToDateWhen { false }
+
+        // Delete existing /Models directory.
+        doFirst {
+            delete layout.projectDirectory.dir("repo/Adyen/${serviceName}/Models")
+        }
+
+        from(layout.buildDirectory.dir("services/${svc.id}/src/Adyen/${serviceName}.Models").get().asFile) {
+            eachFile { FileCopyDetails copyDetails ->
+                replaceReservedWords(copyDetails.file)
+            }
+        }
+        into layout.projectDirectory.dir("repo/Adyen/${serviceName}/Models")
+    }
+
+    def deployServices = tasks.register("generate${svc.name}Services", Sync) {
+        println "Moving ${svc.name}-Services..."
+        group "deploy"
+        description "Move ${svc.name} into the repo."
+        dependsOn "generate${svc.name}Models"
+        outputs.upToDateWhen { false }
+        onlyIf { !svc.webhook } // Skip webhooks - This task is for generating service classes only, see deployWebhookHandlers instead.
+
+        // Delete existing /Services directory.
+        doFirst {
+            delete layout.projectDirectory.dir("repo/Adyen/${serviceName}/Services")
+        }
+
+        from(layout.buildDirectory.dir("services/${svc.id}/src/Adyen/${serviceName}.Services").get().asFile) {
+            exclude 'IApi.cs'
+            eachFile { FileCopyDetails copyDetails ->
+                replaceReservedWords(copyDetails.file)
+            }
+        }
+        into layout.projectDirectory.dir("repo/Adyen/${serviceName}/Services")
+    }
+
+    def deployClients = tasks.register("generate${svc.name}Clients", Sync) {
+        println "Moving ${svc.name}-Clients..."
+        group "deploy"
+        description "Move ${svc.name} into the repo."
+        dependsOn "generate${svc.name}Services"
+        outputs.upToDateWhen { false }
+
+        // Delete existing /Clients directory.
+        doFirst {
+            delete layout.projectDirectory.dir("repo/Adyen/${serviceName}/Clients")
+        }
+
+        from(layout.buildDirectory.dir("services/$svc.id/src/Adyen/Client").get().asFile) {
+            include 'HostConfiguration.cs', 'ClientUtils.cs', 'JsonSerializerOptionsProvider.cs', 'ApiKeyToken.cs'
+            eachFile { FileCopyDetails copyDetails ->
+                replaceReservedWords(copyDetails.file)
+
+                // Do not include the `Adyen.{{Webhook}}.Services` as namespace for webhooks.
+                if (copyDetails.name == 'HostConfiguration.cs' && serviceName.endsWith("Webhooks")) {
+                    copyDetails.file.text = copyDetails.file.text.replace("using Adyen.${serviceName}.Services;", "")
+                    println("Removed Adyen.${{serviceName}}.Services namespace in HostConfiguration.cs")
+                }
+            }
+        }
+        into layout.projectDirectory.dir("repo/Adyen/${serviceName}/Client")
+    }
+
+    def deployExtensions = tasks.register("generate${svc.name}Extensions", Sync) {
+        println "Moving ${svc.name}-Extensions..."
+        group "generate"
+        description "Move ${svc.name} into the repo."
+        dependsOn "generate${svc.name}Clients"
+        outputs.upToDateWhen { false }
+
+        // Delete existing /Extensions directory.
+        doFirst {
+            delete layout.projectDirectory.dir("repo/Adyen/${serviceName}/Extensions")
+        }
+
+        from(layout.buildDirectory.dir("services/$svc.id/src/Adyen/Extensions").get().asFile) {
+            include 'IHostBuilderExtensions.cs', 'IServiceCollectionExtensions.cs'
+            rename('IHostBuilderExtensions.cs', 'HostBuilderExtensions.cs')
+            rename('IServiceCollectionExtensions.cs', 'ServiceCollectionExtensions.cs')
+        }
+        into layout.projectDirectory.dir("repo/Adyen/${serviceName}/Extensions")
+    }
+
+    def deployDocumentation = tasks.register("generate${svc.name}Documentation", Sync) {
+        println "Moving ${svc.name}-Documentation..."
+        group "generate"
+        description "Move ${svc.name} into the repo."
+        dependsOn "generate${svc.name}Services"
+        outputs.upToDateWhen { false }
+
+        doFirst {
+            // Delete existing /docs directory.
+            delete layout.projectDirectory.dir("repo/docs/${serviceName}")
+
+            def docsDirectory = layout.projectDirectory.dir("repo/docs").getAsFile()
+
+            // Create /docs directory if it doesn't exist.
+            if (!docsDirectory.exists()) {
+                docsDirectory.mkdirs()
+                println "Created /docs directory: ${docsDirectory}"
+            }
+        }
+
+        from(layout.buildDirectory.dir("services/$svc.id/docs/apis").get().asFile)
+        into layout.projectDirectory.dir("repo/docs/${serviceName}")
+    }
+
+    def deployWebhookHandlers = tasks.register("generate${svc.name}WebhookHandlers") {
+        group 'deploy'
+        description "Move $svc.name handlers into the repo."
+        dependsOn "generate${svc.name}Models"
+        outputs.upToDateWhen { false }
+
+        doLast {
+            if (serviceName.endsWith("Webhooks")) {
+                MoveWebhookHandlerFile(svc, serviceName)
+                MoveHmacKeyTokenFile(svc, serviceName)
+            }
+        }
+    }
+
+    tasks.named(svc.id) { dependsOn deployModels, deployServices, deployClients, deployExtensions, deployDocumentation, deployWebhookHandlers }
 }
 
-// Tests
-tasks.named('binlookup') {
-    doLast {
-        assert file("${layout.projectDirectory}/repo/Adyen/Model/BinLookup/Amount.cs").exists()
-        assert file("${layout.projectDirectory}/repo/Adyen/Service/BinLookupService.cs").exists()
+private void MoveWebhookHandlerFile(Service svc, serviceName) {
+    // Find generated WebhookHandler.cs.
+    def webhookHandlerFile = layout.projectDirectory.file("build/services/$svc.id/src/Adyen/SupportingFiles/WebhookHandler.cs").getAsFile()
+    // Move file to the /Handlers directory and prefix with the serviceName (e.g. WebhookHandler.cs -> `Configuration`WebhooksHandler.cs).
+    def handlerDirectory = layout.projectDirectory.file("repo/Adyen/${serviceName}/Handlers").asFile
+
+    // Create /Handlers directory if it doesn't exist.
+    if (!handlerDirectory.exists()) {
+        handlerDirectory.mkdirs()
+    }
+
+    def targetFile = new File(handlerDirectory, svc.name + "Handler.cs")
+
+    if (webhookHandlerFile.exists()) {
+        webhookHandlerFile.renameTo(targetFile)
+        println "Moved ${webhookHandlerFile} to ${targetFile}"
+    } else {
+        println "Source file does not exist: ${webhookHandlerFile}"
     }
 }
+
+private void MoveHmacKeyTokenFile(Service svc, serviceName) {
+// Find generated HmacKeyToken.cs.
+    def hmacKeyTokenFile = layout.projectDirectory.file("build/services/$svc.id/src/Adyen/SupportingFiles/HmacKeyToken.cs").getAsFile()
+
+    // Move `HmacKeyToken.cs` to the /Client directory
+    def clientDirectory = layout.projectDirectory.file("repo/Adyen/${serviceName}/Client").asFile
+
+    // Create /Client directory if it doesn't exist.
+    if (!clientDirectory.exists()) {
+        clientDirectory.mkdirs()
+    }
+
+    def targetHmacKeyTokenFile = new File(clientDirectory, "HmacKeyToken.cs")
+
+    if (hmacKeyTokenFile.exists()) {
+        hmacKeyTokenFile.renameTo(targetHmacKeyTokenFile)
+        println "Moved ${hmacKeyTokenFile} to ${targetHmacKeyTokenFile}"
+    } else {
+        println "Source file does not exist: ${hmacKeyTokenFile}"
+    }
+}
+
+// Test regular api services generation.
 tasks.named('checkout') {
     doLast {
-        assert file("${layout.projectDirectory}/repo/Adyen/Model/Checkout/Amount.cs").exists()
-        assert file("${layout.projectDirectory}/repo/Adyen/Service/Checkout/PaymentsService.cs").exists()
+        def serviceName = "Checkout"
+
+        // /Models folder
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Models/Amount.cs").exists()
+
+        // /Services folder
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Services/PaymentsService.cs").exists()
+
+        // /Client folder
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/ApiKeyToken.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/ClientUtils.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/HostConfiguration.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/JsonSerializerOptionsProvider.cs").exists()
+
+        // /Extensions folder
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Extensions/HostBuilderExtensions.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Extensions/ServiceCollectionExtensions.cs").exists()
+
+        // /Handlers folders should not exist for services.
+        assert !file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Handlers").exists()
     }
 }
+
+// Test webhook generation, supporting files WebhookHandler.cs and HmacKeyToken.cs both exist.
 tasks.named('acswebhooks') {
     doLast {
-        assert file("${layout.projectDirectory}/repo/Adyen/Model/AcsWebhooks/Amount.cs").exists()
-        assert !file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooks").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Models/Amount.cs").exists()
+        assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/WebhookHandler.cs").exists()
+        assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/HmacKeyToken.cs").exists()
+        assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Services").exists()
         assert !file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooksService.cs").exists()
     }
 }
