@@ -14,14 +14,15 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-sdk-automation
+  group: ci-sdk-automation-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   # generate code for the libraries defined in the matrix
   generate:
     strategy:
       matrix:
-        project: [ java, node, dotnet, python, ruby ]
+        project: [ node, dotnet, python, ruby ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v5
@@ -52,7 +53,7 @@ jobs:
       run: |
         cd schema
         echo pr_title="Code generation: update services and models" >> "$GITHUB_OUTPUT"
-        echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \
+        echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \ 
           by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
@@ -108,7 +109,7 @@ jobs:
         run: |
           cd schema
           echo "pr_title=[$TAG] Code generation: update services and models" >> "$GITHUB_OUTPUT"
-          echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \
+          echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \ 
             by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
 
       - name: Check for changes
@@ -138,3 +139,81 @@ jobs:
           body: ${{ steps.vars.outputs.pr_body }}
           commit-message: |
             [adyen-sdk-automation] automated changes
+  generate-per-service:
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [ java ]
+        service: [
+          checkout, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
+          management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
+          sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
+          transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
+          balancewebhooks, tokenizationwebhooks
+        ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Clone ${{ matrix.project }} repository
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
+          repository: Adyen/adyen-${{ matrix.project }}-api-library
+          path: ${{ matrix.project }}/repo
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Override properties
+        if: matrix.project == 'node' || matrix.project == 'java'
+        env:
+          PROJECT: ${{ matrix.project }}
+        run: cp $PROJECT/gradle.properties buildSrc
+
+      - name: Generate code for ${{ matrix.service }} in ${{ matrix.project }}
+        env:
+          PROJECT: ${{ matrix.project }}
+          SERVICE: ${{ matrix.service }}
+        run: ./gradlew $PROJECT:$SERVICE
+
+      - name: Check for changes
+        id: changes
+        env:
+          PROJECT: ${{ matrix.project }}
+        run: |
+          cd $PROJECT/repo
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Get OpenAPI commit SHA
+        if: steps.changes.outputs.changed == 'true'
+        id: vars
+        run: |
+          echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          path: ${{ matrix.project }}/repo
+          token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
+          committer: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
+          author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
+          branch: sdk-automation/${{ matrix.service }}
+          title: '[${{ matrix.service }}] Code generation: update services and models'
+          body: |
+            This PR contains the automated changes for the `${{ matrix.service }}` service.
+
+            The commit history of this PR reflects the `adyen-openapi` commits that have been applied.
+          commit-message: '[${{ matrix.service }}] Automated update from Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}'
