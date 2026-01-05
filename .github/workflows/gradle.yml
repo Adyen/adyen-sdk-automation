@@ -38,7 +38,7 @@ jobs:
         repository: Adyen/adyen-${{ matrix.project }}-api-library
         path: ${{ matrix.project }}/repo
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
+      uses: gradle/actions/setup-gradle@v5
     - name: Override properties
       if: matrix.project == 'node' || matrix.project == 'java'
       env:
@@ -88,7 +88,7 @@ jobs:
           path: ${{ matrix.project }}/repo
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Set up JDK 11
         uses: actions/setup-java@v4
@@ -169,7 +169,7 @@ jobs:
           path: ${{ matrix.project }}/repo
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Override properties
         if: matrix.project == 'node' || matrix.project == 'java'
