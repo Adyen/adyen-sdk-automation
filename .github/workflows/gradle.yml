@@ -207,6 +207,19 @@ jobs:
           echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
+      - name: Get existing PR body
+        if: steps.changes.outputs.changed == 'true'
+        id: get_pr
+        env:
+          GH_TOKEN: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
+          PROJECT: ${{ matrix.project }}
+          SERVICE: ${{ matrix.service }}
+        run: |
+          body=$(gh pr view "sdk-automation/$SERVICE" --json body --jq .body --repo "Adyen/adyen-$PROJECT-api-library" || echo "This PR contains the automated changes for the `${{ matrix.service }}` service.")
+          echo "body<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$body" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
       - name: Create Pull Request
         if: steps.changes.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
@@ -218,7 +231,7 @@ jobs:
           branch: sdk-automation/${{ matrix.service }}
           title: '[${{ matrix.service }}] Code generation: update services and models'
           body: |
-            This PR contains the automated changes for the `${{ matrix.service }}` service.
+            Automated update from adyen-openapi@${{ steps.vars.outputs.sha_short }}.
 
-            The commit history of this PR reflects the `adyen-openapi` commits that have been applied.
+            ${{ steps.get_pr.outputs.body }}
           commit-message: '[${{ matrix.service }}] Automated update from Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}'
