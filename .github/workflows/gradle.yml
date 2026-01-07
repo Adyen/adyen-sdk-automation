@@ -183,6 +183,11 @@ jobs:
           SERVICE: ${{ matrix.service }}
         run: ./gradlew $PROJECT:$SERVICE
 
+      - name: Format Java code
+        if: matrix.project == 'java'
+        working-directory: ${{ matrix.project }}/repo
+        run: mvn spotless:apply
+
       - name: Check for changes
         id: changes
         env:
