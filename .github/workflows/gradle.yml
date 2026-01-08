@@ -39,11 +39,6 @@ jobs:
         path: ${{ matrix.project }}/repo
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
-    - name: Override properties
-      if: matrix.project == 'node' || matrix.project == 'java' || matrix.project == 'python'  || matrix.project == 'ruby'
-      env:
-        PROJECT: ${{ matrix.project }}
-      run: cp $PROJECT/gradle.properties buildSrc
     - name: Generate code for ${{ matrix.project }}
       env:
         PROJECT: ${{ matrix.project }}
@@ -168,12 +163,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-
-      - name: Override properties
-        if: matrix.project == 'node' || matrix.project == 'java'
-        env:
-          PROJECT: ${{ matrix.project }}
-        run: cp $PROJECT/gradle.properties buildSrc
 
       - name: Generate code for ${{ matrix.service }} in ${{ matrix.project }}
         env:

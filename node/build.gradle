@@ -13,6 +13,7 @@ import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 project.ext {
     generator = 'typescript'
+    openapiGeneratorVersion='7.13.0'
 }
 
 def services = project.ext.services as List<Service>

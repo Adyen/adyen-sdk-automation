@@ -10,6 +10,6 @@ repositories {
 }
 
 dependencies {
-    implementation "org.openapitools:openapi-generator-gradle-plugin:${openapiGeneratorVersion}"
+    implementation "org.openapitools:openapi-generator-gradle-plugin:6.0.1"
     testImplementation 'junit:junit:4.13.2'
 }

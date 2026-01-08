@@ -6,7 +6,7 @@ plugins {
 }
 
 project.ext {
-    generator = 'python'
+    openapiGeneratorVersion='7.13.0'
 }
 
 List<Service> services = project.ext.services
