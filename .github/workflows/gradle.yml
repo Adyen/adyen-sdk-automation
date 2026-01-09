@@ -66,7 +66,7 @@ jobs:
         title: ${{ steps.vars.outputs.pr_title }}
         body: ${{ steps.vars.outputs.pr_body }}
         commit-message: |
-          ${{ contains(fromJSON('["go", "php", "node"]'), matrix.project) && '[reformat]' }}[adyen-sdk-automation] automated change
+          ${{ (matrix.project == 'node' && '[reformat]') || '' }}[adyen-sdk-automation] automated change
   # split generation (create multiple PRs)
   generate-modules:
     runs-on: ubuntu-latest
@@ -167,7 +167,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Override properties
-        if: matrix.project == 'node' || matrix.project == 'java'
+        if: matrix.project == 'java'
         env:
           PROJECT: ${{ matrix.project }}
         run: cp $PROJECT/gradle.properties buildSrc
