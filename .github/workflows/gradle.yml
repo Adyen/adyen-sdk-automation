@@ -144,13 +144,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [ java ]
-        service: [
-          checkout, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
-          management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
-          sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
-          transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
-          balancewebhooks, tokenizationwebhooks
-        ]
+        service: [ checkout ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -167,6 +161,7 @@ jobs:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           repository: Adyen/adyen-${{ matrix.project }}-api-library
           path: ${{ matrix.project }}/repo
+          ref: fix/java-format-in-ci # Branch with composite action for testing
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -222,8 +217,8 @@ jobs:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           committer: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
           author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
-          branch: sdk-automation/${{ matrix.service }}
-          title: '[${{ matrix.service }}] Code generation: update services and models'
+          branch: test-format-ci/${{ matrix.service }}
+          title: '[TEST] [${{ matrix.service }}] Code generation: update services and models'
           body: |
             This PR contains the automated changes for the `${{ matrix.service }}` service.
 
