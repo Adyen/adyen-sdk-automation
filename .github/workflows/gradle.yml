@@ -184,20 +184,26 @@ jobs:
           echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Check if format action exists
-        id: check_format_action
+      - name: Check for and prepare formatting action
+        id: prep_action
         run: |
-          if [[ -f ./${{ matrix.project }}/repo/.github/actions/format/action.yml ]]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
+          if [[ -f "${{ matrix.project }}/repo/.github/actions/format/action.yml" ]]; then
+            echo "action_exists=true" >> "$GITHUB_OUTPUT"
+            mkdir -p ./.temp-format-action
+            mv "${{ matrix.project }}/repo/.github/actions/format" ./.temp-format-action/
           else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "action_exists=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Format Code
-        if: steps.check_format_action.outputs.exists == 'true'
-        uses: ./${{ matrix.project }}/repo/.github/actions/format/action.yml
+        if: steps.prep_action.outputs.action_exists == 'true'
+        uses: ./.temp-format-action/format
         with:
           path: ${{ matrix.project }}/repo
+
+      - name: Clean up formatting action
+        if: always() && steps.prep_action.outputs.action_exists == 'true'
+        run: rm -rf ./.temp-format-action
 
       - name: Check for changes
         id: changes
