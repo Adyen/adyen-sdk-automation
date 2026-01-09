@@ -65,7 +65,7 @@ jobs:
         title: ${{ steps.vars.outputs.pr_title }}
         body: ${{ steps.vars.outputs.pr_body }}
         commit-message: |
-          ${{ contains(fromJSON('["go", "php", "node"]'), matrix.project) && '[reformat]' }}[adyen-sdk-automation] automated change
+          ${{ (matrix.project == 'node' && '[reformat]') || '' }}[adyen-sdk-automation] automated change
   # split generation (create multiple PRs)
   generate-modules:
     runs-on: ubuntu-latest
@@ -142,13 +142,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [ java ]
-        service: [
-          checkout, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
-          management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
-          sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
-          transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
-          balancewebhooks, tokenizationwebhooks
-        ]
+        service: [ checkout ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -165,12 +159,13 @@ jobs:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           repository: Adyen/adyen-${{ matrix.project }}-api-library
           path: ${{ matrix.project }}/repo
+          ref: fix/java-format-in-ci # Branch with composite action for testing
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
       - name: Override properties
-        if: matrix.project == 'node' || matrix.project == 'java'
+        if: matrix.project == 'java'
         env:
           PROJECT: ${{ matrix.project }}
         run: cp $PROJECT/gradle.properties buildSrc
@@ -181,24 +176,42 @@ jobs:
           SERVICE: ${{ matrix.service }}
         run: ./gradlew $PROJECT:$SERVICE
 
+      - name: Get OpenAPI commit SHA
+        id: vars
+        run: |
+          echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Check for and prepare formatting action
+        id: prep_action
+        run: |
+          if [[ -f "${{ matrix.project }}/repo/.github/actions/format/action.yml" ]]; then
+            echo "action_exists=true" >> "$GITHUB_OUTPUT"
+            mkdir -p ./.temp-format-action
+            mv "${{ matrix.project }}/repo/.github/actions/format" ./.temp-format-action/
+          else
+            echo "action_exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Format Code
+        if: steps.prep_action.outputs.action_exists == 'true'
+        uses: ./.temp-format-action/format
+        with:
+          path: ${{ matrix.project }}/repo
+
+      - name: Clean up formatting action
+        if: always() && steps.prep_action.outputs.action_exists == 'true'
+        run: rm -rf ./.temp-format-action
+
       - name: Check for changes
         id: changes
-        env:
-          PROJECT: ${{ matrix.project }}
+        working-directory: ${{ matrix.project }}/repo
         run: |
-          cd $PROJECT/repo
           if git diff --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Get OpenAPI commit SHA
-        if: steps.changes.outputs.changed == 'true'
-        id: vars
-        run: |
-          echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Create Pull Request
         if: steps.changes.outputs.changed == 'true'
@@ -208,10 +221,11 @@ jobs:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           committer: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
           author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
-          branch: sdk-automation/${{ matrix.service }}
-          title: '[${{ matrix.service }}] Code generation: update services and models'
+          branch: test-format-ci/${{ matrix.service }}
+          title: '[TEST] [${{ matrix.service }}] Code generation: update services and models'
           body: |
             This PR contains the automated changes for the `${{ matrix.service }}` service.
 
             The commit history of this PR reflects the `adyen-openapi` commits that have been applied.
           commit-message: '[${{ matrix.service }}] Automated update from Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}'
+          labels: "automated pr"
