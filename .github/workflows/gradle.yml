@@ -69,7 +69,7 @@ jobs:
           if [[ -f "${{ matrix.project }}/repo/.github/actions/format/action.yml" ]]; then
             echo "action_exists=true" >> "$GITHUB_OUTPUT"
             mkdir -p ./.temp-format-action
-            mv "${{ matrix.project }}/repo/.github/actions/format" ./.temp-format-action/
+            cp -r "${{ matrix.project }}/repo/.github/actions/format" ./.temp-format-action/
           else
             echo "action_exists=false" >> "$GITHUB_OUTPUT"
           fi
