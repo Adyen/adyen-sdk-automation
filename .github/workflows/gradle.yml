@@ -183,24 +183,36 @@ jobs:
           SERVICE: ${{ matrix.service }}
         run: ./gradlew $PROJECT:$SERVICE
 
+      - name: Get OpenAPI commit SHA
+        id: vars
+        run: |
+          echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Check if format action exists
+        id: check_format_action
+        run: |
+          if [[ -f ./${{ matrix.project }}/repo/.github/actions/format/action.yml ]]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Format Code
+        if: steps.check_format_action.outputs.exists == 'true'
+        uses: ./${{ matrix.project }}/repo/.github/actions/format/action.yml
+        with:
+          path: ${{ matrix.project }}/repo
+
       - name: Check for changes
         id: changes
-        env:
-          PROJECT: ${{ matrix.project }}
+        working-directory: ${{ matrix.project }}/repo
         run: |
-          cd $PROJECT/repo
           if git diff --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Get OpenAPI commit SHA
-        if: steps.changes.outputs.changed == 'true'
-        id: vars
-        run: |
-          echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Create Pull Request
         if: steps.changes.outputs.changed == 'true'
@@ -217,3 +229,4 @@ jobs:
 
             The commit history of this PR reflects the `adyen-openapi` commits that have been applied.
           commit-message: '[${{ matrix.service }}] Automated update from Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}'
+          labels: "automated pr"
