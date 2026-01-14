@@ -192,8 +192,8 @@ tasks.named('balanceplatform') {
     }
 }
 
-// Test relayedauthorisation Webhooks generation
-tasks.named('relayedauthorisationwebhooks') {
+// Test RelayedAuthorization Webhooks generation
+tasks.named('relayedauthorizationwebhooks') {
     doLast {
         // verify Webhook Handler is created
         assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorisationwebhooks/RelayedAuthorisationWebhooksHandler.java").exists()
