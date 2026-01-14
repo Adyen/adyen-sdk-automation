@@ -192,3 +192,12 @@ tasks.named('balanceplatform') {
     }
 }
 
+tasks.named('capital') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/capital/Amount.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantsApi.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantOffersApi.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantAccountsApi.java").exists()
+    }
+}
+

@@ -143,7 +143,7 @@ jobs:
       matrix:
         project: [ java, php, node, python ]
         service: [
-          checkout, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
+          checkout, capital, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
           management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
           sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
           transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
