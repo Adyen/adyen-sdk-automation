@@ -73,7 +73,7 @@ jobs:
     # each iteration generates a group of services and creates a PR
     strategy:
       matrix:
-        project: [ go ]
+        project: [ ]
         tag: [PaymentsAPIs, ManagementAPIs, PlatformsAPIs, Webhooks]
 
     steps:
@@ -141,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [ java, php, node, python, ruby ]
+        project: [ java, php, node, python, ruby, go ]
         service: [
           checkout, capital, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
           management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
