@@ -40,6 +40,7 @@ List<Service> services = [
         new Service(name: 'Transfers', spec: 'TransferService', version: 4, tag: 'Platforms'),
         new Service(name: 'DataProtection', version: 1, small: true, tag: 'Platforms'),
         new Service(name: 'SessionAuthentication', version: 1, tag: 'Platforms'),
+        new Service(name: 'Capital', version: 1, tag: "Platforms"),
         // Webhooks
         new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 2, tag: 'Webhooks'),
         new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1, tag: 'Webhooks'),
@@ -52,14 +53,6 @@ List<Service> services = [
         new Service(name: 'BalanceWebhooks', spec: 'BalancePlatformBalanceNotification', version: 1, tag: 'Webhooks'),
         new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks')
 ]
-
-// For now, introduce Capital only for Python.
-// Services is a static list consumed at Gradle configuration time for service-specific task generation:
-//   e.g., X -> generateXService,  deployX{Models, Services}
-// Thus, lib-specific generation must be handled at convention-plugin level (instead of subproject level)
-if (project.name == "python") {
-    services.add(new Service(name: 'Capital', version: 1, tag: "Platforms"))
-}
 
 ext {
     generator = project.name

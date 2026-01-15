@@ -133,3 +133,12 @@ tasks.named('payment') {
         assert file("${layout.projectDirectory}/repo/src/Adyen/Service/Payments/PaymentsApi.php").exists()
     }
 }
+
+tasks.named('capital') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Model/Capital/Amount.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Service/Capital/GrantsApi.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Service/Capital/GrantOffersApi.php").exists()
+        assert file("${layout.projectDirectory}/repo/src/Adyen/Service/Capital/GrantAccountsApi.php").exists()
+    }
+}
