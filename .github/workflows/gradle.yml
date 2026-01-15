@@ -204,10 +204,13 @@ jobs:
         id: changes
         working-directory: ${{ matrix.project }}/repo
         run: |
-          if git diff --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
+          # Check for modified tracked files AND new untracked files
+          if [ -n "$(git status --porcelain)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected."
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected."
           fi
 
       - name: Get OpenAPI commit SHA
