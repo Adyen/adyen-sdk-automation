@@ -25,14 +25,14 @@ jobs:
         project: [ dotnet ]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Set up JDK 11
       uses: actions/setup-java@v5
       with:
         java-version: '11'
         distribution: 'temurin'
     - name: Clone ${{ matrix.project }} repository
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
         repository: Adyen/adyen-${{ matrix.project }}-api-library
@@ -77,10 +77,10 @@ jobs:
         tag: [PaymentsAPIs, ManagementAPIs, PlatformsAPIs, Webhooks]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Clone repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           repository: Adyen/adyen-${{ matrix.project }}-api-library
@@ -151,7 +151,7 @@ jobs:
         ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up JDK 11
         uses: actions/setup-java@v5
@@ -160,7 +160,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Clone ${{ matrix.project }} repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           repository: Adyen/adyen-${{ matrix.project }}-api-library
