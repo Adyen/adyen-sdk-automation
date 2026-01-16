@@ -51,7 +51,8 @@ List<Service> services = [
         new Service(name: 'DisputeWebhooks', spec: 'BalancePlatformDisputeNotification', version: 1, tag: 'Webhooks'),
         new Service(name: 'NegativeBalanceWarningWebhooks', spec: 'BalancePlatformNegativeBalanceCompensationWarningNotification', version: 1, tag: 'Webhooks'),
         new Service(name: 'BalanceWebhooks', spec: 'BalancePlatformBalanceNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks')
+        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks'),
+        new Service(name: 'RelayedAuthorizationWebhooks', spec: 'BalancePlatformRelayedAuthorisationNotification', version: 4, tag: 'Webhooks')
 ]
 
 ext {
@@ -255,6 +256,11 @@ project.ext.services.each { Service svc ->
                     // add 'x-webhook-root' to DisputeNotificationRequest model
                     // bespoke fix as the model doesn't adopt the standard schema (missing 'environment' attribute)
                     if (schema.key.equals("DisputeNotificationRequest")) {
+                        schema.value["x-webhook-root"] = true
+                    }
+                    // add 'x-webhook-root' to RelayedAuthorisationRequest model (missing 'data' attributes)
+                    // bespoke fix as the model doesn't adopt the standard schema
+                    if (schema.key.equals("RelayedAuthorisationRequest")) {
                         schema.value["x-webhook-root"] = true
                     }
 

@@ -147,7 +147,7 @@ jobs:
           management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
           sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
           transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
-          balancewebhooks, tokenizationwebhooks
+          balancewebhooks, tokenizationwebhooks, relayedauthorizationwebhooks
         ]
     runs-on: ubuntu-latest
     steps:

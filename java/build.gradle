@@ -192,6 +192,20 @@ tasks.named('balanceplatform') {
     }
 }
 
+// Test RelayedAuthorization Webhooks generation
+tasks.named('relayedauthorizationwebhooks') {
+    doLast {
+        // verify Webhook Handler is created
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorisationwebhooks/RelayedAuthorisationWebhooksHandler.java").exists()
+        // verify model is created
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorisationwebhooks/RelayedAuthorisationRequest.java").exists()
+
+        def fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorisationwebhooks/RelayedAuthorisationWebhooksHandler.java").text
+        assert fileContent.contains("getRelayedAuthorisationRequest"), "'getRelayedAuthorisationRequest' method not found in RelayedAuthorisationWebhooksHandler.java"
+    }
+}
+
+
 tasks.named('capital') {
     doLast {
         assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/capital/Amount.java").exists()
