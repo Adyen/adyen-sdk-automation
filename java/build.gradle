@@ -196,12 +196,12 @@ tasks.named('balanceplatform') {
 tasks.named('relayedauthorizationwebhooks') {
     doLast {
         // verify Webhook Handler is created
-        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorisationwebhooks/RelayedAuthorisationWebhooksHandler.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorizationWebhooksHandler.java").exists()
         // verify model is created
-        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorisationwebhooks/RelayedAuthorisationRequest.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorisationRequest.java").exists()
 
-        def fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorisationwebhooks/RelayedAuthorisationWebhooksHandler.java").text
-        assert fileContent.contains("getRelayedAuthorisationRequest"), "'getRelayedAuthorisationRequest' method not found in RelayedAuthorisationWebhooksHandler.java"
+        def fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorizationWebhooksHandler.java").text
+        assert fileContent.contains("getRelayedAuthorisationRequest"), "'getRelayedAuthorisationRequest' method not found in RelayedAuthorizationWebhooksHandler.java"
     }
 }
 
