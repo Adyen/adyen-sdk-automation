@@ -218,6 +218,44 @@ project.ext.smallServices.each { Service svc ->
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
+// Task to strip discriminators for all languages EXCEPT dotnet
+project.ext.services.each { Service svc ->
+    def stripDiscriminators = tasks.register("stripDiscriminators${svc.name}") {
+        group 'specs'
+        description "Remove discriminators from ${svc.name} unless generating for dotnet"
+        dependsOn ':specs'
+        
+        // ONLY run if the project/language is not dotnet
+        onlyIf { project.name == 'dotnet' }
+
+        doLast {
+            def specFile = file("$rootDir/schema/json/${svc.filename}")
+            def json = new JsonSlurper().parse(specFile)
+
+            // Recursive removal function
+            def removeDiscriminators
+            removeDiscriminators = { obj ->
+                if (obj instanceof Map) {
+                    obj.remove("discriminator")
+                    obj.values().each { removeDiscriminators(it) }
+                } else if (obj instanceof List) {
+                    obj.each { removeDiscriminators(it) }
+                }
+            }
+
+            println "Stripping discriminators from ${svc.name} for language: ${project.name}"
+            removeDiscriminators(json)
+
+            specFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+        }
+    }
+
+    // Link the stripping task to the generator task
+    tasks.named("generate$svc.name") {
+        dependsOn stripDiscriminators
+    }
+}
+
 // update OpenAPI file of the webhooks to add a custom extension 'x-webhook-root' to the model that represents the webhook payload
 // this is necessary to generate the WebhookHandler that deserialises the Webhook models
 project.ext.services.each { Service svc ->
