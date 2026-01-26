@@ -243,40 +243,37 @@ project.ext.services.each { Service svc ->
                     }
                 }
                 
-                // Step 2: Find schemas that reference discriminated schemas (via oneOf/allOf/properties/items)
-                def containsRemovedSchemaRef
-                containsRemovedSchemaRef = { obj ->
-                    if (obj instanceof Map) {
-                        if (obj.'$ref' instanceof String) {
-                            def refName = obj.'$ref'.tokenize('/').last()
-                            if (toRemove.contains(refName)) return true
+                // Helper function to check if an object contains a $ref to a removed schema
+                def containsRefTo = { obj, Set targetSchemas ->
+                    def checkRef
+                    checkRef = { o ->
+                        if (o instanceof Map) {
+                            if (o.'$ref' instanceof String) {
+                                def refName = o.'$ref'.tokenize('/').last()
+                                if (targetSchemas.contains(refName)) return true
+                            }
+                            return o.values().any { checkRef(it) }
+                        } else if (o instanceof List) {
+                            return o.any { checkRef(it) }
                         }
-                        return obj.values().any { containsRemovedSchemaRef(it) }
-                    } else if (obj instanceof List) {
-                        return obj.any { containsRemovedSchemaRef(it) }
+                        return false
                     }
-                    return false
+                    return checkRef(obj)
                 }
                 
-                def findReferencingSchemas
-                findReferencingSchemas = { Set toRemove ->
+                // Step 2: Recursively find all schemas that reference discriminated schemas
+                def iteration = 0
+                while (true) {
                     def newFound = [] as Set
                     schemas.each { Map.Entry schema ->
-                        if (!toRemove.contains(schema.key)) {
-                            if (containsRemovedSchemaRef(schema.value)) {
+                        if (!schemasToRemove.contains(schema.key)) {
+                            if (containsRefTo(schema.value, schemasToRemove)) {
                                 newFound.add(schema.key)
                             }
                         }
                     }
-                    return newFound
-                }
-                
-                // Recursively find all schemas that reference discriminated schemas
-                def iteration = 0
-                while (true) {
-                    def newSchemas = findReferencingSchemas(schemasToRemove)
-                    if (newSchemas.isEmpty()) break
-                    schemasToRemove.addAll(newSchemas)
+                    if (newFound.isEmpty()) break
+                    schemasToRemove.addAll(newFound)
                     iteration++
                     if (iteration > 10) break // Safety limit
                 }
@@ -287,24 +284,10 @@ project.ext.services.each { Service svc ->
                 }
                 
                 // Step 3: Remove paths/endpoints that reference removed schemas
-                def containsRemovedSchemaRef
-                containsRemovedSchemaRef = { obj ->
-                    if (obj instanceof Map) {
-                        if (obj.'$ref' instanceof String) {
-                            def refName = obj.'$ref'.tokenize('/').last()
-                            if (schemasToRemove.contains(refName)) return true
-                        }
-                        return obj.values().any { containsRemovedSchemaRef(it) }
-                    } else if (obj instanceof List) {
-                        return obj.any { containsRemovedSchemaRef(it) }
-                    }
-                    return false
-                }
-                
                 def pathsToRemove = []
                 if (json.containsKey("paths")) {
                     json["paths"].each { Map.Entry path ->
-                        if (containsRemovedSchemaRef(path.value)) {
+                        if (containsRefTo(path.value, schemasToRemove)) {
                             pathsToRemove.add(path.key)
                         }
                     }
