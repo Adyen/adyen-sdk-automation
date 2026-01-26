@@ -69,6 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     # generate code as defined in the matrix
     # each iteration generates a group of services and creates a PR
+    if: false # This skips the job entirely
     strategy:
       matrix:
         project: [ ]
