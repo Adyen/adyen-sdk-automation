@@ -218,41 +218,94 @@ project.ext.smallServices.each { Service svc ->
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-// Task to strip discriminators for all languages EXCEPT dotnet
+// Task to remove schemas with discriminators for dotnet only
 project.ext.services.each { Service svc ->
-    def stripDiscriminators = tasks.register("stripDiscriminators${svc.name}") {
+    def removeDiscriminatorSchemas = tasks.register("removeDiscriminatorSchemas${svc.name}") {
         group 'specs'
-        description "Remove discriminators from ${svc.name} unless generating for dotnet"
+        description "Remove schemas with discriminators from ${svc.name} for dotnet"
         dependsOn ':specs'
         
-        // ONLY run if the project/language is not dotnet
+        // ONLY run for dotnet
         onlyIf { project.name == 'dotnet' }
 
         doLast {
             def specFile = file("$rootDir/schema/json/${svc.filename}")
             def json = new JsonSlurper().parse(specFile)
 
-            // Recursive removal function
-            def removeDiscriminators
-            removeDiscriminators = { obj ->
-                if (obj instanceof Map) {
-                    obj.remove("discriminator")
-                    obj.values().each { removeDiscriminators(it) }
-                } else if (obj instanceof List) {
-                    obj.each { removeDiscriminators(it) }
+            if (json.containsKey("components") && json["components"].containsKey("schemas")) {
+                def schemas = json["components"]["schemas"]
+                def schemasToRemove = [] as Set
+                
+                // Step 1: Find schemas with discriminators
+                schemas.each { Map.Entry schema ->
+                    if (schema.value?.containsKey("discriminator")) {
+                        schemasToRemove.add(schema.key)
+                    }
+                }
+                
+                // Step 2: Find schemas that reference discriminated schemas via oneOf/allOf
+                def findReferencingSchemas
+                findReferencingSchemas = { Set toRemove ->
+                    def newFound = [] as Set
+                    schemas.each { Map.Entry schema ->
+                        if (!toRemove.contains(schema.key)) {
+                            def referencesDiscriminated = false
+                            
+                            // Check allOf
+                            if (schema.value?.allOf instanceof List) {
+                                schema.value.allOf.each { item ->
+                                    if (item?.'$ref' instanceof String) {
+                                        def refName = item.'$ref'.tokenize('/').last()
+                                        if (toRemove.contains(refName)) {
+                                            referencesDiscriminated = true
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // Check oneOf
+                            if (schema.value?.oneOf instanceof List) {
+                                schema.value.oneOf.each { item ->
+                                    if (item?.'$ref' instanceof String) {
+                                        def refName = item.'$ref'.tokenize('/').last()
+                                        if (toRemove.contains(refName)) {
+                                            referencesDiscriminated = true
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if (referencesDiscriminated) {
+                                newFound.add(schema.key)
+                            }
+                        }
+                    }
+                    return newFound
+                }
+                
+                // Recursively find all schemas that reference discriminated schemas
+                def iteration = 0
+                while (true) {
+                    def newSchemas = findReferencingSchemas(schemasToRemove)
+                    if (newSchemas.isEmpty()) break
+                    schemasToRemove.addAll(newSchemas)
+                    iteration++
+                    if (iteration > 10) break // Safety limit
+                }
+                
+                println "Removing ${schemasToRemove.size()} schemas (with discriminators and their children) from ${svc.name} for dotnet: ${schemasToRemove}"
+                schemasToRemove.each { schemaName ->
+                    schemas.remove(schemaName)
                 }
             }
-
-            println "Stripping discriminators from ${svc.name} for language: ${project.name}"
-            removeDiscriminators(json)
 
             specFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
         }
     }
 
-    // Link the stripping task to the generator task
+    // Link the removal task to the generator task
     tasks.named("generate$svc.name") {
-        dependsOn stripDiscriminators
+        dependsOn removeDiscriminatorSchemas
     }
 }
 
