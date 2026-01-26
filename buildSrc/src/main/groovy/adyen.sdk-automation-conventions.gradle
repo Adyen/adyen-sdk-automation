@@ -297,6 +297,55 @@ project.ext.services.each { Service svc ->
                 schemasToRemove.each { schemaName ->
                     schemas.remove(schemaName)
                 }
+                
+                // Step 3: Remove paths/endpoints that reference removed schemas
+                def pathsToRemove = []
+                if (json.containsKey("paths")) {
+                    json["paths"].each { Map.Entry path ->
+                        def shouldRemovePath = false
+                        path.value.each { Map.Entry method ->
+                            if (method.value instanceof Map) {
+                                // Check request body
+                                def requestBody = method.value?.requestBody?.content?.'application/json'?.schema
+                                if (requestBody) {
+                                    def refName = requestBody?.'$ref'?.tokenize('/')?.last()
+                                    if (refName && schemasToRemove.contains(refName)) {
+                                        shouldRemovePath = true
+                                    }
+                                }
+                                
+                                // Check response bodies
+                                method.value?.responses?.each { Map.Entry response ->
+                                    def responseSchema = response.value?.content?.'application/json'?.schema
+                                    if (responseSchema) {
+                                        def refName = responseSchema?.'$ref'?.tokenize('/')?.last()
+                                        if (refName && schemasToRemove.contains(refName)) {
+                                            shouldRemovePath = true
+                                        }
+                                    }
+                                }
+                                
+                                // Check parameters
+                                method.value?.parameters?.each { param ->
+                                    def refName = param?.schema?.'$ref'?.tokenize('/')?.last()
+                                    if (refName && schemasToRemove.contains(refName)) {
+                                        shouldRemovePath = true
+                                    }
+                                }
+                            }
+                        }
+                        if (shouldRemovePath) {
+                            pathsToRemove.add(path.key)
+                        }
+                    }
+                    
+                    if (!pathsToRemove.isEmpty()) {
+                        println "Removing ${pathsToRemove.size()} paths that reference discriminated schemas: ${pathsToRemove}"
+                        pathsToRemove.each { pathName ->
+                            json["paths"].remove(pathName)
+                        }
+                    }
+                }
             }
 
             specFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
