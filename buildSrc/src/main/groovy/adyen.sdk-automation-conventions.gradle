@@ -243,39 +243,27 @@ project.ext.services.each { Service svc ->
                     }
                 }
                 
-                // Step 2: Find schemas that reference discriminated schemas via oneOf/allOf
+                // Step 2: Find schemas that reference discriminated schemas (via oneOf/allOf/properties/items)
+                def containsRemovedSchemaRef
+                containsRemovedSchemaRef = { obj ->
+                    if (obj instanceof Map) {
+                        if (obj.'$ref' instanceof String) {
+                            def refName = obj.'$ref'.tokenize('/').last()
+                            if (toRemove.contains(refName)) return true
+                        }
+                        return obj.values().any { containsRemovedSchemaRef(it) }
+                    } else if (obj instanceof List) {
+                        return obj.any { containsRemovedSchemaRef(it) }
+                    }
+                    return false
+                }
+                
                 def findReferencingSchemas
                 findReferencingSchemas = { Set toRemove ->
                     def newFound = [] as Set
                     schemas.each { Map.Entry schema ->
                         if (!toRemove.contains(schema.key)) {
-                            def referencesDiscriminated = false
-                            
-                            // Check allOf
-                            if (schema.value?.allOf instanceof List) {
-                                schema.value.allOf.each { item ->
-                                    if (item?.'$ref' instanceof String) {
-                                        def refName = item.'$ref'.tokenize('/').last()
-                                        if (toRemove.contains(refName)) {
-                                            referencesDiscriminated = true
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            // Check oneOf
-                            if (schema.value?.oneOf instanceof List) {
-                                schema.value.oneOf.each { item ->
-                                    if (item?.'$ref' instanceof String) {
-                                        def refName = item.'$ref'.tokenize('/').last()
-                                        if (toRemove.contains(refName)) {
-                                            referencesDiscriminated = true
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            if (referencesDiscriminated) {
+                            if (containsRemovedSchemaRef(schema.value)) {
                                 newFound.add(schema.key)
                             }
                         }
@@ -299,42 +287,24 @@ project.ext.services.each { Service svc ->
                 }
                 
                 // Step 3: Remove paths/endpoints that reference removed schemas
+                def containsRemovedSchemaRef
+                containsRemovedSchemaRef = { obj ->
+                    if (obj instanceof Map) {
+                        if (obj.'$ref' instanceof String) {
+                            def refName = obj.'$ref'.tokenize('/').last()
+                            if (schemasToRemove.contains(refName)) return true
+                        }
+                        return obj.values().any { containsRemovedSchemaRef(it) }
+                    } else if (obj instanceof List) {
+                        return obj.any { containsRemovedSchemaRef(it) }
+                    }
+                    return false
+                }
+                
                 def pathsToRemove = []
                 if (json.containsKey("paths")) {
                     json["paths"].each { Map.Entry path ->
-                        def shouldRemovePath = false
-                        path.value.each { Map.Entry method ->
-                            if (method.value instanceof Map) {
-                                // Check request body
-                                def requestBody = method.value?.requestBody?.content?.'application/json'?.schema
-                                if (requestBody) {
-                                    def refName = requestBody?.'$ref'?.tokenize('/')?.last()
-                                    if (refName && schemasToRemove.contains(refName)) {
-                                        shouldRemovePath = true
-                                    }
-                                }
-                                
-                                // Check response bodies
-                                method.value?.responses?.each { Map.Entry response ->
-                                    def responseSchema = response.value?.content?.'application/json'?.schema
-                                    if (responseSchema) {
-                                        def refName = responseSchema?.'$ref'?.tokenize('/')?.last()
-                                        if (refName && schemasToRemove.contains(refName)) {
-                                            shouldRemovePath = true
-                                        }
-                                    }
-                                }
-                                
-                                // Check parameters
-                                method.value?.parameters?.each { param ->
-                                    def refName = param?.schema?.'$ref'?.tokenize('/')?.last()
-                                    if (refName && schemasToRemove.contains(refName)) {
-                                        shouldRemovePath = true
-                                    }
-                                }
-                            }
-                        }
-                        if (shouldRemovePath) {
+                        if (containsRemovedSchemaRef(path.value)) {
                             pathsToRemove.add(path.key)
                         }
                     }
