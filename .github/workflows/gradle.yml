@@ -48,7 +48,7 @@ jobs:
       id: vars
       run: |
         cd schema
-        echo pr_title="Code generation: update services and models" >> "$GITHUB_OUTPUT"
+        echo pr_title="[Patch 32.1.3] Code generation: update services and models" >> "$GITHUB_OUTPUT"
         echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \
           by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
     - name: Create Pull Request

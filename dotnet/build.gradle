@@ -27,11 +27,37 @@ services.each { Service svc ->
         ])
     }
 
+    // Post-processing: Replace StringEnumConverter with SafeStringEnumConverter
+    def postProcess = tasks.register("postProcess${svc.name}", Task) {
+        group 'generate'
+        description "Post-process $svc.name to use SafeStringEnumConverter"
+        
+        doLast {
+            def modelDir = layout.buildDirectory.dir("services/$svc.id/src/Adyen/Model.${serviceName}").get().asFile
+            if (modelDir.exists()) {
+                modelDir.eachFileRecurse { file ->
+                    if (file.name.endsWith('.cs')) {
+                        def content = file.text
+                        def updated = content.replaceAll(
+                            /\[JsonConverter\(typeof\(StringEnumConverter\)\)\]/,
+                            '[JsonConverter(typeof(Adyen.Util.SafeStringEnumConverter))]'
+                        )
+                        if (content != updated) {
+                            file.text = updated
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     // Deployment
     def deployModels = tasks.register("deploy${svc.name}Models", Sync) {
         group 'deploy'
         description "Deploy $svc.name models into the repo."
         dependsOn "generate$svc.name"
+        dependsOn postProcess
         outputs.upToDateWhen { false }
 
         from layout.buildDirectory.dir("services/$svc.id/src/Adyen/Model.${serviceName}")
