@@ -7,6 +7,10 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
+def props = new Properties()
+rootProject.file("buildSrc/gradle.properties").withInputStream { props.load(it) }
+project.ext.openApiVersion = props.getProperty('openapiGeneratorVersion')
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -31,11 +35,12 @@ List<Service> services = [
         new Service(name: 'Management', version: 3, tag: 'Management'),
         new Service(name: 'BalanceControl', version: 1, small: true, tag: 'Management'),
         // Adyen for Platforms
-        new Service(name: 'LegalEntityManagement', spec: 'LegalEntityService', version: 3, tag: 'Platforms'),
+        new Service(name: 'LegalEntityManagement', spec: 'LegalEntityService', version: 4, tag: 'Platforms'),
         new Service(name: 'BalancePlatform', version: 2, tag: 'Platforms'),
         new Service(name: 'Transfers', spec: 'TransferService', version: 4, tag: 'Platforms'),
         new Service(name: 'DataProtection', version: 1, small: true, tag: 'Platforms'),
         new Service(name: 'SessionAuthentication', version: 1, tag: 'Platforms'),
+        new Service(name: 'Capital', version: 1, tag: "Platforms"),
         // Webhooks
         new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 2, tag: 'Webhooks'),
         new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1, tag: 'Webhooks'),
@@ -46,7 +51,8 @@ List<Service> services = [
         new Service(name: 'DisputeWebhooks', spec: 'BalancePlatformDisputeNotification', version: 1, tag: 'Webhooks'),
         new Service(name: 'NegativeBalanceWarningWebhooks', spec: 'BalancePlatformNegativeBalanceCompensationWarningNotification', version: 1, tag: 'Webhooks'),
         new Service(name: 'BalanceWebhooks', spec: 'BalancePlatformBalanceNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks')
+        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks'),
+        new Service(name: 'RelayedAuthorizationWebhooks', spec: 'BalancePlatformRelayedAuthorisationNotification', version: 4, tag: 'Webhooks')
 ]
 
 ext {
@@ -66,6 +72,7 @@ ext {
 // Generate a full client for each service
 services.each { Service svc ->
     def generate = tasks.register("generate$svc.name", GenerateTask) {
+        println "Generating ${svc.name} Client..."
         group 'generate'
         description "Generate a $project.name client for $svc.name."
         dependsOn 'cloneRepo'
@@ -86,7 +93,7 @@ services.each { Service svc ->
                 "configuration": "configuration"
         ])
         additionalProperties.set([
-                'serviceName': project.ext.serviceName,
+                'serviceName': project.ext.serviceName
         ])
         globalProperties.set([
                 'modelDocs' : 'false',
@@ -158,6 +165,9 @@ tasks.register('cloneRepo', Exec) {
 
 // Disable generator caching
 tasks.withType(GenerateTask).configureEach {
+    doFirst {
+        println "Using OpenAPI Generator version ${project.openApiVersion}"
+    }
     outputs.upToDateWhen { false }
     outputs.cacheIf { false }
 }
@@ -314,6 +324,10 @@ project.ext.services.each { Service svc ->
 // update OpenAPI file of the webhooks to add a custom extension 'x-webhook-root' to the model that represents the webhook payload
 // this is necessary to generate the WebhookHandler that deserialises the Webhook models
 project.ext.services.each { Service svc ->
+    // unnecessary to create webhook-related tasks for services/specs not related to webhooks
+    if (!svc.webhook) {
+        return
+    }
     def addWebhookExtension = tasks.register("addWebhookExtension${svc.name}") {
         group 'specs'
         description "Add x-webhook-root extension to ${svc.name}"
@@ -322,8 +336,8 @@ project.ext.services.each { Service svc ->
             def specFile = file("$rootDir/schema/json/${svc.filename}")
             def json = new JsonSlurper().parse(specFile)
 
-            // Check if the service name ends with "Webhooks"
-            if (svc.name.endsWith("Webhooks") && json.containsKey("components") && json["components"].containsKey("schemas")) {
+            if (json.containsKey("components") && json["components"].containsKey("schemas")) {
+                def addOnce = true
                 json["components"]["schemas"].each { Map.Entry schema ->
                     def properties = schema.value?.properties
                     // add 'x-webhook-root' to the webhook model (we find 'environment' and 'data' attributes)
@@ -340,12 +354,29 @@ project.ext.services.each { Service svc ->
                     if (schema.key.equals("DisputeNotificationRequest")) {
                         schema.value["x-webhook-root"] = true
                     }
+                    // add 'x-webhook-root' to RelayedAuthorisationRequest model (missing 'data' attributes)
+                    // bespoke fix as the model doesn't adopt the standard schema
+                    if (schema.key.equals("RelayedAuthorisationRequest")) {
+                        schema.value["x-webhook-root"] = true
+                    }
+
+                    // Workaround
+                    // Mark one model `{{#x-has-at-least-one-webhook-root}}` as true. I could not extend this property at the root-level.
+                    // Context: {{#models}}{{#model.vendorExtensions.x-webhook-root}} -> {{#first}} won't work with multiple `x-webhook-root` extensions
+                    if (addOnce) {
+                        schema.value["x-has-at-least-one-webhook-root"] = true
+                        addOnce = false
+                    }
                 }
             }
 
             specFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
         }
     }
-    tasks.named("generate$svc.name") { dependsOn addWebhookExtension }
+
+    tasks.named("generate$svc.name", GenerateTask) {
+        println "Generating ${svc.name} Webhooks..."
+        dependsOn addWebhookExtension
+    }
 }
 

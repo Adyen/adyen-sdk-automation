@@ -28,10 +28,14 @@ tasks.withType(GenerateTask).configureEach {
             "containerDefaultToNull" : "true"
     ])
 
-    // for webhooks apply extra config.yaml (to generate WebhookHandler)
     if (serviceId.endsWith("webhooks")) {
+        // for webhooks only apply extra config.yaml (to generate WebhookHandler)
         configFile.set("$projectDir/config.yaml")
+    } else {
+        // for APIs only add custom code to handle nullable properties
+        additionalProperties.handleNullableProperties = true
     }
+
 }
 
 // Deployment: copy and rename models/services
@@ -39,6 +43,25 @@ services.each { Service svc ->
 
     def serviceName = project.ext.serviceNaming[svc.id] as String
     def serviceId = serviceName.toLowerCase()
+
+    // words replacement to enforce naming conventions (after code generation)
+    def replaceReservedWords = { File directory ->
+
+        fileTree(directory).matching { include '**/*.java' }.forEach { File file ->
+            def text = file.text
+
+            def replaceFromTo = [
+                    'wwWAuthenticate' : 'wwwAuthenticate',
+            ]
+
+            replaceFromTo.each { from, to ->
+                //println "Replacing ${from} → ${to} in ${file.name}"
+                text = text.replace(from, to)
+            }
+            file.text = text
+        }
+    }
+
 
     // Copy models
     def deployModels = tasks.register("deploy${svc.name}Models", Copy) {
@@ -56,6 +79,10 @@ services.each { Service svc ->
         from layout.buildDirectory.dir("services/$svc.id/src/main/java/com/adyen/model")
         into layout.projectDirectory.dir("repo/src/main/java/com/adyen/model")
 
+        // post processing
+        doLast {
+            replaceReservedWords(layout.projectDirectory.dir("repo/src/main/java/com/adyen/model/${serviceId}").asFile)
+        }
     }
 
     // Copy services
@@ -73,6 +100,11 @@ services.each { Service svc ->
         // copy newly generated services
         from layout.buildDirectory.dir("services/$svc.id/src/main/java/com/adyen/service/${serviceId}")
         into layout.projectDirectory.dir("repo/src/main/java/com/adyen/service/" + serviceId)
+
+        // post processing
+        doLast {
+            replaceReservedWords(layout.projectDirectory.dir("repo/src/main/java/com/adyen/service/${serviceId}").asFile)
+        }
     }
 
     // Copy serializers
@@ -148,6 +180,38 @@ tasks.named('acswebhooks') {
         assert !file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/AcsWebhooksApi.java").exists()
         // verify Webhook Handler is created
         assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/acswebhooks/AcsWebhooksHandler.java").exists()
+    }
+}
+
+// Test balanceplatform generation
+tasks.named('balanceplatform') {
+    doLast {
+        // HTTP header not found in signature
+        def fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/balanceplatform/ScaAssociationManagementApi.java").text
+        assert !fileContent.contains("wwwAuthenticate"), "'wwwAuthenticate' (HTTP header) should not be part of a method signature in ScaAssociationManagementApi.java"
+    }
+}
+
+// Test RelayedAuthorization Webhooks generation
+tasks.named('relayedauthorizationwebhooks') {
+    doLast {
+        // verify Webhook Handler is created
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorizationWebhooksHandler.java").exists()
+        // verify model is created
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorisationRequest.java").exists()
+
+        def fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorizationWebhooksHandler.java").text
+        assert fileContent.contains("getRelayedAuthorisationRequest"), "'getRelayedAuthorisationRequest' method not found in RelayedAuthorizationWebhooksHandler.java"
+    }
+}
+
+
+tasks.named('capital') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/capital/Amount.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantsApi.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantOffersApi.java").exists()
+        assert file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantAccountsApi.java").exists()
     }
 }
 

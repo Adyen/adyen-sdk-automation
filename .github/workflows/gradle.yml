@@ -14,7 +14,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-sdk-automation
+  group: ci-sdk-automation-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   # generate code for the libraries defined in the matrix
@@ -24,35 +25,38 @@ jobs:
         project: [ dotnet ]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 11
-      uses: actions/setup-java@v4
+    - uses: actions/checkout@v6
+    - name: Set up JDK 21
+      uses: actions/setup-java@v5
       with:
-        java-version: '11'
+        java-version: '21'
         distribution: 'temurin'
     - name: Clone ${{ matrix.project }} repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
         repository: Adyen/adyen-${{ matrix.project }}-api-library
         path: ${{ matrix.project }}/repo
         ref:  'patch/32.1.3'
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
+      uses: gradle/actions/setup-gradle@v5
     - name: Override properties
-      if: matrix.project == 'node' || matrix.project == 'java'
-      run: cp ${{ matrix.project }}/gradle.properties buildSrc
+      if: matrix.project == 'dotnet' || matrix.project == 'node' || matrix.project == 'java' || matrix.project == 'python'  || matrix.project == 'ruby'
+      env:
+        PROJECT: ${{ matrix.project }}
+      run: cp $PROJECT/gradle.properties buildSrc
     - name: Generate code for ${{ matrix.project }}
-      run: ./gradlew ${{ matrix.project }}:services
+      env:
+        PROJECT: ${{ matrix.project }}
+      run: ./gradlew $PROJECT:services
     - name: Set PR variables
       id: vars
       run: |
         cd schema
-        echo pr_title="[Patch 32.1.3] Code generation: update services and models" >> "$GITHUB_OUTPUT"
-        echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \
-          by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
+        echo pr_title="Code generation: update services and models" >> "$GITHUB_OUTPUT"
+        echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
+      uses: peter-evans/create-pull-request@v8
       with:
         path: ${{ matrix.project }}/repo
         token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}

@@ -14,8 +14,7 @@ To generate all services in all libraries, run:
 For all services in a library, run:
 
 ```
- ./gradlew :go:services
-
+./gradlew :go:services
 ```
 
 For a single specific service:
@@ -46,6 +45,8 @@ For Node.js, set the generator version via CLI:
 
 ```
 ./gradlew :node:cleanRepo :node:checkout -PopenapiGeneratorVersion=5.4.0
+./gradlew :java:cleanRepo :java:checkout -PopenapiGeneratorVersion=7.11.0
+./gradlew :dotnet:cleanRepo :dotnet:checkout -PopenapiGeneratorVersion=7.11.0
 ```
 
 ### Development
@@ -57,6 +58,8 @@ For local testing of some library:
 
 ```shell
 rm -rf go/repo && ln -s ~/workspace/adyen-go-api-library go/repo
+rm -rf java/repo && ln -s ~/workspace/adyen-java-api-library java/repo
+rm -rf dotnet/repo && ln -s ~/workspace/adyen-dotnet-api-library dotnet/repo
 ```
 
 To run unit tests:

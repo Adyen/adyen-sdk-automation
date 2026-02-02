@@ -13,9 +13,6 @@ List<Service> services = project.ext.services
 
 // Service renaming
 Map<String, String> serviceNaming = project.ext.serviceNamingCamel
-serviceNaming.putAll([
-        'balancecontrol': 'balanceControlService',
-])
 
 services.<Service> each { Service svc ->
     String serviceName = serviceNaming[svc.id]
@@ -23,23 +20,41 @@ services.<Service> each { Service svc ->
     // Generation
     tasks.named("generate${svc.name}", GenerateTask) {
         configFile.set("$projectDir/config.yaml")
+
         additionalProperties.putAll([
                 'serviceName': serviceName,
         ])
+        // skip generation of models, docs, tests
+        globalProperties.putAll([
+                'apis': '',
+                'supportingFiles': ''
+        ])
+
+        // when generating Classic Payment add prefix for service classes
+        if (serviceName == 'payment') {
+            additionalProperties.classicPrefix = 'Classic'
+        }
     }
 
-    // Deployment
+    // Copy services
     def deployServices = tasks.register("deploy${svc.name}Services", Sync) {
         group 'deploy'
         description "Deploy $svc.name into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }
-        onlyIf { !svc.small && !svc.webhook }
+        onlyIf { !svc.webhook }
 
+        // delete existing services
+        doFirst {
+            delete layout.projectDirectory.dir("repo/lib/adyen/services/" + serviceName)
+        }
+
+        // rename and copy generated services (i.e. bin_lookup_api.rb)
         from layout.buildDirectory.dir("services/$svc.id/lib/openapi_client/api")
         include '*_api.rb'
         into layout.projectDirectory.dir("repo/lib/adyen/services/" + serviceName)
 
+        // rename and copy generated service facades (i.e. binLookup.rb)
         from(layout.buildDirectory.dir("services/$svc.id/api")) {
             include 'api-single.rb'
             rename 'api-single.rb', serviceName + '.rb'
@@ -47,25 +62,7 @@ services.<Service> each { Service svc ->
         }
     }
 
-    def deploySmallService = tasks.register("deploy${svc.name}SmallService", Copy) {
-        group 'deploy'
-        description "Copy $svc.name into the repo."
-        dependsOn "generate$svc.name"
-        outputs.upToDateWhen { false }
-        onlyIf { svc.small }
-
-        from layout.buildDirectory.file("services/$svc.id/lib/openapi_client/api/default_api-small.rb")
-        rename 'default_api-small.rb', "${serviceName}.rb"
-        into layout.projectDirectory.dir("repo/lib/adyen/services")
-    }
-
-    tasks.named(svc.id) { dependsOn deployServices, deploySmallService }
-}
-
-tasks.named('deployDataProtectionSmallService', Copy) {
-    filter {
-        it.replace("'DataProtection'", "'DataProtectionService'")
-    }
+    tasks.named(svc.id) { dependsOn deployServices }
 }
 
 // Tests
@@ -77,7 +74,7 @@ tasks.named('checkout') {
 }
 tasks.named('binlookup') {
     doLast {
-        assert file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup.rb").exists()
-        assert !file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup").exists()
+        assert file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup/bin_lookup_api.rb").exists()
+        assert file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup").exists()
     }
 }

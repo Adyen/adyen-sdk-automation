@@ -162,3 +162,12 @@ tasks.named('acswebhooks') {
         assert !file("${layout.projectDirectory}/repo/src/services/acsWebhooksApi.ts").exists()
     }
 }
+
+tasks.named('capital') {
+    doLast {
+        assert file("${layout.projectDirectory}/repo/src/typings/capital/amount.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/capital/grantsApi.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/capital/grantOffersApi.ts").exists()
+        assert file("${layout.projectDirectory}/repo/src/services/capital/grantAccountsApi.ts").exists()
+    }
+}

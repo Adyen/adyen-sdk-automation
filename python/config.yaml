@@ -3,10 +3,7 @@ files:
     folder: api
     destinationFilename: api-single.py
     templateType: SupportingFiles
-  api-small.mustache:
-    destinationFilename: -small.py
-    templateType: API
-  api-test-single.mustache:
+api-test-single.mustache:
     folder: api
     destinationFilename: api-test.py
     templateType: SupportingFiles

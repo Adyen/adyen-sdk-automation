@@ -3,7 +3,3 @@ files:
     folder: api
     destinationFilename: api-single.rb
     templateType: SupportingFiles
-  api-small.mustache:
-    folder: api_small
-    destinationFilename: -small.rb
-    templateType: API

@@ -7,7 +7,6 @@ plugins {
 
 project.ext {
     generator = 'python'
-    removeTags = false
 }
 
 List<Service> services = project.ext.services
@@ -40,7 +39,12 @@ services.<Service> each { Service svc ->
         description "Deploy $svc.name into the repo."
         dependsOn "generate$svc.name"
         outputs.upToDateWhen { false }
-        onlyIf { !svc.small && !svc.webhook }
+        onlyIf { !svc.webhook }
+
+        doFirst {
+            delete layout.projectDirectory.dir("repo/Adyen/services/" + serviceName)
+        }
+
 
         from layout.buildDirectory.dir("services/$svc.id/openapi_client/api")
         include '*_api.py'
@@ -52,31 +56,26 @@ services.<Service> each { Service svc ->
         }
     }
 
-    def deploySmallService = tasks.register("deploy${svc.name}SmallService", Copy) {
-        group 'deploy'
-        description "Copy $svc.name into the repo."
-        dependsOn "generate$svc.name"
-        outputs.upToDateWhen { false }
-        onlyIf { svc.small }
-
-        from layout.buildDirectory.file("services/$svc.id/openapi_client/api/general_api-small.py")
-        rename 'general_api-small.py', "${serviceName}.py"
-        into layout.projectDirectory.dir("repo/Adyen/services")
-    }
-
-    tasks.named(svc.id) { dependsOn deployServices, deploySmallService }
+    tasks.named(svc.id) { dependsOn deployServices }
 }
 
-// Tests
-tasks.named('checkout') {
-    doLast {
-        assert file("${layout.projectDirectory}/repo/Adyen/services/checkout/payments_api.py").exists()
-        assert file("${layout.projectDirectory}/repo/Adyen/services/checkout/__init__.py").exists()
+// TODO: Review how to generalize this to other libs
+/**
+ * Configures a service lifecycle tasks to perform a final sanity check: ensure that given files exists at the expected location.
+ * @param serviceName the service to be checked
+ * @param files the expected files
+ */
+def assertServiceFilesExist(String serviceName, List<String> files) {
+    tasks.named(serviceName) {
+        // Hooks into this lifecycle task to do a sanity check: ensure that the given files
+        // exists in the expected location
+        doLast {
+            files.forEach {
+                assert file("${layout.projectDirectory}/repo/Adyen/services/${serviceName}/" + it).exists()
+            }
+        }
     }
 }
-tasks.named('binlookup') {
-    doLast {
-        assert file("${layout.projectDirectory}/repo/Adyen/services/binlookup.py").exists()
-        assert !file("${layout.projectDirectory}/repo/Adyen/services/binlookup").exists()
-    }
-}
+
+assertServiceFilesExist('checkout', ["payments_api.py", "__init__.py"])
+assertServiceFilesExist('capital', ["__init__.py", "grants_api.py", "grant_offers_api.py", "grant_accounts_api.py"])
