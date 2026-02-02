@@ -37,6 +37,7 @@ jobs:
         token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
         repository: Adyen/adyen-${{ matrix.project }}-api-library
         path: ${{ matrix.project }}/repo
+        ref:  'patch/32.1.3'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v5
     - name: Override properties
@@ -61,106 +62,9 @@ jobs:
         token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
         committer: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
         author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
-        branch: sdk-automation/models
+        branch: sdk-automation/patch/32.1.3/models
         title: ${{ steps.vars.outputs.pr_title }}
         body: ${{ steps.vars.outputs.pr_body }}
+        base: 'patch/32.1.3'
         commit-message: |
-          ${{ (matrix.project == 'node' && '[reformat]') || '' }}[adyen-sdk-automation] automated change
-  # split generation (create multiple PRs)
-  generate-per-service:
-    strategy:
-      fail-fast: false
-      matrix:
-        project: [ java, php, node, python, ruby, go ]
-        service: [
-          checkout, capital, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
-          management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
-          sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
-          transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
-          balancewebhooks, tokenizationwebhooks, relayedauthorizationwebhooks
-        ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Clone ${{ matrix.project }} repository
-        uses: actions/checkout@v6
-        with:
-          token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
-          repository: Adyen/adyen-${{ matrix.project }}-api-library
-          path: ${{ matrix.project }}/repo
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
-
-      - name: Override properties
-        if: matrix.project != 'php'
-        env:
-          PROJECT: ${{ matrix.project }}
-        run: cp $PROJECT/gradle.properties buildSrc
-
-      - name: Generate code for ${{ matrix.service }} in ${{ matrix.project }}
-        env:
-          PROJECT: ${{ matrix.project }}
-          SERVICE: ${{ matrix.service }}
-        run: ./gradlew $PROJECT:$SERVICE
-
-      - name: Check for and prepare formatting action
-        id: prep_action
-        # Some libraries have a formatting action in their repository, so we check for it and copy it to a temporary directory to use it later.
-        run: |
-          if [[ -f "${{ matrix.project }}/repo/.github/actions/format/action.yml" ]]; then
-            echo "format_action_exists=true" >> "$GITHUB_OUTPUT"
-            mkdir -p ./.temp-format-action
-            cp -r "${{ matrix.project }}/repo/.github/actions/format" ./.temp-format-action/
-          else
-            echo "format_action_exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Format Code
-        # We run the formatting action if it exists.
-        if: steps.prep_action.outputs.format_action_exists == 'true'
-        uses: ./.temp-format-action/format
-        with:
-          path: ${{ matrix.project }}/repo
-
-      - name: Check for changes
-        id: changes
-        working-directory: ${{ matrix.project }}/repo
-        run: |
-          # Check for modified tracked files AND new untracked files
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "Changes detected."
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No changes detected."
-          fi
-
-      - name: Get OpenAPI commit SHA
-        id: vars
-        run: |
-          echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
-
-      - name: Create Pull Request
-        if: steps.changes.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v8
-        with:
-          path: ${{ matrix.project }}/repo
-          token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
-          committer: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
-          author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
-          branch: sdk-automation/${{ matrix.service }}
-          title: '[${{ matrix.service }}] Code generation: update services and models'
-          body: |
-            This PR contains the automated changes for the `${{ matrix.service }}` service.
-
-            The commit history of this PR reflects the `adyen-openapi` commits that have been applied.
-          commit-message: '[${{ matrix.service }}] Automated update from Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}'
+          ${{ contains(fromJSON('["go", "php", "node"]'), matrix.project) && '[reformat]' }}[adyen-sdk-automation] automated change
