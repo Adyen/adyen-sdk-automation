@@ -327,6 +327,7 @@ tasks.named('checkout') {
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/ClientUtils.cs").exists()
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/HostConfiguration.cs").exists()
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/JsonSerializerOptionsProvider.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/AdyenOptionsProvider.cs").exists()
 
         // /Extensions folder
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Extensions/HostBuilderExtensions.cs").exists()
@@ -341,8 +342,12 @@ tasks.named('checkout') {
 tasks.named('acswebhooks') {
     doLast {
         assert file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Models/Amount.cs").exists()
+
+        assert file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Client/AdyenOptionsProvider.cs").exists()
+
         assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/WebhookHandler.cs").exists()
         assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/HmacKeyToken.cs").exists()
+
         assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Services").exists()
         assert !file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooksService.cs").exists()
     }
