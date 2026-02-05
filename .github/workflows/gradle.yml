@@ -44,13 +44,18 @@ jobs:
       run: cp ${{ matrix.project }}/gradle.properties buildSrc
     - name: Generate code for ${{ matrix.project }}
       run: ./gradlew ${{ matrix.project }}:services
+    # Revert changes to InvalidField.cs to prevent a breaking change from an old
+    # spec update (e7fc0e4) that flipped constructor arguments.
+    - name: Revert changes in specific files for dotnet
+      if: matrix.project == 'dotnet'
+      run: git restore Adyen/Model/BalancePlatform/InvalidField.cs
+      working-directory: ${{ matrix.project }}/repo
     - name: Set PR variables
       id: vars
       run: |
         cd schema
         echo pr_title="[Patch 32.1.3] Code generation: update services and models" >> "$GITHUB_OUTPUT"
-        echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y) \
-          by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
+        echo pr_body="OpenAPI spec files or templates have been modified on $(date +%d-%m-%Y)         by [commit](https://github.com/Adyen/adyen-openapi/commit/$(git rev-parse HEAD)). " >> "$GITHUB_OUTPUT"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
       with:
