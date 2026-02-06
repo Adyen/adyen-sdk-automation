@@ -50,6 +50,17 @@ jobs:
       if: matrix.project == 'dotnet'
       run: git restore Adyen/Model/BalancePlatform/InvalidField.cs
       working-directory: ${{ matrix.project }}/repo
+    # The modules TokenizationWebhooks, BalanceWebhooks, SessionAuthentication don't exist on the version we are patching.
+    - name: Remove unwanted folders and files for dotnet
+      if: matrix.project == 'dotnet'
+      run: |
+        rm -rf Adyen/Model/TokenizationWebhooks
+        rm -rf Adyen/Model/BalanceWebhooks
+        rm -rf Adyen/Model/SessionAuthentication
+        rm -rf Adyen/Service/BalancePlatform/AuthorizedCardUsersService.cs
+        rm -rf Adyen/Service/BalancePlatform/TransferLimitsBalanceAccountLevelService.cs
+        rm -rf Adyen/Service/BalancePlatform/TransferLimitsBalancePlatformLevelService.cs
+      working-directory: ${{ matrix.project }}/repo
     - name: Set PR variables
       id: vars
       run: |
