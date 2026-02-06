@@ -54,12 +54,33 @@ jobs:
     - name: Remove unwanted folders and files for dotnet
       if: matrix.project == 'dotnet'
       run: |
-        rm -rf Adyen/Model/TokenizationWebhooks
-        rm -rf Adyen/Model/BalanceWebhooks
-        rm -rf Adyen/Model/SessionAuthentication
-        rm -rf Adyen/Service/BalancePlatform/AuthorizedCardUsersService.cs
-        rm -rf Adyen/Service/BalancePlatform/TransferLimitsBalanceAccountLevelService.cs
-        rm -rf Adyen/Service/BalancePlatform/TransferLimitsBalancePlatformLevelService.cs
+        echo "Removing unwanted folders and files that do not exist on the version we are patching."
+        rm -rfv Adyen/Model/TokenizationWebhooks
+        rm -rfv Adyen/Model/BalanceWebhooks
+        rm -rfv Adyen/Model/SessionAuthentication
+        rm -v Adyen/Service/BalancePlatform/AuthorizedCardUsersService.cs
+        rm -v Adyen/Service/BalancePlatform/TransferLimitsBalanceAccountLevelService.cs
+        rm -v Adyen/Service/BalancePlatform/TransferLimitsBalancePlatformLevelService.cs
+      working-directory: ${{ matrix.project }}/repo
+    # The following files are removed because they are generated from schemas that are
+    # either directly or indirectly related to an 'allOf' keyword, which is not
+    # supported by the dotnet SDK generator. The root cause is a single 'allOf'
+    # in the 'BalanceWebhookSetting' schema within the BalancePlatformService v2 spec.
+    # This 'allOf' creates a chain of dependencies that affects all the models listed below.
+    - name: Remove files with allOf not supported by the SDK
+      if: matrix.project == 'dotnet'
+      run: |
+        echo "The following files are not supported by the SDK and will be removed."
+        rm -v Adyen/Model/BalancePlatform/Target.cs \
+          Adyen/Model/BalancePlatform/Condition.cs \
+          Adyen/Model/BalancePlatform/BalanceWebhookSettingInfo.cs \
+          Adyen/Model/BalancePlatform/SettingType.cs \
+          Adyen/Model/BalancePlatform/WebhookSetting.cs \
+          Adyen/Model/BalancePlatform/BalanceWebhookSetting.cs \
+          Adyen/Model/BalancePlatform/BalanceWebhookSettingAllOf.cs \
+          Adyen/Model/BalancePlatform/WebhookSettings.cs \
+          Adyen/Model/BalancePlatform/TargetUpdate.cs \
+          Adyen/Model/BalancePlatform/BalanceWebhookSettingInfoUpdate.cs
       working-directory: ${{ matrix.project }}/repo
     - name: Set PR variables
       id: vars
