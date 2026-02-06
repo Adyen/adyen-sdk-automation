@@ -62,7 +62,6 @@ jobs:
         rm -v Adyen/Service/BalancePlatform/AuthorizedCardUsersService.cs
         rm -v Adyen/Service/BalancePlatform/TransferLimitsBalanceAccountLevelService.cs
         rm -v Adyen/Service/BalancePlatform/TransferLimitsBalancePlatformLevelService.cs
-        rm -v Adyen/Service/BalancePlatform/BalancesService.cs
       working-directory: ${{ matrix.project }}/repo
     # The following files are removed because they are generated from schemas that are
     # either directly or indirectly related to an 'allOf' keyword, which is not
@@ -77,10 +76,6 @@ jobs:
           Adyen/Model/BalancePlatform/Condition.cs \
           Adyen/Model/BalancePlatform/BalanceWebhookSettingInfo.cs \
           Adyen/Model/BalancePlatform/SettingType.cs \
-          Adyen/Model/BalancePlatform/WebhookSetting.cs \
-          Adyen/Model/BalancePlatform/BalanceWebhookSetting.cs \
-          Adyen/Model/BalancePlatform/BalanceWebhookSettingAllOf.cs \
-          Adyen/Model/BalancePlatform/WebhookSettings.cs \
           Adyen/Model/BalancePlatform/TargetUpdate.cs \
           Adyen/Model/BalancePlatform/BalanceWebhookSettingInfoUpdate.cs
       working-directory: ${{ matrix.project }}/repo
