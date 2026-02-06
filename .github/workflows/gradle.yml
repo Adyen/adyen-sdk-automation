@@ -58,9 +58,11 @@ jobs:
         rm -rfv Adyen/Model/TokenizationWebhooks
         rm -rfv Adyen/Model/BalanceWebhooks
         rm -rfv Adyen/Model/SessionAuthentication
+        rm -rfv Adyen/Service/SessionAuthentication
         rm -v Adyen/Service/BalancePlatform/AuthorizedCardUsersService.cs
         rm -v Adyen/Service/BalancePlatform/TransferLimitsBalanceAccountLevelService.cs
         rm -v Adyen/Service/BalancePlatform/TransferLimitsBalancePlatformLevelService.cs
+        rm -v Adyen/Service/BalancePlatform/BalancesService.cs
       working-directory: ${{ matrix.project }}/repo
     # The following files are removed because they are generated from schemas that are
     # either directly or indirectly related to an 'allOf' keyword, which is not
