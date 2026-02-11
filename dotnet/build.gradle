@@ -203,29 +203,30 @@ services.each { Service svc ->
         into layout.projectDirectory.dir("repo/Adyen/${serviceName}/Extensions")
     }
 
-    def deployDocumentation = tasks.register("generate${svc.name}Documentation", Sync) {
-        println "Moving ${svc.name}-Documentation..."
-        group "generate"
-        description "Move ${svc.name} into the repo."
-        dependsOn "generate${svc.name}Services"
-        outputs.upToDateWhen { false }
-
-        doFirst {
-            // Delete existing /docs directory.
-            delete layout.projectDirectory.dir("repo/docs/${serviceName}")
-
-            def docsDirectory = layout.projectDirectory.dir("repo/docs").getAsFile()
-
-            // Create /docs directory if it doesn't exist.
-            if (!docsDirectory.exists()) {
-                docsDirectory.mkdirs()
-                println "Created /docs directory: ${docsDirectory}"
-            }
-        }
-
-        from(layout.buildDirectory.dir("services/$svc.id/docs/apis").get().asFile)
-        into layout.projectDirectory.dir("repo/docs/${serviceName}")
-    }
+    // tmp removing /docs generation (to be enabled in a future release)
+//    def deployDocumentation = tasks.register("generate${svc.name}Documentation", Sync) {
+//        println "Moving ${svc.name}-Documentation..."
+//        group "generate"
+//        description "Move ${svc.name} into the repo."
+//        dependsOn "generate${svc.name}Services"
+//        outputs.upToDateWhen { false }
+//
+//        doFirst {
+//            // Delete existing /docs directory.
+//            delete layout.projectDirectory.dir("repo/docs/${serviceName}")
+//
+//            def docsDirectory = layout.projectDirectory.dir("repo/docs").getAsFile()
+//
+//            // Create /docs directory if it doesn't exist.
+//            if (!docsDirectory.exists()) {
+//                docsDirectory.mkdirs()
+//                println "Created /docs directory: ${docsDirectory}"
+//            }
+//        }
+//
+//        from(layout.buildDirectory.dir("services/$svc.id/docs/apis").get().asFile)
+//        into layout.projectDirectory.dir("repo/docs/${serviceName}")
+//    }
 
     def deployWebhookHandlers = tasks.register("generate${svc.name}WebhookHandlers") {
         group 'deploy'
@@ -241,7 +242,7 @@ services.each { Service svc ->
         }
     }
 
-    tasks.named(svc.id) { dependsOn deployModels, deployServices, deployClients, deployExtensions, deployDocumentation, deployWebhookHandlers }
+    tasks.named(svc.id) { dependsOn deployModels, deployServices, deployClients, deployExtensions, deployWebhookHandlers }
 }
 
 private void MoveWebhookHandlerFile(Service svc, serviceName) {
