@@ -7,3 +7,7 @@ files:
     folder: src/Adyen/SupportingFiles
     destinationFilename: HmacKeyToken.cs
     templateType: SupportingFiles
+  AdyenOptionsProvider.mustache:
+    folder: src/Adyen/SupportingFiles
+    destinationFilename: AdyenOptionsProvider.cs
+    templateType: SupportingFiles

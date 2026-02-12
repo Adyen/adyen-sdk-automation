@@ -108,10 +108,7 @@ services.each { Service svc ->
                 //'useSourceGeneration': 'false',
         ])
 
-        if (serviceName.endsWith("Webhooks")) {
-            println("Set Config to generate WebhookHandler for ${serviceName}")
-            configFile.set("$projectDir/config.yaml")
-        }
+        configFile.set("$projectDir/config.yaml")
     }
 
     def deployModels = tasks.register("generate${svc.name}Models", Sync) {
@@ -179,6 +176,11 @@ services.each { Service svc ->
                     println("Removed Adyen.${{serviceName}}.Services namespace in HostConfiguration.cs")
                 }
             }
+        }
+
+        doLast {
+            // Move AdyenOptionsProvider.cs to `/Client` folder
+            MoveAdyenOptionsProviderFile(svc, serviceName)
         }
         into layout.projectDirectory.dir("repo/Adyen/${serviceName}/Client")
     }
@@ -280,13 +282,35 @@ private void MoveHmacKeyTokenFile(Service svc, serviceName) {
         clientDirectory.mkdirs()
     }
 
-    def targetHmacKeyTokenFile = new File(clientDirectory, "HmacKeyToken.cs")
+    def targetFile = new File(clientDirectory, "HmacKeyToken.cs")
 
     if (hmacKeyTokenFile.exists()) {
-        hmacKeyTokenFile.renameTo(targetHmacKeyTokenFile)
-        println "Moved ${hmacKeyTokenFile} to ${targetHmacKeyTokenFile}"
+        hmacKeyTokenFile.renameTo(targetFile)
+        println "Moved ${hmacKeyTokenFile} to ${targetFile}"
     } else {
         println "Source file does not exist: ${hmacKeyTokenFile}"
+    }
+}
+
+private void MoveAdyenOptionsProviderFile(Service svc, serviceName) {
+    // Find generated dyenOptionsProvider.cs.
+    def adyenOptionsProviderFile = layout.projectDirectory.file("build/services/$svc.id/src/Adyen/SupportingFiles/AdyenOptionsProvider.cs").getAsFile()
+
+    // Move `AdyenOptionsProvider.cs` to the /Client directory
+    def clientDirectory = layout.projectDirectory.file("repo/Adyen/${serviceName}/Client").asFile
+
+    // Create /Client directory if it doesn't exist.
+    if (!clientDirectory.exists()) {
+        clientDirectory.mkdirs()
+    }
+
+    def targetFile = new File(clientDirectory, "AdyenOptionsProvider.cs")
+
+    if (adyenOptionsProviderFile.exists()) {
+        adyenOptionsProviderFile.renameTo(targetFile)
+        println "Moved ${adyenOptionsProviderFile} to ${targetFile}"
+    } else {
+        println "Source file does not exist: ${adyenOptionsProviderFile}"
     }
 }
 
@@ -306,6 +330,7 @@ tasks.named('checkout') {
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/ClientUtils.cs").exists()
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/HostConfiguration.cs").exists()
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/JsonSerializerOptionsProvider.cs").exists()
+        assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Client/AdyenOptionsProvider.cs").exists()
 
         // /Extensions folder
         assert file("${layout.projectDirectory}/repo/Adyen/${serviceName}/Extensions/HostBuilderExtensions.cs").exists()
@@ -320,8 +345,12 @@ tasks.named('checkout') {
 tasks.named('acswebhooks') {
     doLast {
         assert file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Models/Amount.cs").exists()
+
+        assert file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Client/AdyenOptionsProvider.cs").exists()
+
         assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/WebhookHandler.cs").exists()
         assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/HmacKeyToken.cs").exists()
+
         assert !file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Services").exists()
         assert !file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooksService.cs").exists()
     }
