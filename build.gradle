@@ -20,7 +20,7 @@ tasks.register('specs', Exec) {
             workingDir specsDir
             commandLine 'git', 'checkout', 'de5cef4ad33d5b732473eb1c0ac0d0227717e21d', '--', // // same date as .NET 32.2.0 , --before="2025-10-20 23:59:38 +0200"
                         'json/LegalEntityService-v4.json', 
-                        'yaml/LegalEntityService-v4.json'
+                        'yaml/LegalEntityService-v4.yaml'
         }
         File folder = new File("$specsDir/json");
         assert folder.exists()
