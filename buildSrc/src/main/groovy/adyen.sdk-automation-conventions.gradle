@@ -218,6 +218,99 @@ project.ext.smallServices.each { Service svc ->
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
+// Task to remove schemas with discriminators for dotnet only
+project.ext.services.each { Service svc ->
+    def removeDiscriminatorSchemas = tasks.register("removeDiscriminatorSchemas${svc.name}") {
+        group 'specs'
+        description "Remove schemas with discriminators from ${svc.name} for dotnet"
+        dependsOn ':specs'
+        
+        // ONLY run for dotnet
+        onlyIf { project.name == 'dotnet' }
+
+        doLast {
+            def specFile = file("$rootDir/schema/json/${svc.filename}")
+            def json = new JsonSlurper().parse(specFile)
+
+            if (json.containsKey("components") && json["components"].containsKey("schemas")) {
+                def schemas = json["components"]["schemas"]
+                def schemasToRemove = [] as Set
+                
+                // Step 1: Find schemas with discriminators
+                schemas.each { Map.Entry schema ->
+                    if (schema.value?.containsKey("discriminator")) {
+                        schemasToRemove.add(schema.key)
+                    }
+                }
+                
+                // Helper function to check if an object contains a $ref to a removed schema
+                def containsRefTo = { obj, Set targetSchemas ->
+                    def checkRef
+                    checkRef = { o ->
+                        if (o instanceof Map) {
+                            if (o.'$ref' instanceof String) {
+                                def refName = o.'$ref'.tokenize('/').last()
+                                if (targetSchemas.contains(refName)) return true
+                            }
+                            return o.values().any { checkRef(it) }
+                        } else if (o instanceof List) {
+                            return o.any { checkRef(it) }
+                        }
+                        return false
+                    }
+                    return checkRef(obj)
+                }
+                
+                // Step 2: Recursively find all schemas that reference discriminated schemas
+                def iteration = 0
+                while (true) {
+                    def newFound = [] as Set
+                    schemas.each { Map.Entry schema ->
+                        if (!schemasToRemove.contains(schema.key)) {
+                            if (containsRefTo(schema.value, schemasToRemove)) {
+                                newFound.add(schema.key)
+                            }
+                        }
+                    }
+                    if (newFound.isEmpty()) break
+                    schemasToRemove.addAll(newFound)
+                    iteration++
+                    if (iteration > 10) break // Safety limit
+                }
+                
+                println "Removing ${schemasToRemove.size()} schemas (with discriminators and their children) from ${svc.name} for dotnet: ${schemasToRemove}"
+                schemasToRemove.each { schemaName ->
+                    schemas.remove(schemaName)
+                }
+                
+                // Step 3: Remove paths/endpoints that reference removed schemas
+                def pathsToRemove = []
+                if (json.containsKey("paths")) {
+                    json["paths"].each { Map.Entry path ->
+                        if (containsRefTo(path.value, schemasToRemove)) {
+                            pathsToRemove.add(path.key)
+                        }
+                    }
+                    
+                    if (!pathsToRemove.isEmpty()) {
+                        println "Removing ${pathsToRemove.size()} paths that reference discriminated schemas: ${pathsToRemove}"
+                        pathsToRemove.each { pathName ->
+                            json["paths"].remove(pathName)
+                        }
+                    }
+                }
+            }
+
+            specFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+        }
+    }
+
+    // Link the removal task to the generator task
+    tasks.named("generate$svc.name") {
+        dependsOn removeDiscriminatorSchemas
+    }
+}
+
 // update OpenAPI file of the webhooks to add a custom extension 'x-webhook-root' to the model that represents the webhook payload
 // this is necessary to generate the WebhookHandler that deserialises the Webhook models
 project.ext.services.each { Service svc ->
