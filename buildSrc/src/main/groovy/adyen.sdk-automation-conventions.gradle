@@ -21,38 +21,38 @@ repositories {
 // smallServices are APIs with a single tag 'General': the generation will create a single class/file
 List<Service> services = [
         // Payments
-        new Service(name: 'Checkout', version: 71, tag: 'Payments'),
-        new Service(name: 'Payout', version: 68, tag: 'Payments'),
-        new Service(name: 'Recurring', version: 68, small: true, tag: 'Payments'),
-        new Service(name: 'BinLookup', version: 54, small: true, tag: 'Payments'),
-        new Service(name: 'PosMobile', spec: 'SessionService', version: 68, small: true, tag: 'Payments'),
-        new Service(name: 'PaymentsApp', spec: 'PaymentsAppService', version: 1, small: true, tag: 'Payments'),
-        new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true, tag: 'Payments'),
-        new Service(name: 'StoredValue', version: 46, small: true, tag: 'Payments'),
+        new Service(name: 'Checkout', version: 71),
+        new Service(name: 'Payout', version: 68),
+        new Service(name: 'Recurring', version: 68, small: true),
+        new Service(name: 'BinLookup', version: 54, small: true),
+        new Service(name: 'PosMobile', spec: 'SessionService', version: 68, small: true),
+        new Service(name: 'PaymentsApp', spec: 'PaymentsAppService', version: 1, small: true),
+        new Service(name: 'Disputes', spec: 'DisputeService', version: 30, small: true),
+        new Service(name: 'StoredValue', version: 46, small: true),
         // Classic Payments
-        new Service(name: 'Payment', version: 68, small: true, tag: 'Payments'),
+        new Service(name: 'Payment', version: 68, small: true),
         // Management
-        new Service(name: 'Management', version: 3, tag: 'Management'),
-        new Service(name: 'BalanceControl', version: 1, small: true, tag: 'Management'),
+        new Service(name: 'Management', version: 3),
+        new Service(name: 'BalanceControl', version: 1, small: true),
         // Adyen for Platforms
-        new Service(name: 'LegalEntityManagement', spec: 'LegalEntityService', version: 4, tag: 'Platforms'),
-        new Service(name: 'BalancePlatform', version: 2, tag: 'Platforms'),
-        new Service(name: 'Transfers', spec: 'TransferService', version: 4, tag: 'Platforms'),
-        new Service(name: 'DataProtection', version: 1, small: true, tag: 'Platforms'),
-        new Service(name: 'SessionAuthentication', version: 1, tag: 'Platforms'),
-        new Service(name: 'Capital', version: 1, tag: "Platforms"),
+        new Service(name: 'LegalEntityManagement', spec: 'LegalEntityService', version: 4),
+        new Service(name: 'BalancePlatform', version: 2),
+        new Service(name: 'Transfers', spec: 'TransferService', version: 4),
+        new Service(name: 'DataProtection', version: 1, small: true),
+        new Service(name: 'SessionAuthentication', version: 1),
+        new Service(name: 'Capital', version: 1),
         // Webhooks
-        new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 2, tag: 'Webhooks'),
-        new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'ReportWebhooks', spec: 'BalancePlatformReportNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'TransferWebhooks', spec: 'BalancePlatformTransferNotification', version: 4, tag: 'Webhooks'),
-        new Service(name: 'TransactionWebhooks', spec: 'BalancePlatformTransactionNotification', version: 4, tag: 'Webhooks'),
-        new Service(name: 'ManagementWebhooks', spec: 'ManagementNotificationService', version: 3, tag: 'Webhooks'),
-        new Service(name: 'DisputeWebhooks', spec: 'BalancePlatformDisputeNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'NegativeBalanceWarningWebhooks', spec: 'BalancePlatformNegativeBalanceCompensationWarningNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'BalanceWebhooks', spec: 'BalancePlatformBalanceNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1, tag: 'Webhooks'),
-        new Service(name: 'RelayedAuthorizationWebhooks', spec: 'BalancePlatformRelayedAuthorisationNotification', version: 4, tag: 'Webhooks')
+        new Service(name: 'ConfigurationWebhooks', spec: 'BalancePlatformConfigurationNotification', version: 2),
+        new Service(name: 'AcsWebhooks', spec: 'BalancePlatformAcsNotification', version: 1),
+        new Service(name: 'ReportWebhooks', spec: 'BalancePlatformReportNotification', version: 1),
+        new Service(name: 'TransferWebhooks', spec: 'BalancePlatformTransferNotification', version: 4),
+        new Service(name: 'TransactionWebhooks', spec: 'BalancePlatformTransactionNotification', version: 4),
+        new Service(name: 'ManagementWebhooks', spec: 'ManagementNotificationService', version: 3),
+        new Service(name: 'DisputeWebhooks', spec: 'BalancePlatformDisputeNotification', version: 1),
+        new Service(name: 'NegativeBalanceWarningWebhooks', spec: 'BalancePlatformNegativeBalanceCompensationWarningNotification', version: 1),
+        new Service(name: 'BalanceWebhooks', spec: 'BalancePlatformBalanceNotification', version: 1),
+        new Service(name: 'TokenizationWebhooks', spec: 'TokenizationNotification', version: 1),
+        new Service(name: 'RelayedAuthorizationWebhooks', spec: 'BalancePlatformRelayedAuthorisationNotification', version: 4)
 ]
 
 ext {
@@ -116,30 +116,6 @@ services.each { Service svc ->
 tasks.register('services') {
     description 'Generate code for multiple services.'
     dependsOn services.collect { it.id }
-}
-
-// generate services with tag 'Payments'
-tasks.register('paymentsApis') {
-    description 'Generate code for Payments services.'
-    dependsOn services.findAll { it.tag == 'Payments' }.collect { it.id }
-}
-
-// generate services with tag 'Management'
-tasks.register('managementApis') {
-    description 'Generate code for Management services.'
-    dependsOn services.findAll { it.tag == 'Management' }.collect { it.id }
-}
-
-// generate services with tag 'Platforms'
-tasks.register('platformsApis') {
-    description 'Generate code for Platforms services.'
-    dependsOn services.findAll { it.tag == 'Platforms' }.collect { it.id }
-}
-
-// generate services with tag 'Webhooks'
-tasks.register('webhooks') {
-    description 'Generate code for Webhooks.'
-    dependsOn services.findAll { it.tag == 'Webhooks' }.collect { it.id }
 }
 
 tasks.named('generateCheckout', GenerateTask) {
