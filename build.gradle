@@ -8,7 +8,7 @@ def checkoutDir = "$projectDir/schema/json/CheckoutService-v71.json"
 tasks.register('specs', Exec) {
     group 'setup'
     description 'Clone OpenAPI spec (and apply local patches).'
-    commandLine 'git', 'clone', '--shallow-since=2025-09-01', uri, specsDir
+    commandLine 'git', 'clone', '--shallow-since=2025-09-19', uri, specsDir
     outputs.dir specsDir
     onlyIf { !file(specsDir).exists() }
     doLast {
@@ -21,6 +21,12 @@ tasks.register('specs', Exec) {
             commandLine 'git', 'checkout', 'de5cef4ad33d5b732473eb1c0ac0d0227717e21d', '--', // // same date as .NET 32.2.0 , --before="2025-10-20 23:59:38 +0200"
                         'json/LegalEntityService-v4.json', 
                         'yaml/LegalEntityService-v4.yaml'
+        }
+        exec {
+            workingDir specsDir
+            commandLine 'git', 'checkout', 'ff13376', '--', // // same date as .NET 32.2.0 , --before="2025-10-20 23:59:38 +0200"
+                        'json/CheckoutService-v71.json', 
+                        'yaml/CheckoutService-v71.yaml'
         }
         File folder = new File("$specsDir/json");
         assert folder.exists()
