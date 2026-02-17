@@ -28,6 +28,11 @@ tasks.register('specs', Exec) {
                         'json/CheckoutService-v71.json', 
                         'yaml/CheckoutService-v71.yaml'
         }
+        // Prevent breaking change on shopperName
+        exec {
+            workingDir specsDir
+            commandLine 'sed', '-i', '', 's|#/components/schemas/ShopperName|#/components/schemas/Name|g', 'json/CheckoutService-v71.json'
+        }
         File folder = new File("$specsDir/json");
         assert folder.exists()
         assert folder.isDirectory()
