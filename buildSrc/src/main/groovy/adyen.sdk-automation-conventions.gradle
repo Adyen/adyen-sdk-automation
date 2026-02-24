@@ -105,10 +105,34 @@ services.each { Service svc ->
         }
     }
 
+    def writeCommit = tasks.register("writeOpenApiCommit$svc.name") {
+        group 'metadata'
+        description "Record the OpenAPI commit SHA for $svc.name in source.json."
+        dependsOn ':specs'
+        dependsOn 'cloneRepo'
+        doLast {
+            def schemaDir = file("$rootDir/schema")
+            def sha = ['git', 'rev-parse', 'HEAD'].execute(null, schemaDir).text.trim()
+
+            def sourceFile = file("$projectDir/repo/.openapi-generator/source.json")
+            sourceFile.parentFile.mkdirs()
+
+            def json = [:]
+            if (sourceFile.exists()) {
+                json = new JsonSlurper().parse(sourceFile) as Map
+            }
+            json[svc.id] = [openapi_commit: sha]
+            // sort keys for stable output
+            def sorted = new TreeMap(json)
+            sourceFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(sorted))
+        }
+    }
+
     tasks.register(svc.id) {
         group 'service'
         description "Base task for $svc.name."
         dependsOn generate
+        dependsOn writeCommit
     }
 }
 

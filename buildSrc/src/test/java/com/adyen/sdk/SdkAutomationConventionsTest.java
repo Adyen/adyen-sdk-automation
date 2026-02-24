@@ -19,6 +19,27 @@ public class SdkAutomationConventionsTest {
     }
 
     @Test
+    public void addsWriteOpenApiCommitTaskToProject() {
+        Project project = ProjectBuilder.builder().build();
+        project.getPluginManager().apply("adyen.sdk-automation-conventions");
+
+        // verify writeOpenApiCommit tasks are registered for each service
+        assertTrue(project.getTasks().getNames().contains("writeOpenApiCommitCheckout"));
+        assertTrue(project.getTasks().getNames().contains("writeOpenApiCommitBalancePlatform"));
+        assertTrue(project.getTasks().getNames().contains("writeOpenApiCommitAcsWebhooks"));
+
+        // verify the base service task depends on the writeOpenApiCommit task
+        var checkoutTask = project.getTasks().getByName("checkout");
+        var depNames = new java.util.HashSet<String>();
+        checkoutTask.getDependsOn().forEach(dep -> {
+            if (dep instanceof org.gradle.api.tasks.TaskProvider) {
+                depNames.add(((org.gradle.api.tasks.TaskProvider<?>) dep).getName());
+            }
+        });
+        assertTrue("checkout task should depend on writeOpenApiCommitCheckout", depNames.contains("writeOpenApiCommitCheckout"));
+    }
+
+    @Test
     public void serviceName() {
         var svc = new Service();
         svc.setName("Checkout");
