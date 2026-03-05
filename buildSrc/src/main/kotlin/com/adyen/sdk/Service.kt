@@ -3,21 +3,26 @@ package com.adyen.sdk
 /**
  * Holds required information for code generation.
  */
-class Service {
+data class Service(
     /**
      * The target name of the generated service
      */
-    String name
+    val name: String,
 
     /**
      * The source API spec
      */
-    String spec
+    val spec: String? = null,
 
     /**
      * The version of the source API spec
      */
-    int version
+    val version: Int,
+
+    /**
+     * Name used for grouping services around a common tag
+     */
+    val tag: String,
 
     /**
      * A "small" service is a service that is generated in a self-contained file.
@@ -29,23 +34,23 @@ class Service {
         not generic enough to deserve its place here.
         Plus, "small" doesn't hint much about its actual meaning.
      */
-    boolean small
-
-    String getId() { name.toLowerCase() }
+    var small: Boolean = false
+) {
+    val id: String get() = name.lowercase()
 
     /**
      * The target file associated with this service
      *
      * @return The file name associated with this service
      */
-    String getFilename() { "${getSpec()}-v${version}.json" }
+    val filename: String get() = "${getSpecName()}-v$version.json"
 
     /**
      * Indicates whether this target is related to a spec from a webhook.
      *
      * @return <code>true</code> if this service is a webhook
      */
-    boolean isWebhook() { name.endsWith("Webhooks") }
+    val isWebhook: Boolean get() = name.endsWith("Webhooks")
 
     /**
      * The spec convention name.
@@ -53,5 +58,5 @@ class Service {
      *
      * @return The spec convention name
      */
-    String getSpec() { spec ?: "${name}Service" }
+    fun getSpecName(): String = spec ?: "${name}Service"
 }
