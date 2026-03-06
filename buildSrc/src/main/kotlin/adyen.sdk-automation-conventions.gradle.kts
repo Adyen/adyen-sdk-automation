@@ -9,7 +9,7 @@ apply(plugin = "org.openapi.generator")
 
 val props = Properties()
 rootProject.file("buildSrc/gradle.properties").inputStream().use { props.load(it) }
-val openApiVersion = props.getProperty("openapiGeneratorVersion")
+val openApiVersion: String? = props.getProperty("openapiGeneratorVersion")
 
 repositories {
     mavenCentral()
@@ -28,38 +28,46 @@ fun <T> cast(obj: Any?): T = obj as T
 // smallServices are APIs with a single tag 'General': the generation will create a single class/file
 val servicesList = listOf(
     // Payments
-    Service(name = "Checkout", version = 71, tag = "Payments"),
-    Service(name = "Payout", version = 68, tag = "Payments"),
-    Service(name = "Recurring", version = 68, small = true, tag = "Payments"),
-    Service(name = "BinLookup", version = 54, small = true, tag = "Payments"),
-    Service(name = "PosMobile", spec = "SessionService", version = 68, small = true, tag = "Payments"),
-    Service(name = "PaymentsApp", spec = "PaymentsAppService", version = 1, small = true, tag = "Payments"),
-    Service(name = "Disputes", spec = "DisputeService", version = 30, small = true, tag = "Payments"),
-    Service(name = "StoredValue", version = 46, small = true, tag = "Payments"),
+    Service(name = "Checkout", version = 71),
+    Service(name = "Payout", version = 68),
+    Service(name = "Recurring", version = 68, small = true),
+    Service(name = "BinLookup", version = 54, small = true),
+    Service(name = "PosMobile", spec = "SessionService", version = 68, small = true),
+    Service(name = "PaymentsApp", spec = "PaymentsAppService", version = 1, small = true),
+    Service(name = "Disputes", spec = "DisputeService", version = 30, small = true),
+    Service(name = "StoredValue", version = 46, small = true),
     // Classic Payments
-    Service(name = "Payment", version = 68, small = true, tag = "Payments"),
+    Service(name = "Payment", version = 68, small = true),
     // Management
-    Service(name = "Management", version = 3, tag = "Management"),
-    Service(name = "BalanceControl", version = 1, small = true, tag = "Management"),
+    Service(name = "Management", version = 3),
+    Service(name = "BalanceControl", version = 1, small = true),
     // Adyen for Platforms
-    Service(name = "LegalEntityManagement", spec = "LegalEntityService", version = 4, tag = "Platforms"),
-    Service(name = "BalancePlatform", version = 2, tag = "Platforms"),
-    Service(name = "Transfers", spec = "TransferService", version = 4, tag = "Platforms"),
-    Service(name = "DataProtection", version = 1, small = true, tag = "Platforms"),
-    Service(name = "SessionAuthentication", version = 1, tag = "Platforms"),
-    Service(name = "Capital", version = 1, tag = "Platforms"),
+    Service(name = "LegalEntityManagement", spec = "LegalEntityService", version = 4),
+    Service(name = "BalancePlatform", version = 2),
+    Service(name = "Transfers", spec = "TransferService", version = 4),
+    Service(name = "DataProtection", version = 1, small = true),
+    Service(name = "SessionAuthentication", version = 1),
+    Service(name = "Capital", version = 1),
     // Webhooks
-    Service(name = "ConfigurationWebhooks", spec = "BalancePlatformConfigurationNotification", version = 2, tag = "Webhooks"),
-    Service(name = "AcsWebhooks", spec = "BalancePlatformAcsNotification", version = 1, tag = "Webhooks"),
-    Service(name = "ReportWebhooks", spec = "BalancePlatformReportNotification", version = 1, tag = "Webhooks"),
-    Service(name = "TransferWebhooks", spec = "BalancePlatformTransferNotification", version = 4, tag = "Webhooks"),
-    Service(name = "TransactionWebhooks", spec = "BalancePlatformTransactionNotification", version = 4, tag = "Webhooks"),
-    Service(name = "ManagementWebhooks", spec = "ManagementNotificationService", version = 3, tag = "Webhooks"),
-    Service(name = "DisputeWebhooks", spec = "BalancePlatformDisputeNotification", version = 1, tag = "Webhooks"),
-    Service(name = "NegativeBalanceWarningWebhooks", spec = "BalancePlatformNegativeBalanceCompensationWarningNotification", version = 1, tag = "Webhooks"),
-    Service(name = "BalanceWebhooks", spec = "BalancePlatformBalanceNotification", version = 1, tag = "Webhooks"),
-    Service(name = "TokenizationWebhooks", spec = "TokenizationNotification", version = 1, tag = "Webhooks"),
-    Service(name = "RelayedAuthorizationWebhooks", spec = "BalancePlatformRelayedAuthorisationNotification", version = 4, tag = "Webhooks")
+    Service(name = "ConfigurationWebhooks", spec = "BalancePlatformConfigurationNotification", version = 2),
+    Service(name = "AcsWebhooks", spec = "BalancePlatformAcsNotification", version = 1),
+    Service(name = "ReportWebhooks", spec = "BalancePlatformReportNotification", version = 1),
+    Service(name = "TransferWebhooks", spec = "BalancePlatformTransferNotification", version = 4),
+    Service(name = "TransactionWebhooks", spec = "BalancePlatformTransactionNotification", version = 4),
+    Service(name = "ManagementWebhooks", spec = "ManagementNotificationService", version = 3),
+    Service(name = "DisputeWebhooks", spec = "BalancePlatformDisputeNotification", version = 1),
+    Service(
+        name = "NegativeBalanceWarningWebhooks",
+        spec = "BalancePlatformNegativeBalanceCompensationWarningNotification",
+        version = 1
+    ),
+    Service(name = "BalanceWebhooks", spec = "BalancePlatformBalanceNotification", version = 1),
+    Service(name = "TokenizationWebhooks", spec = "TokenizationNotification", version = 1),
+    Service(
+        name = "RelayedAuthorizationWebhooks",
+        spec = "BalancePlatformRelayedAuthorisationNotification",
+        version = 4
+    )
 )
 
 sdkExtension.services.set(servicesList)
@@ -89,16 +97,22 @@ servicesList.forEach { svc ->
         engine.set("mustache")
         validateSpec.set(false)
         skipValidateSpec.set(true)
-        reservedWordsMappings.set(mapOf(
-            "configuration" to "configuration"
-        ))
-        additionalProperties.set(mapOf(
-            "serviceName" to svc.name
-        ))
-        globalProperties.set(mapOf(
-            "modelDocs" to "false",
-            "modelTests" to "false"
-        ))
+        reservedWordsMappings.set(
+            mapOf(
+                "configuration" to "configuration"
+            )
+        )
+        additionalProperties.set(
+            mapOf(
+                "serviceName" to svc.name
+            )
+        )
+        globalProperties.set(
+            mapOf(
+                "modelDocs" to "false",
+                "modelTests" to "false"
+            )
+        )
 
         if (project.extra.has("configFile")) {
             configFile.set("$projectDir/repo/${project.extra["configFile"]}")
@@ -118,39 +132,17 @@ tasks.register("services") {
     dependsOn(servicesList.map { it.id })
 }
 
-// generate services with tag 'Payments'
-tasks.register("paymentsApis") {
-    description = "Generate code for Payments services."
-    dependsOn(servicesList.filter { it.tag == "Payments" }.map { it.id })
-}
-
-// generate services with tag 'Management'
-tasks.register("managementApis") {
-    description = "Generate code for Management services."
-    dependsOn(servicesList.filter { it.tag == "Management" }.map { it.id })
-}
-
-// generate services with tag 'Platforms'
-tasks.register("platformsApis") {
-    description = "Generate code for Platforms services."
-    dependsOn(servicesList.filter { it.tag == "Platforms" }.map { it.id })
-}
-
-// generate services with tag 'Webhooks'
-tasks.register("webhooks") {
-    description = "Generate code for Webhooks."
-    dependsOn(servicesList.filter { it.tag == "Webhooks" }.map { it.id })
-}
-
 tasks.named("generateCheckout", GenerateTask::class) {
     if (project.name == "node") {
         // generator v5 does not support inlineSchemaNameMappings
         return@named
     }
-    inlineSchemaNameMappings.set(mapOf(
-        "PaymentRequest_paymentMethod" to "CheckoutPaymentMethod",
-        "DonationPaymentRequest_paymentMethod" to "DonationPaymentMethod"
-    ))
+    inlineSchemaNameMappings.set(
+        mapOf(
+            "PaymentRequest_paymentMethod" to "CheckoutPaymentMethod",
+            "DonationPaymentRequest_paymentMethod" to "DonationPaymentMethod"
+        )
+    )
 }
 
 tasks.register<Exec>("cloneRepo") {

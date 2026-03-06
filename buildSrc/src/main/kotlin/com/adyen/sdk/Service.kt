@@ -20,11 +20,6 @@ data class Service(
     val version: Int,
 
     /**
-     * Name used for grouping services around a common tag
-     */
-    val tag: String,
-
-    /**
      * A "small" service is a service that is generated in a self-contained file.
      * In contrast, for some languages, the generated code might be bundled inside a directory.
      * Note that it's up to the underlying libs to honor this flag.
