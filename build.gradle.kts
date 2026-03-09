@@ -18,26 +18,7 @@ tasks.register<Exec>("specs") {
         assert(folder.list()?.isNotEmpty() ?: false) { "Folder cannot be empty after clone" }
         file(folder).walkTopDown().maxDepth(1).forEach { specFile ->
             if (specFile.name.endsWith(".json")) {
-                @Suppress("UNCHECKED_CAST")
-                val json = JsonSlurper().parseText(specFile.readText()) as MutableMap<String, Any>
-                // Modify the 'openapi' field
-                json["openapi"] = "3.0.0"
-
-                @Suppress("UNCHECKED_CAST")
-                val paths = json["paths"] as Map<String, Any>
-                paths.forEach { (_, endpoint) ->
-                    @Suppress("UNCHECKED_CAST")
-                    val methods = endpoint as Map<String, Any>
-                    methods.forEach { (_, httpMethod) ->
-                        @Suppress("UNCHECKED_CAST")
-                        val methodDetails = httpMethod as MutableMap<String, Any>
-                        // overwrite operationId
-                        methodDetails["operationId"] = methodDetails["x-methodName"]!!
-                    }
-                }
-
-                // Overwrite the file with updated content
-                specFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(json)))
+                specFile.writeText(com.adyen.sdk.SpecProcessor.process(specFile.readText()))
             }
         }
     }

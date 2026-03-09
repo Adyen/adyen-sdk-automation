@@ -8,7 +8,10 @@ import java.util.Properties
 apply(plugin = "org.openapi.generator")
 
 val props = Properties()
-rootProject.file("buildSrc/gradle.properties").inputStream().use { props.load(it) }
+val propsFile = rootProject.file("buildSrc/gradle.properties")
+if (propsFile.exists()) {
+    propsFile.inputStream().use { props.load(it) }
+}
 val openApiVersion: String? = props.getProperty("openapiGeneratorVersion")
 
 repositories {
