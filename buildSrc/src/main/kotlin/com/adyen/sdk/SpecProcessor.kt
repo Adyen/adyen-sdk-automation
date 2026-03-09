@@ -15,16 +15,12 @@ object SpecProcessor {
         @Suppress("UNCHECKED_CAST")
         val paths = json["paths"] as? Map<String, Any>
         // Webhooks and notifications do not have 'paths', so we skip them
-        paths?.forEach { (_, endpoint) ->
-            if (endpoint is Map<*, *>) {
-                endpoint.forEach { (method, httpMethod) ->
-                    if (httpMethod is MutableMap<*, *>) {
-                        @Suppress("UNCHECKED_CAST")
-                        val methodDetails = httpMethod as MutableMap<String, Any>
-                        // overwrite operationId if x-methodName exists (not all operations have this extension)
-                        methodDetails["x-methodName"]?.let {
-                            methodDetails["operationId"] = it
-                        }
+        paths?.values?.forEach { endpoint ->
+            (endpoint as? Map<*, *>)?.values?.forEach { httpMethod ->
+                @Suppress("UNCHECKED_CAST")
+                (httpMethod as? MutableMap<String, Any>)?.let { methodDetails ->
+                    methodDetails["x-methodName"]?.let {
+                        methodDetails["operationId"] = it
                     }
                 }
             }
