@@ -1,31 +1,46 @@
 package com.adyen.sdk
 
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
+import com.adyen.sdk.JsonUtils.patch
+import com.adyen.sdk.JsonUtils.patchJson
+import com.adyen.sdk.model.*
+import kotlinx.serialization.json.*
 
 object SpecProcessor {
+    private val jsonFormatter = Json { prettyPrint = true }
+
     fun process(content: String): String {
-        @Suppress("UNCHECKED_CAST")
-        val json = JsonSlurper().parseText(content) as? MutableMap<String, Any>
-            ?: return content
-
-        // Modify the 'openapi' field
-        json["openapi"] = "3.0.0"
-
-        @Suppress("UNCHECKED_CAST")
-        val paths = json["paths"] as? Map<String, Any>
-        // Webhooks and notifications do not have 'paths', so we skip them
-        paths?.values?.forEach { endpoint ->
-            (endpoint as? Map<*, *>)?.values?.forEach { httpMethod ->
-                @Suppress("UNCHECKED_CAST")
-                (httpMethod as? MutableMap<String, Any>)?.let { methodDetails ->
-                    methodDetails["x-methodName"]?.let {
-                        methodDetails["operationId"] = it
-                    }
-                }
-            }
+        val root = try {
+            Json.parseToJsonElement(content).jsonObject
+        } catch (e: Exception) {
+            return content
         }
 
-        return JsonOutput.prettyPrint(JsonOutput.toJson(json))
+        // Decode into typed model (ignores unknown fields)
+        val spec = patchJson.decodeFromJsonElement<OpenApiSpec>(root)
+
+        // Modify the typed models
+        val modifiedPaths = spec.paths?.mapValues { (_, pathItem) ->
+            pathItem.copy(
+                get = pathItem.get?.withOperationIdFromMethod(),
+                post = pathItem.post?.withOperationIdFromMethod(),
+                put = pathItem.put?.withOperationIdFromMethod(),
+                delete = pathItem.delete?.withOperationIdFromMethod(),
+                patch = pathItem.patch?.withOperationIdFromMethod()
+            )
+        }
+
+        val modifiedSpec = spec.copy(
+            openapi = "3.0.0",
+            paths = modifiedPaths
+        )
+
+        // Encode back and patch the original root to preserve unknown fields
+        val patch = patchJson.encodeToJsonElement(modifiedSpec)
+        val finalJson = root.patch(patch)
+
+        return jsonFormatter.encodeToString(JsonElement.serializer(), finalJson)
     }
+
+    private fun Operation.withOperationIdFromMethod(): Operation =
+        if (xMethodName != null) this.copy(operationId = xMethodName) else this
 }

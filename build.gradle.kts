@@ -1,9 +1,23 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
+plugins {
+    kotlin("plugin.serialization") version "2.3.0"
+}
+
+import kotlinx.serialization.json.*
+import com.adyen.sdk.model.*
+import com.adyen.sdk.JsonUtils.patchJson
 
 val uri = "https://github.com/Adyen/adyen-openapi.git"
 val specsDir = "$projectDir/schema"
 val checkoutDir = "$projectDir/schema/json/CheckoutService-v71.json"
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
+    }
+}
 
 tasks.register<Exec>("specs") {
     group = "setup"
@@ -31,39 +45,26 @@ tasks.register("pmTable") {
     val checkoutFile = file(checkoutDir)
     onlyIf { checkoutFile.exists() }
     doLast {
-        @Suppress("UNCHECKED_CAST")
-        val json = JsonSlurper().parseText(checkoutFile.readText()) as Map<String, Any>
-        @Suppress("UNCHECKED_CAST")
-        val components = json["components"] as Map<String, Any>
-        @Suppress("UNCHECKED_CAST")
-        val base = components["schemas"] as Map<String, Any>
+        val root = Json.parseToJsonElement(checkoutFile.readText()).jsonObject
+        val spec = patchJson.decodeFromJsonElement<OpenApiSpec>(root)
+        val schemas = spec.components?.schemas ?: return@doLast
         val pmList = mutableMapOf<String, MutableList<String>>()
 
         // find list of PaymentMethod Classes
-        @Suppress("UNCHECKED_CAST")
-        val paymentRequest = base["PaymentRequest"] as Map<String, Any>
-        @Suppress("UNCHECKED_CAST")
-        val properties = paymentRequest["properties"] as Map<String, Any>
-        @Suppress("UNCHECKED_CAST")
-        val paymentMethod = properties["paymentMethod"] as Map<String, Any>
-        @Suppress("UNCHECKED_CAST")
-        val oneOf = paymentMethod["oneOf"] as List<Map<String, String>>
+        val paymentRequest = schemas["PaymentRequest"] ?: return@doLast
+        val paymentMethod = paymentRequest.properties?.get("paymentMethod") ?: return@doLast
+        val oneOf = paymentMethod.oneOf ?: return@doLast
 
         oneOf.forEach { pmClass ->
-            val ref = pmClass["\$ref"]!!
+            val ref = pmClass.ref ?: return@forEach
             pmList[ref.replace("#/components/schemas/", "")] = mutableListOf()
         }
 
         // populate available tx variants per PaymentMethodDetailsClass
         pmList.forEach { (keyString, list) ->
-            @Suppress("UNCHECKED_CAST")
-            val schema = base[keyString] as Map<String, Any>
-            @Suppress("UNCHECKED_CAST")
-            val schemaProperties = schema["properties"] as Map<String, Any>
-            @Suppress("UNCHECKED_CAST")
-            val type = schemaProperties["type"] as Map<String, Any>
-            @Suppress("UNCHECKED_CAST")
-            val enumValues = type["enum"] as List<String>
+            val schema = schemas[keyString] ?: return@forEach
+            val type = schema.properties?.get("type") ?: return@forEach
+            val enumValues = type.enum ?: return@forEach
             list.addAll(enumValues)
         }
         println(pmList)

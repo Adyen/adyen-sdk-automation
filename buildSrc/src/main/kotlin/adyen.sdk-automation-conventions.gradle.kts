@@ -1,11 +1,15 @@
 import com.adyen.sdk.Service
 import com.adyen.sdk.SdkAutomationExtension
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
+import com.adyen.sdk.JsonUtils.patch
+import com.adyen.sdk.JsonUtils.patchJson
+import com.adyen.sdk.model.*
+import kotlinx.serialization.json.*
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 import java.util.Properties
 
 apply(plugin = "org.openapi.generator")
+
+val jsonFormatter = Json { prettyPrint = true }
 
 val props = Properties()
 val propsFile = rootProject.file("buildSrc/gradle.properties")
@@ -25,6 +29,10 @@ sdkExtension.openApiVersion.set(openApiVersion)
 // Helper to handle JSON casting
 @Suppress("UNCHECKED_CAST")
 fun <T> cast(obj: Any?): T = obj as T
+
+fun Operation.renameTags(serviceName: String): Operation {
+    return this.copy(tags = this.tags?.map { if (it == "General") serviceName else it })
+}
 
 // list of services to be generated
 // services are APIs with multiple tags: the generation will create a service class/file for each tag
@@ -208,23 +216,23 @@ sdkExtension.smallServices.get().forEach { svc ->
         onlyIf { sdkExtension.removeTags.get() }
         doLast {
             val specFile = file("$rootDir/schema/json/${svc.filename}")
-            val json = cast<MutableMap<String, Any>>(JsonSlurper().parse(specFile))
+            val root = Json.parseToJsonElement(specFile.readText()).jsonObject
+            val spec = patchJson.decodeFromJsonElement<OpenApiSpec>(root)
 
-            val paths = cast<Map<String, Any>>(json["paths"])
-            paths.forEach { (_, endpoint) ->
-                val methods = cast<Map<String, Any>>(endpoint)
-                methods.forEach { (_, httpMethod) ->
-                    val methodDetails = cast<MutableMap<String, Any>>(httpMethod)
-                    if (methodDetails.containsKey("tags") && methodDetails["tags"] is List<*>) {
-                        val tags = cast<List<String>>(methodDetails["tags"])
-                        // Rename tag associated with endpoint
-                        methodDetails["tags"] = tags.map { tag ->
-                            if (tag == "General") svc.name else tag
-                        }
-                    }
-                }
+            val modifiedPaths = spec.paths?.mapValues { (_, pathItem) ->
+                pathItem.copy(
+                    get = pathItem.get?.renameTags(svc.name),
+                    post = pathItem.post?.renameTags(svc.name),
+                    put = pathItem.put?.renameTags(svc.name),
+                    delete = pathItem.delete?.renameTags(svc.name),
+                    patch = pathItem.patch?.renameTags(svc.name)
+                )
             }
-            specFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(json)))
+            val modifiedSpec = spec.copy(paths = modifiedPaths)
+            val patch = patchJson.encodeToJsonElement(modifiedSpec)
+            val finalJson = root.patch(patch)
+
+            specFile.writeText(jsonFormatter.encodeToString(JsonElement.serializer(), finalJson))
         }
     }
     tasks.named("generate${svc.name}") { dependsOn(ungroup) }
@@ -243,48 +251,35 @@ servicesList.forEach { svc ->
         dependsOn(":specs")
         doLast {
             val specFile = file("$rootDir/schema/json/${svc.filename}")
-            val json = cast<MutableMap<String, Any>>(JsonSlurper().parse(specFile))
+            val root = Json.parseToJsonElement(specFile.readText()).jsonObject
+            val spec = patchJson.decodeFromJsonElement<OpenApiSpec>(root)
 
-            if (json.containsKey("components")) {
-                val components = cast<Map<String, Any>>(json["components"])
-                if (components.containsKey("schemas")) {
-                    val schemas = cast<Map<String, Any>>(components["schemas"])
-                    var addOnce = true
-                    schemas.forEach { (schemaKey, schemaValue) ->
-                        val schemaDetails = cast<MutableMap<String, Any>>(schemaValue)
-                        val properties = cast<Map<String, Any>?>(schemaDetails["properties"])
-                        // add 'x-webhook-root' to the webhook model (we find 'environment' and 'data' attributes)
-                        if (properties?.containsKey("environment") == true && properties.containsKey("data")) {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-                        // add 'x-webhook-root' to RelayedAuthenticationRequest model (missing 'environment' and 'data' attributes)
-                        // bespoke fix as the model doesn't adopt the standard schema
-                        if (schemaKey == "RelayedAuthenticationRequest") {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-                        // add 'x-webhook-root' to DisputeNotificationRequest model
-                        // bespoke fix as the model doesn't adopt the standard schema (missing 'environment' attribute)
-                        if (schemaKey == "DisputeNotificationRequest") {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-                        // add 'x-webhook-root' to RelayedAuthorisationRequest model (missing 'data' attributes)
-                        // bespoke fix as the model doesn't adopt the standard schema
-                        if (schemaKey == "RelayedAuthorisationRequest") {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-
-                        // Workaround
-                        // Mark one model `{{#x-has-at-least-one-webhook-root}}` as true. I could not extend this property at the root-level.
-                        // Context: {{#models}}{{#model.vendorExtensions.x-webhook-root}} -> {{#first}} won't work with multiple `x-webhook-root` extensions
-                        if (addOnce) {
-                            schemaDetails["x-has-at-least-one-webhook-root"] = true
-                            addOnce = false
-                        }
+            val modifiedSchemas = spec.components?.schemas?.toMutableMap()?.apply {
+                var addOnce = true
+                this.forEach { (key, schema) ->
+                    var modifiedSchema = schema
+                    // add 'x-webhook-root' to the webhook model
+                    if (schema.properties?.containsKey("environment") == true && schema.properties.containsKey("data")) {
+                        modifiedSchema = modifiedSchema.copy(xWebhookRoot = true)
                     }
+                    // bespoke fixes
+                    if (key in listOf("RelayedAuthenticationRequest", "DisputeNotificationRequest", "RelayedAuthorisationRequest")) {
+                        modifiedSchema = modifiedSchema.copy(xWebhookRoot = true)
+                    }
+
+                    if (addOnce) {
+                        modifiedSchema = modifiedSchema.copy(xHasAtLeastOneWebhookRoot = true)
+                        addOnce = false
+                    }
+                    this[key] = modifiedSchema
                 }
             }
 
-            specFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(json)))
+            val modifiedSpec = spec.copy(components = spec.components?.copy(schemas = modifiedSchemas))
+            val patch = patchJson.encodeToJsonElement(modifiedSpec)
+            val finalJson = root.patch(patch)
+
+            specFile.writeText(jsonFormatter.encodeToString(JsonElement.serializer(), finalJson))
         }
     }
 
