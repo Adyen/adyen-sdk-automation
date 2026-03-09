@@ -12,36 +12,36 @@ sdkAutomation.generator.set("java")
 val services = sdkAutomation.services.get()
 val serviceNaming = sdkAutomation.serviceNaming.get()
 
-tasks.withType(GenerateTask::class).configureEach {
-    val serviceId = project.name.lowercase()
-    val modelNamespace = "com.adyen.model.${serviceId}"
-    
-    templateDir.set("$projectDir/repo/templates-v7")
-    library.set("jersey3")
-    modelPackage.set(modelNamespace.replace('/', '.'))
-    apiPackage.set("com.adyen.service.${serviceId}")
-    apiNameSuffix.set("Api")
-    additionalProperties.putAll(mapOf(
-        "dateLibrary" to "java8",
-        "openApiNullable" to "false",
-        "enumPropertyNaming" to "legacy",
-        "javaxPackage" to "jakarta",
-        "containerDefaultToNull" to "true"
-    ))
-
-    if (serviceId.endsWith("webhooks")) {
-        // for webhooks only apply extra config.yaml (to generate WebhookHandler)
-        configFile.set("$projectDir/config.yaml")
-    } else {
-        // for APIs only add custom code to handle nullable properties
-        additionalProperties.put("handleNullableProperties", true)
-    }
-}
-
 // Deployment: copy and rename models/services
 services.forEach { svc ->
     val serviceName = serviceNaming[svc.id]!!
     val serviceId = serviceName.lowercase()
+
+    // Configuration
+    tasks.named<GenerateTask>("generate${svc.name}") {
+        val modelNamespace = "com.adyen.model.${serviceId}"
+
+        templateDir.set("$projectDir/repo/templates-v7")
+        library.set("jersey3")
+        modelPackage.set(modelNamespace.replace('/', '.'))
+        apiPackage.set("com.adyen.service.${serviceId}")
+        apiNameSuffix.set("Api")
+        additionalProperties.putAll(mapOf(
+            "dateLibrary" to "java8",
+            "openApiNullable" to "false",
+            "enumPropertyNaming" to "legacy",
+            "javaxPackage" to "jakarta",
+            "containerDefaultToNull" to "true"
+        ))
+
+        if (serviceId.endsWith("webhooks")) {
+            // for webhooks only apply extra config.yaml (to generate WebhookHandler)
+            configFile.set("$projectDir/config.yaml")
+        } else {
+            // for APIs only add custom code to handle nullable properties
+            additionalProperties.put("handleNullableProperties", true)
+        }
+    }
 
     // words replacement to enforce naming conventions (after code generation)
     val replaceReservedWords = { directory: Any ->
@@ -153,8 +153,8 @@ services.forEach { svc ->
 // Test binlookup generation
 tasks.named("binlookup") {
     doLast {
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/binlookup/Amount.java").exists())
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/BinLookupApi.java").exists())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/binlookup/Amount.java").readText().isNotEmpty())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/binlookup/BinLookupApi.java").readText().isNotEmpty())
         // verify DefaultApi class no longer exists (it has been renamed to BinLookupApi)
         assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/binlookup/DefaultApi.java").exists())
     }
@@ -162,20 +162,21 @@ tasks.named("binlookup") {
 // Test checkout generation
 tasks.named("checkout") {
     doLast {
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/checkout/Amount.java").exists())
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/checkout/PaymentsApi.java").exists())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/checkout/Amount.java").readText().isNotEmpty())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/checkout/PaymentsApi.java").readText().isNotEmpty())
     }
 }
 // Test acswebhooks generation
 tasks.named("acswebhooks") {
     doLast {
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/acswebhooks/Amount.java").exists())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/acswebhooks/Amount.java").readText().isNotEmpty())
         // verify no service package is created for a webhook
         assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/acswebhooks").exists())
         // verify no API class is created for a webhook
         assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/AcsWebhooksApi.java").exists())
         // verify Webhook Handler is created
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/acswebhooks/AcsWebhooksHandler.java").exists())
+        val fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/acswebhooks/AcsWebhooksHandler.java").readText()
+        assert(fileContent.contains("getAuthenticationNotificationRequest")) { "'getAuthenticationNotificationRequest' method not found in AcsWebhooksHandler.java" }
     }
 }
 
@@ -194,7 +195,7 @@ tasks.named("relayedauthorizationwebhooks") {
         // verify Webhook Handler is created
         assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorizationWebhooksHandler.java").exists())
         // verify model is created
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorisationRequest.java").exists())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorisationRequest.java").readText().isNotEmpty())
 
         val fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/relayedauthorizationwebhooks/RelayedAuthorizationWebhooksHandler.java").readText()
         assert(fileContent.contains("getRelayedAuthorisationRequest")) { "'getRelayedAuthorisationRequest' method not found in RelayedAuthorizationWebhooksHandler.java" }
@@ -203,9 +204,9 @@ tasks.named("relayedauthorizationwebhooks") {
 
 tasks.named("capital") {
     doLast {
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/capital/Amount.java").exists())
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantsApi.java").exists())
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantOffersApi.java").exists())
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantAccountsApi.java").exists())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/capital/Amount.java").readText().isNotEmpty())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantsApi.java").readText().isNotEmpty())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantOffersApi.java").readText().isNotEmpty())
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/capital/GrantAccountsApi.java").readText().isNotEmpty())
     }
 }
