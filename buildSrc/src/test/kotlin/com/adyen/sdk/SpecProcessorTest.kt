@@ -1,8 +1,7 @@
 package com.adyen.sdk
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class SpecProcessorTest {
 
@@ -24,8 +23,8 @@ class SpecProcessorTest {
 
         val result = SpecProcessor.process(input)
 
-        assertTrue(result.contains("\"openapi\": \"3.0.0\""))
-        assertTrue(result.contains("\"operationId\": \"myCustomMethod\""))
+        assertThat(result).contains("\"openapi\": \"3.0.0\"")
+        assertThat(result).contains("\"operationId\": \"myCustomMethod\"")
     }
 
     @Test
@@ -41,15 +40,15 @@ class SpecProcessorTest {
 
         val result = SpecProcessor.process(input)
 
-        assertTrue(result.contains("\"openapi\": \"3.0.0\""))
-        assertTrue(result.contains("\"title\": \"Webhook\""))
+        assertThat(result).contains("\"openapi\": \"3.0.0\"")
+        assertThat(result).contains("\"title\": \"Webhook\"")
     }
 
     @Test
     fun `handles invalid or empty JSON`() {
         val input = "[]"
         val result = SpecProcessor.process(input)
-        assertEquals(input, result)
+        assertThat(result).isEqualTo(input)
     }
 
     @Test
@@ -69,7 +68,7 @@ class SpecProcessorTest {
 
         val result = SpecProcessor.process(input)
 
-        assertTrue(result.contains("\"openapi\": \"3.0.0\""))
-        assertTrue(result.contains("\"operationId\": \"post-test\""))
+        assertThat(result).contains("\"openapi\": \"3.0.0\"")
+        assertThat(result).contains("\"operationId\": \"post-test\"")
     }
 }
