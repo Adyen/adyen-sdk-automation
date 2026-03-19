@@ -226,3 +226,4 @@ Master these tools to master this repo.
 *   **Pre-process**: OpenAPI schema (in the `schema` folder) are manipulated before kicking off the generation:
     - `x-webhook-root` extension is added to mark Webhook events
     - tags named `General` are renamed to match the name of the API
+    - endpoint `operationId` is overriden with `x-methodName` (extension used to name the generated methods/functions in the SDKs)
