@@ -63,7 +63,7 @@ Clone this repository. Then, prepare the target language environment. You cannot
 # Example: Setup for Java
 ./gradlew :java:cloneRepo
 ```
-*What this does:* It clones the official `adyen-java-api-library` into `java/repo`.
+*What this does:* It clones the official `adyen-java-api-library` into `java/repo`.  
 *⚡ Pro tip*: Clone instead the library in its own folder and use symlink, see [Pro-Tips & Troubleshooting](#-pro-tips--troubleshooting)
 
 ### Step 2: Generate Code
@@ -76,9 +76,10 @@ Run the generator for a specific service (e.g., Checkout).
 1.  **Downloads** the OpenAPI specs (if the folder `schema` doesn't exist).
 2.  **Runs** the generator using the templates in `java/repo/templates`.
 3.  **Outputs** the generated code in the `build` folder.
-4.  **Adjusts** and **copies** the code into `java/repo/...`.
-    *⚡ Pro tip*: Generate all services with `/gradlew :java:services`
-    *⚡ Pro tip*: Delete regularly the `schema` folder to clone again the OpenApi specs (make sure you are using the latest version)
+4.  **Adjusts** and **copies** the code into `java/repo/...`.  
+
+*⚡ Pro tip*: Generate all services with `/gradlew :java:services`  
+*⚡ Pro tip*: Delete regularly the `schema` folder to clone again the OpenApi specs (make sure you are using the latest version)
 
 ### Step 3: Verify
 Navigate to `java/repo` and check the status. Open the library in a different window if you have created a symlink.
@@ -91,6 +92,12 @@ You should see the newly generated files.
 ---
 
 ## 🛠️ 4. Engineer's Workflow: The "How-To"
+
+There are typically 4 worklows:
+- Fix the code generation
+- Add a new endpoint, attribute or enum
+- Update an existing API or Webhook
+- Add a new API or Webhook
 
 ### Scenario A: Working on a new feature or bug fix
 *The Goal: The generated code has a syntax error or doesn't follow our style guide.*
