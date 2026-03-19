@@ -34,6 +34,10 @@ services.<Service> each { Service svc ->
         if (serviceName == 'payment') {
             additionalProperties.classicPrefix = 'Classic'
         }
+        // when generating Recurring add prefix for service classes
+        if (serviceName == 'recurring') {
+            additionalProperties.classicPrefix = 'Legacy'
+        }
     }
 
     // Copy services
