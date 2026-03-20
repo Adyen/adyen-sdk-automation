@@ -12,7 +12,9 @@ val propsFile = rootProject.file("buildSrc/gradle.properties")
 if (propsFile.exists()) {
     propsFile.inputStream().use { props.load(it) }
 }
-val openApiVersion: String? = props.getProperty("openapiGeneratorVersion")
+val openApiVersion: String? = project.findProperty("openapiGeneratorVersion") as String?
+    ?: System.getProperty("openapiGeneratorVersion")
+    ?: props.getProperty("openapiGeneratorVersion")
 
 repositories {
     mavenCentral()

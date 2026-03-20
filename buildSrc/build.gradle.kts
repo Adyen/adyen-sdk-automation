@@ -8,7 +8,9 @@ repositories {
 }
 
 // openapiGeneratorVersion is defined in buildSrc/gradle.properties
-val openapiGeneratorVersion: String by project
+// but can be overridden via system property: -DopenapiGeneratorVersion=7.11.0
+val openapiGeneratorVersion: String = System.getProperty("openapiGeneratorVersion")
+    ?: project.findProperty("openapiGeneratorVersion") as String
 
 dependencies {
     implementation("org.openapitools:openapi-generator-gradle-plugin:$openapiGeneratorVersion")
