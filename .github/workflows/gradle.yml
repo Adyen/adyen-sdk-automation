@@ -2,6 +2,15 @@ name: Update SDKs
 
 on:
   workflow_dispatch:
+    inputs:
+      projects:
+        description: 'Comma-separated list of projects to generate (e.g. java,python). Leave empty for all.'
+        required: false
+        default: ''
+      services:
+        description: 'Comma-separated list of services to generate (e.g. checkout,management). Leave empty for all.'
+        required: false
+        default: ''
   push:
     branches: [ "main" ]
     paths-ignore:
@@ -18,19 +27,43 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      projects: ${{ steps.resolve.outputs.projects }}
+      services: ${{ steps.resolve.outputs.services }}
+    steps:
+      - name: Resolve matrix inputs
+        id: resolve
+        env:
+          INPUT_PROJECTS: ${{ github.event.inputs.projects }}
+          INPUT_SERVICES: ${{ github.event.inputs.services }}
+        run: |
+          ALL_PROJECTS='["java","php","node","python","ruby","go","dotnet"]'
+          ALL_SERVICES='["checkout","capital","payout","recurring","binlookup","posmobile","paymentsapp","disputes","storedvalue","payment","management","balancecontrol","legalentitymanagement","balanceplatform","transfers","dataprotection","sessionauthentication","configurationwebhooks","acswebhooks","reportwebhooks","transferwebhooks","transactionwebhooks","managementwebhooks","disputewebhooks","negativebalancewarningwebhooks","balancewebhooks","tokenizationwebhooks","relayedauthorizationwebhooks"]'
+
+          if [ -z "$INPUT_PROJECTS" ]; then
+            echo "projects=$ALL_PROJECTS" >> "$GITHUB_OUTPUT"
+          else
+            JSON=$(echo "$INPUT_PROJECTS" | tr ',' '\n' | jq -Rsc 'split("\n") | map(select(. != "")) | map(ltrimstr(" ") | rtrimstr(" "))')
+            echo "projects=$JSON" >> "$GITHUB_OUTPUT"
+          fi
+
+          if [ -z "$INPUT_SERVICES" ]; then
+            echo "services=$ALL_SERVICES" >> "$GITHUB_OUTPUT"
+          else
+            JSON=$(echo "$INPUT_SERVICES" | tr ',' '\n' | jq -Rsc 'split("\n") | map(select(. != "")) | map(ltrimstr(" ") | rtrimstr(" "))')
+            echo "services=$JSON" >> "$GITHUB_OUTPUT"
+          fi
+
   # split generation (create multiple PRs)
   generate-per-service:
+    needs: setup
     strategy:
       fail-fast: false
       matrix:
-        project: [ java, php, node, python, ruby, go, dotnet ]
-        service: [
-          checkout, capital, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
-          management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
-          sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
-          transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
-          balancewebhooks, tokenizationwebhooks, relayedauthorizationwebhooks
-        ]
+        project: ${{ fromJson(needs.setup.outputs.projects) }}
+        service: ${{ fromJson(needs.setup.outputs.services) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
