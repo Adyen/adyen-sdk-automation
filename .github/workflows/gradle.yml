@@ -38,23 +38,7 @@ jobs:
         env:
           INPUT_PROJECTS: ${{ github.event.inputs.projects }}
           INPUT_SERVICES: ${{ github.event.inputs.services }}
-        run: |
-          ALL_PROJECTS='["java","php","node","python","ruby","go","dotnet"]'
-          ALL_SERVICES='["checkout","capital","payout","recurring","binlookup","posmobile","paymentsapp","disputes","storedvalue","payment","management","balancecontrol","legalentitymanagement","balanceplatform","transfers","dataprotection","sessionauthentication","configurationwebhooks","acswebhooks","reportwebhooks","transferwebhooks","transactionwebhooks","managementwebhooks","disputewebhooks","negativebalancewarningwebhooks","balancewebhooks","tokenizationwebhooks","relayedauthorizationwebhooks"]'
-
-          if [ -z "$INPUT_PROJECTS" ]; then
-            echo "projects=$ALL_PROJECTS" >> "$GITHUB_OUTPUT"
-          else
-            JSON=$(echo "$INPUT_PROJECTS" | tr ',' '\n' | jq -Rsc 'split("\n") | map(select(. != "")) | map(ltrimstr(" ") | rtrimstr(" "))')
-            echo "projects=$JSON" >> "$GITHUB_OUTPUT"
-          fi
-
-          if [ -z "$INPUT_SERVICES" ]; then
-            echo "services=$ALL_SERVICES" >> "$GITHUB_OUTPUT"
-          else
-            JSON=$(echo "$INPUT_SERVICES" | tr ',' '\n' | jq -Rsc 'split("\n") | map(select(. != "")) | map(ltrimstr(" ") | rtrimstr(" "))')
-            echo "services=$JSON" >> "$GITHUB_OUTPUT"
-          fi
+        run: bash .github/scripts/resolve-matrix-inputs.sh "$GITHUB_OUTPUT"
 
   # split generation (create multiple PRs)
   generate-per-service:
