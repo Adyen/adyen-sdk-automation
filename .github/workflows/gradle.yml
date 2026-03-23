@@ -33,6 +33,8 @@ jobs:
       projects: ${{ steps.resolve.outputs.projects }}
       services: ${{ steps.resolve.outputs.services }}
     steps:
+      - uses: actions/checkout@v6
+
       - name: Resolve matrix inputs
         id: resolve
         env:
