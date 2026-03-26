@@ -12,6 +12,8 @@ sdkAutomation.generator.set("java")
 val services = sdkAutomation.services.get()
 val serviceNaming = sdkAutomation.serviceNaming.get()
 
+val tapiServiceId = "tapi"
+
 // Deployment: copy and rename models/services
 services.forEach { svc ->
     val serviceName = serviceNaming[svc.id]!!
@@ -33,6 +35,49 @@ services.forEach { svc ->
             "javaxPackage" to "jakarta",
             "containerDefaultToNull" to "true"
         ))
+
+        if (serviceId == tapiServiceId) {
+            // custom setting for Terminal API generation
+
+            // override enum naming strategy
+            additionalProperties.put("enumPropertyNaming", "MACRO_CASE")
+            // rename models for backward-compatibility
+            modelNameMappings.set(mapOf(
+                "Alignment"             to "AlignmentType",
+                "CharacterHeight"       to "CharacterHeightType",
+                "CharacterStyle"        to "CharacterStyleType",
+                "CharacterWidth"        to "CharacterWidthType",
+                "Device"                to "DeviceType",
+                "DocumentQualifier"     to "DocumentQualifierType",
+                "ErrorCondition"        to "ErrorConditionType",
+                "EventToNotify"         to "EventToNotifyType",
+                "GlobalStatus"          to "GlobalStatusType",
+                "IdentificationSupport" to "IdentificationSupportType",
+                "InfoQualify"           to "InfoQualifyType",
+                "InputCommand"          to "InputCommandType",
+                "LoyaltyHandling"       to "LoyaltyHandlingType",
+                "MenuEntryTag"          to "MenuEntryTagType",
+                "MessageCategory"       to "MessageCategoryType",
+                "MessageClass"          to "MessageClassType",
+                "OutputFormat"          to "OutputFormatType",
+                "PeriodUnit"            to "PeriodUnitType",
+                "PINFormat"             to "PINFormatType",
+                "PrinterStatus"         to "PrinterStatusType",
+                "ResponseMode"          to "ResponseModeType",
+                "Result"                to "ResultType",
+                "ReversalReason"        to "ReversalReasonType",
+                "SoundAction"           to "SoundActionType",
+                "SoundFormat"           to "SoundFormatType",
+                "TrackFormat"           to "TrackFormatType",
+                "TransactionAction"     to "TransactionActionType",
+                "TypeCode"              to "TypeCodeType",
+                "TransactionIDType"     to "TransactionIdentification"
+            ))
+            // rename attributes for backward-compatibility
+            nameMappings.set(mapOf(
+                "POIData" to "poIData"
+            ))
+        }
 
         if (serviceId.endsWith("webhooks")) {
             // for webhooks only apply extra config.yaml (to generate WebhookHandler)
@@ -86,6 +131,7 @@ services.forEach { svc ->
         description = "Deploy ${svc.name} services into the repo."
         dependsOn(deployModels)
         outputs.upToDateWhen { false }
+        onlyIf { serviceId != tapiServiceId } // skip for Terminal API
 
         // delete existing services
         doFirst {
