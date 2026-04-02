@@ -42,37 +42,40 @@ services.forEach { svc ->
             // override enum naming strategy
             additionalProperties.put("enumPropertyNaming", "MACRO_CASE")
             // rename models for backward-compatibility
-            modelNameMappings.set(mapOf(
-                "Alignment"             to "AlignmentType",
-                "CharacterHeight"       to "CharacterHeightType",
-                "CharacterStyle"        to "CharacterStyleType",
-                "CharacterWidth"        to "CharacterWidthType",
-                "Device"                to "DeviceType",
-                "DocumentQualifier"     to "DocumentQualifierType",
-                "ErrorCondition"        to "ErrorConditionType",
-                "EventToNotify"         to "EventToNotifyType",
-                "GlobalStatus"          to "GlobalStatusType",
-                "IdentificationSupport" to "IdentificationSupportType",
-                "InfoQualify"           to "InfoQualifyType",
-                "InputCommand"          to "InputCommandType",
-                "LoyaltyHandling"       to "LoyaltyHandlingType",
-                "MenuEntryTag"          to "MenuEntryTagType",
-                "MessageCategory"       to "MessageCategoryType",
-                "MessageClass"          to "MessageClassType",
-                "OutputFormat"          to "OutputFormatType",
-                "PeriodUnit"            to "PeriodUnitType",
-                "PINFormat"             to "PINFormatType",
-                "PrinterStatus"         to "PrinterStatusType",
-                "ResponseMode"          to "ResponseModeType",
-                "Result"                to "ResultType",
-                "ReversalReason"        to "ReversalReasonType",
-                "SoundAction"           to "SoundActionType",
-                "SoundFormat"           to "SoundFormatType",
-                "TrackFormat"           to "TrackFormatType",
-                "TransactionAction"     to "TransactionActionType",
-                "TypeCode"              to "TypeCodeType",
-                "TransactionIDType"     to "TransactionIdentification"
-            ))
+            val typePostfixModels = listOf(
+                "Alignment",
+                "CharacterHeight",
+                "CharacterStyle",
+                "CharacterWidth",
+                "Device",
+                "DocumentQualifier",
+                "ErrorCondition",
+                "EventToNotify",
+                "GlobalStatus",
+                "IdentificationSupport",
+                "InfoQualify",
+                "InputCommand",
+                "LoyaltyHandling",
+                "MenuEntryTag",
+                "MessageCategory",
+                "MessageClass",
+                "OutputFormat",
+                "PeriodUnit",
+                "PINFormat",
+                "PrinterStatus",
+                "ResponseMode",
+                "Result",
+                "ReversalReason",
+                "SoundAction",
+                "SoundFormat",
+                "TrackFormat",
+                "TransactionAction",
+                "TypeCode"
+            )
+            modelNameMappings.set(
+                typePostfixModels.associateWith { "${it}Type" } +
+                mapOf("TransactionIDType" to "TransactionIdentification")
+            )
             // rename attributes for backward-compatibility
             nameMappings.set(mapOf(
                 "POIData" to "poIData"
@@ -193,6 +196,24 @@ services.forEach { svc ->
 
     tasks.named(svc.id) {
         dependsOn(deployModels, deployServices, deploySerializers, deployWebhookHandlers)
+    }
+}
+
+// Test tapi generation
+tasks.named("tapi") {
+    doLast {
+        // verify a known model is generated
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/SaleToPOIRequest.java").readText().isNotEmpty())
+        // verify no service package is created for tapi
+        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/tapi").exists())
+        // verify model name mappings applied (e.g. Device -> DeviceType)
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/DeviceType.java").exists()) { "'DeviceType.java' not found - modelNameMapping for 'Device' was not applied" }
+        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/Device.java").exists()) { "'Device.java' should have been renamed to 'DeviceType.java'" }
+        // verify special mapping: TransactionIDType -> TransactionIdentification
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/TransactionIdentification.java").exists()) { "'TransactionIdentification.java' not found - modelNameMapping for 'TransactionIDType' was not applied" }
+        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/TransactionIDType.java").exists()) { "'TransactionIDType.java' should have been renamed to 'TransactionIdentification.java'" }
+        // verify JSON serializer is deployed
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/JSON.java").readText().isNotEmpty()) { "'JSON.java' not found in tapi model folder" }
     }
 }
 
