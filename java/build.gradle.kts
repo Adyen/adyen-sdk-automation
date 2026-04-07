@@ -41,44 +41,9 @@ services.forEach { svc ->
 
             // override enum naming strategy
             additionalProperties.put("enumPropertyNaming", "MACRO_CASE")
-            // rename models for backward-compatibility
-            val typePostfixModels = listOf(
-                "Alignment",
-                "CharacterHeight",
-                "CharacterStyle",
-                "CharacterWidth",
-                "Device",
-                "DocumentQualifier",
-                "ErrorCondition",
-                "EventToNotify",
-                "GlobalStatus",
-                "IdentificationSupport",
-                "InfoQualify",
-                "InputCommand",
-                "LoyaltyHandling",
-                "MenuEntryTag",
-                "MessageCategory",
-                "MessageClass",
-                "OutputFormat",
-                "PeriodUnit",
-                "PINFormat",
-                "PrinterStatus",
-                "ResponseMode",
-                "Result",
-                "ReversalReason",
-                "SoundAction",
-                "SoundFormat",
-                "TrackFormat",
-                "TransactionAction",
-                "TypeCode"
-            )
-            modelNameMappings.set(
-                typePostfixModels.associateWith { "${it}Type" } +
-                mapOf("TransactionIDType" to "TransactionIdentification")
-            )
             // rename attributes for backward-compatibility
             nameMappings.set(mapOf(
-                "POIData" to "poIData"
+                "POIData" to "poiData"
             ))
         }
 
