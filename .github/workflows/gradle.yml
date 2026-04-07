@@ -23,13 +23,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [ java, php, node, python, ruby, go, dotnet ]
+        project: [ java ]
         service: [
-          checkout, capital, payout, recurring, binlookup, posmobile, paymentsapp, disputes, storedvalue, payment,
-          management, balancecontrol, legalentitymanagement, balanceplatform, transfers, dataprotection,
-          sessionauthentication, configurationwebhooks, acswebhooks, reportwebhooks, transferwebhooks,
-          transactionwebhooks, managementwebhooks, disputewebhooks, negativebalancewarningwebhooks,
-          balancewebhooks, tokenizationwebhooks, relayedauthorizationwebhooks
+          recurring
         ]
     runs-on: ubuntu-latest
     steps:
@@ -109,7 +105,8 @@ jobs:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           committer: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
           author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
-          branch: sdk-automation/${{ matrix.service }}
+#          branch: sdk-automation/${{ matrix.service }}
+          branch: patch/v41.1.1
           title: '[${{ matrix.service }}] Code generation: update services and models'
           body: |
             This PR contains the automated changes for the `${{ matrix.service }}` service.
