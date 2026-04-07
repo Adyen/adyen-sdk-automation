@@ -1,0 +1,22 @@
+name: Gradle PR Sanity Check
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  gradle-check:
+    name: Configure build tasks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Run `gradle tasks`
+        run: ./gradlew tasks --all
