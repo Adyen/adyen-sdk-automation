@@ -43,8 +43,8 @@ val servicesList = listOf(
     Service(name = "StoredValue", version = 46, small = true),
     // Classic Payments
     Service(name = "Payment", version = 68, small = true),
-    // Terminal API models
-    Service(name = "Tapi", spec = "TerminalAPI", version = 1),
+    // Terminal API models (available for specific libraries)
+    Service(name = "Tapi", spec = "TerminalAPI", version = 1, projects = listOf("java")),
     // Management
     Service(name = "Management", version = 3),
     Service(name = "BalanceControl", version = 1, small = true),
@@ -77,10 +77,13 @@ val servicesList = listOf(
     )
 )
 
-sdkExtension.services.set(servicesList)
-sdkExtension.smallServices.set(servicesList.filter { it.small })
-sdkExtension.serviceNaming.set(servicesList.associate { it.id to it.name })
-sdkExtension.serviceNamingCamel.set(servicesList.associate {
+// Filter services by project. When project is undefined, all services are included
+val applicableServices = servicesList.filter { it.projects == null || it.projects.contains(project.name) }
+
+sdkExtension.services.set(applicableServices)
+sdkExtension.smallServices.set(applicableServices.filter { it.small })
+sdkExtension.serviceNaming.set(applicableServices.associate { it.id to it.name })
+sdkExtension.serviceNamingCamel.set(applicableServices.associate {
     it.id to (it.name.substring(0, 1).lowercase() + it.name.substring(1))
 })
 sdkExtension.generator.set(project.name)
@@ -89,7 +92,7 @@ sdkExtension.serviceName.set("")
 sdkExtension.removeTags.set(true)
 
 // Generate a full client for each service
-servicesList.forEach { svc ->
+applicableServices.forEach { svc ->
     val generate = tasks.register("generate${svc.name}", GenerateTask::class) {
         println("Generating ${svc.name} Client...")
         group = "generate"
@@ -136,7 +139,7 @@ servicesList.forEach { svc ->
 // generate all services
 tasks.register("services") {
     description = "Generate code for multiple services."
-    dependsOn(servicesList.map { it.id })
+    dependsOn(applicableServices.map { it.id })
 }
 
 tasks.named("generateCheckout", GenerateTask::class) {
@@ -236,7 +239,7 @@ sdkExtension.smallServices.get().forEach { svc ->
 
 // update OpenAPI file of the webhooks to add a custom extension 'x-webhook-root' to the model that represents the webhook payload
 // this is necessary to generate the WebhookHandler that deserialises the Webhook models
-servicesList.forEach { svc ->
+applicableServices.forEach { svc ->
     // unnecessary to create webhook-related tasks for services/specs not related to webhooks
     if (!svc.isWebhook) {
         return@forEach

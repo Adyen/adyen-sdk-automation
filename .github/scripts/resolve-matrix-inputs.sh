@@ -4,7 +4,7 @@ set -euo pipefail
 OUTPUT_FILE="${1:?Usage: $0 <output-file>}"
 
 ALL_PROJECTS='["java","php","node","python","ruby","go","dotnet"]'
-ALL_SERVICES='["checkout","capital","payout","recurring","binlookup","posmobile","paymentsapp","disputes","storedvalue","payment","management","balancecontrol","legalentitymanagement","balanceplatform","transfers","dataprotection","sessionauthentication","configurationwebhooks","acswebhooks","reportwebhooks","transferwebhooks","transactionwebhooks","managementwebhooks","disputewebhooks","negativebalancewarningwebhooks","balancewebhooks","tokenizationwebhooks","relayedauthorizationwebhooks"]'
+ALL_SERVICES='["checkout","capital","payout","recurring","binlookup","posmobile","paymentsapp","disputes","storedvalue","payment","tapi","management","balancecontrol","legalentitymanagement","balanceplatform","transfers","dataprotection","sessionauthentication","configurationwebhooks","acswebhooks","reportwebhooks","transferwebhooks","transactionwebhooks","managementwebhooks","disputewebhooks","negativebalancewarningwebhooks","balancewebhooks","tokenizationwebhooks","relayedauthorizationwebhooks"]'
 
 if [ -z "${INPUT_PROJECTS:-}" ]; then
   echo "projects=$ALL_PROJECTS" >> "$OUTPUT_FILE"

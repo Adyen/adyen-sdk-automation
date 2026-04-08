@@ -71,7 +71,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Override properties
-        if: matrix.project != 'php'
         env:
           PROJECT: ${{ matrix.project }}
         run: cp $PROJECT/gradle.properties buildSrc
@@ -80,7 +79,12 @@ jobs:
         env:
           PROJECT: ${{ matrix.project }}
           SERVICE: ${{ matrix.service }}
-        run: ./gradlew $PROJECT:$SERVICE
+        run: |
+          if ./gradlew :$PROJECT:tasks --group=service 2>/dev/null | grep -qw "^$SERVICE"; then
+            ./gradlew $PROJECT:$SERVICE
+          else
+            echo "Service '$SERVICE' is not applicable for '$PROJECT', skipping."
+          fi
 
       - name: Check for and prepare formatting action
         id: prep_action

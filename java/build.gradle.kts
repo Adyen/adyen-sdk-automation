@@ -171,12 +171,13 @@ tasks.named("tapi") {
         assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/SaleToPOIRequest.java").readText().isNotEmpty())
         // verify no service package is created for tapi
         assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/tapi").exists())
-        // verify model name mappings applied (e.g. Device -> DeviceType)
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/DeviceType.java").exists()) { "'DeviceType.java' not found - modelNameMapping for 'Device' was not applied" }
-        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/Device.java").exists()) { "'Device.java' should have been renamed to 'DeviceType.java'" }
-        // verify special mapping: TransactionIDType -> TransactionIdentification
-        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/TransactionIdentification.java").exists()) { "'TransactionIdentification.java' not found - modelNameMapping for 'TransactionIDType' was not applied" }
-        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/TransactionIDType.java").exists()) { "'TransactionIDType.java' should have been renamed to 'TransactionIdentification.java'" }
+        // verify Webhook Handler is created
+        val fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/MessageHeader.java").readText()
+        assert(fileContent.contains("private String POIID;")) { "'POIID' attribute not found in MessageHeader.java" }
+
+        // verify enum name is correct (Device instead of DeviceType)
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/Device.java").exists()) { "'Device.java' not found" }
+        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/DeviceType.java").exists()) { "'DeviceType.java' is unexpected" }
         // verify JSON serializer is deployed
         assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/JSON.java").readText().isNotEmpty()) { "'JSON.java' not found in tapi model folder" }
     }

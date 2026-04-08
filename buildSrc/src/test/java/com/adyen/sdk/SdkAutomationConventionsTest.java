@@ -20,8 +20,26 @@ public class SdkAutomationConventionsTest {
     }
 
     @Test
+    public void tapiTaskExistsForJava() {
+        Project project = ProjectBuilder.builder().withName("java").build();
+        project.getPluginManager().apply("adyen.sdk-automation-conventions");
+
+        assertThat(project.getTasks().findByName("tapi")).isNotNull();
+        assertThat(project.getTasks().findByName("generateTapi")).isNotNull();
+    }
+
+    @Test
+    public void tapiTaskDoesNotExistForGo() {
+        Project project = ProjectBuilder.builder().withName("go").build();
+        project.getPluginManager().apply("adyen.sdk-automation-conventions");
+
+        assertThat(project.getTasks().findByName("tapi")).isNull();
+        assertThat(project.getTasks().findByName("generateTapi")).isNull();
+    }
+
+    @Test
     public void serviceName() {
-        var svc = new Service("Checkout", null, 71, false);
+        var svc = new Service("Checkout", null, 71, false, null);
 
         assertThat(svc.getFilename()).isEqualTo("CheckoutService-v71.json");
     }

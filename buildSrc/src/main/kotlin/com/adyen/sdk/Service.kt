@@ -29,7 +29,13 @@ data class Service(
         not generic enough to deserve its place here.
         Plus, "small" doesn't hint much about its actual meaning.
      */
-    var small: Boolean = false
+    var small: Boolean = false,
+
+    /**
+     * The list of projects that support this service (e.g. ["java", "node"]).
+     * Null means the service is available for all projects.
+     */
+    val projects: List<String>? = null
 ) {
     val id: String get() = name.lowercase()
 
