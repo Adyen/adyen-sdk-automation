@@ -83,6 +83,7 @@ jobs:
         run: |
           if ./gradlew :$PROJECT:tasks --group=service 2>/dev/null | grep -qw "^$SERVICE"; then
             ./gradlew $PROJECT:$SERVICE
+            echo "applicable=true" >> "$GITHUB_OUTPUT"
           else
             echo "Service '$SERVICE' is not applicable for '$PROJECT', skipping."
             echo "applicable=false" >> "$GITHUB_OUTPUT"
