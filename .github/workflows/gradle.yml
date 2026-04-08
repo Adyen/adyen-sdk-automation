@@ -76,18 +76,24 @@ jobs:
         run: cp $PROJECT/gradle.properties buildSrc
 
       - name: Generate code for ${{ matrix.service }} in ${{ matrix.project }}
+        id: generate
         env:
           PROJECT: ${{ matrix.project }}
           SERVICE: ${{ matrix.service }}
         run: |
           if ./gradlew :$PROJECT:tasks --group=service 2>/dev/null | grep -qw "^$SERVICE"; then
             ./gradlew $PROJECT:$SERVICE
+            # Service generation is performed, enable following steps
+            echo "service_generation=true" >> "$GITHUB_OUTPUT"
           else
+            # Service generation is disabled, skip following steps
             echo "Service '$SERVICE' is not applicable for '$PROJECT', skipping."
+            echo "service_generation=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Check for and prepare formatting action
         id: prep_action
+        if: steps.generate.outputs.service_generation != 'false'
         # Some libraries have a formatting action in their repository, so we check for it and copy it to a temporary directory to use it later.
         run: |
           if [[ -f "${{ matrix.project }}/repo/.github/actions/format/action.yml" ]]; then
@@ -100,13 +106,14 @@ jobs:
 
       - name: Format Code
         # We run the formatting action if it exists.
-        if: steps.prep_action.outputs.format_action_exists == 'true'
+        if: steps.generate.outputs.service_generation != 'false' && steps.prep_action.outputs.format_action_exists == 'true'
         uses: ./.temp-format-action/format
         with:
           path: ${{ matrix.project }}/repo
 
       - name: Check for changes
         id: changes
+        if: steps.generate.outputs.service_generation != 'false'
         working-directory: ${{ matrix.project }}/repo
         run: |
           # Check for modified tracked files AND new untracked files
@@ -120,12 +127,13 @@ jobs:
 
       - name: Get OpenAPI commit SHA
         id: vars
+        if: steps.generate.outputs.service_generation != 'false'
         run: |
           echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Create Pull Request
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.generate.outputs.service_generation != 'false' && steps.changes.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
           path: ${{ matrix.project }}/repo
