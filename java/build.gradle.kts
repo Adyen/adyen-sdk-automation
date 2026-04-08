@@ -12,6 +12,8 @@ sdkAutomation.generator.set("java")
 val services = sdkAutomation.services.get()
 val serviceNaming = sdkAutomation.serviceNaming.get()
 
+val tapiServiceId = "tapi"
+
 // Deployment: copy and rename models/services
 services.forEach { svc ->
     val serviceName = serviceNaming[svc.id]!!
@@ -33,6 +35,17 @@ services.forEach { svc ->
             "javaxPackage" to "jakarta",
             "containerDefaultToNull" to "true"
         ))
+
+        if (serviceId == tapiServiceId) {
+            // custom setting for Terminal API generation
+
+            // override enum naming strategy
+            additionalProperties.put("enumPropertyNaming", "MACRO_CASE")
+            // rename attributes for backward-compatibility
+            nameMappings.set(mapOf(
+                "POIData" to "poiData"
+            ))
+        }
 
         if (serviceId.endsWith("webhooks")) {
             // for webhooks only apply extra config.yaml (to generate WebhookHandler)
@@ -86,6 +99,7 @@ services.forEach { svc ->
         description = "Deploy ${svc.name} services into the repo."
         dependsOn(deployModels)
         outputs.upToDateWhen { false }
+        onlyIf { serviceId != tapiServiceId } // skip for Terminal API
 
         // delete existing services
         doFirst {
@@ -147,6 +161,25 @@ services.forEach { svc ->
 
     tasks.named(svc.id) {
         dependsOn(deployModels, deployServices, deploySerializers, deployWebhookHandlers)
+    }
+}
+
+// Test tapi generation
+tasks.named("tapi") {
+    doLast {
+        // verify a known model is generated
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/SaleToPOIRequest.java").readText().isNotEmpty())
+        // verify no service package is created for tapi
+        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/tapi").exists())
+        // verify Webhook Handler is created
+        val fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/MessageHeader.java").readText()
+        assert(fileContent.contains("private String POIID;")) { "'POIID' attribute not found in MessageHeader.java" }
+
+        // verify enum name is correct (Device instead of DeviceType)
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/Device.java").exists()) { "'Device.java' not found" }
+        assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/DeviceType.java").exists()) { "'DeviceType.java' is unexpected" }
+        // verify JSON serializer is deployed
+        assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/JSON.java").readText().isNotEmpty()) { "'JSON.java' not found in tapi model folder" }
     }
 }
 
