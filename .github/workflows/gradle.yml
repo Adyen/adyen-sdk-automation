@@ -120,9 +120,30 @@ jobs:
 
       - name: Get OpenAPI commit SHA
         id: vars
+        env:
+          PROJECT: ${{ matrix.project }}
         run: |
           echo "sha=$(cd schema && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "library_sha=$(cd $PROJECT/repo && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Write generation log
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          PROJECT: ${{ matrix.project }}
+          SERVICE: ${{ matrix.service }}
+        run: |
+          mkdir -p $PROJECT/repo/sdk-generation-log
+          cat > $PROJECT/repo/sdk-generation-log/$SERVICE.json << EOF
+          {
+            "service": "$SERVICE",
+            "project": "$PROJECT",
+            "generatedAt": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "openapiCommitSha": "${{ steps.vars.outputs.sha }}",
+            "automationCommitSha": "${{ github.sha }}",
+            "libraryCommitSha": "${{ steps.vars.outputs.library_sha }}"
+          }
+          EOF
 
       - name: Create Pull Request
         if: steps.changes.outputs.changed == 'true'
