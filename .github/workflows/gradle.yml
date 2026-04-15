@@ -110,9 +110,14 @@ jobs:
         working-directory: ${{ matrix.project }}/repo
         run: |
           # Check for modified tracked files AND new untracked files
+          echo "=== Git Status Output ==="
+          git status --porcelain
+          
           if [ -n "$(git status --porcelain)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "Changes detected."
+            echo ""
+            echo "=== Diff Summary ==="
+            git diff --stat
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes detected."
