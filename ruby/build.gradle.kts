@@ -32,6 +32,10 @@ services.forEach { svc ->
         if (serviceName == "payment") {
             additionalProperties.put("classicPrefix", "Classic")
         }
+        // when generating Recurring add Legacy prefix to avoid namespace clashing
+        if (serviceName == "recurring") {
+            additionalProperties.put("classicPrefix", "Legacy")
+        }
     }
 
     // Copy services
@@ -68,13 +72,21 @@ services.forEach { svc ->
 // Tests
 tasks.named("checkout") {
     doLast {
-        assert(file("${layout.projectDirectory}/repo/lib/adyen/services/checkout/payments_api.rb").exists())
-        assert(file("${layout.projectDirectory}/repo/lib/adyen/services/checkout.rb").exists())
+        check(file("${layout.projectDirectory}/repo/lib/adyen/services/checkout/payments_api.rb").exists()) { "checkout/payments_api.rb not found" }
+        check(file("${layout.projectDirectory}/repo/lib/adyen/services/checkout.rb").exists()) { "checkout.rb not found" }
     }
 }
 tasks.named("binlookup") {
     doLast {
-        assert(file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup/bin_lookup_api.rb").exists())
-        assert(file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup").exists())
+        check(file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup/bin_lookup_api.rb").exists()) { "binLookup/bin_lookup_api.rb not found" }
+        check(file("${layout.projectDirectory}/repo/lib/adyen/services/binLookup").exists()) { "binLookup directory not found" }
+    }
+}
+tasks.named("recurring") {
+    doLast {
+        val apiFile = file("${layout.projectDirectory}/repo/lib/adyen/services/recurring/recurring_api.rb")
+        check(apiFile.exists()) { "recurring/recurring_api.rb not found" }
+        check(apiFile.readText().contains("LegacyRecurringApi")) { "LegacyRecurringApi class not found in recurring_api.rb" }
+        check(file("${layout.projectDirectory}/repo/lib/adyen/services/recurring.rb").exists()) { "recurring.rb not found" }
     }
 }
