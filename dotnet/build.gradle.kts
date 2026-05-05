@@ -290,38 +290,38 @@ tasks.named("checkout") {
         val serviceName = "Checkout"
 
         // /Models folder
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Models/Amount.cs").exists())
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Models/Amount.cs").exists()) { "$serviceName/Models/Amount.cs not found" }
 
         // /Services folder
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Services/PaymentsService.cs").exists())
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Services/PaymentsService.cs").exists()) { "$serviceName/Services/PaymentsService.cs not found" }
 
         // /Client folder
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/ApiKeyToken.cs").exists())
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/ClientUtils.cs").exists())
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/HostConfiguration.cs").exists())
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/JsonSerializerOptionsProvider.cs").exists())
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/AdyenOptionsProvider.cs").exists())
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/ApiKeyToken.cs").exists()) { "$serviceName/Client/ApiKeyToken.cs not found" }
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/ClientUtils.cs").exists()) { "$serviceName/Client/ClientUtils.cs not found" }
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/HostConfiguration.cs").exists()) { "$serviceName/Client/HostConfiguration.cs not found" }
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/JsonSerializerOptionsProvider.cs").exists()) { "$serviceName/Client/JsonSerializerOptionsProvider.cs not found" }
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Client/AdyenOptionsProvider.cs").exists()) { "$serviceName/Client/AdyenOptionsProvider.cs not found" }
 
         // /Extensions folder
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Extensions/HostBuilderExtensions.cs").exists())
-        assert(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Extensions/ServiceCollectionExtensions.cs").exists())
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Extensions/HostBuilderExtensions.cs").exists()) { "$serviceName/Extensions/HostBuilderExtensions.cs not found" }
+        check(file("${layout.projectDirectory}/repo/Adyen/$serviceName/Extensions/ServiceCollectionExtensions.cs").exists()) { "$serviceName/Extensions/ServiceCollectionExtensions.cs not found" }
 
         // /Handlers folders should not exist for services.
-        assert(!file("${layout.projectDirectory}/repo/Adyen/$serviceName/Handlers").exists())
+        check(!file("${layout.projectDirectory}/repo/Adyen/$serviceName/Handlers").exists()) { "$serviceName/Handlers directory should not exist for services" }
     }
 }
 
 // Test webhook generation, supporting files WebhookHandler.cs and HmacKeyToken.cs both exist.
 tasks.named("acswebhooks") {
     doLast {
-        assert(file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Models/Amount.cs").exists())
+        check(file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Models/Amount.cs").exists()) { "AcsWebhooks/Models/Amount.cs not found" }
 
-        assert(file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Client/AdyenOptionsProvider.cs").exists())
+        check(file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Client/AdyenOptionsProvider.cs").exists()) { "AcsWebhooks/Client/AdyenOptionsProvider.cs not found" }
 
-        assert(!file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/WebhookHandler.cs").exists())
-        assert(!file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/HmacKeyToken.cs").exists())
+        check(!file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/WebhookHandler.cs").exists()) { "AcsWebhooks/Handlers/WebhookHandler.cs should not exist" }
+        check(!file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Handlers/HmacKeyToken.cs").exists()) { "AcsWebhooks/Handlers/HmacKeyToken.cs should not exist" }
 
-        assert(!file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Services").exists())
-        assert(!file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooksService.cs").exists())
+        check(!file("${layout.projectDirectory}/repo/Adyen/AcsWebhooks/Services").exists()) { "AcsWebhooks/Services directory should not exist" }
+        check(!file("${layout.projectDirectory}/repo/Adyen/Service/AcsWebhooksService.cs").exists()) { "Service/AcsWebhooksService.cs should not exist" }
     }
 }
