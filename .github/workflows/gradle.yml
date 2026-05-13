@@ -33,7 +33,7 @@ jobs:
       projects: ${{ steps.resolve.outputs.projects }}
       services: ${{ steps.resolve.outputs.services }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Resolve matrix inputs
         id: resolve
@@ -52,23 +52,23 @@ jobs:
         service: ${{ fromJson(needs.setup.outputs.services) }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Clone ${{ matrix.project }} repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           repository: Adyen/adyen-${{ matrix.project }}-api-library
           path: ${{ matrix.project }}/repo
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v5
 
       - name: Override properties
         env:
@@ -152,7 +152,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.changes.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           path: ${{ matrix.project }}/repo
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
