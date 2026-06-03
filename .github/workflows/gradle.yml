@@ -33,7 +33,7 @@ jobs:
       projects: ${{ steps.resolve.outputs.projects }}
       services: ${{ steps.resolve.outputs.services }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
 
       - name: Resolve matrix inputs
         id: resolve
@@ -52,7 +52,7 @@ jobs:
         service: ${{ fromJson(needs.setup.outputs.services) }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
 
       - name: Set up JDK 21
         uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
@@ -61,7 +61,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Clone ${{ matrix.project }} repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
           repository: Adyen/adyen-${{ matrix.project }}-api-library
