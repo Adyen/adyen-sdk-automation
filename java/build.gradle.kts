@@ -171,7 +171,7 @@ tasks.named("tapi") {
         assert(file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/SaleToPOIRequest.java").readText().isNotEmpty())
         // verify no service package is created for tapi
         assert(!file("${layout.projectDirectory}/repo/src/main/java/com/adyen/service/tapi").exists())
-        // verify Webhook Handler is created
+        // verify MessageHeader is created
         val fileContent = file("${layout.projectDirectory}/repo/src/main/java/com/adyen/model/tapi/MessageHeader.java").readText()
         assert(fileContent.contains("private String POIID;")) { "'POIID' attribute not found in MessageHeader.java" }
 
