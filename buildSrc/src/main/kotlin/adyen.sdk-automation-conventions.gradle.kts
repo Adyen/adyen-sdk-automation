@@ -44,7 +44,7 @@ val servicesList = listOf(
     // Classic Payments
     Service(name = "Payment", version = 68, small = true),
     // Terminal API models (available for specific libraries)
-    Service(name = "Tapi", spec = "TerminalAPI", version = 1, projects = listOf("java")),
+    Service(name = "Tapi", spec = "TerminalAPI", version = 1, projects = listOf("java", "node")),
     // Management
     Service(name = "Management", version = 3),
     Service(name = "BalanceControl", version = 1, small = true),

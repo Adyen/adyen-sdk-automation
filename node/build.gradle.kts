@@ -18,6 +18,8 @@ sdkAutomation.generator.set("typescript")
 val services = sdkAutomation.services.get()
 val serviceNaming = sdkAutomation.serviceNamingCamel.get()
 
+val tapiServiceId = "tapi"
+
 services.forEach { svc ->
     // service name starting lowercase
     val serviceName = serviceNaming[svc.id]!!
@@ -87,14 +89,14 @@ services.forEach { svc ->
      * - copy generated models from build (generated code) to the library services folder
      * - rename to start with lowercase (to follow naming conventions)
      *
-     * Note: webhook specs (i.e. ConfigurationWebhooks, etc.. ) are skipped because Webhooks generation must only creates models
+     * Note: skip webhooks and TAPI specs as they only require generation of models
     */
     val deployServices = tasks.register<Sync>("deploy${svc.name}Services") {
         group = "deploy"
         description = "Deploy ${svc.name} into the repo."
         dependsOn("generate${svc.name}")
         outputs.upToDateWhen { false }
-        onlyIf { !svc.isWebhook } // skip webhooks (this task is for generating service classes only)
+        onlyIf { !svc.isWebhook && svc.id != tapiServiceId } // continue only when it is not webhooks nor tapi
 
         from(layout.buildDirectory.dir("services/${svc.id}/apis")) {
             include("*Api.ts")
@@ -167,5 +169,23 @@ tasks.named("capital") {
         assert(file("${layout.projectDirectory}/repo/src/services/capital/grantsApi.ts").exists())
         assert(file("${layout.projectDirectory}/repo/src/services/capital/grantOffersApi.ts").exists())
         assert(file("${layout.projectDirectory}/repo/src/services/capital/grantAccountsApi.ts").exists())
+    }
+}
+
+tasks.named("tapi") {
+    doLast {
+        // verify a known model is generated
+        assert(file("${layout.projectDirectory}/repo/src/typings/tapi/saleToPOIRequest.ts").readText().isNotEmpty())
+        // verify no service package is created for tapi
+        assert(!file("${layout.projectDirectory}/repo/src/services/tapi").exists())
+        // verify messageHeader
+        val fileContent = file("${layout.projectDirectory}/repo/src/typings/tapi/messageHeader.ts").readText()
+        assert(fileContent.contains("\"POIID\": string;")) { "'POIID' attribute not found in messageHeader.ts" }
+
+        // verify enum name is correct (device instead of deviceType)
+        assert(file("${layout.projectDirectory}/repo/src/typings/tapi/device.ts").exists()) { "'device.ts' not found" }
+        assert(!file("${layout.projectDirectory}/repo/src/typings/tapi/deviceType.ts").exists()) { "'deviceType.ts' is unexpected" }
+        // verify JSON serializer is deployed
+        assert(file("${layout.projectDirectory}/repo/src/typings/tapi/objectSerializer.ts").readText().isNotEmpty()) { "'objectSerializer.ts' not found in tapi model folder" }
     }
 }
