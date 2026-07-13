@@ -33,7 +33,7 @@ fun <T> cast(obj: Any?): T = obj as T
 // smallServices are APIs with a single tag 'General': the generation will create a single class/file
 val servicesList = listOf(
     // Payments
-    Service(name = "Checkout", version = 71),
+    Service(name = "Checkout", version = 72),
     Service(name = "Payout", version = 68),
     Service(name = "Recurring", version = 68, small = true),
     Service(name = "BinLookup", version = 54, small = true),
