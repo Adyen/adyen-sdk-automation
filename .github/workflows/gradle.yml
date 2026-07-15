@@ -13,11 +13,6 @@ on:
         default: ''
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - '**/README.md'
-      - README.md
-      - LICENSE
-      - .github/CODEOWNERS
 
 permissions:
   contents: read
@@ -32,8 +27,29 @@ jobs:
     outputs:
       projects: ${{ steps.resolve.outputs.projects }}
       services: ${{ steps.resolve.outputs.services }}
+      should_generate: ${{ steps.classify.outputs.should_generate }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Classify generation impact
+        id: classify
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "should_generate=true" >> "$GITHUB_OUTPUT"
+            echo "reason=manual-dispatch" >> "$GITHUB_OUTPUT"
+          else
+            python3 .github/scripts/should_generate.py "$BEFORE_SHA" "$AFTER_SHA" "$GITHUB_OUTPUT"
+          fi
+
+      - name: Report generation decision
+        run: |
+          echo "SDK generation: ${{ steps.classify.outputs.should_generate }} (${{ steps.classify.outputs.reason }})" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Resolve matrix inputs
         id: resolve
@@ -45,6 +61,7 @@ jobs:
   # split generation (create multiple PRs)
   generate-per-service:
     needs: setup
+    if: needs.setup.outputs.should_generate == 'true'
     strategy:
       fail-fast: false
       matrix:
