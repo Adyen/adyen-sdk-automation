@@ -21,6 +21,7 @@ ALL_SERVICES = [
     "disputes",
     "storedvalue",
     "payment",
+    "tapi",
     "management",
     "balancecontrol",
     "legalentitymanagement",

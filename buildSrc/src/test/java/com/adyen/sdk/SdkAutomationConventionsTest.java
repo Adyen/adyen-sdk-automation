@@ -3,8 +3,6 @@ package com.adyen.sdk;
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;
-import org.openapitools.generator.gradle.plugin.tasks.GenerateTask;
-import com.adyen.sdk.SdkAutomationExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
