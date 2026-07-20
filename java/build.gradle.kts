@@ -159,8 +159,20 @@ services.forEach { svc ->
         }
     }
 
-    tasks.named(svc.id) {
+    // Format deployed code with spotless
+    val spotless = tasks.register<Exec>("spotless${svc.name}") {
+        group = "deploy"
+        description = "Run spotless:apply on generated ${svc.name} code."
         dependsOn(deployModels, deployServices, deploySerializers, deployWebhookHandlers)
+        workingDir(layout.projectDirectory.dir("repo"))
+        commandLine(
+            "mvn", "spotless:apply",
+            "-DspotlessFiles=.*com/adyen/(model|service)/${serviceId}/.*"
+        )
+    }
+
+    tasks.named(svc.id) {
+        dependsOn(deployModels, deployServices, deploySerializers, deployWebhookHandlers, spotless)
     }
 }
 
