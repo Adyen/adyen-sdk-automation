@@ -14,6 +14,7 @@ val openapiGeneratorVersion: String = System.getProperty("openapiGeneratorVersio
 
 dependencies {
     implementation("org.openapitools:openapi-generator-gradle-plugin:$openapiGeneratorVersion")
+    implementation("org.openapitools:openapi-generator:$openapiGeneratorVersion")
     implementation(localGroovy())
     testImplementation("org.junit.jupiter:junit-jupiter:6.1.2")
     testImplementation("org.assertj:assertj-core:3.27.7")
