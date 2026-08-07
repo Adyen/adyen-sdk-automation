@@ -17,6 +17,8 @@ services.forEach { svc ->
 
     // Generation
     tasks.named<GenerateTask>("generate${svc.name}") {
+        // Custom generator adding Adyen-specific Mustache lambdas (e.g. lambda.escapeSingleQuotedString)
+        generatorName.set("com.adyen.sdk.AdyenRubyCodegen")
         configFile.set("$projectDir/config.yaml")
 
         additionalProperties.putAll(mapOf(
