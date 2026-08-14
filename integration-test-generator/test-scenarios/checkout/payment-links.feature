@@ -47,3 +47,4 @@ Feature: Checkout payment links
       """
     When the "paymentLinks" operation is called
     Then the operation succeeds with HTTP status 201
+    And the response field "id" is not empty
