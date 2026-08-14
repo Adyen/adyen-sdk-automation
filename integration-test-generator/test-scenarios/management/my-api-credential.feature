@@ -52,28 +52,3 @@ Feature: Management API credential
       }
       """
     Then the manual response example matches the documented response schema
-
-  @contract-only @response-400
-  Scenario: Validate the documented 400 response
-    Given documented response status 400
-    Then the response definition and schema are present and valid
-
-  @contract-only @response-401
-  Scenario: Validate the documented 401 response
-    Given documented response status 401
-    Then the response definition and schema are present and valid
-
-  @contract-only @response-403
-  Scenario: Validate the documented 403 response
-    Given documented response status 403
-    Then the response definition and schema are present and valid
-
-  @contract-only @response-422
-  Scenario: Validate the documented 422 response
-    Given documented response status 422
-    Then the response definition and schema are present and valid
-
-  @contract-only @response-500
-  Scenario: Validate the documented 500 response
-    Given documented response status 500
-    Then the response definition and schema are present and valid

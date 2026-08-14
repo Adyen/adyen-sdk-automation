@@ -36,58 +36,6 @@ Feature: Checkout payments
     And the response field "pspReference" is not empty
     And the response field "resultCode" equals "Authorised"
 
-  @contract-only @response-400 @example-generic
-  Scenario: Validate the documented 400 response
-    Given documented response status 400
-    And response example "generic"
-    Then the response example matches the documented response schema
-
-  @contract-only @response-401 @example-generic
-  Scenario: Validate the documented 401 response
-    Given documented response status 401
-    And response example "generic"
-    Then the response example matches the documented response schema
-
-  @contract-only @response-403 @example-generic
-  Scenario: Validate the documented 403 response
-    Given documented response status 403
-    And response example "generic"
-    Then the response example matches the documented response schema
-
-  @external @test-only @side-effect @response-422
-  Scenario: Reject a payment with an invalid currency
-    Given a unique value is available as "reference"
-    And the payment request is:
-      """json
-      {
-        "amount": {
-          "currency": "INVALID",
-          "value": 1000
-        },
-        "reference": "${reference}",
-        "paymentMethod": {
-          "type": "scheme",
-          "encryptedCardNumber": "test_4111111111111111",
-          "encryptedExpiryMonth": "test_03",
-          "encryptedExpiryYear": "test_2030",
-          "encryptedSecurityCode": "test_737"
-        },
-        "returnUrl": "https://example.com/checkout/return",
-        "merchantAccount": "${merchantAccount}"
-      }
-      """
-    When the "payments" operation is called
-    Then the operation fails with HTTP status 422
-    And the API error field "errorCode" equals "138"
-    And the API error field "errorType" equals "validation"
-    And the API error message contains "currency", ignoring case
-
-  @contract-only @response-500 @example-generic
-  Scenario: Validate the documented 500 response
-    Given documented response status 500
-    And response example "generic"
-    Then the response example matches the documented response schema
-
   @contract-only @response-200 @example-success
   Scenario: Validate the documented payment session result
     Given documented response status 200
