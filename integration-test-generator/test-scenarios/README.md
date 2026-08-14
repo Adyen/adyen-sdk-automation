@@ -31,6 +31,10 @@ within `test-scenarios`, for example
 
 - Use `@integration`, API, and service tags so scenarios can be selected
   independently of their file path.
+- Add one `@response-<code>` scenario for every response entry documented by
+  the selected OpenAPI operation.
+- Mark safely executable scenarios with `@external @test-only`. Mark response
+  examples that are validated without an API call with `@contract-only`.
 - Describe public API behavior rather than SDK classes, methods, exceptions,
   or test-framework details.
 - Put request payloads in JSON doc strings. Their shape must match the API
