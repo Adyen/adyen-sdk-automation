@@ -82,6 +82,7 @@ repository is authoritative.
 Build a coverage ledger before writing. For each feature and scenario, resolve:
 
 - the destination test file and locally conventional suite/test name;
+- the exact Gherkin scenario title for the required test header comment;
 - background setup and the existing TEST-environment client mechanism;
 - every runtime value introduced by a `Given` step;
 - the public service/API class and operation method;
@@ -120,18 +121,28 @@ scenario. Do not invent APIs, conventions, infrastructure, or setup.
 Only after every ledger entry is complete:
 
 1. Create or update the planned test case files.
-2. Keep arrange, act, and assert structure consistent with nearby tests.
-3. Reuse existing client/environment utilities without modifying them.
-4. Keep assertions limited to those expressed by the scenario.
-5. Catch and inspect errors using the target library's concrete exception
+2. Immediately above each generated test case, add a language-appropriate
+   comment header in this exact form, preserving the Gherkin title:
+
+   ```text
+   Scenario: <exact scenario title>
+   ```
+
+3. Keep arrange, act, and assert structure consistent with nearby tests.
+4. Reuse existing client/environment utilities without modifying them.
+5. Keep assertions limited to those expressed by the scenario.
+6. Catch and inspect errors using the target library's concrete exception
    patterns; do not accept a test merely because any exception was thrown.
-6. Do not add comments that duplicate the code or mention the generator.
+7. Apart from the required scenario header, do not add comments that duplicate
+   the code or mention the generator.
 
 ## 6. Review and validate without live calls
 
 Review the target-library diff and verify:
 
 - every feature and scenario has exactly one corresponding test;
+- every generated test has a comment header containing its exact Gherkin
+  scenario title;
 - only planned test case source files changed;
 - no baseline user changes were altered;
 - no mock/stub framework was introduced;

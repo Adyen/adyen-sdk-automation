@@ -1,5 +1,5 @@
 # Source: CheckoutService-v72.json
-# Endpoints: /payments, /sessions/{sessionId}, /cardDetails
+# Endpoints: /payments, /sessions, /sessions/{sessionId}, /cardDetails, /paymentMethods
 
 @integration @checkout @payments
 Feature: Checkout payments
@@ -32,92 +32,45 @@ Feature: Checkout payments
       }
       """
     When the "payments" operation is called
-    Then the operation succeeds with HTTP status 200
+    Then the operation succeeds
     And the response field "pspReference" is not empty
     And the response field "resultCode" equals "Authorised"
 
-  @contract-only @response-200 @example-success
-  Scenario: Validate the documented payment session result
-    Given documented response status 200
-    And the API Explorer response example "success" is:
-      """json
-      {
-        "id": "CS12345678",
-        "status": "completed"
-      }
-      """
-    Then the response example matches the documented response schema
-
-  @external @test-only @side-effect @response-200 @example-klarna
-  Scenario: Start a Klarna payment
+  @external @test-only @side-effect @response-201 @example-00-success
+  Scenario: Create a payment session
     Given a unique value is available as "reference"
-    And a unique value is available as "shopperReference"
     And a unique idempotency key is available as "idempotencyKey"
-    And the payment request is:
+    And the payment session request is:
       """json
       {
         "merchantAccount": "${merchantAccount}",
-        "reference": "${reference}",
-        "paymentMethod": {
-          "type": "klarna"
-        },
         "amount": {
-          "currency": "SEK",
-          "value": 1000
-        },
-        "shopperLocale": "en_US",
-        "countryCode": "SE",
-        "telephoneNumber": "+46 840 839 298",
-        "shopperEmail": "youremail@email.com",
-        "shopperName": {
-          "firstName": "Testperson-se",
-          "lastName": "Approved"
-        },
-        "shopperReference": "${shopperReference}",
-        "billingAddress": {
-          "city": "Ankeborg",
-          "country": "SE",
-          "houseNumberOrName": "1",
-          "postalCode": "12345",
-          "street": "Stargatan"
-        },
-        "deliveryAddress": {
-          "city": "Ankeborg",
-          "country": "SE",
-          "houseNumberOrName": "1",
-          "postalCode": "12345",
-          "street": "Stargatan"
+          "value": 100,
+          "currency": "EUR"
         },
         "returnUrl": "https://example.com/checkout/return",
-        "lineItems": [
-          {
-            "quantity": 1,
-            "amountExcludingTax": 331,
-            "taxPercentage": 2100,
-            "description": "Shoes",
-            "id": "Item #1",
-            "taxAmount": 69,
-            "amountIncludingTax": 400,
-            "productUrl": "https://example.com/products/shoes",
-            "imageUrl": "https://example.com/images/shoes.jpg"
-          },
-          {
-            "quantity": 2,
-            "amountExcludingTax": 248,
-            "taxPercentage": 2100,
-            "description": "Socks",
-            "id": "Item #2",
-            "taxAmount": 52,
-            "amountIncludingTax": 300,
-            "productUrl": "https://example.com/products/socks",
-            "imageUrl": "https://example.com/images/socks.jpg"
-          }
-        ]
+        "reference": "${reference}",
+        "countryCode": "NL"
       }
       """
-    When the "payments" operation is called
-    Then the operation succeeds with HTTP status 200
-    And the response field "action" is not empty
+    When the "sessions" operation is called
+    Then the operation succeeds
+    And the response field "id" is not empty
+
+  @external @test-only @read-only @response-200 @example-basic
+  Scenario: List brands for a card
+    Given a unique idempotency key is available as "idempotencyKey"
+    And the card details request is:
+      """json
+      {
+        "merchantAccount": "${merchantAccount}",
+        "cardNumber": "411111"
+      }
+      """
+    When the "cardDetails" operation is called
+    Then the operation succeeds
+    And the response field "brands" is not empty
+    And the response field "/brands/0/type" equals "visa"
 
   @external @test-only @read-only @response-200 @example-supported-brands
   Scenario: List supported brands for a card
@@ -135,6 +88,20 @@ Feature: Checkout payments
       }
       """
     When the "cardDetails" operation is called
-    Then the operation succeeds with HTTP status 200
+    Then the operation succeeds
     And the response field "/brands/0/type" equals "visa"
     And the response field "/brands/0/supported" equals true
+
+  @external @test-only @read-only @response-200 @example-basic
+  Scenario: List available payment methods
+    Given a unique idempotency key is available as "idempotencyKey"
+    And the payment methods request is:
+      """json
+      {
+        "merchantAccount": "${merchantAccount}"
+      }
+      """
+    When the "paymentMethods" operation is called
+    Then the operation succeeds
+    And the response field "paymentMethods" is not empty
+

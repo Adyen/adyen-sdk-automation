@@ -1,20 +1,20 @@
 ---
-name: generate-api-gherkin
+name: generate-integration-tests-scenarios
 description: >-
-  Create or extend a curated Gherkin feature from an Adyen OpenAPI operation
-  and official or approved manually sourced examples. Use when the user
-  provides an API/service and endpoint, or an Adyen API Explorer endpoint link,
-  plus an optional example. Generate scenario coverage only for documented
-  2xx response codes. This skill only writes scenario definitions; it never calls
-  Adyen or executes tests.
+  Create or extend curated, language-agnostic Gherkin integration test
+  scenarios from an Adyen OpenAPI operation and official or approved manually
+  sourced examples. Use when the user asks to generate integration test
+  scenarios for an API/service and endpoint, or provides an Adyen API Explorer
+  endpoint link, plus an optional example. Generate scenario coverage only for
+  documented 2xx response codes. This skill only writes scenario definitions;
+  it never calls Adyen or executes tests.
 argument-hint: <api> <endpoint> [example-name] | <api-explorer-url> [example-name]
 user-invocable: true
-version: 1.10.1
 metadata:
   owner: sdk-automation
 ---
 
-# Generate API Gherkin
+# Generate Integration Test Scenarios
 
 ## Purpose
 
@@ -25,6 +25,29 @@ and create scenario coverage only for documented 2xx response entries.
 Write scenarios under
 `integration-test-generator/test-scenarios/`.
 
+## Hard output invariants
+
+These rules take precedence over examples, existing feature contents, and
+general wording elsewhere in this skill:
+
+1. Never assert an HTTP response status in an executable scenario. Use
+   `Then the operation succeeds`, followed by one or two response-body
+   attribute assertions. A `@response-<key>` coverage tag is required metadata,
+   not a status assertion.
+2. Never choose among multiple request examples on the user's behalf. When no
+   `example-name` was supplied and the endpoint exposes more than one request
+   example, use `AskUser` to select exactly one before writing.
+3. Never choose an unmatched response example on the user's behalf. Prefer the
+   response example paired by key with the selected request example. If no
+   unique pairing exists and multiple response examples remain eligible for a
+   2xx response, use `AskUser` to select one before writing.
+
+When an example-selection question has more than four candidates, paginate it:
+offer three examples plus `Show more examples`, then continue with the next
+page until the user selects one. Show both the API Explorer label and OpenAPI
+key for every example option. A custom answer containing an exact key is also
+valid.
+
 Only create or update Gherkin feature files in this workflow.
 Before writing, read
 `integration-test-generator/test-scenarios/README.md` and follow its structure
@@ -33,17 +56,22 @@ and conventions.
 Use `integration-test-generator/test-scenarios/checkout/payments.feature` as
 the canonical style reference. New features should use its concise feature
 title, one-line purpose, tag ordering, JSON doc-string indentation, observable
-scenario names, executable status-only assertions, and contract-only response
-structure. Do not add explanatory steps that repeat source metadata already
-present in the feature header.
+scenario names, narrow executable response assertions, and contract-only
+response structure. Do not add explanatory steps that repeat source metadata
+already present in the feature header. The response-validation rules in this
+skill supersede any legacy HTTP status assertions in that reference file.
 
 When a selected 2xx response has a matching executable request example, do not
 materialize the response JSON or add a separate contract-only scenario. End the
-executable scenario with the exact documented status assertion:
+executable scenario with a general success step and one or two narrow
+assertions for documented response-body attributes:
 
 ```gherkin
-Then the operation succeeds with HTTP status 201
+Then the operation succeeds
+And the response field "id" is not empty
 ```
+
+Never assert the HTTP response status code in an executable scenario.
 
 Materialize response JSON only when contract-only coverage is necessary. Do
 not leave such a contract-only scenario with only an example name, such as
@@ -61,10 +89,10 @@ Parse `$ARGUMENTS` as:
 Examples:
 
 ```text
-/generate-api-gherkin Checkout /payments card-securedfields
-/generate-api-gherkin Checkout /sessions
-/generate-api-gherkin Checkout payments card-direct
-/generate-api-gherkin "https://docs.adyen.com/api-explorer/Checkout/latest/post/payments" card-securedfields
+/generate-integration-tests-scenarios Checkout /payments card-securedfields
+/generate-integration-tests-scenarios Checkout /sessions
+/generate-integration-tests-scenarios Checkout payments card-direct
+/generate-integration-tests-scenarios "https://docs.adyen.com/api-explorer/Checkout/latest/post/payments" card-securedfields
 ```
 
 Inputs:
@@ -156,14 +184,18 @@ keys, and example names.
 - Parse and pretty-print extracted payloads as JSON, preserving their data
   shape and values before applying Request Bindings.
 - For an executable 2xx scenario, use the response example only to establish
-  its association with the request example and documented status. Do not write
-  the response JSON into the scenario or create contract-only coverage solely
-  to materialize it.
+  its association with the request example and documented status, and to select
+  one stable response-body attribute to assert. Do not write the response JSON
+  into the scenario or create contract-only coverage solely to materialize it.
 - Do not synthesize a payload from an OpenAPI schema or alter a payload to make
   it fit another response status.
-- If the page exposes several examples for one status, resolve and create
-  coverage for every example. Do not ask the user to select a representative
-  example unless the invocation explicitly scopes generation to one example.
+- If the page exposes several request examples and no `example-name` was
+  supplied, use `AskUser` to select one by its visible label and OpenAPI key.
+  Do not default to the first example.
+- For each 2xx response, prefer the response example whose key matches the
+  selected request example. If there is no unique key match and several
+  response examples are eligible, use `AskUser` to select one by its visible
+  label and OpenAPI key. Do not default to the first response example.
 - If the page omits an example that is present in the OpenAPI specification,
   ask the user whether to use the specification payload, provide an approved
   manual example, or keep that response schema-only. Do not silently invent
@@ -195,11 +227,11 @@ it, use `AskUser` to select an operation by summary or `x-methodName`.
 
 2. Resolve local `$ref` values under `#/components/examples/`.
 3. When no example was provided:
-   - Resolve every available request example.
-   - Create one scenario for each request example, using its matching response
-     example when available.
-   - Do not ask the user to choose a request example merely because several
-     examples exist.
+   - If exactly one request example exists, select it.
+   - If more than one request example exists, use `AskUser` to select exactly
+     one by its API Explorer label and OpenAPI key.
+   - Use the selected request example's matching response example when
+     available.
 4. For an operation without a request body, continue without a request example
    and resolve required path or query inputs instead.
 5. If the operation has a request body but no OpenAPI example, use `AskUser` to
@@ -211,7 +243,8 @@ it, use `AskUser` to select an operation by summary or `x-methodName`.
    - Stop so an OpenAPI example can be added first.
 
 An explicitly supplied `example-name` scopes generation to that exact request
-example. Without one, all available examples must be covered.
+example. A user selection made through `AskUser` has the same scope. Generate
+only the selected example, not every example exposed by the endpoint.
 
 Never fabricate credentials, resource identifiers, tokens, or domain-specific
 request values.
@@ -283,9 +316,9 @@ contract-only response-example coverage as required parts of the feature:
    Explorer or OpenAPI example.
 
 For operations with no request body, a request example is not required. Prefer
-an executable status-only scenario when all required operation inputs can be
-provided. Use the contract-only response rules only when the response cannot be
-covered by an executable scenario.
+an executable scenario when all required operation inputs can be provided and
+one documented response-body attribute can be asserted. Use the contract-only
+response rules when the response cannot be covered by an executable scenario.
 
 ## Request Bindings
 
@@ -361,23 +394,29 @@ For each included 2xx response entry:
 1. Resolve its schema and all local response-example `$ref` values.
 2. Resolve media-type and schema-level examples as described in
    [Example-driven output completeness](#example-driven-output-completeness).
-3. Resolve and cover every response example. For each response example, prefer
-   a request example with the same key and apply these associations in order:
+3. Select one response example for each 2xx response entry. When
+   `example-name` was supplied, select the response example with the same key
+   when available. A request example selected through `AskUser` follows the
+   same matching rule. Apply these associations in order:
    - The API Explorer example with the same key as the selected request
      example.
    - An API Explorer example named `generic`.
    - The sole API Explorer example for the status.
+   - If multiple API Explorer response examples remain eligible after these
+     rules, use `AskUser` to select one by its visible label and OpenAPI key.
    - The corresponding OpenAPI example, only when the user approved the
      fallback described in [API Explorer examples](#api-explorer-examples).
    - If no API Explorer or approved OpenAPI example exists, accept an approved
      manual response example only after recording its cited source and
      verifying it against the response schema.
-   Create an executable scenario for each distinct request/response example
-   pairing that is documented to produce the response. The association counts
-   as response-example coverage even though the response payload is not written
-   into the executable scenario. Do not add a second contract-only scenario for
-   the same pairing. Use a contract-only scenario only for a response example
-   that has no matching executable request example.
+   Create an executable scenario for the selected request/response example
+   pairing when it is documented to produce the response. The association
+   counts as response-example coverage even though the response payload is not
+   written into the executable scenario. Do not add a second contract-only
+   scenario for the same pairing. Use a contract-only scenario only when the
+   selected response example has no matching executable request example. Do
+   not generate coverage for unselected examples under the same response
+   entry.
 4. Decide whether the 2xx scenario is executable:
    - A 2xx response may be executable when the selected request example is
      documented to produce that response.
@@ -386,11 +425,22 @@ For each included 2xx response entry:
 5. For an executable scenario:
    - Include the request example and all required bindings.
    - Invoke the API operation.
-   - End with `Then the operation succeeds with HTTP status <code>`, using the
-     exact documented 2xx response code.
+   - End the invocation with `Then the operation succeeds`.
+   - Add one or two assertions for documented response-body attributes. Select
+     required, stable fields from the associated response example and resolved
+     response schema. Prefer a returned identifier, success enum, echoed
+     request value, or non-empty collection that directly demonstrates the
+     operation's result.
+   - Use the public JSON property name and assert only the documented value or
+     shape, for example `And the response field "id" is not empty` or
+     `And the response field "status" equals "active"`.
+   - If no response-body attribute can be resolved from the documented example
+     and schema, do not create an executable scenario. Use
+     contract-only coverage or stop for an approved response example, as
+     applicable.
    - Do not materialize the response example in the scenario.
-   - Do not add response-body, response-header, schema, identifier, enum,
-     echoed-value, or other result assertions.
+   - Do not assert the HTTP response status code.
+   - Do not add response-header, schema, or more than two result assertions.
 6. For a contract-only scenario:
    - Do not invoke the API.
    - Reference the documented response status or response key. The feature
@@ -408,15 +458,19 @@ undocumented, or non-2xx status codes.
 
 For executable assertions:
 
-- Use exactly one response-code assertion as the complete result assertion.
-- Assert the documented 2xx code, for example:
+- Use `Then the operation succeeds` followed by one or two response-body
+  attribute assertions.
+- Assert stable documented response fields that validate the operation's
+  outcome, for example:
 
   ```gherkin
-  Then the operation succeeds with HTTP status 200
+  Then the operation succeeds
+  And the response field "pspReference" is not empty
+  And the response field "resultCode" equals "Authorised"
   ```
 
-- Do not add any `And` or additional `Then` result assertions after the
-  response-code assertion.
+- Never use the HTTP response status code as an assertion.
+- Do not add more than two result assertions.
 
 ## Scenario Tags
 
@@ -512,7 +566,9 @@ Feature: Checkout payments
       }
       """
     When the "payments" operation is called
-    Then the operation succeeds with HTTP status 200
+    Then the operation succeeds
+    And the response field "pspReference" is not empty
+    And the response field "resultCode" equals "Authorised"
 
 ```
 
@@ -535,10 +591,15 @@ If the target file exists:
    represented.
 5. Do not duplicate an existing scenario for the same response key and exact
    request/response example pairing solely because the generator was run again.
-6. If an existing response scenario conflicts with the current OpenAPI
+6. If the in-scope executable scenario contains an HTTP status assertion,
+   replace it with `Then the operation succeeds`. Normalize its result checks
+   to one or two documented response-body attribute assertions. This is
+   required cleanup and does not require confirmation.
+7. If an existing response scenario conflicts with the current OpenAPI
    definition, use `AskUser` to choose whether to update it or leave it
    unchanged.
-7. Preserve handwritten scenarios, comments, ordering, and formatting.
+8. Preserve unrelated handwritten scenarios, comments, ordering, and
+   formatting.
 
 Never overwrite an existing feature wholesale.
 
@@ -555,18 +616,22 @@ Before finishing:
    - For executable scenarios, a request example, fixture, inline payload, or
      no-body operation.
    - For executable scenarios, exactly one
-     `When the API operation is invoked` step and exactly one response-code
-     assertion with no additional result assertions.
+     `When the API operation is invoked` step, one general operation-success
+     step, and one or two documented response-body attribute assertions, with
+     no HTTP status assertion or further result assertions.
    - For contract-only scenarios, no invocation step and a response
      example/schema validation step.
 4. Compare the complete set of documented 2xx response keys with the response tags
    in the feature and fail validation if any response key is missing.
-5. Confirm every in-scope API Explorer request example is covered. Confirm each
-   response example is either associated with an executable scenario or
-   materialized in a contract-only scenario. Confirm no contract-only scenario
-   was added solely to materialize a response example already associated with
-   an executable scenario. When the operation has only a `200` response,
-   confirm every new scenario has `@response-200`.
+5. Confirm the explicitly supplied or user-selected request example is
+   covered. If no selection was needed, confirm the sole request example is
+   covered. For each 2xx response entry, confirm the matching, sole, or
+   user-selected response example is either associated with an executable
+   scenario or materialized in a contract-only scenario. Confirm unselected
+   examples under the same response entry were not generated. Confirm no
+   contract-only scenario was added solely to materialize a response example
+   already associated with an executable scenario. When the operation has only
+   a `200` response, confirm every new scenario has `@response-200`.
 6. Confirm no new scenario has a non-2xx response tag, even if API Explorer
    exposes a corresponding example.
 7. Re-check that the endpoint and response keys exist in the resolved OpenAPI

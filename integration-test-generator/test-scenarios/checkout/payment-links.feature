@@ -46,5 +46,6 @@ Feature: Checkout payment links
       }
       """
     When the "paymentLinks" operation is called
-    Then the operation succeeds with HTTP status 201
+    Then the operation succeeds
     And the response field "id" is not empty
+    And the response field "status" equals "active"
