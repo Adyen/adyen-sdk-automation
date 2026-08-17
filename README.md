@@ -79,45 +79,33 @@ To run unit tests:
 
 ### Generating Release Notes
 
-A release notes generator is included that analyzes git history, API surface changes, dependency impacts, and linked GitHub issues to produce structured release notes.
+A Factory skill and droid are included to generate evidence-backed release notes for an Adyen API library. The skill validates the request and manages the output files, while the droid clones the selected library into a temporary directory, analyzes the release range, validates the result, and cleans up the clone.
 
-The prompt lives at [`.factory/droids/sdk-release-notes-generator.md`](.factory/droids/sdk-release-notes-generator.md).
+The workflow is defined in:
 
-#### Using Droid (recommended)
+- [`.factory/skills/release-notes-generation/SKILL.md`](.factory/skills/release-notes-generation/SKILL.md)
+- [`.factory/droids/release-notes-generation-droid.md`](.factory/droids/release-notes-generation-droid.md)
 
-With `<language>/repo` already cloned, ask from this repository root:
-
-```
-Generate release notes for the Java SDK from v41.0.0 to HEAD
-```
-
-Or let it auto-detect the latest released tag to current HEAD:
+Run the skill from the directory where the output files should be created:
 
 ```
-Generate release notes for the Python SDK
+/release-notes-generation <language> [from_version] [to_version]
 ```
 
-#### Using another LLM (Gemini CLI, Claude, Copilot, etc.)
+For example:
 
-1. Clone or symlink the target SDK repo into `<language>/repo`.
-2. Open `.factory/droids/sdk-release-notes-generator.md` and copy the prompt body (excluding frontmatter).
-3. Paste it as your system/user prompt, then provide inputs, for example:
+```
+/release-notes-generation java v41.0.0 HEAD
+/release-notes-generation python
+```
 
-   ```
-   Generate release notes for language=python, from_version=v14.0.0, to_version=HEAD.
-   The repository is at python/repo relative to the automation repo root.
-   ```
+Supported languages are `java`, `python`, `dotnet`, `go`, `node`, `php`, and `ruby`.
 
-4. Ensure the environment has `git` and authenticated `gh` access for PR/issue link resolution.
+When `from_version` is omitted, the latest released semantic-version tag is used. When `to_version` is omitted, it defaults to `HEAD`. No local SDK checkout is required.
 
-#### Output sections
+The workflow writes two files to the invocation directory:
 
-| Section | When included |
-|---|---|
-| `## Breaking Changes 🛠` | Renames, removals, or raised runtime minimums |
-| `## New Features 💎` | New APIs, endpoints, models, fields, grouped by service |
-| `## Fixes ⛑️` | Bug fixes linked to issues and/or PRs |
-| `## Contributor Notes 🔧` | Tooling, linting, or build dependency changes |
-| `## Other Changes 🖇️` | CI, docs, and general dependency updates |
+- `RELEASE_NOTES.md`, the publishable release notes
+- `RELEASE_NOTES_VALIDATION.md`, an auditable validation report. It can be deleted after the Release Notes are generated.
 
-Every bullet includes at least one PR link for direct traceability.
+Existing output files are only overwritten after confirmation. Release notes are produced only when validation passes; on failure, the validation report records the blocking reasons.
