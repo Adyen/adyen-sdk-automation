@@ -20,6 +20,7 @@ ALL_SERVICES = [
     "paymentsapp",
     "disputes",
     "storedvalue",
+    "documentcollector",
     "payment",
     "tapi",
     "management",
