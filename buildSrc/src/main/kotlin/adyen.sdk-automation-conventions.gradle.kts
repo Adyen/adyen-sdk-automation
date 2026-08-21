@@ -41,6 +41,7 @@ val servicesList = listOf(
     Service(name = "PaymentsApp", spec = "PaymentsAppService", version = 1, small = true),
     Service(name = "Disputes", spec = "DisputeService", version = 30, small = true),
     Service(name = "StoredValue", version = 46, small = true),
+    Service(name = "DocumentCollector", version = 1),
     // Classic Payments
     Service(name = "Payment", version = 68, small = true),
     // Terminal API models (available for specific libraries)
