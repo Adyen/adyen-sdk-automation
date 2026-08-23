@@ -28,9 +28,12 @@ services.forEach { svc ->
         modelPackage.set(modelNamespace.replace('/', '.'))
         apiPackage.set("com.adyen.service.${serviceId}")
         apiNameSuffix.set("Api")
+        importMappings.put(
+            "JsonDeserialize",
+            "tools.jackson.databind.annotation.JsonDeserialize"
+        )
         additionalProperties.putAll(mapOf(
             "dateLibrary" to "java8",
-            "useJackson3" to "true",
             "openApiNullable" to "false",
             "enumPropertyNaming" to "legacy",
             "javaxPackage" to "jakarta",
