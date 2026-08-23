@@ -30,6 +30,7 @@ services.forEach { svc ->
         apiNameSuffix.set("Api")
         additionalProperties.putAll(mapOf(
             "dateLibrary" to "java8",
+            "useJackson3" to "true",
             "openApiNullable" to "false",
             "enumPropertyNaming" to "legacy",
             "javaxPackage" to "jakarta",
