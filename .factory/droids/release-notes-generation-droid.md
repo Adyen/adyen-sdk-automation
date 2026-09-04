@@ -185,13 +185,19 @@ Highlight:
 
 ### 7. Resolve API endpoint documentation
 
-- For new or changed service methods, look for a matching concrete endpoint in
-  Adyen API Explorer under `https://docs.adyen.com/api-explorer/`.
-- Add a documentation link only when repository or GitHub evidence supports
-  the method-to-endpoint mapping.
-- Do not add links to guides, product pages, generic API Explorer pages, or
-  documentation outside API Explorer.
-- Do not construct or guess endpoint links. Omit the link when uncertain.
+- For each newly supported API, look for a matching API page or concrete
+  endpoint in Adyen API Explorer under `https://docs.adyen.com/api-explorer/`.
+- Prefer a verified API page over an individual endpoint when the release-note
+  bullet summarizes support for the API as a whole.
+- For other new or changed service methods, look for a matching concrete
+  endpoint.
+- Add a specific documentation link only when repository or GitHub evidence
+  supports the API or method-to-endpoint mapping.
+- Do not construct or guess API Explorer links. When no specific API Explorer
+  URL can be verified for a newly supported API, link the API name to
+  `https://docs.adyen.com/api-explorer/` as the explicit fallback.
+- Do not use the API Explorer home-page fallback for ordinary method changes,
+  guides, product pages, or documentation outside API Explorer.
 
 ### 8. Resolve contributors
 
@@ -212,6 +218,7 @@ Highlight:
   - `sessionauthentication` -> `Session Authentication API`
   - `legalentitymanagement` -> `Legal Entity Management API`
   - `storedvalue` -> `Stored Value API`
+  - `documentcollector` -> `Document Collector API`
   - `posterminalmanagement` -> `POS Terminal Management API`
   - `recurring` -> `Recurring API`
   - `payout` -> `Payout API`
@@ -226,9 +233,15 @@ Highlight:
 Complete all checks before writing `RELEASE_NOTES.md`.
 
 - Map every removed public API symbol and serialized model property to a
-  Breaking Changes bullet that explicitly names its owner and symbol.
-- A single bullet may cover related removals only when it names every inventory
-  item explicitly.
+  Breaking Changes bullet.
+- When a class, model, enum, method, or other parent API entity is removed,
+  name that entity once in the release notes. Treat the same bullet as coverage
+  for its removed nested members, fields, properties, enum values,
+  constructors, parameters, and implementation dependencies without naming
+  them individually.
+- Name an individual member in the release notes only when its parent entity
+  remains public after the change. Keep the complete one-row-per-symbol detail
+  and each symbol-to-bullet mapping in `RELEASE_NOTES_VALIDATION.md`.
 - Exclude an inventory item only with evidence that it is not public API, and
   record the reason in the validation report.
 - Fail generation if any removed symbol is unmapped or lacks an
@@ -237,11 +250,21 @@ Complete all checks before writing `RELEASE_NOTES.md`.
   removed-symbol coverage checklist entries. Report both counts and fail if
   they differ.
 - Map every detailed change bullet to all implementing PRs.
+- For every newly supported API, require exactly one user-facing feature
+  bullet and require that bullet to link every PR needed to implement the API
+  support.
+- Fail validation if a namespace, model, field, constructor, service method,
+  request helper, serialization change, or transport change folded into a new
+  API summary is repeated as a separate user-facing feature or
+  contributor-note bullet.
 - Verify every git-range PR appears exactly once in the PR appendix and that no
   unproven PR is included.
 - Verify every contributor is derived from at least one appendix PR.
-- Verify every API Explorer URL targets a concrete endpoint and has repository
-  or GitHub evidence.
+- Verify every specific API Explorer URL targets a supported API page or
+  concrete endpoint and has repository or GitHub evidence.
+- Permit `https://docs.adyen.com/api-explorer/` only for a newly supported
+  API when no specific API Explorer URL was confidently verified. Record the
+  failed resolution and fallback use in the validation report.
 - Verify the full changelog is the final line of the release notes.
 - Treat validation as a gate, not a narrative assessment. Do not emit `PASS`
   when any required output-schema, reconciliation, or regression assertion is
@@ -255,6 +278,23 @@ Complete all checks before writing `RELEASE_NOTES.md`.
 - After the overview, put breaking changes first.
 - Keep signal high. Avoid noisy or internal-only details unless they affect
   contributors.
+- Summarize removal at the highest removed public API entity. Do not add
+  sub-bullets listing that entity's removed attributes, nested objects,
+  constructors, method parameters, enum values, or dependencies. If an entire
+  class is removed, mention the class once. If an individual method is removed
+  from a retained class, mention the method once.
+- When a release introduces support for a new API client or service, emit
+  exactly one user-facing feature bullet for that API. Use:
+  `Add support for [<API name>](<API Explorer URL>) for <concise capability>.`
+  End the bullet with links to every PR that implements the API support.
+- Fold the new API's associated namespaces, models, fields, constructors,
+  service methods, request helpers, serialization support, and transport
+  changes into that single bullet. Keep their complete symbol-level evidence
+  in the public API inventory instead of listing them as separate
+  user-facing feature or contributor-note bullets.
+- Do not fold breaking changes or runtime requirement changes into the summary
+  bullet. Do not fold independent fixes or contributor-impacting changes unless
+  they are necessary for the new API support.
 - Include at least one PR link for every user-facing change bullet.
 - Start with a concise overview of the highest-impact user-facing changes. Do
   not repeat the detailed sections bullet-for-bullet.
@@ -269,8 +309,9 @@ Complete all checks before writing `RELEASE_NOTES.md`.
   not obscure related changes.
 - Sort the PR appendix by ascending PR number.
 - List each PR and contributor once.
-- When one PR contains several closely related changes, a parent bullet may
-  carry the PR link and exact-symbol sub-bullets may inherit that evidence.
+- For non-removal changes, when one PR contains several closely related
+  changes, a parent bullet may carry the PR link and exact-symbol sub-bullets
+  may inherit that evidence.
 
 ## Output format
 
@@ -317,7 +358,11 @@ Start the file with:
   - Counts and lists for git-range PRs, appendix PRs, missing PRs, unexpected
     PRs, and Release PR discrepancies.
 5. `## Documentation-link evidence`
-  - Each API Explorer URL and the evidence supporting its endpoint mapping.
+  - Each API Explorer URL and the evidence supporting its API or endpoint
+    mapping.
+  - For an API Explorer home-page fallback, identify the newly supported API,
+    state that no specific URL was confidently verified, and record the
+    fallback decision.
 6. `## Contributor coverage`
   - Each contributor and the appendix PRs that establish authorship.
 7. `## Unresolved evidence`
@@ -369,7 +414,9 @@ On failure:
 - Ensure every contributor is backed by at least one appendix PR.
 - Ensure every removed public symbol and serialized model property is present
   in the removed-symbol coverage checklist.
-- Ensure every checked removal explicitly appears in a Breaking Changes bullet.
+- Ensure every checked removal maps to a Breaking Changes bullet. Nested
+  removals may map to the bullet for their removed parent entity without being
+  named separately in `RELEASE_NOTES.md`.
 - Ensure every removed enum value has its own inventory row and coverage item.
 - Ensure the removed or replaced inventory count equals the checked
   removed-symbol coverage count.
@@ -378,6 +425,10 @@ On failure:
   heading before marking it `PASS`.
 - Confirm that the PR appendix is numerically ascending before marking
   validation `PASS`.
+- When support for a new API is introduced, require exactly one feature bullet
+  that uses the API's canonical name and concisely describes its user-facing
+  capability. Do not emit separate feature bullets for the supporting models,
+  methods, request helpers, serialization, or transport changes.
 - State uncertainty explicitly and conservatively.
 
 ## Regression fixture
