@@ -71,4 +71,45 @@ class SpecProcessorTest {
         assertThat(result).contains("\"openapi\": \"3.0.0\"")
         assertThat(result).contains("\"operationId\": \"post-test\"")
     }
+
+    @Test
+    fun `sanitizes nested descriptions`() {
+        val input = """
+            {
+              "openapi": "3.1.0",
+              "paths": {
+                "/test": {
+                  "get": {
+                    "description": "Operation description.  \n",
+                    "parameters": [
+                      {
+                        "description": "See [ISO 8601](https://example.com\\).  ",
+                        "name": "date"
+                      },
+                      {
+                        "description": "Use regex \\) to match a parenthesis.",
+                        "name": "regex"
+                      }
+                    ]
+                  }
+                }
+              },
+              "components": {
+                "parameters": {
+                  "test": {
+                    "description": "Component description.  "
+                  }
+                }
+              }
+            }
+        """.trimIndent()
+
+        val result = SpecProcessor.process(input)
+
+        assertThat(result).contains("\"description\": \"Operation description.\"")
+        assertThat(result).contains("\"description\": \"See [ISO 8601](https://example.com).\"")
+        assertThat(result).contains("\"description\": \"Component description.\"")
+        assertThat(result).contains("\"description\": \"Use regex \\\\) to match a parenthesis.\"")
+        assertThat(SpecProcessor.process(result)).isEqualTo(result)
+    }
 }
