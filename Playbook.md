@@ -63,7 +63,8 @@ Clone this repository. Then, prepare the target language environment. You cannot
 # Example: Setup for Java
 ./gradlew :java:cloneRepo
 ```
-*What this does:* It clones the official `adyen-java-api-library` into `java/repo`.
+*What this does:* It clones the official `adyen-java-api-library` into `java/repo`.  
+*⚡ Pro tip*: Clone instead the library in its own folder and use symlink, see [Pro-Tips & Troubleshooting](#pro-tips--troubleshooting)
 
 ### Step 2: Generate Code
 Run the generator for a specific service (e.g., Checkout).
@@ -72,13 +73,16 @@ Run the generator for a specific service (e.g., Checkout).
 ./gradlew :java:checkout
 ```
 *What this does:*
-1.  **Downloads** the Checkout OpenAPI spec.
+1.  **Downloads** the OpenAPI specs (if the folder `schema`).
 2.  **Runs** the generator using the templates in `java/repo/templates`.
-3.  **Outputs** code to a temp folder.
-4.  **Copies** the code into `java/repo/src/main/...`.
+3.  **Outputs** the generated code in the `build` folder.
+4.  **Adjusts** and **copies** the code into `java/repo/...`.  
+
+*⚡ Pro tip*: Generate all services with `./gradlew :java:services`.
+*⚡ Pro tip*: Delete regularly the `schema` folder with `./gradlew cleanSpecs` to clone the latest version of all OpenAPI specs.
 
 ### Step 3: Verify
-Navigate to `java/repo` and check the status.
+Navigate to `java/repo` and check the status. Open the library in a different window if you have created a symlink.
 ```bash
 cd java/repo
 git status
@@ -89,19 +93,16 @@ You should see the newly generated files.
 
 ## 🛠️ 4. Engineer's Workflow: The "How-To"
 
-### Scenario A: Adyen Releases a New API Feature
-*The Goal: Update the SDKs to reflect a change in the API (e.g., a new field).*
+There are typically 4 workflows:
+- Fix the code generation
+- Add a new endpoint, attribute or enum
+- Update an existing API or Webhook
+- Add a new API or Webhook
 
-1.  **Update Specs:** The automation usually fetches the latest specs automatically (or via a submodule update).
-2.  **Run Generation:**
-    ```bash
-    ./gradlew :java:services
-    ```
-3.  **Validate:** Check the `java/repo` folder. Did the new field appear?
-4.  **Commit:** You commit the changes *in the target SDK repository* (`java/repo`), not here.
-
-### Scenario B: Fixing "Ugly" or Broken Code
+### Scenario A: Working on a new feature or bug fix
 *The Goal: The generated code has a syntax error or doesn't follow our style guide.*
+
+In this scenario you **work locally** to modify and test the changes.
 
 1.  **Locate the Template:** **NEVER** edit the generated `.java` file directly. It will be overwritten.
     *   Go to `[language]/repo/templates`.
@@ -112,16 +113,56 @@ You should see the newly generated files.
     ./gradlew :java:checkout
     ```
 4.  **Verify:** Check if the output code is now correct.
+5.  **Add Tests:** When applicable, add new tests in the SDK Automation Bot and/or the library source code
+6.  **Commit:** You commit the changes *in the target SDK repository* (`java/repo`), not here.
 
-### Scenario C: Adding a Brand New Service
-*The Goal: Generate an SDK for a completely new Adyen Product.*
+
+### Scenario B: Adyen Releases a New API Feature
+*The Goal: Update the SDKs to reflect a change in the API (e.g., a new field).*
+
+In this scenario the public [OpenAPI specs](https://github.com/Adyen/adyen-openapi/tree/main) have been updated and
+the SDK Automation Bot has generated a PR-per-service (i.e. Checkout) in each library repository.
+
+1.  **Review PRs:** Review the PRs in the library repository.
+2. **Add Tests:** When applicable, checkout the branch locally (or use Codespaces) and add new unit tests.
+   a. Is there a new endpoint or new webhook event? **MUST add** new unit tests.
+   b. Is there a new attribute or enum value? **MAY add** new unit tests.
+3.  **Label:** Add the correct label in the PR (Improvement, Breaking Change)
+4.  **Merge:** Approve and merge the PR
+
+### Scenario C: Upgrading an existing API
+*The Goal: Update the SDKs to upgrade an existing API version.*
+
+In this scenario there is a new version of an API and the SDK Automation Bot must be updated.
+
+1.  **Update the Service:**
+    *   Open `buildSrc/src/main/kotlin/adyen.sdk-automation-conventions.gradle.kts`.
+    *   Update the API version in the `servicesList` list: `Service(name = "NewApiVersion", version = 2)`.
+2.  **Run:** `./gradlew :java:newApiVersion`.
+3.  **Verify:** Confirm the new service is updated.
+4.  **Add Tests:** When applicable, checkout the branch locally (or use Codespaces) and add new unit tests the library source code.
+5.  **README.MD:** Edit `README.md` file to update the versioning of the API/Webhook.
+6.  **Commit:** You commit the changes in `adyen-sdk-automation` and in the target SDK repository* (`java/repo`) (*).
+
+(*) Alternatively, commit and push the changes in `adyen-sdk-automation` only, then review the new PRs.
+
+### Scenario D: Adding a Brand New Service
+*The Goal: Update the SDKs to support a new Adyen Product.*
 
 1.  **Register the Service:**
     *   Open `buildSrc/src/main/kotlin/adyen.sdk-automation-conventions.gradle.kts`.
-    *   Add to the `servicesList` list: `Service(name = "NewProduct", version = 1, tag = "ProductTag")`.
+    *   Add to the `servicesList` list: `Service(name = "NewProduct", version = 1)`.
 2.  **Configure Deployment (Language Dependent):**
     *   In `java/build.gradle.kts` (or other languages), ensure there is logic to copy files for this new service.
 3.  **Run:** `./gradlew :java:newProduct`.
+4.  **Verify:** Confirm the new service is generated.
+5.  **Add Tests:** Add new unit tests the library source code
+6.   **README.MD:** Edit `README.md` file to include the new API/Webhook version
+7.  **Commit:** You commit the changes in `adyen-sdk-automation` and in the target SDK repository* (`java/repo`) (*).
+
+(*) Alternatively, commit and push the changes in `adyen-sdk-automation` only, then review the new PR and add the unit
+testing.
+
 
 ---
 
@@ -181,3 +222,9 @@ Master these tools to master this repo.
 *   **Cleanliness:** If things act weird, run a clean:
     `./gradlew :java:cleanRepo`
 *   **Webhooks are Special:** They often require custom "Handler" logic. Check `config.yaml` in the language folders for special configuration rules.
+*   **Delete regularly** the `schema` folder to clone the latest version of all OpenAPI specs:
+    `./gradlew cleanSpecs`
+*   **Pre-process**: OpenAPI schema (in the `schema` folder) are manipulated before kicking off the generation:
+    - `x-webhook-root` extension is added to mark Webhook events
+    - tags named `General` are renamed to match the name of the API
+    - endpoint `operationId` is overriden with `x-methodName` (extension used to name the generated methods/functions in the SDKs)
