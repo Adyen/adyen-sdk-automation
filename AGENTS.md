@@ -67,11 +67,33 @@ You can now run the Gradle commands to generate code for the linked library. The
 
 Replace `java`, `php`, `go`, and `node` with the target language of your choice (`dotnet`, `python`, `ruby`).
 
+## Service Catalog
+
+[`config/services.json`](config/services.json) is the **single source of truth** for the SDK service matrix. Both the Gradle build (via the conventions plugin) and the CI matrix (via `.github/scripts/resolve-matrix-inputs.sh`) derive their service lists from it, so the two can never drift apart.
+
+**Adding, removing, or updating a service = edit `config/services.json`.** Each entry supports the following fields:
+
+| Field | Required | Meaning |
+|-------|----------|---------|
+| `name` | yes | Target name of the generated service; its lowercase form is the service id (e.g. `BalancePlatform` → `balanceplatform`). |
+| `version` | yes | Version of the source API spec (positive integer). |
+| `spec` | no | Source API spec name; defaults to `<name>Service`. |
+| `small` | no | A "small" service is generated in a self-contained file (default `false`). |
+| `group` | no | Documentation-only domain grouping (e.g. `Payments`, `Webhooks`). |
+| `projects` | no | Whitelist of projects that support this service (e.g. `["java", "node"]`). Omit for all projects. |
+| `excludedProjects` | no | Projects that must not generate this service (e.g. `["go"]`). Mutually exclusive with `projects`. |
+
+`projects` and `excludedProjects` drive applicability identically in the local build (the conventions plugin only registers tasks for applicable services) and in CI (the matrix's `exclude` list, via the `excludes` setup-job output, covers both explicitly excluded and non-whitelisted project/service combinations, so no-op jobs are never scheduled).
+
+The catalog is validated by `.github/scripts/test_services_catalog.py`, which runs on every PR. A missing or malformed catalog fails every Gradle invocation at configuration time.
+
+**When renaming or removing a service, update hardcoded service names in tests.** Some tests intentionally use representative service names, including `Checkout`, `Tapi`, and `Management`, in catalog fixtures and task assertions. Update those fixtures and assertions in `buildSrc/src/test` and `.github/scripts/test_resolve_matrix_inputs.py`.
+
 ## Language-Specific and Core Generation Logic
 
-While the core generation is handled by OpenAPI Generator, each language requires specific logic to handle naming conventions, file placement, and library-specific conventions. This logic is defined within each language's `build.gradle` file.
+While the core generation is handled by OpenAPI Generator, each language requires specific logic to handle naming conventions, file placement, and library-specific conventions. This logic is defined within each language's `build.gradle.kts` file.
 
-The central, language-agnostic generation logic is defined in [`buildSrc/src/main/groovy/adyen.sdk-automation-conventions.gradle`](buildSrc/src/main/groovy/adyen.sdk-automation-conventions.gradle). This file contains the complete list of API services, defines the main Gradle generation tasks, and includes pre-processing steps to adapt the OpenAPI specifications for our needs.
+The central, language-agnostic generation logic is defined in [`buildSrc/src/main/kotlin/adyen.sdk-automation-conventions.gradle.kts`](buildSrc/src/main/kotlin/adyen.sdk-automation-conventions.gradle.kts). This file loads the service catalog, defines the main Gradle generation tasks, and includes pre-processing steps to adapt the OpenAPI specifications for our needs.
 
 For detailed implementation of language-specific logic, refer to the following files using Java as an example:
 
@@ -82,4 +104,9 @@ For detailed implementation of language-specific logic, refer to the following f
 To run the unit tests for the shared Gradle logic in `buildSrc`, execute:
 ```bash
 ./gradlew :buildSrc:test
+```
+
+To run the unit tests for the CI scripts (matrix resolution and catalog validation), execute:
+```bash
+python3 -m unittest discover -s .github/scripts
 ```

@@ -9,6 +9,9 @@
 # Ignore Gradle build output directory
 build
 
+# Python bytecode (from .github/scripts unit tests)
+__pycache__/
+
 # OpenAPI specs
 schema
 PaymentMethodOverview.md

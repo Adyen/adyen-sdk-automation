@@ -1,4 +1,3 @@
-import com.adyen.sdk.Service
 import com.adyen.sdk.SdkAutomationExtension
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
@@ -124,10 +123,9 @@ services.filter { it.name.endsWith("Webhooks") }.forEach { svc ->
 }
 
 // Services with a RestServiceError model
-listOf("generateBalancePlatform", "generateTransfers", "generateManagement").forEach {
-    tasks.named<GenerateTask>(it) {
-        additionalProperties.put("hasRestServiceError", "true")
-    }
+// (BalancePlatform and Management are excluded from go via config/services.json)
+tasks.named<GenerateTask>("generateTransfers") {
+    additionalProperties.put("hasRestServiceError", "true")
 }
 
 // Test small services
