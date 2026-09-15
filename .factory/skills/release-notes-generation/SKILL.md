@@ -32,6 +32,19 @@ The canonical source repository is
 `Adyen/adyen-<language>-api-library`. Do not accept a repository name, GitHub
 identity, URL, or local checkout path in place of `language`.
 
+## Release-note composition requirements
+
+- Count the level 2 headings in the completed release notes. If there are more
+  than five, add a table of contents containing working links to every level 2
+  heading. Do not add a table of contents when there are five or fewer.
+- Cover each newly added webhook event type under New Features. Name the event
+  itself rather than mentioning only its supporting models, and link to its
+  API Explorer endpoint when one is available, for example
+  `https://docs.adyen.com/api-explorer/balanceplatform-webhooks/2/post/balancePlatform.balanceAccount.recurringTopUp.created`.
+- When an object is removed, report only the removal of the base object. Do not
+  enumerate removed internal properties.
+- Do not use inline code formatting or backticks in any heading or subheading.
+
 ## Preparation workflow
 
 Complete every preparation step before delegation.
@@ -82,6 +95,10 @@ After every preparation step succeeds:
   - absolute `release_notes_path` and `validation_path`
   - `overwrite_authorized: true` only when existing outputs were approved,
     otherwise `overwrite_authorized: false`
+  - all release-note composition requirements defined above, including the
+    conditional level 2 table of contents, webhook event coverage and API
+    Explorer links, base-object-only removal reporting, and the prohibition on
+    code formatting in headings and subheadings
   - a statement that the droid must follow its full source acquisition,
     analysis, output, cleanup, and validation contract
 3. Do not copy the droid's detailed analysis rules into the handoff.
