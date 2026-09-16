@@ -1,0 +1,39 @@
+{
+  "services": [
+    { "name": "Checkout", "version": 72, "group": "Payments" },
+    { "name": "Payout", "version": 68, "group": "Payments" },
+    { "name": "Recurring", "version": 68, "small": true, "group": "Payments" },
+    { "name": "BinLookup", "version": 54, "small": true, "group": "Payments" },
+    { "name": "PosMobile", "spec": "SessionService", "version": 68, "small": true, "group": "Payments" },
+    { "name": "PaymentsApp", "spec": "PaymentsAppService", "version": 1, "small": true, "group": "Payments" },
+    { "name": "Disputes", "spec": "DisputeService", "version": 30, "small": true, "group": "Payments" },
+    { "name": "StoredValue", "version": 46, "small": true, "group": "Payments" },
+    { "name": "DocumentCollector", "version": 1, "group": "Payments" },
+
+    { "name": "Payment", "version": 68, "small": true, "group": "Classic Payments" },
+
+    { "name": "Tapi", "spec": "TerminalAPI", "version": 1, "projects": ["java", "node"], "group": "Terminal API" },
+
+    { "name": "Management", "version": 3, "excludedProjects": ["go"], "group": "Management" },
+    { "name": "BalanceControl", "version": 1, "small": true, "group": "Management" },
+
+    { "name": "LegalEntityManagement", "spec": "LegalEntityService", "version": 4, "group": "Adyen for Platforms" },
+    { "name": "BalancePlatform", "version": 2, "excludedProjects": ["go"], "group": "Adyen for Platforms" },
+    { "name": "Transfers", "spec": "TransferService", "version": 4, "group": "Adyen for Platforms" },
+    { "name": "DataProtection", "version": 1, "small": true, "group": "Adyen for Platforms" },
+    { "name": "SessionAuthentication", "version": 1, "group": "Adyen for Platforms" },
+    { "name": "Capital", "version": 1, "group": "Adyen for Platforms" },
+
+    { "name": "ConfigurationWebhooks", "spec": "BalancePlatformConfigurationNotification", "version": 2, "group": "Webhooks" },
+    { "name": "AcsWebhooks", "spec": "BalancePlatformAcsNotification", "version": 1, "group": "Webhooks" },
+    { "name": "ReportWebhooks", "spec": "BalancePlatformReportNotification", "version": 1, "group": "Webhooks" },
+    { "name": "TransferWebhooks", "spec": "BalancePlatformTransferNotification", "version": 4, "group": "Webhooks" },
+    { "name": "TransactionWebhooks", "spec": "BalancePlatformTransactionNotification", "version": 4, "group": "Webhooks" },
+    { "name": "ManagementWebhooks", "spec": "ManagementNotificationService", "version": 3, "group": "Webhooks" },
+    { "name": "DisputeWebhooks", "spec": "BalancePlatformDisputeNotification", "version": 1, "group": "Webhooks" },
+    { "name": "NegativeBalanceWarningWebhooks", "spec": "BalancePlatformNegativeBalanceCompensationWarningNotification", "version": 1, "group": "Webhooks" },
+    { "name": "BalanceWebhooks", "spec": "BalancePlatformBalanceNotification", "version": 1, "group": "Webhooks" },
+    { "name": "TokenizationWebhooks", "spec": "TokenizationNotification", "version": 1, "group": "Webhooks" },
+    { "name": "RelayedAuthorizationWebhooks", "spec": "BalancePlatformRelayedAuthorisationNotification", "version": 4, "group": "Webhooks" }
+  ]
+}

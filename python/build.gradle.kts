@@ -1,4 +1,3 @@
-import com.adyen.sdk.Service
 import com.adyen.sdk.SdkAutomationExtension
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
@@ -10,7 +9,6 @@ val sdkAutomation = extensions.getByType<SdkAutomationExtension>()
 sdkAutomation.generator.set("python")
 
 val services = sdkAutomation.services.get()
-services.find { it.id == "payment" }?.small = false
 
 // Service renaming
 val serviceNaming = sdkAutomation.serviceNamingCamel.get().toMutableMap()

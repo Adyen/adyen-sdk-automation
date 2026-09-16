@@ -2,6 +2,7 @@ import com.adyen.sdk.Service
 import com.adyen.sdk.SdkAutomationExtension
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import org.gradle.api.GradleException
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 import java.util.Properties
 
@@ -31,55 +32,43 @@ fun <T> cast(obj: Any?): T = obj as T
 // list of services to be generated
 // services are APIs with multiple tags: the generation will create a service class/file for each tag
 // smallServices are APIs with a single tag 'General': the generation will create a single class/file
-val servicesList = listOf(
-    // Payments
-    Service(name = "Checkout", version = 72),
-    Service(name = "Payout", version = 68),
-    Service(name = "Recurring", version = 68, small = true),
-    Service(name = "BinLookup", version = 54, small = true),
-    Service(name = "PosMobile", spec = "SessionService", version = 68, small = true),
-    Service(name = "PaymentsApp", spec = "PaymentsAppService", version = 1, small = true),
-    Service(name = "Disputes", spec = "DisputeService", version = 30, small = true),
-    Service(name = "StoredValue", version = 46, small = true),
-    Service(name = "DocumentCollector", version = 1),
-    // Classic Payments
-    Service(name = "Payment", version = 68, small = true),
-    // Terminal API models (available for specific libraries)
-    Service(name = "Tapi", spec = "TerminalAPI", version = 1, projects = listOf("java", "node")),
-    // Management
-    Service(name = "Management", version = 3),
-    Service(name = "BalanceControl", version = 1, small = true),
-    // Adyen for Platforms
-    Service(name = "LegalEntityManagement", spec = "LegalEntityService", version = 4),
-    Service(name = "BalancePlatform", version = 2),
-    Service(name = "Transfers", spec = "TransferService", version = 4),
-    Service(name = "DataProtection", version = 1, small = true),
-    Service(name = "SessionAuthentication", version = 1),
-    Service(name = "Capital", version = 1),
-    // Webhooks
-    Service(name = "ConfigurationWebhooks", spec = "BalancePlatformConfigurationNotification", version = 2),
-    Service(name = "AcsWebhooks", spec = "BalancePlatformAcsNotification", version = 1),
-    Service(name = "ReportWebhooks", spec = "BalancePlatformReportNotification", version = 1),
-    Service(name = "TransferWebhooks", spec = "BalancePlatformTransferNotification", version = 4),
-    Service(name = "TransactionWebhooks", spec = "BalancePlatformTransactionNotification", version = 4),
-    Service(name = "ManagementWebhooks", spec = "ManagementNotificationService", version = 3),
-    Service(name = "DisputeWebhooks", spec = "BalancePlatformDisputeNotification", version = 1),
-    Service(
-        name = "NegativeBalanceWarningWebhooks",
-        spec = "BalancePlatformNegativeBalanceCompensationWarningNotification",
-        version = 1
-    ),
-    Service(name = "BalanceWebhooks", spec = "BalancePlatformBalanceNotification", version = 1),
-    Service(name = "TokenizationWebhooks", spec = "TokenizationNotification", version = 1),
-    Service(
-        name = "RelayedAuthorizationWebhooks",
-        spec = "BalancePlatformRelayedAuthorisationNotification",
-        version = 4
+//
+// The service catalog (config/services.json) is the single source of truth for the service matrix:
+// both this build and the CI matrix (.github/scripts/resolve-matrix-inputs.sh) derive from it.
+// A missing or malformed catalog fails every build at configuration time.
+val catalogFile = rootProject.file("config/services.json")
+val servicesList: List<Service> = try {
+    val catalog = cast<Map<String, Any?>>(JsonSlurper().parse(catalogFile))
+    cast<List<Map<String, Any?>>>(catalog["services"]).mapIndexed { index, entry ->
+        try {
+            Service(
+                name = cast(entry["name"]),
+                spec = entry["spec"] as String?,
+                version = cast<Number>(entry["version"]).toInt(),
+                small = entry["small"] as Boolean? ?: false,
+                projects = cast(entry["projects"]),
+                excludedProjects = cast(entry["excludedProjects"])
+            )
+        } catch (e: Exception) {
+            throw GradleException("Invalid service entry #${index + 1} (${entry["name"] ?: "no name"}) in config/services.json: ${e.message}", e)
+        }
+    }
+} catch (e: GradleException) {
+    throw e
+} catch (e: Exception) {
+    throw GradleException(
+        "Cannot load the service catalog at ${catalogFile.absolutePath}. " +
+            "Fix config/services.json (see AGENTS.md). Cause: ${e.message}",
+        e
     )
-)
+}
 
-// Filter services by project. When project is undefined, all services are included
-val applicableServices = servicesList.filter { it.projects == null || it.projects.contains(project.name) }
+// When a service's `projects` is unset, it's available to all projects. Setting otherwise
+// narrows its scope to only those in `projects`. A service's `excludedProjects` defines
+// the projects it is omitted from.
+val applicableServices = servicesList
+    .filter { it.projects == null || it.projects.contains(project.name) }
+    .filter { it.excludedProjects == null || !it.excludedProjects.contains(project.name) }
 
 sdkExtension.services.set(applicableServices)
 sdkExtension.smallServices.set(applicableServices.filter { it.small })

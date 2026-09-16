@@ -27,6 +27,7 @@ jobs:
     outputs:
       projects: ${{ steps.resolve.outputs.projects }}
       services: ${{ steps.resolve.outputs.services }}
+      excludes: ${{ steps.resolve.outputs.excludes }}
       should_generate: ${{ steps.classify.outputs.should_generate }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
@@ -67,11 +68,7 @@ jobs:
       matrix:
         project: ${{ fromJson(needs.setup.outputs.projects) }}
         service: ${{ fromJson(needs.setup.outputs.services) }}
-        exclude:
-          - project: go
-            service: management
-          - project: go
-            service: balanceplatform
+        exclude: ${{ fromJson(needs.setup.outputs.excludes) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7

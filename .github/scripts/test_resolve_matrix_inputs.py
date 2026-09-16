@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.13
+#!/usr/bin/env python3
 
 import json
 import os
@@ -8,48 +8,49 @@ import unittest
 from pathlib import Path
 
 SCRIPT = Path(__file__).parent / "resolve-matrix-inputs.sh"
+CATALOG = Path(__file__).parents[2] / "config" / "services.json"
 
 ALL_PROJECTS = ["java", "php", "node", "python", "ruby", "go", "dotnet"]
-ALL_SERVICES = [
-    "checkout",
-    "capital",
-    "payout",
-    "recurring",
-    "binlookup",
-    "posmobile",
-    "paymentsapp",
-    "disputes",
-    "storedvalue",
-    "documentcollector",
-    "payment",
-    "tapi",
-    "management",
-    "balancecontrol",
-    "legalentitymanagement",
-    "balanceplatform",
-    "transfers",
-    "dataprotection",
-    "sessionauthentication",
-    "configurationwebhooks",
-    "acswebhooks",
-    "reportwebhooks",
-    "transferwebhooks",
-    "transactionwebhooks",
-    "managementwebhooks",
-    "disputewebhooks",
-    "negativebalancewarningwebhooks",
-    "balancewebhooks",
-    "tokenizationwebhooks",
-    "relayedauthorizationwebhooks",
+
+# Expected services and excludes come from the catalog (the single source of truth).
+with CATALOG.open() as catalog_file:
+    _catalog = json.load(catalog_file)
+
+ALL_SERVICES = [service["name"].lower() for service in _catalog["services"]]
+
+# A tiny synthetic catalog with hardcoded expectation.
+PINNED_CATALOG = {
+    "services": [
+        {"name": "Alpha", "version": 1},
+        {"name": "Beta", "version": 2, "projects": ["java", "node"]},
+        {"name": "Gamma", "version": 3, "excludedProjects": ["go"]},
+    ]
+}
+PINNED_SERVICES = ["alpha", "beta", "gamma"]
+PINNED_EXCLUDES = [
+    {"project": "php", "service": "beta"},
+    {"project": "python", "service": "beta"},
+    {"project": "ruby", "service": "beta"},
+    {"project": "go", "service": "beta"},
+    {"project": "dotnet", "service": "beta"},
+    {"project": "go", "service": "gamma"},
 ]
 
 
-def run_script(projects: str = "", services: str = "") -> tuple[subprocess.CompletedProcess[str], dict[str, list[str]]]:
+def run_script(projects: str = "", services: str = "", catalog: dict | None = None) -> tuple[subprocess.CompletedProcess[str], dict[str, list]]:
     with tempfile.NamedTemporaryFile(mode="w+", suffix=".output", delete=False) as output_file:
         output_path = Path(output_file.name)
 
+    catalog_path = None
+    if catalog is not None:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as catalog_file:
+            json.dump(catalog, catalog_file)
+            catalog_path = Path(catalog_file.name)
+
     try:
         env = {**os.environ, "INPUT_PROJECTS": projects, "INPUT_SERVICES": services}
+        if catalog_path is not None:
+            env["SERVICES_CATALOG"] = str(catalog_path)
         result = subprocess.run(
             ["bash", str(SCRIPT), str(output_path)],
             env=env,
@@ -68,6 +69,8 @@ def run_script(projects: str = "", services: str = "") -> tuple[subprocess.Compl
         return result, outputs
     finally:
         output_path.unlink(missing_ok=True)
+        if catalog_path is not None:
+            catalog_path.unlink(missing_ok=True)
 
 
 class TestResolveMatrixInputs(unittest.TestCase):
@@ -114,6 +117,18 @@ class TestResolveMatrixInputs(unittest.TestCase):
         result, outputs = run_script(services="checkout,management")
         self.assertEqual(result.returncode, 0)
         self.assertEqual(outputs["services"], ["checkout", "management"])
+
+    def test_pinned_catalog_services_and_excludes(self) -> None:
+        result, outputs = run_script(catalog=PINNED_CATALOG)
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(outputs["services"], PINNED_SERVICES)
+        self.assertEqual(outputs["excludes"], PINNED_EXCLUDES)
+
+    def test_excludes_output_present_with_custom_inputs(self) -> None:
+        result, outputs = run_script(projects="java", services="alpha", catalog=PINNED_CATALOG)
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(outputs["services"], ["alpha"])
+        self.assertEqual(outputs["excludes"], PINNED_EXCLUDES)
 
 
 if __name__ == "__main__":

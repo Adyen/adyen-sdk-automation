@@ -3,8 +3,25 @@ set -euo pipefail
 
 OUTPUT_FILE="${1:?Usage: $0 <output-file>}"
 
+# The service catalog is the single source of truth for the service matrix.
+# SERVICES_CATALOG overrides the path (used by tests).
+CATALOG="${SERVICES_CATALOG:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../config/services.json}"
+
+# ALL_PROJECTS mirrors the Gradle subprojects in settings.gradle.kts
 ALL_PROJECTS='["java","php","node","python","ruby","go","dotnet"]'
-ALL_SERVICES='["checkout","capital","payout","recurring","binlookup","posmobile","paymentsapp","disputes","storedvalue","documentcollector","payment","tapi","management","balancecontrol","legalentitymanagement","balanceplatform","transfers","dataprotection","sessionauthentication","configurationwebhooks","acswebhooks","reportwebhooks","transferwebhooks","transactionwebhooks","managementwebhooks","disputewebhooks","negativebalancewarningwebhooks","balancewebhooks","tokenizationwebhooks","relayedauthorizationwebhooks"]'
+# ALL_SERVICES and EXCLUDES are derived from the catalog.
+ALL_SERVICES=$(jq -c '[.services[].name | ascii_downcase]' "$CATALOG")
+# A service is excluded from a project's matrix job when the project is in its
+# `excludedProjects`, or when the service has a `projects` whitelist that doesn't
+# contain the project. This mirrors the applicability rules in the Gradle
+# conventions plugin so that no-op jobs are never scheduled.
+EXCLUDES=$(jq -c --argjson allProjects "$ALL_PROJECTS" '
+  [ .services[] | . as $svc
+    | (if .excludedProjects != null then .excludedProjects
+       elif .projects != null then ($allProjects - .projects)
+       else [] end)[]
+    | {project: ., service: ($svc.name | ascii_downcase)} ]
+' "$CATALOG")
 
 if [ -z "${INPUT_PROJECTS:-}" ]; then
   echo "projects=$ALL_PROJECTS" >> "$OUTPUT_FILE"
@@ -29,3 +46,6 @@ else
   fi
   echo "services=$JSON" >> "$OUTPUT_FILE"
 fi
+
+# Emitted after input validation, so a failed run never contains an excludes line.
+echo "excludes=$EXCLUDES" >> "$OUTPUT_FILE"
