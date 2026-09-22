@@ -151,6 +151,17 @@ jobs:
           echo "sha_short=$(cd schema && git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           echo "library_sha=$(cd $PROJECT/repo && git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+      - name: Select reviewer
+        if: steps.changes.outputs.changed == 'true'
+        id: reviewer
+        env:
+          SDK_REVIEWERS: ${{ vars.SDK_REVIEWERS }}
+        run: |
+          python3 .github/scripts/select_reviewer.py \
+            "$SDK_REVIEWERS" \
+            "${{ steps.vars.outputs.sha }}" \
+            "$GITHUB_OUTPUT"
+
       - name: Write generation log
         if: steps.changes.outputs.changed == 'true'
         env:
@@ -179,8 +190,11 @@ jobs:
           author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
           branch: sdk-automation/${{ matrix.service }}
           title: '[${{ matrix.service }}] Code generation: update services and models'
+          reviewers: ${{ steps.reviewer.outputs.reviewer }}
           body: |
             This PR contains the automated changes for the `${{ matrix.service }}` service.
+
+            [Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}](https://github.com/Adyen/adyen-openapi/commit/${{ steps.vars.outputs.sha_short }})
 
             The commit history of this PR reflects the `adyen-openapi` commits that have been applied.
           commit-message: '[${{ matrix.service }}] Automated update from Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}'
