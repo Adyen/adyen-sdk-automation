@@ -1,0 +1,70 @@
+{
+  "uncoveredSpecs": {
+    "AccountService": {
+      "reason": "Classic Platforms integration, superseded by Legal Entity Management and Balance Platform. Not generated."
+    },
+    "FundService": {
+      "reason": "Classic Platforms integration, superseded by Transfers and Balance Platform. Not generated."
+    },
+    "HopService": {
+      "reason": "Classic Platforms hosted onboarding, superseded by Legal Entity Management. Not generated."
+    },
+    "MarketPayNotificationService": {
+      "reason": "Classic Platforms notifications, superseded by the Balance Platform webhooks. Not generated."
+    },
+    "NotificationConfigurationService": {
+      "reason": "Classic Platforms notification configuration, superseded by Management API. Not generated."
+    },
+    "BalancePlatformPaymentNotification": {
+      "reason": "The spec marks these webhooks as deprecated in favour of the accounting webhooks. Not generated."
+    },
+    "TfmAPIService": {
+      "reason": "The spec marks the POS Terminal Management API as deprecated, superseded by Management API. Not generated."
+    },
+    "CloudDeviceService": {
+      "reason": "UNREVIEWED: hand-maintained outside the generator in some libraries (see com/adyen/service/clouddevice in Java). Decide whether to generate it instead."
+    },
+    "OpenBankingService": {
+      "reason": "UNREVIEWED: hand-maintained outside the generator in some libraries (see com/adyen/service/openbanking in Java). Decide whether to generate it instead."
+    },
+    "Webhooks": {
+      "reason": "UNREVIEWED: record why the standard webhooks spec is not generated."
+    },
+    "A2APaymentsService": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "BalancePlatformAccountingNotification": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "BalancePlatformGrantNotification": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "BalancePlatformManagedRiskNotification": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "ForeignExchangeService": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "ForwardApiNotification": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "RaiseDisputesService": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "SoftPOSConfigurationService": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "TestCardService": {
+      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
+    },
+    "TransactionService": {
+      "reason": "UNREVIEWED: shares its title and description with RaiseDisputesService, so confirm whether this spec is superseded before deciding."
+    }
+  },
+  "pinnedVersions": {
+    "BalanceControlService": {
+      "acknowledgedVersion": 2,
+      "reason": "UNREVIEWED: v2 renames /balanceTransfer to /balanceTransfers and adds the balance overview endpoints, so bumping is a breaking change across all libraries. Decide and schedule it."
+    }
+  }
+}

@@ -1,0 +1,91 @@
+name: Spec Coverage
+
+# A spec release in Adyen/adyen-openapi produces no pull request here, so drift between
+# the published specs and the service catalog is invisible to every other workflow. The
+# schedule is what catches it; the pull_request trigger additionally guards catalog edits.
+#
+# The `coverage` job reports every gap. The `propose` job turns the subset that is a newly
+# published API into a draft catalog entry for review. The two are independent on purpose:
+# `coverage` fails when unreviewed drift exists, which is exactly when `propose` must run.
+
+on:
+  schedule:
+    # Weekday mornings (UTC), after the usual spec release window.
+    - cron: '30 7 * * 1-5'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'config/services.json'
+      - 'config/spec-coverage-baseline.json'
+      - '.github/scripts/check_spec_coverage.py'
+      - '.github/workflows/spec-coverage.yaml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: spec-coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    name: Compare published specs with the service catalog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+
+      # Mirrors the `specs` Gradle task, which clones the spec repository into schema/.
+      - name: Check out the OpenAPI specs
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          repository: Adyen/adyen-openapi
+          path: schema
+
+      - name: Report the OpenAPI commit under test
+        run: echo "adyen-openapi at $(git -C schema rev-parse --short HEAD)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Compare specs with the catalog
+        run: python3 .github/scripts/check_spec_coverage.py --summary "$GITHUB_STEP_SUMMARY"
+
+  propose:
+    name: Propose catalog entries for new specs
+    # A pull request is where a proposal gets reviewed, not where one is made.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+
+      - name: Check out the OpenAPI specs
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          repository: Adyen/adyen-openapi
+          path: schema
+
+      - name: Propose an entry for every uncovered spec
+        run: |
+          # Without pipefail, tee would mask a non-zero exit from the script.
+          set -o pipefail
+          python3 .github/scripts/propose_new_services.py \
+            --write \
+            --pr-body "$RUNNER_TEMP/pr-body.md" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # The bot token is deliberate: a pull request opened with GITHUB_TOKEN does not trigger
+      # `on: pull_request` workflows, so the catalog validation would not run on the proposal.
+      # No changes means no pull request, so a run with nothing to propose is a no-op.
+      - name: Open a draft pull request
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
+          committer: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
+          author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
+          branch: spec-coverage/new-services
+          draft: true
+          title: '[catalog] Add entries for newly published specs'
+          body-path: ${{ runner.temp }}/pr-body.md
+          commit-message: '[catalog] Propose entries for specs with no SDK coverage'
+          add-paths: config/services.json
