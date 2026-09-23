@@ -23,6 +23,7 @@
     { "name": "DataProtection", "version": 1, "small": true, "group": "Adyen for Platforms" },
     { "name": "SessionAuthentication", "version": 1, "group": "Adyen for Platforms" },
     { "name": "Capital", "version": 1, "group": "Adyen for Platforms" },
+    { "name": "ForeignExchange", "version": 1, "group": "Adyen for Platforms" },
 
     { "name": "ConfigurationWebhooks", "spec": "BalancePlatformConfigurationNotification", "version": 2, "group": "Webhooks" },
     { "name": "AcsWebhooks", "spec": "BalancePlatformAcsNotification", "version": 1, "group": "Webhooks" },
