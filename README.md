@@ -77,6 +77,18 @@ To run unit tests:
 ./gradlew :buildSrc:test
 ```
 
+### Automated PR Reviewers
+
+The `Update SDKs` workflow requests one reviewer for every generated SDK pull request. Configure the reviewer pool with an `SDK_REVIEWERS` repository variable containing a comma-separated list of GitHub usernames:
+
+```
+alice,bob-smith,carol
+```
+
+The workflow converts the full `adyen-openapi` commit SHA to an integer and uses its modulo against the pool size. This makes the selection deterministic for retries of the same commit and distributes reviews across the pool, but does not guarantee that consecutive commits select different reviewers.
+
+Every reviewer must have access to all target SDK repositories. The `ADYEN_AUTOMATION_BOT_ACCESS_TOKEN` must also have permission to request reviews. The workflow fails before creating a pull request when the reviewer pool is missing or invalid.
+
 ### Generating Release Notes
 
 A Factory skill and droid are included to generate evidence-backed release notes for an Adyen API library. The skill validates the request and manages the output files, while the droid clones the selected library into a temporary directory, analyzes the release range, validates the result, and cleans up the clone.
