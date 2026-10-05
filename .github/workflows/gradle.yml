@@ -207,5 +207,12 @@ jobs:
           PR_NUMBER: ${{ steps.pull_request.outputs.pull-request-number }}
           REVIEWER: ${{ steps.reviewer.outputs.reviewer }}
         run: |
-          gh api --method POST "repos/$REPOSITORY/pulls/$PR_NUMBER/requested_reviewers" \
-            -f "reviewers[]=$REVIEWER"
+          request_reviewer() {
+            gh api --method POST "repos/$REPOSITORY/pulls/$PR_NUMBER/requested_reviewers" \
+              -f "reviewers[]=$REVIEWER"
+          }
+          if ! request_reviewer; then
+            echo "Reviewer request failed; retrying once in 5 seconds."
+            sleep 5
+            request_reviewer
+          fi
