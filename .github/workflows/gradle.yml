@@ -182,6 +182,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.changes.outputs.changed == 'true'
+        id: pull_request
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           path: ${{ matrix.project }}/repo
@@ -190,7 +191,6 @@ jobs:
           author: ${{ secrets.ADYEN_AUTOMATION_BOT_TEST_EMAIL }}
           branch: sdk-automation/${{ matrix.service }}
           title: '[${{ matrix.service }}] Code generation: update services and models'
-          reviewers: ${{ steps.reviewer.outputs.reviewer }}
           body: |
             This PR contains the automated changes for the `${{ matrix.service }}` service.
 
@@ -198,3 +198,14 @@ jobs:
 
             The commit history of this PR reflects the `adyen-openapi` commits that have been applied.
           commit-message: '[${{ matrix.service }}] Automated update from Adyen/adyen-openapi@${{ steps.vars.outputs.sha_short }}'
+
+      - name: Request reviewer for new pull request
+        if: steps.pull_request.outputs.pull-request-operation == 'created'
+        env:
+          GH_TOKEN: ${{ secrets.ADYEN_AUTOMATION_BOT_ACCESS_TOKEN }}
+          REPOSITORY: Adyen/adyen-${{ matrix.project }}-api-library
+          PR_NUMBER: ${{ steps.pull_request.outputs.pull-request-number }}
+          REVIEWER: ${{ steps.reviewer.outputs.reviewer }}
+        run: |
+          gh api --method POST "repos/$REPOSITORY/pulls/$PR_NUMBER/requested_reviewers" \
+            -f "reviewers[]=$REVIEWER"

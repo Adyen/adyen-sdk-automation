@@ -79,7 +79,7 @@ To run unit tests:
 
 ### Automated PR Reviewers
 
-The `Update SDKs` workflow requests one reviewer for every generated SDK pull request. Configure the reviewer pool with an `SDK_REVIEWERS` repository variable containing a comma-separated list of GitHub usernames:
+The `Update SDKs` workflow requests one reviewer only when it creates a new SDK pull request. Updates to existing pull requests leave their reviewers untouched. Configure the reviewer pool with an `SDK_REVIEWERS` repository variable containing a comma-separated list of GitHub usernames:
 
 ```
 alice,bob-smith,carol
