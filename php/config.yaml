@@ -1,0 +1,5 @@
+files:
+  webhook_handler.mustache:
+    folder: lib
+    destinationFilename: WebhookHandler.php
+    templateType: SupportingFiles
