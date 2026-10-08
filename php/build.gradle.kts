@@ -1,4 +1,3 @@
-import com.adyen.sdk.Service
 import com.adyen.sdk.SdkAutomationExtension
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
@@ -8,6 +7,7 @@ plugins {
 
 val sdkAutomation = extensions.getByType<SdkAutomationExtension>()
 sdkAutomation.removeTags.set(false)
+sdkAutomation.templates.set("templates-v7")
 
 val services = sdkAutomation.services.get()
 val smallServices = sdkAutomation.smallServices.get()
@@ -18,16 +18,6 @@ serviceNaming.putAll(mapOf(
     "payment" to "Payments",
     "posterminalmanagement" to "POSTerminalManagement"
 ))
-
-tasks.withType(GenerateTask::class).configureEach {
-    val serviceId = sdkAutomation.serviceName.get() // Note: this might be empty if not set, original used project.extra["serviceId"]
-    // In convention plugin, I didn't set serviceId in extension. I'll use property from GenerateTask if possible or just use current logic.
-    // Actually, in convention plugin: tasks.register("generate${svc.name}") { ... }
-    // We can get the service ID from the task name or just use a local variable in the loop.
-}
-
-// Subprojects often need to access the mapping.
-// Let's use the local mapping for deployment.
 
 // Deployment
 services.filter { !it.small }.forEach { svc ->
@@ -58,6 +48,28 @@ services.filter { !it.small }.forEach { svc ->
         from(layout.buildDirectory.file("$sourcePath/ObjectSerializer.php")) {
             into("Model/" + serviceNaming[svc.id])
         }
+
+        if (svc.id.endsWith("webhooks")) {
+            // Copy WebhookHandler.php into the service model folder and rename it
+            // (i.e. WebhookHandler.php to AcsWebhooksHandler.php)
+            from(layout.buildDirectory.file("$sourcePath/WebhookHandler.php")) {
+                rename("WebhookHandler.php", "${svc.name}Handler.php")
+                into("Model/" + serviceNaming[svc.id])
+            }
+
+            // Verify the handler was generated and deployed
+            // we log a warning instead of failing the build
+            doLast {
+                val handlerFile = file(
+                    "${layout.projectDirectory}/repo/src/Adyen/Model/${svc.name}/${svc.name}Handler.php"
+                )
+                if (!handlerFile.exists()) {
+                    logger.warn("WebhookHandler was not generated for ${svc.name}")
+                } else if (!handlerFile.readText().contains("public function get")) {
+                    logger.warn("${svc.name}Handler.php has no getters; the template may be broken")
+                }
+            }
+        }
     }
 
     tasks.named(svc.id) {
@@ -78,13 +90,15 @@ smallServices.forEach { svc ->
 
         // Service
         val clazzName = "${serviceName}Api"
-        from(layout.buildDirectory.file("services/${svc.id}/lib/Service/GeneralApi.php")) {
+        from(layout.buildDirectory.dir("services/${svc.id}/lib/Service/$serviceName")) {
+            include("**/*Api.php")
             rename("GeneralApi.php", "${clazzName}.php")
             filter { line ->
                 line.replace("class GeneralApi", "class $clazzName")
                     .replace("GeneralApi constructor", "$clazzName constructor")
+                    .replace("GeneralApi Class", "$clazzName Class")
             }
-            into("Service")
+            into("Service/$serviceName")
         }
 
         // Models
@@ -115,8 +129,9 @@ services.forEach { svc ->
             "invokerPackage" to "Adyen",
             "packageName" to "Adyen"
         ))
-        if (svc.small) {
-            apiPackage.set("Service")
+        if (svc.id.endsWith("webhooks")) {
+            // for webhooks only apply extra config.yaml (to generate WebhookHandler)
+            configFile.set("$projectDir/config.yaml")
         }
     }
 }
@@ -125,13 +140,17 @@ services.forEach { svc ->
 tasks.named("binlookup") {
     doLast {
         assert(file("${layout.projectDirectory}/repo/src/Adyen/Model/BinLookup/Amount.php").exists())
-        assert(file("${layout.projectDirectory}/repo/src/Adyen/Service/BinLookupApi.php").exists())
+        assert(file("${layout.projectDirectory}/repo/src/Adyen/Service/BinLookup/BinLookupApi.php").exists())
     }
 }
 tasks.named<Copy>("deployAcsWebhooks") {
     doLast {
         assert(file("${layout.projectDirectory}/repo/src/Adyen/Model/AcsWebhooks/Amount.php").exists())
         assert(file("${layout.projectDirectory}/repo/src/Adyen/Model/AcsWebhooks/ObjectSerializer.php").exists())
+        assert(
+            file("${layout.projectDirectory}/repo/src/Adyen/Model/AcsWebhooks/AcsWebhooksHandler.php")
+                .readText().contains("getAuthenticationNotificationRequest")
+        ) { "'getAuthenticationNotificationRequest' method not found in AcsWebhooksHandler.php" }
     }
 }
 tasks.named("deployCheckout") {
