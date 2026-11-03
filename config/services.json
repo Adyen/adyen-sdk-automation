@@ -5,6 +5,7 @@
     { "name": "Recurring", "version": 68, "small": true, "group": "Payments" },
     { "name": "BinLookup", "version": 54, "small": true, "group": "Payments" },
     { "name": "PosMobile", "spec": "SessionService", "version": 68, "small": true, "group": "Payments" },
+    { "name": "SoftPOSConfiguration", "version": 3, "group": "Payments" },
     { "name": "PaymentsApp", "spec": "PaymentsAppService", "version": 1, "small": true, "group": "Payments" },
     { "name": "Disputes", "spec": "DisputeService", "version": 30, "small": true, "group": "Payments" },
     { "name": "StoredValue", "version": 46, "small": true, "group": "Payments" },

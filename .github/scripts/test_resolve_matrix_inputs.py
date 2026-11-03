@@ -86,6 +86,20 @@ class TestResolveMatrixInputs(unittest.TestCase):
         self.assertEqual(outputs["projects"], ["java"])
         self.assertEqual(outputs["services"], ALL_SERVICES)
 
+    def test_softpos_configuration_is_in_default_matrix_for_all_projects(self) -> None:
+        result, outputs = run_script()
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("softposconfiguration", outputs["services"])
+        self.assertEqual(outputs["projects"], ALL_PROJECTS)
+        self.assertNotIn("softposconfiguration", [entry["service"] for entry in outputs["excludes"]])
+
+    def test_softpos_configuration_can_be_selected_for_all_projects(self) -> None:
+        result, outputs = run_script(services="softposconfiguration")
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(outputs["services"], ["softposconfiguration"])
+        self.assertEqual(outputs["projects"], ALL_PROJECTS)
+        self.assertNotIn("softposconfiguration", [entry["service"] for entry in outputs["excludes"]])
+
     def test_multiple_projects_with_spaces_and_trailing_comma(self) -> None:
         result, outputs = run_script(projects=" java , python , ")
         self.assertEqual(result.returncode, 0)

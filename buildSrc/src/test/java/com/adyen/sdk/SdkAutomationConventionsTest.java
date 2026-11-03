@@ -1,8 +1,12 @@
 package com.adyen.sdk;
 
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -26,6 +30,7 @@ public class SdkAutomationConventionsTest {
                       "services": [
                         { "name": "Checkout", "version": 72 },
                         { "name": "Recurring", "version": 68, "small": true },
+                        { "name": "SoftPOSConfiguration", "version": 3 },
                         { "name": "Tapi", "spec": "TerminalAPI", "version": 1, "projects": ["java", "node"] },
                         { "name": "Management", "version": 3, "excludedProjects": ["go"] }
                       ]
@@ -54,6 +59,25 @@ public class SdkAutomationConventionsTest {
 
         assertThat(project.getTasks().findByName("tapi")).isNotNull();
         assertThat(project.getTasks().findByName("generateTapi")).isNotNull();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"java", "php", "node", "python", "ruby", "go", "dotnet"})
+    public void softposConfigurationUsesV3SpecForEveryProject(String name) {
+        Project project = projectWithCatalog(name);
+        project.getPluginManager().apply("adyen.sdk-automation-conventions");
+
+        var task = (GenerateTask) project.getTasks().getByName("generateSoftPOSConfiguration");
+        assertThat(task.getInputSpec().get()).isEqualTo(
+                project.getRootDir() + "/schema/json/SoftPOSConfigurationService-v3.json");
+        var serviceTask = project.getTasks().getByName("softposconfiguration");
+        assertThat(serviceTask.getTaskDependencies().getDependencies(serviceTask))
+                .extracting(Task::getName)
+                .contains(task.getName());
+        var allServicesTask = project.getTasks().getByName("services");
+        assertThat(allServicesTask.getTaskDependencies().getDependencies(allServicesTask))
+                .extracting(Task::getName)
+                .contains(serviceTask.getName());
     }
 
     @Test
