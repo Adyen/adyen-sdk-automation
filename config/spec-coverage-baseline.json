@@ -42,9 +42,6 @@
     "BalancePlatformManagedRiskNotification": {
       "reason": "UNREVIEWED: record why this spec has no SDK coverage"
     },
-    "ForeignExchangeService": {
-      "reason": "UNREVIEWED: record why this spec has no SDK coverage"
-    },
     "ForwardApiNotification": {
       "reason": "UNREVIEWED: record why this spec has no SDK coverage"
     },

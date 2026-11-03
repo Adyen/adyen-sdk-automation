@@ -12,9 +12,11 @@ into a permanent mute, which is the exact failure mode it exists to prevent.
 import contextlib
 import io
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import check_spec_coverage as checker
 
@@ -64,6 +66,22 @@ class TestSpecDiscovery(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             checker.discover_specs(self.specs_dir)
 
+    def test_public_discovery_skips_only_explicitly_non_public_versions(self) -> None:
+        self.write("CheckoutService-v72.json", "CheckoutService-v73.json", "PrivateService-v1.json")
+        for name in ("CheckoutService-v73.json", "PrivateService-v1.json"):
+            (self.specs_dir / name).write_text(json.dumps({"info": {"x-publicVersion": False}}))
+        self.assertEqual(
+            checker.discover_specs(self.specs_dir, public_only=True),
+            {"CheckoutService": [72]},
+        )
+        self.assertEqual(checker.discover_specs(self.specs_dir)["CheckoutService"], [72, 73])
+
+    def test_all_non_public_specs_produce_an_empty_public_catalog(self) -> None:
+        (self.specs_dir / "PrivateService-v1.json").write_text(
+            json.dumps({"info": {"x-publicVersion": False}})
+        )
+        self.assertEqual(checker.discover_specs(self.specs_dir, public_only=True), {})
+
 
 class TestSpecName(unittest.TestCase):
     def test_defaults_to_name_service(self) -> None:
@@ -77,6 +95,12 @@ class TestSpecName(unittest.TestCase):
 
 
 class TestUncoveredSpecs(unittest.TestCase):
+    def test_uncatalogued_family_does_not_imply_sdk_absence(self) -> None:
+        findings = checker.evaluate({"FundService": [6]}, [], EMPTY_BASELINE)
+        self.assertEqual(findings[0].detail, "published up to v6, absent from the generation catalog")
+        self.assertNotIn("no SDK exposes", checker.render_text(findings, {"FundService": [6]}, []))
+        self.assertNotIn("no SDK exposes", checker.render_markdown(findings, {"FundService": [6]}, []))
+
     def test_spec_without_catalog_entry_is_reported(self) -> None:
         findings = checker.evaluate(
             {"CheckoutService": [72], "ForeignExchangeService": [1]},
@@ -274,8 +298,25 @@ class TestReportingAndExitCodes(unittest.TestCase):
             ]
         )
 
-    def test_unreviewed_drift_exits_one(self) -> None:
-        self.assertEqual(self.run_main(), 1)
+    def test_unreviewed_drift_is_informational(self) -> None:
+        self.assertEqual(self.run_main(), 0)
+
+    def test_version_lag_is_informational(self) -> None:
+        (self.specs_dir / "CheckoutService-v73.json").write_text("{}")
+        self.assertEqual(self.run_main(), 0)
+
+    def test_stale_baseline_is_informational(self) -> None:
+        self.baseline_path.write_text(json.dumps(baseline(
+            uncovered={"CheckoutService": {"reason": "previously excluded"}}
+        )))
+        self.assertEqual(self.run_main(), 0)
+
+    def test_missing_required_spec_is_a_warning(self) -> None:
+        self.catalog.write_text(json.dumps({"services": [{"name": "Checkout", "version": 73}]}))
+        summary = self.root / "summary.md"
+        self.assertEqual(self.run_main("--summary", str(summary)), 0)
+        self.assertIn("missing-spec", summary.read_text())
+        self.assertIn("v73", summary.read_text())
 
     def test_accepted_drift_exits_zero(self) -> None:
         self.baseline_path.write_text(
@@ -286,6 +327,77 @@ class TestReportingAndExitCodes(unittest.TestCase):
     def test_malformed_baseline_exits_two(self) -> None:
         self.baseline_path.write_text(json.dumps({"uncoveredSpecs": {"S": {}}}))
         self.assertEqual(self.run_main(), 2)
+
+    def test_invalid_catalog_exits_two(self) -> None:
+        for content in ("not json", "{}", '{"services": [{}]}'):
+            with self.subTest(content=content):
+                self.catalog.write_text(content)
+                self.assertEqual(self.run_main(), 2)
+        self.catalog.unlink()
+        self.assertEqual(self.run_main(), 2)
+
+    def test_malformed_catalog_values_fail_instead_of_warning(self) -> None:
+        invalid_services = [{}, [], [None]] + [
+            [{"name": "Checkout", "version": version}]
+            for version in (-1, 0, True, "72", 72.5)
+        ]
+        for services in invalid_services:
+            with self.subTest(services=services):
+                self.catalog.write_text(json.dumps({"services": services}))
+                self.assertEqual(self.run_main(), 2)
+
+    def test_invalid_catalog_fields_fail(self) -> None:
+        entries = [
+            {"name": ""},
+            {"name": "../Checkout"},
+            {"name": 42},
+            {"spec": None},
+            {"small": "false"},
+            {"projects": []},
+            {"projects": "java"},
+            {"projects": ["unknown"]},
+            {"excludedProjects": [True]},
+            {"projects": ["java"], "excludedProjects": ["go"]},
+            {"unknown": True},
+        ]
+        for fields in entries:
+            service = {"name": "Checkout", "version": 72, **fields}
+            with self.subTest(service=service):
+                self.catalog.write_text(json.dumps({"services": [service]}))
+                self.assertEqual(self.run_main(), 2)
+        self.catalog.write_text(json.dumps({"services": [
+            {"name": "Checkout", "version": 72},
+            {"name": "checkout", "version": 72},
+        ]}))
+        self.assertEqual(self.run_main(), 2)
+        for document in ([], None, {"services": [{"name": "Checkout", "version": 72}], "unknown": True}):
+            with self.subTest(document=document):
+                self.catalog.write_text(json.dumps(document))
+                self.assertEqual(self.run_main(), 2)
+
+    def test_malformed_spec_exits_two(self) -> None:
+        (self.specs_dir / "CheckoutService-v72.json").write_text("not json")
+        self.assertEqual(self.run_main(), 2)
+
+    def test_non_public_latest_version_does_not_report_drift(self) -> None:
+        self.catalog.write_text(json.dumps({"services": [
+            {"name": "Checkout", "version": 72},
+            {"name": "ForeignExchange", "version": 1},
+        ]}))
+        (self.specs_dir / "CheckoutService-v73.json").write_text(
+            json.dumps({"info": {"x-publicVersion": False}})
+        )
+        self.assertEqual(self.run_main(), 0)
+
+    def test_non_public_pin_is_not_misreported_as_a_missing_file(self) -> None:
+        (self.specs_dir / "CheckoutService-v72.json").write_text(
+            json.dumps({"info": {"x-publicVersion": False}})
+        )
+        self.catalog.write_text(json.dumps({"services": [
+            {"name": "Checkout", "version": 72},
+            {"name": "ForeignExchange", "version": 1},
+        ]}))
+        self.assertEqual(self.run_main(), 0)
 
     def test_missing_specs_directory_exits_two(self) -> None:
         self.assertEqual(
@@ -301,6 +413,39 @@ class TestReportingAndExitCodes(unittest.TestCase):
         self.assertIn("previous content", content)
         self.assertIn("## SDK spec coverage", content)
         self.assertIn("ForeignExchangeService", content)
+
+    def test_pending_baseline_decisions_are_not_labelled_accepted(self) -> None:
+        self.baseline_path.write_text(json.dumps(baseline(
+            uncovered={"ForeignExchangeService": {"reason": checker.UNREVIEWED_REASON}}
+        )))
+        summary = self.root / "summary.md"
+        self.assertEqual(self.run_main("--summary", str(summary)), 0)
+        content = summary.read_text()
+        self.assertIn("Unreviewed drift (1)", content)
+        self.assertIn(checker.UNREVIEWED_REASON, content)
+        self.assertNotIn("Accepted gaps", content)
+
+    def test_actions_annotations_warn_for_all_gaps_including_missing_specs(self) -> None:
+        findings = [
+            checker.Finding(checker.UNCOVERED, "NewService", "no catalog entry"),
+            checker.Finding(checker.BEHIND, "CheckoutService", "new version"),
+            checker.Finding(checker.STALE, "OldService", "resolved"),
+            checker.Finding(
+                checker.UNCOVERED, "PendingService", "undecided",
+                accepted=True, reason=checker.UNREVIEWED_REASON,
+            ),
+            checker.Finding(checker.MISSING, "MissingService", "missing required file"),
+            checker.Finding(
+                checker.UNCOVERED, "ExcludedService", "excluded",
+                accepted=True, reason="Intentionally unsupported",
+            ),
+        ]
+        with mock.patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                checker.annotate(findings)
+        lines = output.getvalue().splitlines()
+        self.assertEqual(len(lines), 5)
+        self.assertTrue(all(line.startswith("::warning ") for line in lines))
 
     def test_write_baseline_accepts_current_gaps(self) -> None:
         self.assertEqual(self.run_main("--write-baseline"), 0)

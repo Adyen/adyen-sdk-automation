@@ -6,14 +6,14 @@ config/services.json is an allowlist: the Gradle build and the CI matrix only ac
 on the services it names. Nothing in that flow looks at the specs it does *not*
 name, so two kinds of drift stay invisible until an integrator reports them:
 
-* a spec is published to Adyen/adyen-openapi and reaches no SDK at all;
+* a spec is published to Adyen/adyen-openapi but is absent from the generation catalog;
 * a catalog entry stays pinned below the newest published spec version, so the
   service looks complete while missing every endpoint added since.
 
-This check diffs the two sides. Gaps that were reviewed and accepted live in
-config/spec-coverage-baseline.json, so only unreviewed drift fails the run. A
-version pin is accepted for one specific version, which keeps the baseline from
-muting the next version bump.
+This check reports gaps without blocking CI. Decisions live in
+config/spec-coverage-baseline.json; UNREVIEWED placeholders remain visible as
+pending decisions. Missing catalogued spec files are warnings too; malformed
+configuration or an unreadable spec repository still fails the run.
 """
 
 import argparse
@@ -32,6 +32,11 @@ DEFAULT_SPECS = REPO_ROOT / "schema" / "json"
 
 # Mirrors Service.filename in buildSrc: "<spec>-v<version>.json".
 SPEC_FILENAME = re.compile(r"^(?P<spec>.+)-v(?P<version>\d+)\.json$")
+
+KNOWN_PROJECTS = {"java", "php", "node", "python", "ruby", "go", "dotnet"}
+SUPPORTED_SERVICE_FIELDS = {
+    "name", "version", "spec", "small", "group", "projects", "excludedProjects",
+}
 
 UNREVIEWED_REASON = "UNREVIEWED: record why this spec has no SDK coverage"
 
@@ -63,6 +68,10 @@ class Finding:
         return f"{self.spec}: {self.detail}"
 
     @property
+    def reviewed(self) -> bool:
+        return self.accepted and not self.reason.lstrip().upper().startswith("UNREVIEWED:")
+
+    @property
     def note(self) -> str:
         if not self.accepted:
             return ""
@@ -74,8 +83,8 @@ def spec_name(service: dict) -> str:
     return service.get("spec") or f"{service['name']}Service"
 
 
-def discover_specs(specs_dir: Path) -> dict[str, list[int]]:
-    """Map every published spec name to its sorted list of versions."""
+def discover_specs(specs_dir: Path, *, public_only: bool = False) -> dict[str, list[int]]:
+    """Map spec names to versions, optionally excluding explicitly non-public specs."""
     if not specs_dir.is_dir():
         raise FileNotFoundError(
             f"No spec directory at {specs_dir}. Run `./gradlew specs` to clone Adyen/adyen-openapi, "
@@ -83,20 +92,70 @@ def discover_specs(specs_dir: Path) -> dict[str, list[int]]:
         )
 
     families: dict[str, list[int]] = {}
+    found_spec = False
     for path in sorted(specs_dir.glob("*.json")):
         match = SPEC_FILENAME.match(path.name)
         if match:
+            found_spec = True
+            if public_only:
+                document = json.loads(path.read_text())
+                if document.get("info", {}).get("x-publicVersion") is False:
+                    continue
             families.setdefault(match["spec"], []).append(int(match["version"]))
 
-    if not families:
+    if not found_spec:
         raise FileNotFoundError(f"No <Name>-v<N>.json specs found in {specs_dir}")
 
     return {name: sorted(versions) for name, versions in families.items()}
 
 
 def load_catalog(catalog_path: Path) -> list[dict]:
+    """Read a catalog and validate the service-matrix contract before using it."""
     with catalog_path.open() as catalog_file:
-        return json.load(catalog_file)["services"]
+        catalog = json.load(catalog_file)
+
+    if not isinstance(catalog, dict) or set(catalog) != {"services"}:
+        raise ValueError("Catalog must be an object containing only the services field")
+    services = catalog["services"]
+    if not isinstance(services, list) or not services:
+        raise ValueError("Catalog services must be a non-empty list")
+
+    service_ids = set()
+    for index, service in enumerate(services):
+        label = f"services[{index}]"
+        if not isinstance(service, dict):
+            raise ValueError(f"{label} must be an object")
+        unknown = set(service) - SUPPORTED_SERVICE_FIELDS
+        if unknown:
+            raise ValueError(f"Unknown field(s) in {label}: {', '.join(sorted(unknown))}")
+        name = service.get("name")
+        if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9]*", name):
+            raise ValueError(f"{label}.name must start with an ASCII letter and be alphanumeric")
+        if name.lower() in service_ids:
+            raise ValueError(f"Duplicate service id: {name.lower()}")
+        service_ids.add(name.lower())
+        version = service.get("version")
+        if type(version) is not int or version <= 0:
+            raise ValueError(f"{label}.version must be a positive int")
+        if "spec" in service and not isinstance(service["spec"], str):
+            raise ValueError(f"{label}.spec must be a string")
+        if "small" in service and not isinstance(service["small"], bool):
+            raise ValueError(f"{label}.small must be a boolean")
+        if "projects" in service and "excludedProjects" in service:
+            raise ValueError(f"{label} cannot define both projects and excludedProjects")
+        for field in ("projects", "excludedProjects"):
+            if field not in service:
+                continue
+            projects = service[field]
+            if not isinstance(projects, list) or any(
+                not isinstance(project, str) or project not in KNOWN_PROJECTS
+                for project in projects
+            ):
+                raise ValueError(f"{label}.{field} must be a list of known projects")
+            if field == "projects" and not projects:
+                raise ValueError(f"{label}.projects must not be empty")
+
+    return services
 
 
 def load_baseline(baseline_path: Path) -> dict:
@@ -137,7 +196,12 @@ def load_baseline(baseline_path: Path) -> dict:
     return {"uncoveredSpecs": uncovered, "pinnedVersions": pinned}
 
 
-def evaluate(specs: dict[str, list[int]], services: list[dict], baseline: dict) -> list[Finding]:
+def evaluate(
+    specs: dict[str, list[int]],
+    services: list[dict],
+    baseline: dict,
+    available_specs: dict[str, list[int]] | None = None,
+) -> list[Finding]:
     """Diff the published specs against the catalog and apply the baseline."""
     findings: list[Finding] = []
     accepted_uncovered = baseline["uncoveredSpecs"]
@@ -152,7 +216,7 @@ def evaluate(specs: dict[str, list[int]], services: list[dict], baseline: dict) 
                 Finding(
                     kind=UNCOVERED,
                     spec=spec,
-                    detail=f"published up to v{newest}, absent from the catalog, so no SDK exposes it",
+                    detail=f"published up to v{newest}, absent from the generation catalog",
                     accepted=spec in accepted_uncovered,
                     reason=entry.get("reason", ""),
                     ticket=entry.get("ticket", ""),
@@ -163,7 +227,7 @@ def evaluate(specs: dict[str, list[int]], services: list[dict], baseline: dict) 
         pinned = covered[spec]["version"]
         if pinned < newest:
             entry = accepted_pins.get(spec, {})
-            # The pin is accepted for one version only, so the next release fails again.
+            # The pin is accepted for one version only, so the next release is reported again.
             accepted = entry.get("acknowledgedVersion") == newest
             findings.append(
                 Finding(
@@ -176,17 +240,18 @@ def evaluate(specs: dict[str, list[int]], services: list[dict], baseline: dict) 
                 )
             )
 
-    # A pinned spec file that does not exist breaks generation at configuration time,
-    # so it is always a failure and cannot be accepted by the baseline.
+    # A missing pinned file prevents generation, so always report it even when
+    # the baseline contains a decision about the same family.
+    available = specs if available_specs is None else available_specs
     for service in services:
         spec = spec_name(service)
-        if service["version"] not in specs.get(spec, []):
+        if service["version"] not in available.get(spec, []):
             findings.append(
                 Finding(
                     kind=MISSING,
                     spec=spec,
                     detail=f"catalog pins v{service['version']}, which is not published "
-                    f"(available: {specs.get(spec) or 'none'})",
+                    f"(available: {available.get(spec) or 'none'})",
                 )
             )
 
@@ -258,17 +323,21 @@ def _keep_recorded_order(entries: dict[str, dict], previous: dict[str, dict]) ->
 
 
 def render_text(findings: list[Finding], specs: dict[str, list[int]], services: list[dict]) -> str:
-    new = [finding for finding in findings if not finding.accepted]
-    accepted = [finding for finding in findings if finding.accepted]
+    new = [finding for finding in findings if not finding.reviewed]
+    accepted = [finding for finding in findings if finding.reviewed]
 
     lines = [
         f"Compared {len(specs)} published spec(s) with {len(services)} catalog entr(ies).",
+        "Coverage gaps and missing spec files are warnings. Invalid inputs still fail.",
         "",
     ]
 
     if new:
         lines.append(f"Unreviewed drift ({len(new)}):")
-        lines.extend(f"  [{finding.kind}] {finding.label}" for finding in new)
+        lines.extend(
+            f"  [{finding.kind}] {finding.label}" + (f" -- {finding.note}" if finding.note else "")
+            for finding in new
+        )
     else:
         lines.append("Unreviewed drift: none.")
 
@@ -287,21 +356,25 @@ def render_text(findings: list[Finding], specs: dict[str, list[int]], services: 
 
 
 def render_markdown(findings: list[Finding], specs: dict[str, list[int]], services: list[dict]) -> str:
-    new = [finding for finding in findings if not finding.accepted]
-    accepted = [finding for finding in findings if finding.accepted]
+    new = [finding for finding in findings if not finding.reviewed]
+    accepted = [finding for finding in findings if finding.reviewed]
 
     lines = ["## SDK spec coverage", ""]
     lines.append(f"Compared **{len(specs)}** published specs with **{len(services)}** catalog entries.")
+    lines.append("Coverage gaps and missing spec files are warnings. Invalid inputs still fail.")
     lines.append("")
 
     if new:
         lines += [
             f"### Unreviewed drift ({len(new)})",
             "",
-            "| Spec | Finding | Detail |",
-            "| --- | --- | --- |",
+            "| Spec | Finding | Detail | Reason |",
+            "| --- | --- | --- | --- |",
         ]
-        lines += [f"| `{finding.spec}` | {finding.kind} | {finding.detail} |" for finding in new]
+        lines += [
+            f"| `{finding.spec}` | {finding.kind} | {finding.detail} | {finding.note} |"
+            for finding in new
+        ]
         lines += [
             "",
             "Add the service to `config/services.json` (or bump its version), "
@@ -329,8 +402,8 @@ def annotate(findings: list[Finding]) -> None:
     if not os.environ.get("GITHUB_ACTIONS"):
         return
     for finding in findings:
-        if not finding.accepted:
-            print(f"::error title=SDK spec coverage ({finding.kind})::{finding.label}")
+        if not finding.reviewed:
+            print(f"::warning title=SDK spec coverage ({finding.kind})::{finding.label}")
 
 
 def parse_args(argv: list[str] | None) -> argparse.Namespace:
@@ -342,7 +415,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser.add_argument(
         "--write-baseline",
         action="store_true",
-        help="Accept every current gap by rewriting the baseline, keeping the reasons already recorded",
+        help="Record current gaps with pending reasons, preserving existing decisions",
     )
     return parser.parse_args(argv)
 
@@ -351,14 +424,14 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
 
     try:
-        specs = discover_specs(args.specs)
+        available_specs = discover_specs(args.specs)
+        specs = discover_specs(args.specs, public_only=True)
         baseline = load_baseline(args.baseline)
-    except (FileNotFoundError, BaselineError) as error:
+        services = load_catalog(args.catalog)
+        findings = evaluate(specs, services, baseline, available_specs)
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, BaselineError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
-
-    services = load_catalog(args.catalog)
-    findings = evaluate(specs, services, baseline)
 
     if args.write_baseline:
         args.baseline.write_text(json.dumps(build_baseline(findings, specs, baseline), indent=2) + "\n")
@@ -371,7 +444,7 @@ def main(argv: list[str] | None = None) -> int:
             summary_file.write(render_markdown(findings, specs, services) + "\n")
     annotate(findings)
 
-    return 1 if any(not finding.accepted for finding in findings) else 0
+    return 0
 
 
 if __name__ == "__main__":

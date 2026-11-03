@@ -89,6 +89,73 @@ The workflow converts the full `adyen-openapi` commit SHA to an integer and uses
 
 Every reviewer must have access to all target SDK repositories. The `ADYEN_AUTOMATION_BOT_ACCESS_TOKEN` must also have permission to request reviews. The workflow fails before creating a pull request when the reviewer pool is missing or invalid.
 
+### Checking SDK coverage
+
+There are two checks: a quick check of the service list and a detailed check that
+generates SDK code.
+
+#### Check the service list
+
+This compares the published OpenAPI specs with `config/services.json`. It shows
+APIs missing from the list, newer API versions, and missing spec files.
+
+```shell
+./gradlew specs
+python3 .github/scripts/check_spec_coverage.py
+```
+
+These findings are warnings, so they do not fail the check. Invalid configuration
+or specs that cannot be read do fail it.
+
+`config/spec-coverage-baseline.json` records known gaps and their reasons.
+`UNREVIEWED` means the reason still needs review. When you add a missing service
+or update an older version, remove the matching baseline entry.
+
+When looking for the latest public version, the check skips specs marked
+`info.x-publicVersion: false`. It still checks that every spec file named in the
+service list exists.
+
+The **Spec Coverage** GitHub Action runs every weekday at **07:30 UTC**, on pull
+requests that change its watched files, or when started manually. Results appear
+in the run summary. It does not change files or open pull requests.
+
+#### Generate a detailed SDK report
+
+This check creates temporary SDK clones, generates code, and compares the result
+with the code already in each SDK. Your existing SDK checkouts are not changed.
+
+For example, to check Checkout and Management:
+
+```shell
+python3 .github/scripts/sdk_coverage.py --services checkout,management --jobs 2 --output /tmp/sdk-coverage.md
+```
+
+- Leave out `--services` to check all services in `config/services.json`.
+- `--jobs 2` checks up to two SDKs at the same time.
+- `--output` chooses where to save the report. Without it, the report is saved as
+  `sdk-coverage.md` in this repository. Git ignores that file.
+
+Generation uses the committed automation code and service list on your current
+branch. Uncommitted changes to those inputs are not included.
+
+You need the SDK build tools and formatters installed locally. The script may
+also install formatter dependencies inside its temporary clones.
+
+Differences between generated and existing code are warnings. Missing spec files
+are skipped and shown as `Missing spec`. Setup, generation, formatting, or
+inspection failures fail the run after the report is saved.
+
+Python and Ruby webhook generation is not supported. For unsupported services,
+the report separately checks committed SDK source. When matching source is found,
+it adds `in SDK` and a version when known. Otherwise, the label stays `Unsupported`;
+this does not mean the service is absent. Unclear evidence or inspection failures
+are labelled `presence not assessed`. The log includes matching files and the SDK
+commit. Generic webhook or HMAC helpers do not count as evidence for a specific
+webhook family. Finding source does not prove complete webhook support.
+
+If a generation check cannot confirm that a service is up to date, the report
+shows `Not assessed` rather than `Current`.
+
 ### Generating Release Notes
 
 A Factory skill and droid are included to generate evidence-backed release notes for an Adyen API library. The skill validates the request and manages the output files, while the droid clones the selected library into a temporary directory, analyzes the release range, validates the result, and cleans up the clone.

@@ -13,6 +13,8 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
+import check_spec_coverage as checker
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -45,6 +47,23 @@ SOURCE_EXTENSIONS = {
     ".go",
     ".cs",
 }
+
+SOURCE_ROOTS = {
+    "java": ("src/main/java", ".java"),
+    "node": ("src", ".ts"),
+    "python": ("Adyen", ".py"),
+    "php": ("src/Adyen", ".php"),
+    "ruby": ("lib", ".rb"),
+    "go": ("src", ".go"),
+    "dotnet": ("Adyen", ".cs"),
+}
+
+SOURCE_DECLARATION = re.compile(
+    r"^[ \t]*(?:(?:export|public|abstract|final|partial|declare|sealed|static)\s+)*"
+    r"(?:class|interface|enum|type)\s+([A-Za-z_]\w*)",
+    re.MULTILINE,
+)
+UNSUPPORTED_NOT_ASSESSED = "Unsupported; presence not assessed"
 
 VERSION_PATTERNS = {
     "java": re.compile(
@@ -118,7 +137,6 @@ FAMILY_ALIASES = {
     "TfmAPIService": [
         "PosTerminalManagement",
         "TerminalManagement",
-        "Terminal",
     ],
 }
 
@@ -129,6 +147,9 @@ FAMILY_ALIASES = {
 # contain generic webhook models instead, so the name
 # cannot be shared across projects.
 FAMILY_PROJECT_ALIASES = {
+    "TfmAPIService": {
+        "python": ["Terminal"],
+    },
     "NotificationConfigurationService": {
         "php": [
             "Notification",
@@ -568,7 +589,7 @@ def format_generated_code(repo, project, changed_paths=None):
     return True
 
 
-def load_services():
+def load_services(root=ROOT):
     """Load the complete service catalog from services.json.
 
     The catalog file is the single source of truth for
@@ -576,14 +597,7 @@ def load_services():
     them.
     """
 
-    catalog_path = ROOT / "config/services.json"
-
-    with catalog_path.open(
-            encoding="utf-8"
-    ) as catalog_file:
-        catalog = json.load(catalog_file)
-
-    return catalog["services"]
+    return checker.load_catalog(root / "config/services.json")
 
 
 def select_services(all_services, requested_value):
@@ -624,11 +638,15 @@ def select_services(all_services, requested_value):
 
 
 def supports_project(service, project):
-    """Return whether a service applies to a project.
+    """Return whether the catalog and language generator support a service.
 
     A service either whitelists projects explicitly or
     applies everywhere except its excludedProjects.
+    Python and Ruby generators also skip webhook services.
     """
+
+    if service["name"].endswith("Webhooks") and project in {"python", "ruby"}:
+        return False
 
     allowed_projects = service.get("projects")
     excluded_projects = service.get(
@@ -683,29 +701,15 @@ def discover_openapi_families(schema_directory):
     the highest one is kept.
     """
 
-    families = {}
-
-    for spec_file in schema_directory.glob("*.json"):
-        match = re.fullmatch(
-            r"(.+)-v(\d+)\.json",
-            spec_file.name,
-        )
-
-        if match is None:
-            continue
-
-        family_name = match.group(1)
-        version = int(match.group(2))
-
-        families[family_name] = max(
-            families.get(family_name, 0),
-            version,
-        )
-
-    return families
+    return {
+        family: max(versions)
+        for family, versions in checker.discover_specs(
+            schema_directory, public_only=True
+        ).items()
+    }
 
 
-def audit_catalog(all_services, openapi_families):
+def audit_catalog(all_services, openapi_families, schema_directory):
     """Compare the service catalog with the OpenAPI repository.
 
     Produces three review lists: OpenAPI families the
@@ -756,8 +760,10 @@ def audit_catalog(all_services, openapi_families):
             service
             for service in all_services
             if (
-                get_spec_name(service)
-                not in openapi_families
+                not (
+                    schema_directory
+                    / f"{get_spec_name(service)}-v{service['version']}.json"
+                ).is_file()
         )
         ],
         key=lambda service: service["name"],
@@ -1070,6 +1076,7 @@ def service_source_paths(repo, project, service):
         return [
             repo / "src/typings" / camel_name,
             repo / "src/services" / camel_name,
+            repo / "src/services" / f"{camel_name}Api.ts",
             ]
 
     if project == "python":
@@ -1077,6 +1084,7 @@ def service_source_paths(repo, project, service):
             "BinLookup": "binlookup",
             "Payment": "payments",
             "Payout": "payouts",
+            "PosTerminalManagement": "terminal",
         }
 
         python_name = python_names.get(
@@ -1280,6 +1288,22 @@ def find_family_paths(repo, project, family_name):
     return existing
 
 
+def family_title_patterns(title):
+    """Match a specific API title on its own header line, not inside prose."""
+    return [
+        (
+            needle,
+            re.compile(
+                r"^[ \t]*(?:[#*/]+[ \t]*)?"
+                + re.escape(needle)
+                + r"[ \t]*$",
+                re.MULTILINE,
+            ),
+        )
+        for needle in searchable_title_needles(title)
+    ]
+
+
 def scan_family_titles(
         repo,
         project,
@@ -1310,23 +1334,7 @@ def scan_family_titles(
         if not needles:
             continue
 
-        searched[family_name] = [
-            (
-                needle,
-                re.compile(
-                    r"^[ \t]*"
-                    # A single optional comment prefix
-                    # keeps the pattern linear; a repeated
-                    # prefix backtracks catastrophically on
-                    # banner comment lines.
-                    r"(?:[#*/]+[ \t]*)?"
-                    + re.escape(needle)
-                    + r"[ \t]*$",
-                    re.MULTILINE,
-                ),
-            )
-            for needle in needles
-        ]
+        searched[family_name] = family_title_patterns(titles[family_name])
 
     if not searched:
         return {}
@@ -1442,6 +1450,7 @@ def detect_sdk_families(
 
         present = False
         versions = set()
+        uncertain_version = False
 
         path_hits = find_family_paths(
             repo,
@@ -1461,6 +1470,8 @@ def detect_sdk_families(
 
             if path_version is not None:
                 versions.add(path_version)
+            else:
+                uncertain_version = True
 
         if family_name in title_versions:
             present = True
@@ -1471,10 +1482,12 @@ def detect_sdk_families(
 
             if title_version is not None:
                 versions.add(title_version)
+            else:
+                uncertain_version = True
 
         version = (
             versions.pop()
-            if len(versions) == 1
+            if len(versions) == 1 and not uncertain_version
             else None
         )
 
@@ -1570,6 +1583,139 @@ def read_service_version(
     )
 
 
+def read_committed_sdk_sources(repo, project):
+    """Read production source and generation logs from one immutable SDK commit."""
+    head = run_command(["git", "rev-parse", "--verify", "HEAD^{commit}"], repo)
+    if head.returncode != 0:
+        raise OSError("Could not identify the committed SDK snapshot")
+    commit = head.stdout.strip()
+    if not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", commit):
+        raise OSError("Invalid committed SDK snapshot")
+    source_root, source_extension = SOURCE_ROOTS[project]
+    tree = run_command(
+        ["git", "ls-tree", "-r", "-z", commit, "--", source_root, "sdk-generation-log"],
+        repo,
+    )
+    if tree.returncode != 0:
+        raise OSError("Could not list committed SDK source")
+    entries = []
+    for record in tree.stdout.split("\0"):
+        if not record:
+            continue
+        metadata, name = record.split("\t", 1)
+        mode, kind, blob = metadata.split()
+        path = Path(name)
+        if mode not in {"100644", "100755"} or kind != "blob":
+            continue
+        if {"test", "tests", "__tests__"} & {part.lower() for part in path.parts}:
+            continue
+        if name.endswith(("_test.go", ".test.ts", ".spec.ts", "Test.java", "Tests.cs")):
+            continue
+        if path.suffix.lower() == source_extension or (
+            path.parent == Path("sdk-generation-log") and path.suffix == ".json"
+        ):
+            entries.append((name, blob))
+    entries.sort()
+    if not entries:
+        return commit, {}
+    blobs = subprocess.run(
+        ["git", "cat-file", "--batch"],
+        cwd=repo,
+        input="".join(f"{blob}\n" for _, blob in entries).encode(),
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+    )
+    if blobs.returncode != 0:
+        raise OSError("Could not read committed SDK source")
+    sources = {}
+    offset = 0
+    for name, blob in entries:
+        end = blobs.stdout.index(b"\n", offset)
+        actual_blob, kind, size = blobs.stdout[offset:end].split()
+        if actual_blob.decode() != blob or kind != b"blob":
+            raise OSError(f"Could not read committed SDK file: {name}")
+        offset = end + 1
+        size = int(size)
+        sources[name] = blobs.stdout[offset:offset + size].decode("utf-8")
+        offset += size + 1
+    return commit, sources
+
+
+def detect_unsupported_services(repo, project, services, titles):
+    """Check source presence without claiming that unsupported code was regenerated."""
+    commit, sources = read_committed_sdk_sources(repo, project)
+    results = {}
+    for service in services:
+        name = service["name"]
+        family = get_spec_name(service)
+        title = titles.get(family, "")
+        needles = set(searchable_title_needles(title))
+        title_patterns = family_title_patterns(title)
+        shared_title = any(
+            other != family and needles.intersection(searchable_title_needles(other_title))
+            for other, other_title in titles.items()
+        )
+        paths = [path.relative_to(repo).as_posix().lower()
+                 for path in service_source_paths(repo, project, service)]
+        identities = {
+            identity.replace("_", "").lower()
+            for base in (name, family.removesuffix("Service"))
+            for identity in (base, base + "Api", "Adyen" + base + "Api")
+        }
+        versions = set()
+        matches = []
+        ambiguous = False
+        log_evidence = None
+        for path, content in sorted(sources.items()):
+            if Path(path).suffix.lower() not in SOURCE_EXTENSIONS:
+                continue
+            declarations = list(SOURCE_DECLARATION.finditer(content))
+            owned = any(path.lower() == folder or path.lower().startswith(folder + "/") for folder in paths)
+            declaration = next((
+                match for match in declarations
+                if match.group(1).replace("_", "").lower() in identities
+            ), None)
+            header_text = content[:declarations[0].start()] if declarations else ""
+            header = next((
+                match for _, pattern in title_patterns
+                if (match := pattern.search(header_text))
+            ), None)
+            generated = header is not None and "OpenAPI Generator" in header_text
+            if not (owned and declaration) and not (generated and not shared_title):
+                ambiguous = ambiguous or owned or (generated and shared_title)
+                continue
+            evidence = declaration if owned and declaration else header
+            rule = "known service path and declaration" if owned and declaration else "generated API title"
+            line = content[:evidence.start()].count("\n") + 1
+            file_versions = {
+                int(match.group(1))
+                for pattern in (VERSION_PATTERNS[project], VERSION_PATTERNS["java"])
+                for match in pattern.finditer(content)
+                if int(match.group(1)) > 0
+            }
+            versions.update(file_versions)
+            matches.append((path, line, rule, sorted(file_versions)))
+        if matches:
+            log_path = f"sdk-generation-log/{name.lower()}.json"
+            log = sources.get(log_path)
+            if log is not None:
+                log_version = json.loads(log).get("specVersion")
+                if type(log_version) is int and log_version > 0:
+                    versions.add(log_version)
+                    log_evidence = f"  {log_path}: specVersion {log_version}"
+            status = "Unsupported; in SDK"
+            if len(versions) == 1 and not ambiguous:
+                status += f" at v{next(iter(versions))}"
+        else:
+            status = UNSUPPORTED_NOT_ASSESSED if ambiguous else "Unsupported"
+        results[name.lower()] = status
+        print(f"{PROJECT_LABELS[project]} {name}: {status} (SDK commit {commit})")
+        for path, line, rule, file_versions in matches:
+            print(f"  {path}:{line}: {rule}; source versions {file_versions or 'unknown'}")
+        if log_evidence:
+            print(log_evidence)
+    return results
+
+
 def check_service(workspace, project, service):
     """Generate one service and classify the result.
 
@@ -1583,6 +1729,12 @@ def check_service(workspace, project, service):
     """
 
     service_name = service["name"]
+    if not supports_project(service, project):
+        return UNSUPPORTED_NOT_ASSESSED
+    spec_file = workspace / "schema/json" / f"{get_spec_name(service)}-v{service['version']}.json"
+    if not spec_file.is_file():
+        print(f"Warning: missing {spec_file.name}; skipping {service_name} generation.")
+        return "Missing spec"
     service_id = service_name.lower()
     target_version = service["version"]
 
@@ -1653,7 +1805,19 @@ def check_service(workspace, project, service):
     has_changes = bool(status.stdout.strip())
 
     if not has_changes:
-        result = f"Current v{target_version}"
+        source_paths = service_source_paths(repo, project, service)
+        has_source = any(
+            path.is_file() and path.suffix in SOURCE_EXTENSIONS
+            or path.is_dir() and any(
+                child.is_file() and child.suffix in SOURCE_EXTENSIONS
+                for child in path.rglob("*")
+            )
+            for path in source_paths
+        )
+        if not has_source or sdk_service_version not in {None, target_version}:
+            result = "Not assessed"
+        else:
+            result = f"Current v{target_version}"
 
     elif (
             sdk_service_version is not None
@@ -1680,12 +1844,50 @@ def check_service(workspace, project, service):
     return result
 
 
+NO_BASELINE_ENTRY = "No baseline entry"
+
+
+def pinned_entry(pinned_entries, service, latest_version):
+    """Return the version pin that acknowledges the latest version.
+
+    A pin recorded for an older release no longer applies, matching
+    how the spec coverage check accepts pins.
+    """
+
+    entry = pinned_entries.get(get_spec_name(service))
+
+    if entry is None or entry.get("acknowledgedVersion") != latest_version:
+        return None
+
+    return entry
+
+
+def baseline_reason(entry):
+    """Return the recorded baseline reason for one report cell.
+
+    Only reviewed text is copied into the report. UNREVIEWED
+    placeholders render as empty cells; absent entries keep
+    their fixed label.
+    """
+
+    if entry is None:
+        return NO_BASELINE_ENTRY
+
+    reason = str(entry.get("reason", "")).strip()
+
+    if not reason or reason.upper().startswith("UNREVIEWED:"):
+        return ""
+
+    return " ".join(reason.split()).replace("|", "\\|")
+
+
 def build_audit_lines(
         uncatalogued,
         catalog_versions_behind,
         missing_specifications,
         family_findings,
         duplicate_families,
+        baseline=None,
 ):
     """Build the OpenAPI catalog audit section.
 
@@ -1696,10 +1898,14 @@ def build_audit_lines(
     spec file is missing from OpenAPI.
     """
 
+    baseline = baseline or {"uncoveredSpecs": {}, "pinnedVersions": {}}
+    uncovered_entries = baseline["uncoveredSpecs"]
+    pinned_entries = baseline["pinnedVersions"]
+
     lines = [
         "## OpenAPI catalog audit",
         "",
-        "These findings require review.",
+        "All catalog differences are shown, including gaps recorded in the spec coverage baseline.",
         "",
     ]
 
@@ -1708,8 +1914,8 @@ def build_audit_lines(
             [
                 "### Catalog versions behind OpenAPI",
                 "",
-                "| Catalog service | OpenAPI family | Catalog version | Latest OpenAPI version |",
-                "|---|---|---:|---:|",
+                "| Catalog service | OpenAPI family | Catalog version | Latest OpenAPI version | Baseline reason |",
+                "|---|---|---:|---:|---|",
             ]
         )
 
@@ -1721,7 +1927,8 @@ def build_audit_lines(
                 f"| {service['name']} | "
                 f"{get_spec_name(service)} | "
                 f"{service['version']} | "
-                f"{latest_version} |"
+                f"{latest_version} | "
+                f"{baseline_reason(pinned_entry(pinned_entries, service, latest_version))} |"
             )
 
         lines.append("")
@@ -1738,8 +1945,8 @@ def build_audit_lines(
             [
                 "### OpenAPI families not catalogued",
                 "",
-                "| OpenAPI family | Latest version | Already in SDK |",
-                "|---|---:|---|",
+                "| OpenAPI family | Latest version | Already in SDK | Baseline reason |",
+                "|---|---:|---|---|",
             ]
         )
 
@@ -1751,7 +1958,8 @@ def build_audit_lines(
 
             lines.append(
                 f"| {family_name} | {version} "
-                f"| {summary} |"
+                f"| {summary} "
+                f"| {baseline_reason(uncovered_entries.get(family_name))} |"
             )
 
         lines.append("")
@@ -1799,17 +2007,16 @@ def build_audit_lines(
 def build_report(
         selected_services,
         results,
-        openapi_sha,
         uncatalogued,
         catalog_versions_behind,
         missing_specifications,
         family_findings,
         duplicate_families,
+        baseline=None,
 ):
     """Assemble the complete Markdown report.
 
-    The report has three parts: a header naming the
-    OpenAPI commit it was generated against, the catalog
+    The report has three parts: a timestamped header, the catalog
     audit with its findings, and the generation coverage
     table with one row per service and per uncatalogued
     family, followed by the legend.
@@ -1899,14 +2106,6 @@ def build_report(
         "",
     ]
 
-    if openapi_sha:
-        report_lines.extend(
-            [
-                f"OpenAPI commit: `{openapi_sha}`",
-                "",
-            ]
-        )
-
     report_lines.extend(
         build_audit_lines(
             uncatalogued,
@@ -1914,6 +2113,7 @@ def build_report(
             missing_specifications,
             family_findings,
             duplicate_families,
+            baseline,
         )
     )
 
@@ -1927,20 +2127,61 @@ def build_report(
             "",
             "Notes:",
             "",
-            "- `Current vN`: generated output matches target service version N.",
-            "- `Service version behind vX`: the SDK service source or log shows X",
-            "- `Service drift at vN`: SDK service and target use N, but generated content differs.",
-            "- `Behind`: generated content differs, but the existing service version is unavailable.",
-            "- `Failed`: generation did not complete.",
-            "- `Unsupported`: intentionally excluded by the catalog.",
-            "- `In SDK at vN`: the SDK already ships this family at version N,",
-            "  but the family is not in the generation catalog.",
-            "- `In SDK`: the SDK already ships this family, but its version",
-            "  could not be detected.",
-            "- `Not catalogued`: present in OpenAPI but absent from the catalog",
-            "  and from this SDK.",
-            "- `Not assessed`: the family name is too generic to detect SDK",
-            "  presence reliably.",
+            "- Checks use the OpenAPI versions pinned in the generation catalog, "
+            "not necessarily the latest available versions. See the catalog audit "
+            "for newer OpenAPI versions.",
+            "- `Current vN`: the SDK is up to date with the catalogued OpenAPI "
+            "service at version N; regenerating it produces no changes.",
+            "- `Service version behind vX`: the SDK uses service version X, "
+            "which is older than the catalogued OpenAPI version.",
+            "- `Service drift at vN`: the SDK and the catalogued OpenAPI service "
+            "use version N, but regenerating the SDK produces changes. The SDK "
+            "may be missing recent spec changes, or the differences may come "
+            "from generator or template changes.",
+            "- `Behind`: the SDK differs from the generated OpenAPI code, "
+            "but we cannot reliably compare service versions; "
+            "check the SDK version manually.",
+            "- `Failed`: the report could not complete this SDK/service check "
+            "because setup, generation, formatting, or inspection failed. "
+            "See the run log; this does not by itself mean the SDK is behind.",
+            "- `Missing spec`: the catalog references an OpenAPI file that "
+            "is missing. Generation was skipped for this service "
+            "(warning only).",
+            "- `Unsupported`: this service is not enabled for this SDK in "
+            "the catalog or language generator. This describes generation "
+            "support, not whether the SDK contains the service.",
+            "- `Unsupported; in SDK at vN`: generation is not supported, "
+            "but family-specific source and one consistent version were found.",
+            "- `Unsupported; in SDK`: family-specific source was found, "
+            "but its version is missing or conflicting.",
+            "- `Unsupported; presence not assessed`: source could not be "
+            "inspected or the evidence was ambiguous.",
+            "- Unsupported-service presence checks read committed production "
+            "source before generation. They require a known service path with "
+            "a matching declaration, or an exact, unique generated API title. "
+            "Generic webhook/HMAC helpers do not establish family presence. "
+            "Evidence paths and the SDK commit are printed in the run log. "
+            "Presence does not prove complete webhook support.",
+            "- Uncatalogued families: these OpenAPI families are not in the "
+            "generation catalog. They appear in the audit and coverage table, "
+            "and may already be present in SDKs.",
+            "- `In SDK at vN`: the SDK already ships this OpenAPI family at "
+            "version N, but it is not in the generation catalog.",
+            "- `In SDK`: the SDK already ships this OpenAPI family, but its "
+            "version could not be detected and it is not in the generation catalog.",
+            "- `Not catalogued`: this OpenAPI family is missing from the "
+            "generation catalog, and no matching code was found in this SDK.",
+            "- `Not assessed`: the report could not confirm whether this "
+            "SDK includes the OpenAPI family or matches the target version. "
+            "Check manually; this does not mean unsupported or absent.",
+            "- Baseline reason: copied word for word from "
+            "`config/spec-coverage-baseline.json`. It explains a recorded "
+            "gap and does not change any status.",
+            "- Empty baseline reason cells: the baseline entry has no "
+            "reviewed reason, so no reason is shown.",
+            f"- `{NO_BASELINE_ENTRY}`: the family is not listed in the baseline. "
+            "For catalog versions behind OpenAPI, no version pin "
+            "acknowledges the latest OpenAPI version.",
             "- Uncatalogued detection relies on spec titles, version markers,",
             "  and standard service locations; hand-written code under",
             "  unusual names may not be detected.",
@@ -2005,14 +2246,18 @@ def prepare_project_workspace(
     # the specs task processes them in place after
     # cloning, and a git clone would lose that work.
     try:
+        # Match the per-language generator dependency selected by generation CI.
+        shutil.copyfile(
+            workspace / project / "gradle.properties",
+            workspace / "buildSrc/gradle.properties",
+        )
         shutil.copytree(
             shared_schema,
             workspace / "schema",
         )
     except OSError as error:
         print(
-            f"Could not reuse the OpenAPI "
-            f"specifications for "
+            f"Could not prepare the workspace for "
             f"{PROJECT_LABELS[project]}: {error}"
         )
 
@@ -2036,33 +2281,33 @@ def run_project(
     clean, and generates every applicable service. Any
     failure along the way marks the remaining services
     Failed or Unsupported so the report always has a
-    complete row.
+    complete row. The fourth return value records worker
+    failures independently of warning-only service results.
     """
 
     project_label = PROJECT_LABELS[project]
     service_results = {}
     findings = None
+    project_failed = False
+    unsupported_services = []
+
+    # Keep missing-input warnings separate from build/formatter failures.
+    for service in selected_services:
+        service_id = service["name"].lower()
+        spec_file = shared_schema / "json" / f"{get_spec_name(service)}-v{service['version']}.json"
+        if not supports_project(service, project):
+            service_results[service_id] = UNSUPPORTED_NOT_ASSESSED
+            unsupported_services.append(service)
+        elif not spec_file.is_file():
+            service_results[service_id] = "Missing spec"
 
     def mark_unavailable():
-        """Fail every service without a recorded result."""
+        """Record the worker failure without replacing warnings or unsupported rows."""
 
+        nonlocal project_failed
+        project_failed = True
         for service in selected_services:
-            service_id = (
-                service["name"].lower()
-            )
-
-            if service_id in service_results:
-                continue
-
-            if supports_project(
-                    service,
-                    project,
-            ):
-                service_results[service_id] = "Failed"
-            else:
-                service_results[service_id] = (
-                    "Unsupported"
-                )
+            service_results.setdefault(service["name"].lower(), "Failed")
 
     print(
         f"Preparing {project_label} SDK..."
@@ -2082,6 +2327,7 @@ def run_project(
                 project,
                 service_results,
                 findings,
+                project_failed,
             )
 
         clone_sdk = run_command(
@@ -2105,9 +2351,15 @@ def run_project(
                 project,
                 service_results,
                 findings,
+                project_failed,
             )
 
         repo = workspace / project / "repo"
+
+        if unsupported_services:
+            service_results.update(detect_unsupported_services(
+                repo, project, unsupported_services, family_titles,
+            ))
 
         print(
             f"Scanning {project_label} SDK "
@@ -2129,6 +2381,7 @@ def run_project(
                 project,
                 service_results,
                 findings,
+                project_failed,
             )
 
         for service in selected_services:
@@ -2136,14 +2389,7 @@ def run_project(
                 service["name"].lower()
             )
 
-            if not supports_project(
-                    service,
-                    project,
-            ):
-                service_results[service_id] = (
-                    "Unsupported"
-                )
-
+            if service_id in service_results:
                 continue
 
             service_results[service_id] = check_service(
@@ -2163,6 +2409,7 @@ def run_project(
         project,
         service_results,
         findings,
+        project_failed,
     )
 
 
@@ -2199,22 +2446,19 @@ def main():
         ),
     )
 
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=ROOT / "sdk-coverage.md",
+        help="Write the Markdown report to this path.",
+    )
+
     args = parser.parse_args()
 
-    all_services = load_services()
-
-    try:
-        selected_services = select_services(
-            all_services,
-            args.services,
-        )
-    except ValueError as error:
-        parser.error(str(error))
-
     results = {}
+    worker_failed = False
     family_findings = {}
     openapi_families = {}
-    openapi_sha = None
 
     with tempfile.TemporaryDirectory(
             prefix="adyen-sdk-coverage-"
@@ -2230,6 +2474,21 @@ def main():
                 "Could not create temporary workspace"
             )
             return 1
+
+        # Generation runs committed HEAD in isolated clones. Read that same
+        # catalog and baseline, not uncommitted edits in the caller's working tree.
+        try:
+            all_services = load_services(workspace)
+            baseline = checker.load_baseline(
+                workspace / "config/spec-coverage-baseline.json"
+            )
+        except (OSError, ValueError, checker.BaselineError) as error:
+            print(f"Could not read the service catalog or spec coverage baseline: {error}")
+            return 1
+        try:
+            selected_services = select_services(all_services, args.services)
+        except ValueError as error:
+            parser.error(str(error))
 
         print(
             "Downloading OpenAPI specifications..."
@@ -2260,20 +2519,6 @@ def main():
             )
         )
 
-        sha_result = run_command(
-            [
-                "git",
-                "rev-parse",
-                "HEAD",
-            ],
-            workspace / "schema",
-            )
-
-        if sha_result.returncode == 0:
-            openapi_sha = (
-                sha_result.stdout.strip()
-            )
-
         (
             uncatalogued,
             catalog_versions_behind,
@@ -2281,6 +2526,7 @@ def main():
         ) = audit_catalog(
             all_services,
             openapi_families,
+            schema_directory,
         )
 
         family_titles = load_family_titles(
@@ -2333,7 +2579,9 @@ def main():
                     project,
                     project_results,
                     project_findings,
+                    project_failed,
                 ) = future.result()
+                worker_failed = worker_failed or project_failed
 
                 for (
                         service_id,
@@ -2353,15 +2601,16 @@ def main():
     report = build_report(
         selected_services,
         results,
-        openapi_sha,
         uncatalogued,
         catalog_versions_behind,
         missing_specifications,
         family_findings,
         duplicate_families,
+        baseline,
     )
 
-    report_path = ROOT / "sdk-coverage.md"
+    report_path = args.output
+    report_path.parent.mkdir(parents=True, exist_ok=True)
 
     report_path.write_text(
         report,
@@ -2372,7 +2621,9 @@ def main():
         f"Report written to: {report_path}"
     )
 
-    return 0
+    # Missing specs and coverage differences are warnings. Actual generation
+    # failures still fail after saving the report for inspection.
+    return 1 if worker_failed or "Failed" in results.values() else 0
 
 
 if __name__ == "__main__":
