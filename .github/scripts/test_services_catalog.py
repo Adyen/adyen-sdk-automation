@@ -52,6 +52,22 @@ class TestServicesCatalog(unittest.TestCase):
     def test_catalog_is_not_empty(self) -> None:
         self.assertGreater(len(self.services), 0)
 
+    def test_softpos_configuration_is_available_for_all_projects(self) -> None:
+        services = {service["name"]: service for service in self.services}
+        self.assertIn("SoftPOSConfiguration", services)
+        service = services["SoftPOSConfiguration"]
+        self.assertEqual(service["version"], 3)
+        self.assertNotIn("spec", service)
+        self.assertNotIn("projects", service)
+        self.assertNotIn("excludedProjects", service)
+        self.assertFalse(service.get("small", False))
+
+    def test_deprecated_pos_mobile_is_retained(self) -> None:
+        services = {service["name"]: service for service in self.services}
+        self.assertIn("PosMobile", services)
+        self.assertEqual(services["PosMobile"]["spec"], "SessionService")
+        self.assertEqual(services["PosMobile"]["version"], 68)
+
     def test_service_ids_are_unique(self) -> None:
         ids = [service["name"].lower() for service in self.services]
         duplicates = {service_id for service_id in ids if ids.count(service_id) > 1}
