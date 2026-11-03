@@ -130,6 +130,8 @@ baseline, or generation inputs. Scheduled runs check all services across all
 seven SDKs and start once the workflow is merged into the default branch.
 Open its completed run to see the per-language table in the **Summary**, or
 download the **sdk-coverage** artifact for the Markdown report and generation log.
+Detailed generation diagnostics are saved in the artifact's `sdk-coverage.log`
+rather than echoed into the job log.
 The report is still published when a service check fails, if one was produced.
 
 Once the workflow is on the default branch, you can also open **Actions → SDK

@@ -34,7 +34,9 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
             "if os.environ.get('WRITE_REPORT', '1') == '1':\n"
             "    (Path(os.environ['REPORT_DIR']) / 'sdk-coverage.md').write_text("
             "'# SDK coverage\\n\\n| Service | Java | Node | Python | PHP | Ruby | Go | .NET |\\n')\n"
-            "print('Generation log output')\n"
+            "for _ in range(int(os.environ.get('LOG_LINE_COUNT', '1'))):\n"
+            "    print('Generation log output')\n"
+            "print('Generation stderr output', file=sys.stderr)\n"
             "sys.exit(int(os.environ.get('GENERATOR_EXIT_CODE', '0')))\n"
         )
         stub.chmod(0o755)
@@ -65,6 +67,15 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
             text=True,
             check=False,
         )
+
+    def test_coverage_workflows_have_distinct_run_names(self) -> None:
+        for filename, name in (
+            ("sdk-coverage.yaml", "SDK Coverage"),
+            ("spec-coverage.yaml", "Spec Coverage"),
+        ):
+            with self.subTest(workflow=filename):
+                content = (WORKFLOW.parent / filename).read_text()
+                self.assertRegex(content, rf"(?m)^run-name: {re.escape(name)}$")
 
     def test_manual_and_scoped_pull_request_triggers(self) -> None:
         self.assertIn("  workflow_dispatch:\n", self.workflow)
@@ -106,6 +117,17 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
         )
         self.assertIn("Generation log output", (self.report_dir / "sdk-coverage.log").read_text())
 
+    def test_verbose_diagnostics_only_go_to_artifact_log(self) -> None:
+        result = self.run_step("Generate detailed SDK report", LOG_LINE_COUNT="1000")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        log = (self.report_dir / "sdk-coverage.log").read_text()
+        self.assertEqual(log.count("Generation log output"), 1000)
+        self.assertIn("Generation stderr output", log)
+        self.assertNotIn("Generation log output", result.stdout + result.stderr)
+        self.assertNotIn("Generation stderr output", result.stdout + result.stderr)
+        self.assertIn("sdk-coverage artifact", result.stdout)
+        self.assertLess(len(result.stdout + result.stderr), 500)
+
     def test_service_input_is_passed_as_one_literal_argument(self) -> None:
         services = "checkout,management; touch injected"
         result = self.run_step("Generate detailed SDK report", SERVICES=services)
@@ -117,9 +139,15 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
         generated = self.run_step("Generate detailed SDK report", GENERATOR_EXIT_CODE="1")
         self.assertEqual(generated.returncode, 1)
         self.assertTrue((self.report_dir / "sdk-coverage.log").is_file())
+        self.assertIn("exit code 1", generated.stdout)
+        self.assertNotIn("Generation log output", generated.stdout + generated.stderr)
+        self.assertIn("Generation stderr output", (self.report_dir / "sdk-coverage.log").read_text())
         published = self.run_step("Publish report summary")
         self.assertEqual(published.returncode, 0, published.stderr)
         self.assertEqual(self.summary.read_text(), (self.report_dir / "sdk-coverage.md").read_text())
+        logged = self.run_step("Print report to log")
+        self.assertEqual(logged.returncode, 0, logged.stderr)
+        self.assertEqual(logged.stdout, (self.report_dir / "sdk-coverage.md").read_text())
 
     def test_failure_before_report_creation_still_captures_log(self) -> None:
         result = self.run_step(
@@ -134,8 +162,40 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("No detailed SDK report was produced.", self.summary.read_text())
 
-    def test_summary_and_artifacts_run_after_failures(self) -> None:
+    def test_prints_full_report_including_audit_and_notes(self) -> None:
+        report = (
+            "# SDK coverage\n\n"
+            "## OpenAPI catalog audit\n\n"
+            "| OpenAPI family | Latest version | Already in SDK | Baseline reason |\n"
+            "| ExampleService | 2 | In SDK at v1 | Reviewed gap |\n\n"
+            "## SDK generation coverage\n\n"
+            "| Service | Java |\n| Example | Current v1 |\n\n"
+            "Notes:\n\n- Coverage differences are warnings.\n"
+        )
+        self.report_dir.mkdir()
+        report_path = self.report_dir / "sdk-coverage.md"
+        report_path.write_text(report)
+        result = self.run_step("Print report to log")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, report)
+        self.assertEqual(report_path.read_text(), report)
+
+    def test_print_step_handles_missing_report(self) -> None:
+        result = self.run_step("Print report to log")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("No detailed SDK report was produced.", result.stdout)
+
+    def test_summary_logs_and_artifacts_run_after_failures(self) -> None:
         self.assertIn("        if: always()\n", self.step("Publish report summary"))
+        self.assertIn("        if: always()\n", self.step("Print report to log"))
+        self.assertLess(
+            self.workflow.index("- name: Publish report summary"),
+            self.workflow.index("- name: Print report to log"),
+        )
+        self.assertLess(
+            self.workflow.index("- name: Print report to log"),
+            self.workflow.index("- name: Upload report and log"),
+        )
         upload = self.step("Upload report and log")
         self.assertIn("        if: always()\n", upload)
         self.assertIn("          name: sdk-coverage\n", upload)

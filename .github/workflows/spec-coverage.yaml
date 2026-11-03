@@ -1,4 +1,5 @@
 name: Spec Coverage
+run-name: Spec Coverage
 
 # A spec release in Adyen/adyen-openapi produces no pull request here, so drift between
 # the published specs and the service catalog is invisible to every other workflow. The

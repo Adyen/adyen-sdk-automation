@@ -1,4 +1,5 @@
 name: SDK Coverage
+run-name: SDK Coverage
 
 on:
   schedule:
@@ -88,13 +89,16 @@ jobs:
         env:
           SERVICES: ${{ inputs.services || '' }}
         run: |
-          set -o pipefail
           mkdir -p "$REPORT_DIR"
           args=(--jobs 2 --output "$REPORT_DIR/sdk-coverage.md")
           if [[ -n "$SERVICES" ]]; then
             args+=("--services=$SERVICES")
           fi
-          python3 -u .github/scripts/sdk_coverage.py "${args[@]}" 2>&1 | tee "$REPORT_DIR/sdk-coverage.log"
+          echo "Generating SDK coverage. Full diagnostics will be saved in the sdk-coverage artifact."
+          status=0
+          python3 -u .github/scripts/sdk_coverage.py "${args[@]}" > "$REPORT_DIR/sdk-coverage.log" 2>&1 || status=$?
+          echo "SDK coverage finished with exit code $status. See sdk-coverage.log in the sdk-coverage artifact for diagnostics."
+          exit "$status"
 
       - name: Publish report summary
         if: always()
@@ -103,6 +107,15 @@ jobs:
             cat "$REPORT_DIR/sdk-coverage.md" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "No detailed SDK report was produced. See the failed steps and any available sdk-coverage artifact." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Print report to log
+        if: always()
+        run: |
+          if [[ -f "$REPORT_DIR/sdk-coverage.md" ]]; then
+            cat "$REPORT_DIR/sdk-coverage.md"
+          else
+            echo "No detailed SDK report was produced."
           fi
 
       - name: Upload report and log
