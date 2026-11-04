@@ -1,0 +1,130 @@
+name: SDK Coverage
+run-name: SDK Coverage
+
+on:
+  schedule:
+    - cron: '30 7 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      services:
+        description: 'Comma-separated services (e.g. checkout,management). Leave empty for all.'
+        required: false
+        default: ''
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'config/services.json'
+      - 'config/spec-coverage-baseline.json'
+      - '.github/scripts/sdk_coverage.py'
+      - '.github/scripts/check_spec_coverage.py'
+      - '.github/scripts/test_sdk_coverage.py'
+      - '.github/scripts/test_sdk_coverage_workflow.py'
+      - '.github/scripts/test_check_spec_coverage.py'
+      - '.github/workflows/sdk-coverage.yaml'
+      - 'build.gradle.kts'
+      - 'buildSrc/**'
+      - 'gradle.properties'
+      - 'gradle/**'
+      - 'gradlew'
+      - '*/build.gradle.kts'
+      - '*/gradle.properties'
+      - '*/config.yaml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: sdk-coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    name: Generate the per-language SDK coverage report
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      REPORT_DIR: ${{ github.workspace }}/build/reports/sdk-coverage
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.14'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+        with:
+          go-version: '1.26'
+          cache: false
+
+      - name: Add Go formatter tools to PATH
+        run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1
+        with:
+          php-version: '8.2'
+          extensions: curl, mbstring, xml, dom
+          tools: composer:v2
+          coverage: none
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6
+
+      - name: Generate detailed SDK report
+        env:
+          SERVICES: ${{ inputs.services || '' }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$REPORT_DIR"
+          args=(--jobs 2 --output "$REPORT_DIR/sdk-coverage.md")
+          if [[ -n "$SERVICES" ]]; then
+            args+=("--services=$SERVICES")
+          fi
+          echo "Generating SDK coverage. Full diagnostics will be saved in the sdk-coverage artifact."
+          status=0
+          python3 -u .github/scripts/sdk_coverage.py "${args[@]}" > "$REPORT_DIR/sdk-coverage.log" 2>&1 || status=$?
+          echo "SDK coverage finished with exit code $status. See sdk-coverage.log in the sdk-coverage artifact for diagnostics."
+          exit "$status"
+
+      - name: Publish report summary
+        if: always()
+        run: |
+          if [[ -f "$REPORT_DIR/sdk-coverage.md" ]]; then
+            cat "$REPORT_DIR/sdk-coverage.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No detailed SDK report was produced. See the failed steps and any available sdk-coverage artifact." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Print report to log
+        if: always()
+        run: |
+          if [[ -f "$REPORT_DIR/sdk-coverage.md" ]]; then
+            cat "$REPORT_DIR/sdk-coverage.md"
+          else
+            echo "No detailed SDK report was produced."
+          fi
+
+      - name: Upload report and log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sdk-coverage
+          path: ${{ env.REPORT_DIR }}/
+          if-no-files-found: warn
+          retention-days: 14
