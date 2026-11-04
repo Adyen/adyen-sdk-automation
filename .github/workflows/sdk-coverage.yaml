@@ -32,6 +32,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
   group: sdk-coverage-${{ github.ref }}
@@ -88,6 +89,7 @@ jobs:
       - name: Generate detailed SDK report
         env:
           SERVICES: ${{ inputs.services || '' }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p "$REPORT_DIR"
           args=(--jobs 2 --output "$REPORT_DIR/sdk-coverage.md")

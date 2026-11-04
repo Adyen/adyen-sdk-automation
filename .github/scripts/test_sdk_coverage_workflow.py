@@ -105,6 +105,10 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
             with self.subTest(action=action):
                 self.assertRegex(action, r"^[\w/-]+@[0-9a-f]{40}(?:\s+#.*)?$")
 
+    def test_pr_lookup_uses_read_only_workflow_token(self) -> None:
+        self.assertIn("  pull-requests: read\n", self.workflow)
+        self.assertIn("          GH_TOKEN: ${{ github.token }}\n", self.step("Generate detailed SDK report"))
+
     def test_default_run_checks_all_services_and_captures_log(self) -> None:
         result = self.run_step("Generate detailed SDK report")
         self.assertEqual(result.returncode, 0, result.stderr)

@@ -10,8 +10,12 @@ import subprocess
 import sys
 import tempfile
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.error import HTTPError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
 import check_spec_coverage as checker
 
@@ -2004,6 +2008,131 @@ def build_audit_lines(
     return lines
 
 
+@dataclass(frozen=True)
+class ServicePullRequest:
+    number: int
+    url: str
+    created_at: datetime
+
+
+def supports_pr_age(status):
+    return re.fullmatch(
+        r"(?:Service drift at v\d+|Service version behind v\d+|Behind)", status,
+    ) is not None
+
+
+def github_api_json(path):
+    """Read GitHub metadata without requiring an additional dependency or secret."""
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "adyen-sdk-coverage",
+    }
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    request = Request("https://api.github.com" + path, headers=headers)
+    with urlopen(request, timeout=20) as response:
+        return json.load(response)
+
+
+def match_service_prs(project, service_ids, default_branch, pull_requests):
+    """Match only unique, open automation PRs in the exact SDK repository."""
+    repository = f"Adyen/adyen-{project}-api-library"
+    branches = {f"sdk-automation/{service_id}": service_id for service_id in service_ids}
+    candidates = {service_id: [] for service_id in service_ids}
+    for pr in pull_requests:
+        if not isinstance(pr, dict):
+            raise ValueError("Invalid pull request metadata")
+        base, head = pr.get("base"), pr.get("head")
+        if not isinstance(base, dict) or not isinstance(head, dict):
+            continue
+        base_repo, head_repo = base.get("repo"), head.get("repo")
+        if not isinstance(base_repo, dict) or not isinstance(head_repo, dict):
+            continue
+        repo_names = (base_repo.get("full_name"), head_repo.get("full_name"))
+        if any(not isinstance(name, str) or name.lower() != repository.lower() for name in repo_names):
+            continue
+        branch = head.get("ref")
+        if (
+            pr.get("state") != "open"
+            or pr.get("merged_at") is not None
+            or base.get("ref") != default_branch
+            or not isinstance(branch, str)
+            or branch not in branches
+        ):
+            continue
+        candidates[branches[branch]].append(pr)
+
+    matches = {}
+    for service_id, prs in sorted(candidates.items()):
+        if len(prs) != 1:
+            continue
+        pr = prs[0]
+        number = pr.get("number")
+        if type(number) is not int or number <= 0:
+            continue
+        try:
+            created_at = datetime.strptime(pr["created_at"], "%Y-%m-%dT%H:%M:%SZ").replace(
+                tzinfo=timezone.utc,
+            )
+        except (KeyError, TypeError, ValueError):
+            continue
+        matches[service_id] = ServicePullRequest(
+            number, f"https://github.com/{repository}/pull/{number}", created_at,
+        )
+    return matches
+
+
+def lookup_service_prs(selected_services, results):
+    """Best-effort PR enrichment; failures must not invalidate generation results."""
+    matches = {}
+    for project in PROJECTS:
+        service_ids = {
+            service["name"].lower()
+            for service in selected_services
+            if supports_pr_age(results.get((project, service["name"].lower()), ""))
+        }
+        if not service_ids:
+            continue
+        repository_path = f"/repos/Adyen/adyen-{project}-api-library"
+        try:
+            metadata = github_api_json(repository_path)
+            if not isinstance(metadata, dict) or not isinstance(metadata.get("default_branch"), str):
+                raise ValueError("Missing SDK default branch")
+            default_branch = metadata["default_branch"]
+            if not default_branch:
+                raise ValueError("Empty SDK default branch")
+            pull_requests = []
+            for page in range(1, 11):
+                query = urlencode({
+                    "state": "open", "base": default_branch, "sort": "created",
+                    "direction": "asc", "per_page": 100, "page": page,
+                })
+                batch = github_api_json(f"{repository_path}/pulls?{query}")
+                if not isinstance(batch, list):
+                    raise ValueError("Invalid pull request listing")
+                pull_requests.extend(batch)
+                if len(batch) < 100:
+                    break
+            else:
+                raise ValueError("Pull request listing exceeds 1000 entries")
+            project_matches = match_service_prs(
+                project, service_ids, default_branch, pull_requests,
+            )
+        except (OSError, ValueError, TypeError) as error:
+            detail = f"HTTP {error.code}" if isinstance(error, HTTPError) else type(error).__name__
+            print(f"Warning: {PROJECT_LABELS[project]} PR lookup unavailable ({detail}); ages omitted.")
+            continue
+        for service_id, pr in project_matches.items():
+            matches[(project, service_id)] = pr
+            print(
+                f"{PROJECT_LABELS[project]} {service_id}: confirmed open PR #{pr.number}, "
+                f"created {pr.created_at.isoformat()} ({pr.url})"
+            )
+    return matches
+
+
 def build_report(
         selected_services,
         results,
@@ -2013,6 +2142,8 @@ def build_report(
         family_findings,
         duplicate_families,
         baseline=None,
+        service_prs=None,
+        report_time=None,
 ):
     """Assemble the complete Markdown report.
 
@@ -2022,9 +2153,13 @@ def build_report(
     family, followed by the legend.
     """
 
-    generated_at = datetime.now(
-        timezone.utc
-    ).isoformat(timespec="seconds")
+    report_time = report_time or datetime.now(timezone.utc)
+    if report_time.utcoffset() is None:
+        raise ValueError("The report timestamp must include a timezone")
+    report_time = report_time.astimezone(timezone.utc).replace(microsecond=0)
+    generated_at = report_time.isoformat(timespec="seconds")
+    service_prs = service_prs or {}
+    pr_age_shown = False
 
     headers = [
         "Service",
@@ -2046,6 +2181,9 @@ def build_report(
     )
 
     rows = []
+    shown_statuses = set()
+    service_only_projects = set()
+    uncatalogued_inspected = False
 
     for service in selected_services:
         service_id = service["name"].lower()
@@ -2056,9 +2194,24 @@ def build_report(
         ]
 
         for project in PROJECTS:
-            cells.append(
-                results[(project, service_id)]
-            )
+            status = results[(project, service_id)]
+            shown_statuses.add(status)
+            if project in {"python", "ruby"} and (
+                status == "Behind" or status.startswith(
+                    ("Current v", "Service version behind v", "Service drift at v")
+                )
+            ):
+                service_only_projects.add(project)
+
+            cell = status
+            pr = service_prs.get((project, service_id))
+            if supports_pr_age(status) and pr is not None:
+                age_days = (report_time - pr.created_at).days
+                if age_days >= 0:
+                    days = "day" if age_days == 1 else "days"
+                    cell += f" · [PR #{pr.number}]({pr.url}) · open {age_days} {days}"
+                    pr_age_shown = True
+            cells.append(cell)
 
         rows.append(
             "| " + " | ".join(cells) + " |"
@@ -2081,6 +2234,7 @@ def build_report(
             state, sdk_version = findings[
                 family_name
             ]
+            uncatalogued_inspected = True
 
             if state == "Present":
                 if sdk_version is not None:
@@ -2095,6 +2249,7 @@ def build_report(
                 # Generic names cannot be assessed.
                 cells.append("Not assessed")
 
+        shown_statuses.update(cells[2:])
         rows.append(
             "| " + " | ".join(cells) + " |"
         )
@@ -2117,81 +2272,172 @@ def build_report(
         )
     )
 
-    report_lines.extend(
-        [
-            "## SDK generation coverage",
-            "",
-            header_row,
-            separator_row,
-            *rows,
-            "",
-            "Notes:",
-            "",
-            "- Checks use the OpenAPI versions pinned in the generation catalog, "
-            "not necessarily the latest available versions. See the catalog audit "
-            "for newer OpenAPI versions.",
-            "- `Current vN`: the SDK is up to date with the catalogued OpenAPI "
-            "service at version N; regenerating it produces no changes.",
-            "- `Service version behind vX`: the SDK uses service version X, "
-            "which is older than the catalogued OpenAPI version.",
-            "- `Service drift at vN`: the SDK and the catalogued OpenAPI service "
-            "use version N, but regenerating the SDK produces changes. The SDK "
-            "may be missing recent spec changes, or the differences may come "
-            "from generator or template changes.",
-            "- `Behind`: the SDK differs from the generated OpenAPI code, "
-            "but we cannot reliably compare service versions; "
-            "check the SDK version manually.",
-            "- `Failed`: the report could not complete this SDK/service check "
-            "because setup, generation, formatting, or inspection failed. "
-            "See the run log; this does not by itself mean the SDK is behind.",
-            "- `Missing spec`: the catalog references an OpenAPI file that "
-            "is missing. Generation was skipped for this service "
-            "(warning only).",
-            "- `Unsupported`: this service is not enabled for this SDK in "
-            "the catalog or language generator. This describes generation "
-            "support, not whether the SDK contains the service.",
-            "- `Unsupported; in SDK at vN`: generation is not supported, "
-            "but family-specific source and one consistent version were found.",
-            "- `Unsupported; in SDK`: family-specific source was found, "
-            "but its version is missing or conflicting.",
-            "- `Unsupported; presence not assessed`: source could not be "
-            "inspected or the evidence was ambiguous.",
-            "- Unsupported-service presence checks read committed production "
-            "source before generation. They require a known service path with "
-            "a matching declaration, or an exact, unique generated API title. "
-            "Generic webhook/HMAC helpers do not establish family presence. "
-            "Evidence paths and the SDK commit are printed in the run log. "
-            "Presence does not prove complete webhook support.",
-            "- Uncatalogued families: these OpenAPI families are not in the "
-            "generation catalog. They appear in the audit and coverage table, "
-            "and may already be present in SDKs.",
-            "- `In SDK at vN`: the SDK already ships this OpenAPI family at "
-            "version N, but it is not in the generation catalog.",
-            "- `In SDK`: the SDK already ships this OpenAPI family, but its "
-            "version could not be detected and it is not in the generation catalog.",
-            "- `Not catalogued`: this OpenAPI family is missing from the "
-            "generation catalog, and no matching code was found in this SDK.",
-            "- `Not assessed`: the report could not confirm whether this "
-            "SDK includes the OpenAPI family or matches the target version. "
-            "Check manually; this does not mean unsupported or absent.",
-            "- Baseline reason: copied word for word from "
-            "`config/spec-coverage-baseline.json`. It explains a recorded "
-            "gap and does not change any status.",
-            "- Empty baseline reason cells: the baseline entry has no "
-            "reviewed reason, so no reason is shown.",
-            f"- `{NO_BASELINE_ENTRY}`: the family is not listed in the baseline. "
-            "For catalog versions behind OpenAPI, no version pin "
-            "acknowledges the latest OpenAPI version.",
-            "- Uncatalogued detection relies on spec titles, version markers,",
-            "  and standard service locations; hand-written code under",
-            "  unusual names may not be detected.",
-            "- Presence labels report that the SDK ships the family; they do",
-            "  not distinguish spec-generated code from hand-written legacy",
-            "  code.",
-            "- Ruby uses hashes instead of generated models, so its result covers services only.",
-            "",
-        ]
+    notes = []
+    if selected_services:
+        notes.append(
+            "- About this check: an SDK is the library an application uses to "
+            "connect to Adyen. We check the service versions chosen for automatic "
+            "updates, which may not be the latest available. Newer versions are "
+            "listed in the catalog audit."
+        )
+
+    status_notes = [
+        (
+            r"Current v\d+",
+            "- `Current vN`: the SDK matches the service version we checked (N). "
+            "No code changes were found.",
+        ),
+        (
+            r"Service version behind v\d+",
+            "- `Service version behind vX`: the SDK uses version X, which is "
+            "older than the version selected for this check.",
+        ),
+        (
+            r"Service drift at v\d+",
+            "- `Service drift at vN`: the version number matches (N), but "
+            "rebuilding this service changes its code. This could come from "
+            "service updates or changes to the tools that build the SDK.",
+        ),
+        (
+            r"Behind",
+            "- `Behind`: the code differs, but we could not confirm whether "
+            "the SDK uses an older service version. A manual review is needed.",
+        ),
+        (
+            r"Failed",
+            "- `Failed`: the check could not finish. This does not mean the SDK "
+            "is out of date. For GitHub runs, download `sdk-coverage` and open "
+            "`sdk-coverage.log` for details.",
+        ),
+        (
+            r"Missing spec",
+            "- `Missing spec`: the file describing this service is missing, "
+            "so this check was skipped. This warning does not fail the run.",
+        ),
+        (
+            r"Unsupported",
+            "- `Unsupported`: automatic updates are not enabled for this service "
+            "in this SDK. The service may still be available in the SDK.",
+        ),
+        (
+            r"Unsupported; in SDK at v\d+",
+            "- `Unsupported; in SDK at vN`: automatic updates are not enabled, "
+            "but matching service code was found in the SDK at version N.",
+        ),
+        (
+            r"Unsupported; in SDK",
+            "- `Unsupported; in SDK`: automatic updates are not enabled, but "
+            "matching service code was found. Its version could not be confirmed.",
+        ),
+        (
+            r"Unsupported; presence not assessed",
+            "- `Unsupported; presence not assessed`: automatic updates are not "
+            "enabled, and we could not confirm whether this service is included "
+            "in the SDK.",
+        ),
+        (
+            r"In SDK at v\d+",
+            "- `In SDK at vN`: matching service code was found in the SDK at "
+            "version N, but the service is not on the automatic update list.",
+        ),
+        (
+            r"In SDK",
+            "- `In SDK`: matching service code was found, but its version could "
+            "not be confirmed. The service is not on the automatic update list.",
+        ),
+        (
+            r"Not catalogued",
+            "- `Not catalogued`: the service is not on the automatic update "
+            "list, and this check found no matching code in the SDK. "
+            "This does not prove the service is absent.",
+        ),
+        (
+            r"Not assessed",
+            "- `Not assessed`: we could not confirm whether this service is "
+            "included or up to date. This does not mean it is missing or unsupported.",
+        ),
+    ]
+    notes.extend(
+        note for pattern, note in status_notes
+        if any(re.fullmatch(pattern, status) for status in shown_statuses)
     )
+    if pr_age_shown:
+        notes.append(
+            "- PR age: a pull request (PR) is a proposed SDK update. The number "
+            "counts full 24-hour days from its creation to this report's time. "
+            "We only show requests that match the same SDK and service. "
+            "This is not how long the SDK has been behind, and the request "
+            "may not fix every difference."
+        )
+
+    if any(status.startswith("Unsupported;") for status in shown_statuses):
+        notes.append(
+            "- Code checks: we look for saved SDK code that clearly belongs to "
+            "the service. Shared helper code alone is not enough. Details are "
+            "in `sdk-coverage.log` (download `sdk-coverage` from the GitHub run)."
+        )
+
+    if uncatalogued:
+        notes.append(
+            "- Services missing from the automation list: Adyen publishes these "
+            "APIs, but this automation is not configured to generate or update "
+            "them. Some SDKs may already include them."
+        )
+
+    if uncatalogued or catalog_versions_behind:
+        baseline = baseline or {"uncoveredSpecs": {}, "pinnedVersions": {}}
+        reasons = [
+            baseline_reason(baseline["uncoveredSpecs"].get(family))
+            for family, _ in uncatalogued
+        ] + [
+            baseline_reason(pinned_entry(baseline["pinnedVersions"], service, latest))
+            for service, latest in catalog_versions_behind
+        ]
+        notes.append(
+            "- Baseline reason: a saved explanation for a known gap. "
+            "It does not change the result."
+        )
+        if "" in reasons:
+            notes.append(
+                "- Empty baseline reason cells: no reviewed explanation has "
+                "been saved for that row."
+            )
+        if NO_BASELINE_ENTRY in reasons:
+            notes.append(
+                f"- `{NO_BASELINE_ENTRY}`: this row has no matching entry in "
+                "the saved list of known gaps."
+            )
+
+    if uncatalogued_inspected:
+        notes.append(
+            "- Search limits: code stored under an unexpected name or location "
+            "may be missed."
+        )
+    if any(
+        status == "In SDK" or status.startswith(("In SDK at v", "Unsupported; in SDK"))
+        for status in shown_statuses
+    ):
+        notes.append(
+            "- What 'in SDK' means: matching code was found. It may be created "
+            "automatically or written by hand. This does not confirm that every "
+            "feature is supported."
+        )
+    if service_only_projects:
+        languages = " and ".join(
+            PROJECT_LABELS[project] for project in ("python", "ruby")
+            if project in service_only_projects
+        )
+        subject = "These SDKs do" if len(service_only_projects) > 1 else "This SDK does"
+        notes.append(
+            f"- {languages}: only service code is compared. {subject} not have "
+            "separate generated data models to compare."
+        )
+
+    report_lines.extend(
+        ["## SDK generation coverage", "", header_row, separator_row, *rows, ""]
+    )
+    if notes:
+        report_lines.extend(["Notes:", "", *notes, ""])
 
     return "\n".join(report_lines)
 
@@ -2598,6 +2844,7 @@ def main():
 
     print("Temporary workspace deleted")
 
+    service_prs = lookup_service_prs(selected_services, results)
     report = build_report(
         selected_services,
         results,
@@ -2607,6 +2854,7 @@ def main():
         family_findings,
         duplicate_families,
         baseline,
+        service_prs=service_prs,
     )
 
     report_path = args.output

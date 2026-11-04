@@ -7,7 +7,9 @@ import os
 import shutil
 import tempfile
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.error import HTTPError
 from unittest import mock
 
 import sdk_coverage
@@ -810,7 +812,9 @@ class TestCoverageInputs(unittest.TestCase):
             "openapiGeneratorVersion=7.11.0\n",
         )
 
-    def run_snapshot_report(self, state="Current v72", extra=(), pinned_version=72, worker=None):
+    def run_snapshot_report(
+        self, state="Current v72", extra=(), pinned_version=72, worker=None, pr_lookup=None,
+    ):
         (self.root / "config").mkdir(exist_ok=True)
         (self.root / "config/services.json").write_text(json.dumps({
             "services": [{"name": "Checkout", "version": 73}]
@@ -838,6 +842,7 @@ class TestCoverageInputs(unittest.TestCase):
                 return_value=("java", {"checkout": state}, {}, False),
                 side_effect=worker,
             ) as run_project,
+            mock.patch.object(sdk_coverage, "lookup_service_prs", return_value={}, side_effect=pr_lookup),
             mock.patch("sys.argv", ["sdk_coverage.py", *extra]),
             contextlib.redirect_stdout(io.StringIO()),
         ):
@@ -869,6 +874,28 @@ class TestCoverageInputs(unittest.TestCase):
         status, _ = self.run_snapshot_report(state="Failed")
         self.assertEqual(status, 1)
         self.assertIn("| Checkout | v72 | Failed |", (self.root / "sdk-coverage.md").read_text())
+
+    def test_confirmed_pr_is_added_without_changing_generation_status(self) -> None:
+        pr = sdk_coverage.ServicePullRequest(
+            42, "https://github.com/Adyen/adyen-java-api-library/pull/42",
+            datetime(2000, 1, 1, tzinfo=timezone.utc),
+        )
+        status, _ = self.run_snapshot_report(
+            state="Behind", pr_lookup=lambda *_: {("java", "checkout"): pr},
+        )
+        self.assertEqual(status, 0)
+        report = (self.root / "sdk-coverage.md").read_text()
+        self.assertIn("| Checkout | v72 | Behind · [PR #42]", report)
+        self.assertIn("- `Behind`:", report)
+
+    def test_pr_lookup_failure_does_not_fail_or_prevent_report(self) -> None:
+        lookup = sdk_coverage.lookup_service_prs
+        with mock.patch.object(sdk_coverage, "github_api_json", side_effect=OSError("unavailable")):
+            status, _ = self.run_snapshot_report(state="Behind", pr_lookup=lookup)
+        self.assertEqual(status, 0)
+        report = (self.root / "sdk-coverage.md").read_text()
+        self.assertIn("| Checkout | v72 | Behind |", report)
+        self.assertNotIn("- PR age:", report)
 
     def test_missing_spec_saves_the_report_without_failing(self) -> None:
         status, _ = self.run_snapshot_report(pinned_version=73)
@@ -1395,7 +1422,295 @@ class TestFormatFamilySdkSummary(unittest.TestCase):
         self.assertEqual(summary, "Not assessed")
 
 
+class TestServicePullRequests(unittest.TestCase):
+    def make_pr(self, project="java", service_id="checkout", number=42):
+        repository = f"Adyen/adyen-{project}-api-library"
+        return {
+            "number": number,
+            "state": "open",
+            "merged_at": None,
+            "created_at": "2026-10-21T12:00:00Z",
+            "updated_at": "2026-11-03T11:59:00Z",
+            "base": {"ref": "main", "repo": {"full_name": repository}},
+            "head": {"ref": f"sdk-automation/{service_id}", "repo": {"full_name": repository}},
+        }
+
+    def test_exact_service_match_uses_creation_time_and_canonical_url(self) -> None:
+        pr = self.make_pr()
+        pr["html_url"] = "https://example.invalid/not-a-github-pr"
+        matches = sdk_coverage.match_service_prs("java", {"checkout"}, "main", [pr])
+        self.assertEqual(matches["checkout"], sdk_coverage.ServicePullRequest(
+            42, "https://github.com/Adyen/adyen-java-api-library/pull/42",
+            datetime(2026, 10, 21, 12, tzinfo=timezone.utc),
+        ))
+
+    def test_unconfirmed_matches_are_omitted(self) -> None:
+        for path, value in (
+            (("state",), "closed"),
+            (("merged_at",), "2026-11-02T12:00:00Z"),
+            (("base", "ref"), "release"),
+            (("base", "repo", "full_name"), "Adyen/adyen-node-api-library"),
+            (("head", "repo", "full_name"), "Other/adyen-java-api-library"),
+            (("head", "repo"), None),
+            (("head", "ref"), "feature/checkout"),
+            (("head", "ref"), "sdk-automation/Checkout"),
+            (("head", "ref"), "sdk-automation/checkout-extra"),
+            (("number",), True),
+            (("number",), 0),
+            (("created_at",), None),
+            (("created_at",), "not a timestamp"),
+            (("created_at",), "2026-02-30T12:00:00Z"),
+        ):
+            with self.subTest(path=path, value=value):
+                pr = self.make_pr()
+                pr["title"] = "[checkout] Code generation: update services and models"
+                target = pr
+                for part in path[:-1]:
+                    target = target[part]
+                target[path[-1]] = value
+                self.assertEqual(
+                    sdk_coverage.match_service_prs("java", {"checkout"}, "main", [pr]), {},
+                )
+
+    def test_ambiguous_service_prs_are_not_guessed(self) -> None:
+        self.assertEqual(
+            sdk_coverage.match_service_prs(
+                "java", {"checkout"}, "main", [self.make_pr(number=42), self.make_pr(number=43)],
+            ),
+            {},
+        )
+
+    def test_drafts_and_case_insensitive_repository_names_are_supported(self) -> None:
+        pr = self.make_pr()
+        pr["draft"] = True
+        pr["head"]["repo"]["full_name"] = pr["head"]["repo"]["full_name"].lower()
+        self.assertIn("checkout", sdk_coverage.match_service_prs("java", {"checkout"}, "main", [pr]))
+
+    def test_default_branch_is_not_assumed_to_be_main(self) -> None:
+        pr = self.make_pr(project="ruby", service_id="payment")
+        pr["base"]["ref"] = "master"
+        self.assertIn(
+            "payment", sdk_coverage.match_service_prs("ruby", {"payment"}, "master", [pr]),
+        )
+
+    def test_only_drift_and_behind_results_trigger_lookup(self) -> None:
+        for status, expected in (
+            ("Service drift at v72", True),
+            ("Service version behind v71", True),
+            ("Behind", True),
+            ("Current v72", False),
+            ("Failed", False),
+            ("Missing spec", False),
+            ("Unsupported", False),
+            ("Unsupported; in SDK at v1", False),
+            ("In SDK", False),
+            ("Not assessed", False),
+        ):
+            with self.subTest(status=status):
+                self.assertEqual(sdk_coverage.supports_pr_age(status), expected)
+
+    def test_unselected_results_do_not_trigger_network_requests(self) -> None:
+        with (
+            mock.patch.object(sdk_coverage, "PROJECTS", ["java"]),
+            mock.patch.object(sdk_coverage, "github_api_json") as api,
+        ):
+            self.assertEqual(sdk_coverage.lookup_service_prs(
+                [{"name": "Checkout", "version": 72}],
+                {("java", "checkout"): "Current v72", ("java", "unselected"): "Behind"},
+            ), {})
+        api.assert_not_called()
+
+    def test_lookup_paginates_and_matches_only_affected_sdk(self) -> None:
+        first_page = [
+            self.make_pr(service_id=f"other{index}", number=index + 1)
+            for index in range(100)
+        ]
+        with (
+            mock.patch.object(sdk_coverage, "PROJECTS", ["java", "node"]),
+            mock.patch.object(
+                sdk_coverage, "github_api_json",
+                side_effect=[{"default_branch": "main"}, first_page, [self.make_pr()]],
+            ) as api,
+            contextlib.redirect_stdout(io.StringIO()),
+        ):
+            matches = sdk_coverage.lookup_service_prs(
+                [{"name": "Checkout", "version": 72}],
+                {("java", "checkout"): "Behind", ("node", "checkout"): "Current v72"},
+            )
+        self.assertEqual(set(matches), {("java", "checkout")})
+        self.assertEqual(api.call_count, 3)
+        self.assertIn("base=main", api.call_args_list[1].args[0])
+        self.assertIn("page=2", api.call_args_list[2].args[0])
+        self.assertTrue(all("adyen-java-api-library" in call.args[0] for call in api.call_args_list))
+
+    def test_incomplete_listing_does_not_produce_partial_matches(self) -> None:
+        first_page = [self.make_pr()] + [
+            self.make_pr(service_id=f"other{index}", number=index + 100)
+            for index in range(99)
+        ]
+        with (
+            mock.patch.object(sdk_coverage, "PROJECTS", ["java"]),
+            mock.patch.object(
+                sdk_coverage, "github_api_json",
+                side_effect=[{"default_branch": "main"}, first_page, OSError("private details")],
+            ),
+            contextlib.redirect_stdout(io.StringIO()) as output,
+        ):
+            matches = sdk_coverage.lookup_service_prs(
+                [{"name": "Checkout", "version": 72}], {("java", "checkout"): "Behind"},
+            )
+        self.assertEqual(matches, {})
+        self.assertIn("ages omitted", output.getvalue())
+        self.assertNotIn("private details", output.getvalue())
+
+    def test_pagination_limit_omits_ages_without_guessing(self) -> None:
+        with (
+            mock.patch.object(sdk_coverage, "PROJECTS", ["java"]),
+            mock.patch.object(
+                sdk_coverage, "github_api_json",
+                side_effect=[{"default_branch": "main"}] + [[self.make_pr()] * 100] * 10,
+            ) as api,
+            contextlib.redirect_stdout(io.StringIO()),
+        ):
+            matches = sdk_coverage.lookup_service_prs(
+                [{"name": "Checkout", "version": 72}], {("java", "checkout"): "Behind"},
+            )
+        self.assertEqual(matches, {})
+        self.assertEqual(api.call_count, 11)
+
+    def test_api_failures_and_invalid_responses_are_warning_only(self) -> None:
+        for responses in (
+            [HTTPError("https://api.github.com", 403, "Forbidden", {}, None)],
+            [TimeoutError("unavailable")],
+            [[]],
+            [{"default_branch": ""}],
+            [{"default_branch": "main"}, {}],
+            [{"default_branch": "main"}, [None]],
+        ):
+            with (
+                self.subTest(responses=responses),
+                mock.patch.object(sdk_coverage, "PROJECTS", ["java"]),
+                mock.patch.object(sdk_coverage, "github_api_json", side_effect=responses),
+                contextlib.redirect_stdout(io.StringIO()) as output,
+            ):
+                self.assertEqual(sdk_coverage.lookup_service_prs(
+                    [{"name": "Checkout", "version": 72}], {("java", "checkout"): "Behind"},
+                ), {})
+                self.assertIn("Warning:", output.getvalue())
+
+    def test_api_authentication_is_optional_and_credentials_are_not_in_urls(self) -> None:
+        for environment, token in (
+            ({}, None),
+            ({"GH_TOKEN": "unit-test-token"}, "unit-test-token"),
+            ({"GITHUB_TOKEN": "fallback-test-token"}, "fallback-test-token"),
+            ({"GH_TOKEN": "preferred-test-token", "GITHUB_TOKEN": "other"}, "preferred-test-token"),
+        ):
+            response = io.BytesIO(b'{"default_branch": "main"}')
+            with (
+                self.subTest(environment=environment),
+                mock.patch.dict(os.environ, environment, clear=True),
+                mock.patch.object(sdk_coverage, "urlopen", return_value=response) as opener,
+            ):
+                self.assertEqual(
+                    sdk_coverage.github_api_json("/repos/Adyen/adyen-java-api-library"),
+                    {"default_branch": "main"},
+                )
+            request = opener.call_args.args[0]
+            self.assertEqual(request.full_url, "https://api.github.com/repos/Adyen/adyen-java-api-library")
+            self.assertEqual(request.get_header("Authorization"), f"Bearer {token}" if token else None)
+            self.assertEqual(opener.call_args.kwargs["timeout"], 20)
+            self.assertTrue(response.closed)
+
+
+class TestServicePullRequestAge(unittest.TestCase):
+    report_time = datetime(2026, 11, 3, 12, tzinfo=timezone.utc)
+
+    def build(self, status="Service drift at v72", created_at=None, report_time=None):
+        pr = sdk_coverage.ServicePullRequest(
+            42, "https://github.com/Adyen/adyen-java-api-library/pull/42",
+            created_at or datetime(2026, 10, 21, 12, tzinfo=timezone.utc),
+        )
+        with mock.patch.object(sdk_coverage, "PROJECTS", ["java"]):
+            return sdk_coverage.build_report(
+                [{"name": "Checkout", "version": 72}],
+                {("java", "checkout"): status},
+                [], [], [], {}, {},
+                service_prs={("java", "checkout"): pr},
+                report_time=report_time or self.report_time,
+            )
+
+    def test_fixed_snapshot_and_timestamp_produce_identical_reports(self) -> None:
+        first, second = self.build(), self.build()
+        self.assertEqual(first, second)
+        self.assertIn("Generated at: `2026-11-03T12:00:00+00:00`", first)
+        self.assertIn(
+            "Service drift at v72 · [PR #42](https://github.com/Adyen/adyen-java-api-library/pull/42)"
+            " · open 13 days",
+            first,
+        )
+        self.assertIn("- `Service drift at vN`:", first)
+        self.assertNotIn("- `Current vN`:", first)
+        self.assertIn("a pull request (PR) is a proposed SDK update", first)
+        self.assertIn("full 24-hour days from its creation to this report's time", first)
+        self.assertIn("This is not how long the SDK has been behind", first)
+        self.assertIn("may not fix every difference", first)
+        self.assertNotIn("sdk-automation/<service-id>", first)
+
+    def test_age_is_completed_24_hour_days(self) -> None:
+        for elapsed, expected in (
+            (timedelta(hours=23, minutes=59), "open 0 days"),
+            (timedelta(days=1), "open 1 day"),
+            (timedelta(days=1, hours=23, minutes=59), "open 1 day"),
+            (timedelta(days=2), "open 2 days"),
+        ):
+            with self.subTest(elapsed=elapsed):
+                report = self.build(created_at=self.report_time - elapsed)
+                self.assertIn(f" · {expected} |", report)
+
+    def test_report_timestamp_is_normalized_to_utc(self) -> None:
+        local = self.report_time.astimezone(timezone(timedelta(hours=5, minutes=30)))
+        self.assertEqual(self.build(report_time=local), self.build())
+
+    def test_future_creation_times_are_not_reported_as_zero(self) -> None:
+        report = self.build(created_at=self.report_time + timedelta(seconds=1))
+        self.assertNotIn("[PR #", report)
+        self.assertNotIn("- PR age:", report)
+        self.assertIn("| Checkout | v72 | Service drift at v72 |", report)
+
+    def test_naive_report_timestamp_is_rejected(self) -> None:
+        with self.assertRaisesRegex(ValueError, "timezone"):
+            self.build(report_time=datetime(2026, 11, 3, 12))
+
+    def test_only_eligible_statuses_receive_annotations(self) -> None:
+        for status, expected in (
+            ("Service drift at v72", True),
+            ("Service version behind v71", True),
+            ("Behind", True),
+            ("Current v72", False),
+            ("Failed", False),
+            ("Missing spec", False),
+            ("Unsupported", False),
+            ("Not assessed", False),
+        ):
+            with self.subTest(status=status):
+                report = self.build(status)
+                self.assertEqual("[PR #42]" in report, expected)
+                self.assertEqual("- PR age:" in report, expected)
+
+
 class TestBuildReport(unittest.TestCase):
+    def build_for_statuses(self, statuses, project="java"):
+        services = [
+            {"name": f"Example{index}", "version": 72}
+            for index in range(len(statuses))
+        ]
+        results = {
+            (project, service["name"].lower()): status
+            for service, status in zip(services, statuses)
+        }
+        with mock.patch.object(sdk_coverage, "PROJECTS", [project]):
+            return sdk_coverage.build_report(services, results, [], [], [], {}, {})
+
     def test_unsupported_presence_labels_are_rendered_without_generation_claims(self) -> None:
         with mock.patch.object(sdk_coverage, "PROJECTS", ["python", "ruby"]):
             report = sdk_coverage.build_report(
@@ -1408,18 +1723,40 @@ class TestBuildReport(unittest.TestCase):
             "| AcsWebhooks | v1 | Unsupported; in SDK at v1 | Unsupported |", report,
         )
         self.assertNotIn("not detected", report)
-        self.assertIn("Presence does not prove complete webhook support.", report)
+        self.assertIn("This does not confirm that every feature is supported.", report)
 
     def test_header_omits_openapi_commit(self) -> None:
         report = sdk_coverage.build_report([], {}, [], [], [], {}, {})
         self.assertIn("# SDK coverage", report)
         self.assertIn("Generated at:", report)
         self.assertNotIn("OpenAPI commit:", report)
+        self.assertNotIn("Notes:", report)
 
     def test_status_descriptions_explain_limits(self) -> None:
-        report = sdk_coverage.build_report(
-            [], {}, [], [], [], {}, {},
+        statuses = (
+            "Current v72", "Service version behind v71", "Service drift at v72",
+            "Behind", "Failed", "Missing spec", "Unsupported",
+            "Unsupported; in SDK at v3", "Unsupported; in SDK",
+            "Unsupported; presence not assessed",
         )
+        services = [
+            {"name": f"Example{index}", "version": 72}
+            for index in range(len(statuses))
+        ]
+        findings = {
+            "VersionedService": ("Present", 1),
+            "UnversionedService": ("Present", None),
+            "AbsentService": ("Absent", None),
+            "UnknownService": ("Unknown", None),
+        }
+        with mock.patch.object(sdk_coverage, "PROJECTS", ["java"]):
+            report = sdk_coverage.build_report(
+                services,
+                {("java", service["name"].lower()): status
+                 for service, status in zip(services, statuses)},
+                [(family, 1) for family in findings], [], [],
+                {"java": findings}, {},
+            )
         notes = report.split("Notes:\n\n", 1)[1]
         labels = (
             "`Current vN`",
@@ -1429,7 +1766,10 @@ class TestBuildReport(unittest.TestCase):
             "`Failed`",
             "`Missing spec`",
             "`Unsupported`",
-            "Uncatalogued families",
+            "`Unsupported; in SDK at vN`",
+            "`Unsupported; in SDK`",
+            "`Unsupported; presence not assessed`",
+            "Services missing from the automation list",
             "`In SDK at vN`",
             "`In SDK`",
             "`Not catalogued`",
@@ -1439,15 +1779,162 @@ class TestBuildReport(unittest.TestCase):
             with self.subTest(label=label):
                 self.assertIn(f"- {label}: ", notes)
         for explanation in (
-            "not necessarily the latest available versions",
-            "generator or template changes",
-            "check the SDK version manually",
-            "setup, generation, formatting, or inspection failed",
-            "may already be present in SDKs",
-            "this does not mean unsupported or absent",
+            "may not be the latest available",
+            "changes to the tools that build the SDK",
+            "A manual review is needed",
+            "does not mean the SDK is out of date",
+            "Some SDKs may already include them",
+            "does not mean it is missing or unsupported",
         ):
             with self.subTest(explanation=explanation):
                 self.assertIn(explanation, notes)
+        self.assertIn("an SDK is the library an application uses to connect to Adyen", notes)
+        for technical_term in (
+            "generation catalog", "family-specific", "matching declaration",
+            "sdk-automation/<service-id>", "hashes", "dictionaries",
+        ):
+            with self.subTest(technical_term=technical_term):
+                self.assertNotIn(technical_term, notes)
+
+    def test_each_catalogued_status_only_adds_its_own_explanation(self) -> None:
+        cases = {
+            "Current v72": "Current vN",
+            "Service version behind v71": "Service version behind vX",
+            "Service drift at v72": "Service drift at vN",
+            "Behind": "Behind",
+            "Failed": "Failed",
+            "Missing spec": "Missing spec",
+            "Unsupported": "Unsupported",
+            "Unsupported; in SDK at v3": "Unsupported; in SDK at vN",
+            "Unsupported; in SDK": "Unsupported; in SDK",
+            "Unsupported; presence not assessed": "Unsupported; presence not assessed",
+            "Not assessed": "Not assessed",
+        }
+        for status, expected in cases.items():
+            with self.subTest(status=status):
+                notes = self.build_for_statuses([status]).split("Notes:\n\n", 1)[1]
+                labels = {
+                    line.split("`")[1] for line in notes.splitlines()
+                    if line.startswith("- `")
+                }
+                self.assertEqual(labels, {expected})
+
+    def test_repeated_statuses_have_one_explanation(self) -> None:
+        report = self.build_for_statuses(["Current v72", "Current v72"])
+        self.assertEqual(report.count("- `Current vN`: "), 1)
+
+    def test_unused_results_do_not_add_notes(self) -> None:
+        with mock.patch.object(sdk_coverage, "PROJECTS", ["java"]):
+            report = sdk_coverage.build_report(
+                [{"name": "Checkout", "version": 72}],
+                {
+                    ("java", "checkout"): "Current v72",
+                    ("ruby", "checkout"): "Failed",
+                    ("java", "unselected"): "Behind",
+                },
+                [], [], [], {}, {},
+            )
+        self.assertIn("- `Current vN`: ", report)
+        self.assertNotIn("- `Failed`: ", report)
+        self.assertNotIn("- `Behind`: ", report)
+        self.assertNotIn("- Ruby:", report)
+
+    def test_catalogued_only_report_omits_unrelated_context(self) -> None:
+        report = self.build_for_statuses(["Current v72"])
+        for note in (
+            "Baseline reason:", "Empty baseline reason cells:", "`No baseline entry`:",
+            "Services missing from the automation list:", "- Search limits:",
+            "- Code checks:", "- What 'in SDK' means:",
+            "- Python:", "- Ruby:",
+        ):
+            with self.subTest(note=note):
+                self.assertNotIn(note, report)
+
+    def test_unsupported_only_report_omits_presence_and_language_notes(self) -> None:
+        for project in ("python", "ruby"):
+            with self.subTest(project=project):
+                report = self.build_for_statuses(["Unsupported"], project)
+                self.assertNotIn("- Code checks:", report)
+                self.assertNotIn("- What 'in SDK' means:", report)
+                self.assertNotIn("- Python:", report)
+                self.assertNotIn("- Ruby:", report)
+
+    def test_language_notes_require_generated_service_results(self) -> None:
+        for project in ("python", "ruby"):
+            for status in (
+                "Current v72", "Service drift at v72", "Service version behind v71",
+                "Behind", "Failed", "Missing spec", "Not assessed", "Unsupported",
+            ):
+                with self.subTest(project=project, status=status):
+                    report = self.build_for_statuses([status], project)
+                    expected = status not in {"Failed", "Missing spec", "Not assessed", "Unsupported"}
+                    note = f"- {sdk_coverage.PROJECT_LABELS[project]}:"
+                    self.assertEqual(note in report, expected)
+                    if expected:
+                        self.assertIn(
+                            f"{note} only service code is compared. This SDK does "
+                            "not have separate generated data models to compare.",
+                            report,
+                        )
+
+    def test_python_and_ruby_share_one_plain_language_note(self) -> None:
+        with mock.patch.object(sdk_coverage, "PROJECTS", ["python", "ruby"]):
+            report = sdk_coverage.build_report(
+                [{"name": "Checkout", "version": 72}],
+                {("python", "checkout"): "Current v72", ("ruby", "checkout"): "Current v72"},
+                [], [], [], {}, {},
+            )
+        self.assertEqual(report.count("- Python and Ruby:"), 1)
+        self.assertNotIn("- Python:", report)
+        self.assertNotIn("- Ruby:", report)
+        self.assertIn(
+            "- Python and Ruby: only service code is compared. These SDKs do "
+            "not have separate generated data models to compare.",
+            report,
+        )
+
+    def test_non_webhook_presence_omits_webhook_and_language_notes(self) -> None:
+        report = self.build_for_statuses(["Unsupported; in SDK at v3"], "go")
+        self.assertIn("- Code checks:", report)
+        self.assertIn("`sdk-coverage.log`", report)
+        self.assertIn("This does not confirm that every feature is supported.", report)
+        self.assertNotIn("webhook", report.lower())
+        self.assertNotIn("HMAC", report)
+        self.assertNotIn("- Python:", report)
+        self.assertNotIn("- Ruby:", report)
+
+    def test_uncatalogued_notes_follow_displayed_findings(self) -> None:
+        for state, version, label in (
+            ("Present", 1, "In SDK at vN"),
+            ("Present", None, "In SDK"),
+            ("Absent", None, "Not catalogued"),
+            ("Unknown", None, "Not assessed"),
+            (None, None, "Failed"),
+        ):
+            with self.subTest(state=state, version=version):
+                findings = (
+                    {"java": {"ExampleService": (state, version)}}
+                    if state is not None else {}
+                )
+                with mock.patch.object(sdk_coverage, "PROJECTS", ["java"]):
+                    report = sdk_coverage.build_report(
+                        [], {}, [("ExampleService", 1)], [], [], findings, {},
+                    )
+                notes = report.split("Notes:\n\n", 1)[1]
+                labels = {
+                    line.split("`")[1] for line in notes.splitlines()
+                    if line.startswith("- `")
+                }
+                self.assertEqual(labels, {label, "No baseline entry"})
+                self.assertIn(
+                    "- Services missing from the automation list: Adyen publishes "
+                    "these APIs, but this automation is not configured to generate "
+                    "or update them. Some SDKs may already include them.",
+                    notes,
+                )
+                self.assertEqual("- Search limits:" in notes, state is not None)
+                self.assertEqual("- What 'in SDK' means:" in notes, state == "Present")
+                self.assertNotIn("- About this check:", notes)
 
     def test_uncatalogued_labels(self) -> None:
         report = sdk_coverage.build_report(
@@ -1493,8 +1980,9 @@ class TestBuildReport(unittest.TestCase):
             report,
         )
         self.assertIn(
-            "- `Not catalogued`: this OpenAPI family is missing from the "
-            "generation catalog, and no matching code was found in this SDK.",
+            "- `Not catalogued`: the service is not on the automatic update "
+            "list, and this check found no matching code in the SDK. "
+            "This does not prove the service is absent.",
             report,
         )
         self.assertIn(
@@ -1507,7 +1995,7 @@ class TestBuildReport(unittest.TestCase):
             report,
         )
         self.assertIn(
-            "- `In SDK at vN`: the SDK already ships",
+            "- `In SDK at vN`: matching service code was found",
             report,
         )
 
@@ -1572,9 +2060,34 @@ class TestBaselineReasons(unittest.TestCase):
 
     def test_notes_explain_baseline_labels(self) -> None:
         notes = self.build(None).split("Notes:\n\n", 1)[1]
-        for label in ("Baseline reason", "Empty baseline reason cells", "`No baseline entry`"):
+        for label in ("Baseline reason", "`No baseline entry`"):
             with self.subTest(label=label):
                 self.assertIn(f"- {label}: ", notes)
+        self.assertNotIn("- Empty baseline reason cells:", notes)
+
+    def test_empty_reason_note_only_appears_for_displayed_empty_cells(self) -> None:
+        report = self.build({
+            "uncoveredSpecs": {"FundService": {"reason": "UNREVIEWED: pending"}},
+            "pinnedVersions": {},
+        })
+        self.assertIn("- Empty baseline reason cells:", report)
+
+    def test_reviewed_reasons_do_not_add_empty_or_missing_entry_notes(self) -> None:
+        report = self.build({
+            "uncoveredSpecs": {
+                "FundService": {"reason": "Reviewed."},
+                "CloudDeviceService": {"reason": "Reviewed."},
+                "NewService": {"reason": "Reviewed."},
+                "NotDisplayedService": {"reason": "UNREVIEWED: pending"},
+            },
+            "pinnedVersions": {
+                "BalanceControlService": {"acknowledgedVersion": 2, "reason": "Reviewed."},
+                "CheckoutService": {"acknowledgedVersion": 72, "reason": "Reviewed."},
+            },
+        })
+        self.assertIn("- Baseline reason:", report)
+        self.assertNotIn("- Empty baseline reason cells:", report)
+        self.assertNotIn("- `No baseline entry`:", report)
 
 if __name__ == "__main__":
     unittest.main()

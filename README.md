@@ -172,6 +172,16 @@ webhook family. Finding source does not prove complete webhook support.
 If a generation check cannot confirm that a service is up to date, the report
 shows `Not assessed` rather than `Current`.
 
+For drift, `Behind`, and service-version-behind results, the report also looks
+for a unique open PR in the same SDK repository, targeting its default branch
+from `sdk-automation/<service-id>`. Confirmed matches show the PR link and its age
+in completed 24-hour days at the report's UTC timestamp. This measures how long
+the PR has been open, not how long the SDK has been behind or whether the PR
+resolves every difference. Missing or ambiguous matches have no PR age.
+GitHub lookup failures are warnings and do not change the coverage result.
+The workflow uses its read-only token; local runs can use `GH_TOKEN` or
+`GITHUB_TOKEN`, otherwise public API rate limits apply.
+
 ### Generating Release Notes
 
 A Factory skill and droid are included to generate evidence-backed release notes for an Adyen API library. The skill validates the request and manages the output files, while the droid clones the selected library into a temporary directory, analyzes the release range, validates the result, and cleans up the clone.
