@@ -163,17 +163,20 @@ change. Any other edit to an expectation must be recorded in the breaking-change
 
 ## Isolation of experimental generation
 
-Rule applied in this increment: all experimental generation runs locally into a dedicated
-worktree; nothing is dispatched through CI.
+Decided: migration generation stays local-only for the whole migration. Generate on a
+developer machine against `feature/go-generator-upgrade` of `Adyen/adyen-go-api-library`
+and commit there directly. Never start the "Update SDKs" workflow manually from a migration
+branch of this repository.
 
 Risk found in `.github/workflows/gradle.yml`: generation always checks out the SDK default
 branch and opens PRs from `sdk-automation/<service>` against it. A `workflow_dispatch` from a
 migration branch of this repository would therefore force-update the production bot PRs.
-Proposed guard (not implemented, needs approval because it changes production CI): a
-`sdk_base_branch` dispatch input that sets the SDK checkout `ref`, the PR `base`, and a branch
-prefix `sdk-automation/<base>/<service>` when it is not the default branch.
+A guard (a `sdk_base_branch` dispatch input) was considered and rejected in favour of the
+local-only rule above.
 
-## Open decisions before increment 2
+## Decisions
 
-1. Approve or reject the CI guard above, or keep migration generation local-only.
-Decided: the S1 and S3 fixes ship with v22 only; no v21 patch release.
+- Migration generation is local-only (see above).
+- The S1 and S3 fixes ship with v22 only; no v21 patch release.
+
+No decisions are open. Increment 2 can start once this baseline is accepted.
