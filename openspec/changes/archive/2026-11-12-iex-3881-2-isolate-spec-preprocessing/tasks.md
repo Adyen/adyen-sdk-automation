@@ -21,4 +21,4 @@
 - [x] 4.2 Staged specs for java, php, node, python, ruby, dotnet are byte-identical to the old pipeline output (188/188)
 - [x] 4.3 Go staged specs keep `openapi: 3.1.0` and are otherwise identical to the old output (29/29)
 - [x] 4.4 `git -C schema status` is clean after staging all 217 project/service pairs
-- [ ] 4.5 Review and push the automation branch
+- [x] 4.5 Review and push the automation branch
