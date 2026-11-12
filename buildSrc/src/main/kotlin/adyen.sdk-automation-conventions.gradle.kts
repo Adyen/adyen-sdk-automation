@@ -184,7 +184,14 @@ tasks.register<Exec>("cloneRepo") {
 // Disable generator caching
 tasks.withType(GenerateTask::class).configureEach {
     doFirst {
-        println("Using OpenAPI Generator version ${sdkExtension.openApiVersion.get()}")
+        // The engine comes from the buildSrc classpath, which can differ from the project setting
+        // when buildSrc/gradle.properties is not aligned (CI copies the project file into buildSrc).
+        val loaded = org.openapitools.codegen.utils.ImplementationVersion.read()
+        println("Using OpenAPI Generator version $loaded")
+        val configured = sdkExtension.openApiVersion.orNull
+        if (configured != null && configured != loaded) {
+            logger.warn("OpenAPI Generator $configured is configured for ${project.name}, but $loaded is loaded")
+        }
     }
     outputs.upToDateWhen { false }
     outputs.cacheIf { false }

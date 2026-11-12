@@ -46,6 +46,34 @@ object SpecProcessor {
         return JsonOutput.prettyPrint(JsonOutput.toJson(json))
     }
 
+    /**
+     * Whether any operation response body references the component schema [schemaName], directly
+     * or through a `#/components/responses` reference.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun respondsWithSchema(content: String, schemaName: String): Boolean {
+        val json = JsonSlurper().parseText(content) as? Map<String, Any> ?: return false
+        val schemaRef = "#/components/schemas/$schemaName"
+        val sharedResponses = ((json["components"] as? Map<String, Any>)?.get("responses") as? Map<String, Any>).orEmpty()
+        return operations(json)
+            .flatMap { (it["responses"] as? Map<String, Any>)?.values.orEmpty() }
+            .map { response ->
+                val ref = (response as? Map<*, *>)?.get("\$ref") as? String
+                if (ref != null && ref.startsWith("#/components/responses/")) {
+                    sharedResponses[ref.removePrefix("#/components/responses/")]
+                } else {
+                    response
+                }
+            }
+            .any { referencesExactly(it, schemaRef) }
+    }
+
+    private fun referencesExactly(node: Any?, ref: String): Boolean = when (node) {
+        is Map<*, *> -> node["\$ref"] == ref || node.values.any { referencesExactly(it, ref) }
+        is List<*> -> node.any { referencesExactly(it, ref) }
+        else -> false
+    }
+
     @Suppress("UNCHECKED_CAST")
     private fun operations(json: Map<String, Any>): List<MutableMap<String, Any>> =
         // Webhooks and notifications do not have 'paths'

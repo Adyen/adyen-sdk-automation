@@ -18,6 +18,19 @@ The configuration SHALL keep `Payment` in `src/payments`, `LegalEntityManagement
 - **WHEN** `LegalEntityManagement` is generated and deployed
 - **THEN** files land in `src/legalentity` with package `legalentity`
 
+### Requirement: Deployment replaces generated files
+Deploying a Go service SHALL replace the contents of its package directory with the generated
+files, keeping only handwritten webhook handlers (`webhook_handler.go`). `client.go` SHALL be
+deployed for every non-webhook service except small services that generate a single API file.
+
+#### Scenario: Stale files from an older generation
+- **WHEN** `Payment` is deployed and `src/payments` contains a file the generator no longer produces
+- **THEN** that file is removed and `src/payments/client.go` is regenerated
+
+#### Scenario: Webhook handler survives
+- **WHEN** `AcsWebhooks` is deployed
+- **THEN** `src/acswebhook/webhook_handler.go` is kept and no `client.go` is deployed
+
 ### Requirement: Error model follows the spec
 `hasRestServiceError` SHALL be enabled exactly for services whose spec references
 `RestServiceError` in an operation response.

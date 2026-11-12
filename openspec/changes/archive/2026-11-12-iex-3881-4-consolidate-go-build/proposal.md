@@ -26,6 +26,8 @@ None.
 ## Impact
 
 - `go/build.gradle.kts`, possibly a helper in buildSrc, buildSrc tests.
-- No generated output change for the 29 current services.
+- No generated output change for the 29 current services, except that deployment now cleans the
+  real Payment and LegalEntityManagement directories, removing two stale files
+  (`payments/api_general.go`, `legalentity/api/openapi.yaml`).
 - Gate: historical package paths and client naming remain stable; representative services
   regenerate consistently.

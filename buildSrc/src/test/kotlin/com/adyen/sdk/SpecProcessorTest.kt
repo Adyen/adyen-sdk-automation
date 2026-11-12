@@ -209,4 +209,35 @@ class SpecProcessorTest {
         val result = SpecProcessor.process(input)
 
         assertThat(result).contains("\"additionalProperties\": false").contains("\"nullable\": true")
-    }}
+    }
+
+    @Test
+    fun `detects a schema used by an operation response`() {
+        val direct = """
+            { "paths": { "/a": { "get": { "responses": { "422": { "content": { "application/json": {
+              "schema": { "${'$'}ref": "#/components/schemas/RestServiceError" } } } } } } } } }
+        """.trimIndent()
+        val shared = """
+            { "paths": { "/a": { "get": { "responses": { "500": { "${'$'}ref": "#/components/responses/Error" } } } } },
+              "components": { "responses": { "Error": { "content": { "application/problem+json": {
+                "schema": { "${'$'}ref": "#/components/schemas/RestServiceError" } } } } } } }
+        """.trimIndent()
+
+        assertThat(SpecProcessor.respondsWithSchema(direct, "RestServiceError")).isTrue()
+        assertThat(SpecProcessor.respondsWithSchema(shared, "RestServiceError")).isTrue()
+    }
+
+    @Test
+    fun `ignores schemas that are only declared, nested in names, or used in requests`() {
+        val input = """
+            { "paths": { "/a": { "post": {
+                "requestBody": { "content": { "application/json": { "schema": { "${'$'}ref": "#/components/schemas/RestServiceError" } } } },
+                "responses": { "422": { "content": { "application/json": {
+                  "schema": { "${'$'}ref": "#/components/schemas/RestServiceErrorDetail" } } } } } } } },
+              "components": { "schemas": { "RestServiceError": { "type": "object" } } } }
+        """.trimIndent()
+
+        assertThat(SpecProcessor.respondsWithSchema(input, "RestServiceError")).isFalse()
+        assertThat(SpecProcessor.respondsWithSchema("[]", "RestServiceError")).isFalse()
+    }
+}

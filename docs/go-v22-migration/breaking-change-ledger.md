@@ -27,6 +27,12 @@ Nullable arrays and maps are plain slices and maps: absent and explicit `null` b
 and an explicit `null` cannot be sent. Affected PATCH models arrive with increment 5 (Management
 donation settings, Balance Platform `BalanceWebhookSettingInfoUpdate.conditions`).
 
+## Increment 4: Go build consolidation
+
+| Area | Change | Cause | Compatibility |
+|------|--------|-------|---------------|
+| `payments.GeneralApi` and its `GeneralApi*Input` types | Removed. The file `src/payments/api_general.go` came from an older generation, was never wired into `payments.APIClient`, and was kept only because deployment cleaned the wrong directory. The same operations stay on `payments.PaymentsApi` (`Authorise`, `Authorise3d`, `Authorise3ds2`, `GetAuthenticationResult`, `Retrieve3ds2Result`) | generator (deployment) | Breaking for code that referenced the type; use `client.Payments().PaymentsApi` |
+| `src/legalentity/api/openapi.yaml` | Removed (stale spec copy from an older generation, not used by any Go code) | generator (deployment) | No API change |
 ## Spec changes seen while regenerating (owned by increment 5)
 
 | Package | Change | Cause |
