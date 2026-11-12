@@ -22,7 +22,7 @@ Increment 7 of 8.
 - `go-api-client-wiring`: what makes a generated Go API usable through the documented client.
 
 ### Modified Capabilities
-None.
+- `go-code-generation`: multipart operations send their form fields and files.
 
 ## Impact
 

@@ -90,3 +90,35 @@ and signatures; only their doc comments change. The classic `webhook` package an
 - Webhook packages render `webhook_handler.go` as their only supporting file; other services keep
   rendering `client.go`. Deployment no longer keeps any handwritten file.
 - Empty directories created by the generator (`api/`) are not deployed.
+
+## Increment 7: new APIs and client wiring
+
+Five new packages are generated and reachable from `adyen.APIClient`; `PosMobile`, generated since
+v21 but not reachable, is wired too. Each has a `common.Config` endpoint field, TEST and LIVE
+endpoint constants that match the spec servers, and an API-version constant (`apidiff`: only
+additions in `adyen` and `common`).
+
+| Accessor | Package | TEST / LIVE base URL | Notes |
+|----------|---------|----------------------|-------|
+| `Capital()` | `capital` | `balanceplatform-api-{test,live}.adyen.com/capital/v1` | Use instead of `transfers.CapitalApi`, which the Transfers spec deprecates since v4 and which stays for compatibility |
+| `ForeignExchange()` | `foreignexchange` | `balanceplatform-api-{test,live}.adyen.com/fx/api/v1` | |
+| `SessionAuthentication()` | `sessionauthentication` | `test.adyen.com/authe/api/v1`, `authe-live.adyen.com/authe/api/v1` | |
+| `DocumentCollector()` | `documentcollector` | `document-collector-{test,live}.adyen.com/v1` | Multipart upload (see below) |
+| `SoftPOSConfiguration()` | `softposconfiguration` | `softposconfig-test.adyen.com/softposconfig/v3`, LIVE Europe `softposconfig-live.adyen.com/softposconfig/v3` | Other LIVE regions: `SoftPOSConfigurationEndpointLive{AU,APSE,NEA,US}` assigned to `Config.SoftPOSConfigurationEndpoint` (README) |
+| `PosMobile()` | `posmobile` | `checkout-test.adyen.com/checkout/possdk/v68`, LIVE `<prefix>-checkout-live.adyenpayments.com/checkout/possdk/v68` | Deprecated by the spec in favour of SoftPOS Configuration; empty LIVE endpoint without the live URL prefix, as for Checkout |
+
+| Area | Change | Cause | Compatibility |
+|------|--------|-------|---------------|
+| `multipart/form-data` operations | Form fields and files are sent as a multipart body. Before, the generated code sent no body at all: `documentcollector.DocumentsApi.UploadCrossBorderInvoice` and the Management terminal theme asset uploads (`AddTerminalThemeAsset*`, `EditTerminalThemeAsset*`, new since v21.2.3) did not work | generator (template) | Fix; signatures unchanged |
+| `common.SendAPIRequest` | Keeps a `Content-Type` that the operation set instead of always sending `application/json` | handwritten | Only multipart operations set it |
+| `common.NewMultipartBody` | Added (used by generated multipart operations) | handwritten | Additive |
+| README | Lists the new APIs, the five webhook packages without a row, marks POS Mobile as deprecated, and documents SoftPOS LIVE regions | docs | |
+
+### Notes
+
+- The SoftPOS Configuration spec declares an optional `X-API-Key` header parameter, so
+  `IssueCertificatesInput().XAPIKey(...)` exists. Setting it while `Config.ApiKey` is set sends the
+  header twice; use `Config.ApiKey`.
+- None of the new specs declares an `Idempotency-Key` header; `common.WithIdempotencyKey` works for
+  every operation. Server-side support is tracked upstream (PF-3045).
+- The bot PRs for these APIs (#518, #525, #591, #603, #608) are superseded by this increment.

@@ -1,2 +1,31 @@
 Incompatible changes:
 - CheckoutAPIVersion: value changed from "v71" to "v72"
+Compatible changes:
+- (*APIClient).Capital: added
+- (*APIClient).DocumentCollector: added
+- (*APIClient).ForeignExchange: added
+- (*APIClient).PosMobile: added
+- (*APIClient).SessionAuthentication: added
+- (*APIClient).SoftPOSConfiguration: added
+- CapitalAPIVersion: added
+- CapitalEndpointLive: added
+- CapitalEndpointTest: added
+- DocumentCollectorAPIVersion: added
+- DocumentCollectorEndpointLive: added
+- DocumentCollectorEndpointTest: added
+- ForeignExchangeAPIVersion: added
+- ForeignExchangeEndpointLive: added
+- ForeignExchangeEndpointTest: added
+- PosMobileAPIVersion: added
+- PosMobileEndpointLiveSuffix: added
+- PosMobileEndpointTest: added
+- SessionAuthenticationAPIVersion: added
+- SessionAuthenticationEndpointLive: added
+- SessionAuthenticationEndpointTest: added
+- SoftPOSConfigurationAPIVersion: added
+- SoftPOSConfigurationEndpointLive: added
+- SoftPOSConfigurationEndpointLiveAPSE: added
+- SoftPOSConfigurationEndpointLiveAU: added
+- SoftPOSConfigurationEndpointLiveNEA: added
+- SoftPOSConfigurationEndpointLiveUS: added
+- SoftPOSConfigurationEndpointTest: added
