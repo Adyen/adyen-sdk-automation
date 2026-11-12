@@ -66,16 +66,16 @@ of the migration) or **migration** (must be resolved by a planned increment).
 
 ### SDK v21.2.3 defects
 
-- **S1 (baseline).** `go vet` fails: `Log3XXError`, `Log4XXError`, `Log5XXError` in
+- **S1 (baseline, fixed in `39fb07e7`).** `go vet` fails: `Log3XXError`, `Log4XXError`, `Log5XXError` in
   `src/common/configuration.go` all reuse the JSON tag `debug` already used by `Debug`.
   `encoding/json` drops all four conflicting fields when marshalling `common.Config`. SDK CI runs only `make build` and `make test`, so this is
   invisible. Adding `go vet` to the gate (increment 8) requires fixing it, which renames the
   JSON keys: record in the breaking-change ledger.
-- **S2 (baseline, Go 1.27+).** `tests/checkout/unit_test.go:95` asserts the substring
+- **S2 (baseline, Go 1.27+, fixed in `e889b67a`).** `tests/checkout/unit_test.go:95` asserts the substring
   `error calling MarshalJSON for type checkout.CheckoutPaymentMethod`; Go 1.27's
   `encoding/json` reports `*checkout.CheckoutPaymentMethod`. Test brittleness, not an SDK
   defect, but it will fail once CI adds Go 1.27 (open Renovate PR #598).
-- **S3 (baseline).** `PaymentsApp()` resolves to `https://management-{test,live}.adyen.com/v1/v1`.
+- **S3 (baseline, fixed in `b7ee5fbc`; the routing fixture now runs instead of skipping).** `PaymentsApp()` resolves to `https://management-{test,live}.adyen.com/v1/v1`.
   The spec server is `.../v1`; `SetEnvironment` appends `/v1` and the accessor appends it
   again. No existing test covers it. The routing fixture expects the spec-correct URL and is
   skipped as a known defect until fixed.
@@ -114,7 +114,7 @@ non-determinism. The raw generator output also has "imported and not used" error
 
 ### Working branch
 
-- **B1 (migration, increment 5).** Commit `fee128c7` on `feature/go-generator-upgrade` adds 54
+- **B1 (resolved: files removed in `ba8cadef`; Balance Platform returns in increment 5).** Commit `fee128c7` on `feature/go-generator-upgrade` adds 54
   new `src/balanceplatform` files that do not compile: `ACTIVE` is declared by both
   `AssociationStatus` and `LimitStatus` (same unprefixed-enum issue as G3), and
   `api_balances.go` and others lack `ioutil`/`json` imports (no `make fmt`). The same errors
@@ -130,10 +130,9 @@ non-determinism. The raw generator output also has "imported and not used" error
 
 ## Compatibility fixtures
 
-Committed as `tests/compat` (test-only, no production code changes) in commit `e8a2a494` on
-branch `feature/go-generator-upgrade` of `adyen-sdk-automation/go/repo`, rebased onto v21.2.3.
-The fixtures pass on clean v21.2.3 (Go 1.23 and 1.27.3). On that branch they do not build yet,
-see B1.
+Committed as `tests/compat` on branch `feature/go-generator-upgrade`
+(pushed to `Adyen/adyen-go-api-library`, head `e889b67a`, based on v21.2.3), together with
+the fixes for S1-S3. Build, `go vet`, and all tests pass on Go 1.23, 1.24, 1.25, 1.26, and 1.27.3.
 
 - `surface_test.go`: compile-time guards for `adyen.NewClient`, all 15 service accessors,
   request builders and call signatures (Checkout, Transfers), `common.Config` fields,
@@ -177,5 +176,4 @@ prefix `sdk-automation/<base>/<service>` when it is not the default branch.
 ## Open decisions before increment 2
 
 1. Approve or reject the CI guard above, or keep migration generation local-only.
-2. Whether S1 and S3 are fixed on the v21 maintenance line or only in v22.
-3. Whether to push the `go-v22-migration` branches (to `Adyen/*` or a fork).
+2. Whether to backport the S1 and S3 fixes as a v21 patch release.
