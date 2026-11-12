@@ -176,4 +176,4 @@ prefix `sdk-automation/<base>/<service>` when it is not the default branch.
 ## Open decisions before increment 2
 
 1. Approve or reject the CI guard above, or keep migration generation local-only.
-2. Whether to backport the S1 and S3 fixes as a v21 patch release.
+Decided: the S1 and S3 fixes ship with v22 only; no v21 patch release.
