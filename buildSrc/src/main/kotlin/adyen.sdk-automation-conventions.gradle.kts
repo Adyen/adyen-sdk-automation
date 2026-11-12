@@ -1,6 +1,6 @@
 import com.adyen.sdk.Service
 import com.adyen.sdk.SdkAutomationExtension
-import groovy.json.JsonOutput
+import com.adyen.sdk.SpecProcessor
 import groovy.json.JsonSlurper
 import org.gradle.api.GradleException
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
@@ -80,18 +80,43 @@ sdkExtension.generator.set(project.name)
 sdkExtension.templates.set("templates")
 sdkExtension.serviceName.set("")
 sdkExtension.removeTags.set(true)
+sdkExtension.preserveOpenApiVersion.set(false)
 
 // Generate a full client for each service
 applicableServices.forEach { svc ->
+    val stagedSpec = layout.buildDirectory.file("specs/${svc.filename}")
+    val prepareSpec = tasks.register("prepareSpec${svc.name}") {
+        group = "specs"
+        description = "Stage the ${svc.name} spec for ${project.name} generation."
+        dependsOn(":specs")
+        val sourceSpec = rootProject.file("schema/json/${svc.filename}")
+        // Read lazily: language build scripts adjust these after the plugin is applied.
+        val options = sdkExtension.preserveOpenApiVersion.zip(sdkExtension.removeTags) { preserve, removeTags ->
+            SpecProcessor.Options(
+                downgradeOpenApiVersion = !preserve,
+                generalTagReplacement = if (svc.small && removeTags) svc.name else null,
+                markWebhookRoots = svc.isWebhook,
+            )
+        }
+        inputs.file(sourceSpec)
+        inputs.property("options", options.map { it.toString() })
+        outputs.file(stagedSpec)
+        doLast {
+            val target = stagedSpec.get().asFile
+            target.parentFile.mkdirs()
+            target.writeText(SpecProcessor.process(sourceSpec.readText(), options.get()))
+        }
+    }
+
     val generate = tasks.register("generate${svc.name}", GenerateTask::class) {
         println("Generating ${svc.name} Client...")
         group = "generate"
         description = "Generate a ${project.name} client for ${svc.name}."
         dependsOn("cloneRepo")
-        dependsOn(":specs")
+        dependsOn(prepareSpec)
 
         generatorName.set(sdkExtension.generator)
-        inputSpec.set("$rootDir/schema/json/${svc.filename}")
+        inputSpec.set(stagedSpec.map { it.asFile.absolutePath })
         outputDir.set("${project.layout.buildDirectory.get().asFile}/services/${svc.id}")
         templateDir.set("${projectDir}/repo/${sdkExtension.templates.get()}")
         engine.set("mustache")
@@ -193,100 +218,4 @@ tasks.register<Copy>("addPMTable") {
     dependsOn(":pmTable")
     from(rootProject.file("PaymentMethodOverview.md"))
     into(layout.projectDirectory.dir("repo"))
-}
-
-// update OpenAPI file of the smallService to rename the tag from 'General' to the name of the API (i.e. Binlookup)
-// this is necessary to generate the service/class file using the name of the API (instead of General)
-sdkExtension.smallServices.get().forEach { svc ->
-    val ungroup = tasks.register("ungroup${svc.name}") {
-        group = "specs"
-        description = "Update tags in ${svc.name}"
-        dependsOn(":specs")
-        onlyIf { sdkExtension.removeTags.get() }
-        doLast {
-            val specFile = file("$rootDir/schema/json/${svc.filename}")
-            val json = cast<MutableMap<String, Any>>(JsonSlurper().parse(specFile))
-
-            val paths = cast<Map<String, Any>>(json["paths"])
-            paths.forEach { (_, endpoint) ->
-                val methods = cast<Map<String, Any>>(endpoint)
-                methods.forEach { (_, httpMethod) ->
-                    val methodDetails = cast<MutableMap<String, Any>>(httpMethod)
-                    if (methodDetails.containsKey("tags") && methodDetails["tags"] is List<*>) {
-                        val tags = cast<List<String>>(methodDetails["tags"])
-                        // Rename tag associated with endpoint
-                        methodDetails["tags"] = tags.map { tag ->
-                            if (tag == "General") svc.name else tag
-                        }
-                    }
-                }
-            }
-            specFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(json)))
-        }
-    }
-    tasks.named("generate${svc.name}") { dependsOn(ungroup) }
-}
-
-// update OpenAPI file of the webhooks to add a custom extension 'x-webhook-root' to the model that represents the webhook payload
-// this is necessary to generate the WebhookHandler that deserialises the Webhook models
-applicableServices.forEach { svc ->
-    // unnecessary to create webhook-related tasks for services/specs not related to webhooks
-    if (!svc.isWebhook) {
-        return@forEach
-    }
-    val addWebhookExtension = tasks.register("addWebhookExtension${svc.name}") {
-        group = "specs"
-        description = "Add x-webhook-root extension to ${svc.name}"
-        dependsOn(":specs")
-        doLast {
-            val specFile = file("$rootDir/schema/json/${svc.filename}")
-            val json = cast<MutableMap<String, Any>>(JsonSlurper().parse(specFile))
-
-            if (json.containsKey("components")) {
-                val components = cast<Map<String, Any>>(json["components"])
-                if (components.containsKey("schemas")) {
-                    val schemas = cast<Map<String, Any>>(components["schemas"])
-                    var addOnce = true
-                    schemas.forEach { (schemaKey, schemaValue) ->
-                        val schemaDetails = cast<MutableMap<String, Any>>(schemaValue)
-                        val properties = cast<Map<String, Any>?>(schemaDetails["properties"])
-                        // add 'x-webhook-root' to the webhook model (we find 'environment' and 'data' attributes)
-                        if (properties?.containsKey("environment") == true && properties.containsKey("data")) {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-                        // add 'x-webhook-root' to RelayedAuthenticationRequest model (missing 'environment' and 'data' attributes)
-                        // bespoke fix as the model doesn't adopt the standard schema
-                        if (schemaKey == "RelayedAuthenticationRequest") {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-                        // add 'x-webhook-root' to DisputeNotificationRequest model
-                        // bespoke fix as the model doesn't adopt the standard schema (missing 'environment' attribute)
-                        if (schemaKey == "DisputeNotificationRequest") {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-                        // add 'x-webhook-root' to RelayedAuthorisationRequest model (missing 'data' attributes)
-                        // bespoke fix as the model doesn't adopt the standard schema
-                        if (schemaKey == "RelayedAuthorisationRequest") {
-                            schemaDetails["x-webhook-root"] = true
-                        }
-
-                        // Workaround
-                        // Mark one model `{{#x-has-at-least-one-webhook-root}}` as true. I could not extend this property at the root-level.
-                        // Context: {{#models}}{{#model.vendorExtensions.x-webhook-root}} -> {{#first}} won't work with multiple `x-webhook-root` extensions
-                        if (addOnce) {
-                            schemaDetails["x-has-at-least-one-webhook-root"] = true
-                            addOnce = false
-                        }
-                    }
-                }
-            }
-
-            specFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(json)))
-        }
-    }
-
-    tasks.named("generate${svc.name}", GenerateTask::class) {
-        println("Generating ${svc.name} Webhooks...")
-        dependsOn(addWebhookExtension)
-    }
 }

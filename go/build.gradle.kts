@@ -11,6 +11,7 @@ sdkAutomation.templates.set("templates/custom")
 // configFile is not in extension but we can use extra or just hardcode if it's fixed
 project.extra["configFile"] = "templates/config.yaml"
 sdkAutomation.removeTags.set(false)
+sdkAutomation.preserveOpenApiVersion.set(true)
 
 val services = sdkAutomation.services.get()
 

@@ -26,6 +26,12 @@ interface SdkAutomationExtension {
     val removeTags: Property<Boolean>
 
     /**
+     * Whether to generate from the source OpenAPI version (3.1) instead of downgrading the
+     * staged spec to 3.0.0
+     */
+    val preserveOpenApiVersion: Property<Boolean>
+
+    /**
      * List of all services to be generated
      */
     val services: ListProperty<Service>

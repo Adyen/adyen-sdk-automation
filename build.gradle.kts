@@ -1,4 +1,3 @@
-import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 val uri = "https://github.com/Adyen/adyen-openapi.git"
@@ -7,7 +6,8 @@ val checkoutDir = "$projectDir/schema/json/CheckoutService-v71.json"
 
 tasks.register<Exec>("specs") {
     group = "setup"
-    description = "Clone OpenAPI spec (and apply local patches)."
+    // The clone stays pristine: each project stages its own processed copy (prepareSpec<Service>).
+    description = "Clone the OpenAPI specs."
     commandLine("git", "clone", "--depth", "2", uri, specsDir)
     outputs.dir(specsDir)
     onlyIf { !file(specsDir).exists() }
@@ -16,11 +16,6 @@ tasks.register<Exec>("specs") {
         assert(folder.exists())
         assert(folder.isDirectory)
         assert(folder.list()?.isNotEmpty() ?: false) { "Folder cannot be empty after clone" }
-        file(folder).walkTopDown().maxDepth(1).forEach { specFile ->
-            if (specFile.name.endsWith(".json")) {
-                specFile.writeText(com.adyen.sdk.SpecProcessor.process(specFile.readText()))
-            }
-        }
     }
 }
 

@@ -32,7 +32,8 @@ public class SdkAutomationConventionsTest {
                         { "name": "Recurring", "version": 68, "small": true },
                         { "name": "SoftPOSConfiguration", "version": 3 },
                         { "name": "Tapi", "spec": "TerminalAPI", "version": 1, "projects": ["java", "node"] },
-                        { "name": "Management", "version": 3, "excludedProjects": ["go"] }
+                        { "name": "Management", "version": 3, "excludedProjects": ["go"] },
+                        { "name": "AcsWebhooks", "version": 1 }
                       ]
                     }
                     """);
@@ -69,7 +70,11 @@ public class SdkAutomationConventionsTest {
 
         var task = (GenerateTask) project.getTasks().getByName("generateSoftPOSConfiguration");
         assertThat(task.getInputSpec().get()).isEqualTo(
-                project.getRootDir() + "/schema/json/SoftPOSConfigurationService-v3.json");
+                project.getLayout().getBuildDirectory().file("specs/SoftPOSConfigurationService-v3.json")
+                        .get().getAsFile().getAbsolutePath());
+        assertThat(task.getTaskDependencies().getDependencies(task))
+                .extracting(Task::getName)
+                .contains("prepareSpecSoftPOSConfiguration");
         var serviceTask = project.getTasks().getByName("softposconfiguration");
         assertThat(serviceTask.getTaskDependencies().getDependencies(serviceTask))
                 .extracting(Task::getName)
@@ -106,4 +111,83 @@ public class SdkAutomationConventionsTest {
         assertThat(project.getTasks().findByName("management")).isNull();
         assertThat(project.getTasks().findByName("generateManagement")).isNull();
     }
-}
+
+    private static final String SOURCE_SPEC = """
+            {
+              "openapi": "3.1.0",
+              "paths": { "/t": { "post": { "tags": ["General"], "operationId": "post-t", "x-methodName": "postT" } } },
+              "components": { "schemas": {
+                "Amount": { "properties": { "currency": { "type": ["string", "null"] } } },
+                "AcsWebhook": { "properties": { "environment": {}, "data": {} } }
+              } }
+            }
+            """;
+
+    /** Writes the source spec into the clone location and runs the staging task in place. */
+    private static String stage(Project project, String service, String filename) throws IOException {
+        Path source = project.getRootDir().toPath().resolve("schema/json/" + filename);
+        Files.createDirectories(source.getParent());
+        Files.writeString(source, SOURCE_SPEC);
+
+        Task task = project.getTasks().getByName("prepareSpec" + service);
+        task.getActions().forEach(action -> action.execute(task));
+
+        assertThat(Files.readString(source)).as("source spec stays pristine").isEqualTo(SOURCE_SPEC);
+        var generate = (GenerateTask) project.getTasks().getByName("generate" + service);
+        return Files.readString(Path.of(generate.getInputSpec().get()));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"java", "php", "node", "python", "ruby", "dotnet"})
+    public void nonGoProjectsStageA300Spec(String name) throws IOException {
+        Project project = projectWithCatalog(name);
+        project.getPluginManager().apply("adyen.sdk-automation-conventions");
+
+        String staged = stage(project, "Recurring", "RecurringService-v68.json");
+
+        assertThat(staged).contains("\"openapi\": \"3.0.0\"").contains("\"operationId\": \"postT\"");
+    }
+
+    @Test
+    public void goStagesTheSourceOpenApiVersion() throws IOException {
+        Project project = projectWithCatalog("go");
+        project.getPluginManager().apply("adyen.sdk-automation-conventions");
+        var extension = project.getExtensions().getByType(SdkAutomationExtension.class);
+        extension.getRemoveTags().set(false);
+        extension.getPreserveOpenApiVersion().set(true);
+
+        String staged = stage(project, "Recurring", "RecurringService-v68.json");
+
+        assertThat(staged).contains("\"openapi\": \"3.1.0\"")
+                .contains("\"operationId\": \"postT\"")
+                .contains("\"General\"")
+                .containsSubsequence("\"type\": [", "\"string\"", "\"null\"");
+    }
+
+    @Test
+    public void smallServicesRenameTheGeneralTagUnlessRemoveTagsIsOff() throws IOException {
+        Project java = projectWithCatalog("java");
+        java.getPluginManager().apply("adyen.sdk-automation-conventions");
+        assertThat(stage(java, "Recurring", "RecurringService-v68.json"))
+                .contains("\"Recurring\"").doesNotContain("\"General\"");
+
+        Project php = projectWithCatalog("php");
+        php.getPluginManager().apply("adyen.sdk-automation-conventions");
+        php.getExtensions().getByType(SdkAutomationExtension.class).getRemoveTags().set(false);
+        assertThat(stage(php, "Recurring", "RecurringService-v68.json")).contains("\"General\"");
+
+        // Only small services are renamed.
+        assertThat(stage(java, "Checkout", "CheckoutService-v72.json")).contains("\"General\"");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"java", "go"})
+    public void onlyWebhookSpecsAreMarkedWithWebhookRoots(String name) throws IOException {
+        Project project = projectWithCatalog(name);
+        project.getPluginManager().apply("adyen.sdk-automation-conventions");
+
+        assertThat(stage(project, "AcsWebhooks", "AcsWebhooksService-v1.json"))
+                .contains("\"x-webhook-root\": true")
+                .contains("\"x-has-at-least-one-webhook-root\": true");
+        assertThat(stage(project, "Checkout", "CheckoutService-v72.json")).doesNotContain("x-webhook-root");
+    }}

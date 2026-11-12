@@ -104,7 +104,7 @@ non-determinism. The raw generator output also has "imported and not used" error
   exist: `CapitalEndpoint`, `DocumentCollectorEndpoint`, `ForeignExchangeEndpoint`,
   `SessionAuthenticationEndpoint`, `SoftPOSConfigurationEndpoint`. None are wired into
   `adyen.APIClient`. Matches failing bot PRs #525, #591, #603, #608, #518.
-- **G5 (migration, increment 2).** `:specs` rewrites every cloned spec to `openapi: 3.0.0`
+- **G5 (migration, resolved in increment 2: specs are staged per project under `build/specs`).** `:specs` rewrites every cloned spec to `openapi: 3.0.0`
   in place (`schema/json/CheckoutService-v72.json` reads `3.0.0`), and the `ungroup*` and
   `addWebhookExtension*` tasks also edit the shared clone. Pristine sources are only available
   from a separate spec clone.
