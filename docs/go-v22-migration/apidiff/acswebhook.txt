@@ -1,0 +1,21 @@
+Incompatible changes:
+- NewRelayedAuthenticationRequest: changed from func(string, string, Purchase) *RelayedAuthenticationRequest to func(string, string, string, Purchase, string) *RelayedAuthenticationRequest
+Compatible changes:
+- (*RelayedAuthenticationRequest).GetEnvironment: added
+- (*RelayedAuthenticationRequest).GetEnvironmentOk: added
+- (*RelayedAuthenticationRequest).GetThreeDSRequestorAppURL: added
+- (*RelayedAuthenticationRequest).GetThreeDSRequestorAppURLOk: added
+- (*RelayedAuthenticationRequest).GetTimestamp: added
+- (*RelayedAuthenticationRequest).GetTimestampOk: added
+- (*RelayedAuthenticationRequest).GetType: added
+- (*RelayedAuthenticationRequest).GetTypeOk: added
+- (*RelayedAuthenticationRequest).HasThreeDSRequestorAppURL: added
+- (*RelayedAuthenticationRequest).HasTimestamp: added
+- (*RelayedAuthenticationRequest).SetEnvironment: added
+- (*RelayedAuthenticationRequest).SetThreeDSRequestorAppURL: added
+- (*RelayedAuthenticationRequest).SetTimestamp: added
+- (*RelayedAuthenticationRequest).SetType: added
+- RelayedAuthenticationRequest.Environment: added
+- RelayedAuthenticationRequest.ThreeDSRequestorAppURL: added
+- RelayedAuthenticationRequest.Timestamp: added
+- RelayedAuthenticationRequest.Type: added

@@ -1,0 +1,1318 @@
+Incompatible changes:
+- (*OfflineProcessing).GetOfflineSwipeLimits: removed
+- (*OfflineProcessing).GetOfflineSwipeLimitsOk: removed
+- (*OfflineProcessing).HasOfflineSwipeLimits: removed
+- (*OfflineProcessing).SetOfflineSwipeLimits: removed
+- (*PayByBankPlaidInfo).GetCountryCode: removed
+- (*PayByBankPlaidInfo).GetCountryCodeOk: removed
+- (*PayByBankPlaidInfo).GetMerchantCity: removed
+- (*PayByBankPlaidInfo).GetMerchantCityOk: removed
+- (*PayByBankPlaidInfo).GetMerchantLegalName: removed
+- (*PayByBankPlaidInfo).GetMerchantLegalNameOk: removed
+- (*PayByBankPlaidInfo).GetMerchantShopUrl: removed
+- (*PayByBankPlaidInfo).GetMerchantShopUrlOk: removed
+- (*PayByBankPlaidInfo).GetMerchantStateProvince: removed
+- (*PayByBankPlaidInfo).GetMerchantStateProvinceOk: removed
+- (*PayByBankPlaidInfo).GetMerchantStreetAddress: removed
+- (*PayByBankPlaidInfo).GetMerchantStreetAddressOk: removed
+- (*PayByBankPlaidInfo).GetZipCode: removed
+- (*PayByBankPlaidInfo).GetZipCodeOk: removed
+- (*PayByBankPlaidInfo).HasCountryCode: removed
+- (*PayByBankPlaidInfo).HasMerchantCity: removed
+- (*PayByBankPlaidInfo).HasMerchantLegalName: removed
+- (*PayByBankPlaidInfo).HasMerchantShopUrl: removed
+- (*PayByBankPlaidInfo).HasMerchantStateProvince: removed
+- (*PayByBankPlaidInfo).HasMerchantStreetAddress: removed
+- (*PayByBankPlaidInfo).HasZipCode: removed
+- (*PayByBankPlaidInfo).SetCountryCode: removed
+- (*PayByBankPlaidInfo).SetMerchantCity: removed
+- (*PayByBankPlaidInfo).SetMerchantLegalName: removed
+- (*PayByBankPlaidInfo).SetMerchantShopUrl: removed
+- (*PayByBankPlaidInfo).SetMerchantStateProvince: removed
+- (*PayByBankPlaidInfo).SetMerchantStreetAddress: removed
+- (*PayByBankPlaidInfo).SetZipCode: removed
+- (*PaymentMethod).GetAccel: changed from func() AccelInfo to func() AccelResponseInfo
+- (*PaymentMethod).GetAccelOk: changed from func() (*AccelInfo, bool) to func() (*AccelResponseInfo, bool)
+- (*PaymentMethod).GetAffirm: changed from func() AffirmInfo to func() AffirmResponseInfo
+- (*PaymentMethod).GetAffirmOk: changed from func() (*AffirmInfo, bool) to func() (*AffirmResponseInfo, bool)
+- (*PaymentMethod).GetAfterpayTouch: changed from func() AfterpayTouchInfo to func() AfterpayTouchResponseInfo
+- (*PaymentMethod).GetAfterpayTouchOk: changed from func() (*AfterpayTouchInfo, bool) to func() (*AfterpayTouchResponseInfo, bool)
+- (*PaymentMethod).GetAmex: changed from func() AmexInfo to func() AmexResponseInfo
+- (*PaymentMethod).GetAmexOk: changed from func() (*AmexInfo, bool) to func() (*AmexResponseInfo, bool)
+- (*PaymentMethod).GetApplePay: changed from func() ApplePayInfo to func() ApplePayResponseInfo
+- (*PaymentMethod).GetApplePayOk: changed from func() (*ApplePayInfo, bool) to func() (*ApplePayResponseInfo, bool)
+- (*PaymentMethod).GetBcmc: changed from func() BcmcInfo to func() BcmcResponseInfo
+- (*PaymentMethod).GetBcmcOk: changed from func() (*BcmcInfo, bool) to func() (*BcmcResponseInfo, bool)
+- (*PaymentMethod).GetCartesBancaires: changed from func() CartesBancairesInfo to func() CartesBancairesResponseInfo
+- (*PaymentMethod).GetCartesBancairesOk: changed from func() (*CartesBancairesInfo, bool) to func() (*CartesBancairesResponseInfo, bool)
+- (*PaymentMethod).GetClearpay: changed from func() ClearpayInfo to func() ClearpayResponseInfo
+- (*PaymentMethod).GetClearpayOk: changed from func() (*ClearpayInfo, bool) to func() (*ClearpayResponseInfo, bool)
+- (*PaymentMethod).GetCup: changed from func() GenericPmWithTdiInfo to func() CupResponseInfo
+- (*PaymentMethod).GetCupOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*CupResponseInfo, bool)
+- (*PaymentMethod).GetDiners: changed from func() DinersInfo to func() DinersResponseInfo
+- (*PaymentMethod).GetDinersOk: changed from func() (*DinersInfo, bool) to func() (*DinersResponseInfo, bool)
+- (*PaymentMethod).GetDiscover: changed from func() GenericPmWithTdiInfo to func() DiscoverResponseInfo
+- (*PaymentMethod).GetDiscoverOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*DiscoverResponseInfo, bool)
+- (*PaymentMethod).GetEftDirectdebitCA: changed from func() GenericPmWithTdiInfo to func() EFTDirectDebitCAResponseInfo
+- (*PaymentMethod).GetEftDirectdebitCAOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*EFTDirectDebitCAResponseInfo, bool)
+- (*PaymentMethod).GetEftposAustralia: changed from func() GenericPmWithTdiInfo to func() EftPosAustraliaResponseInfo
+- (*PaymentMethod).GetEftposAustraliaOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*EftPosAustraliaResponseInfo, bool)
+- (*PaymentMethod).GetGirocard: changed from func() GenericPmWithTdiInfo to func() GirocardResponseInfo
+- (*PaymentMethod).GetGirocardOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GirocardResponseInfo, bool)
+- (*PaymentMethod).GetGooglePay: changed from func() GooglePayInfo to func() GooglePayResponseInfo
+- (*PaymentMethod).GetGooglePayOk: changed from func() (*GooglePayInfo, bool) to func() (*GooglePayResponseInfo, bool)
+- (*PaymentMethod).GetIdeal: changed from func() GenericPmWithTdiInfo to func() IdealResponseInfo
+- (*PaymentMethod).GetIdealOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*IdealResponseInfo, bool)
+- (*PaymentMethod).GetInteracCard: changed from func() GenericPmWithTdiInfo to func() InteracCardResponseInfo
+- (*PaymentMethod).GetInteracCardOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*InteracCardResponseInfo, bool)
+- (*PaymentMethod).GetJcb: changed from func() JCBInfo to func() JCBResponseInfo
+- (*PaymentMethod).GetJcbOk: changed from func() (*JCBInfo, bool) to func() (*JCBResponseInfo, bool)
+- (*PaymentMethod).GetKlarna: changed from func() KlarnaInfo to func() KlarnaResponseInfo
+- (*PaymentMethod).GetKlarnaOk: changed from func() (*KlarnaInfo, bool) to func() (*KlarnaResponseInfo, bool)
+- (*PaymentMethod).GetMaestro: changed from func() GenericPmWithTdiInfo to func() MaestroResponseInfo
+- (*PaymentMethod).GetMaestroOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*MaestroResponseInfo, bool)
+- (*PaymentMethod).GetMc: changed from func() GenericPmWithTdiInfo to func() MCResponseInfo
+- (*PaymentMethod).GetMcOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*MCResponseInfo, bool)
+- (*PaymentMethod).GetMealVoucherFR: changed from func() MealVoucherFRInfo to func() MealVoucherFRResponseInfo
+- (*PaymentMethod).GetMealVoucherFROk: changed from func() (*MealVoucherFRInfo, bool) to func() (*MealVoucherFRResponseInfo, bool)
+- (*PaymentMethod).GetNyce: changed from func() NyceInfo to func() NyceResponseInfo
+- (*PaymentMethod).GetNyceOk: changed from func() (*NyceInfo, bool) to func() (*NyceResponseInfo, bool)
+- (*PaymentMethod).GetPaybybankPlaid: changed from func() PayByBankPlaidInfo to func() PayByBankPlaidResponseInfo
+- (*PaymentMethod).GetPaybybankPlaidOk: changed from func() (*PayByBankPlaidInfo, bool) to func() (*PayByBankPlaidResponseInfo, bool)
+- (*PaymentMethod).GetPayme: changed from func() PayMeInfo to func() PayMeResponseInfo
+- (*PaymentMethod).GetPaymeOk: changed from func() (*PayMeInfo, bool) to func() (*PayMeResponseInfo, bool)
+- (*PaymentMethod).GetPaypal: changed from func() PayPalInfo to func() PayPalResponseInfo
+- (*PaymentMethod).GetPaypalOk: changed from func() (*PayPalInfo, bool) to func() (*PayPalResponseInfo, bool)
+- (*PaymentMethod).GetPayto: changed from func() PayToInfo to func() PayToResponseInfo
+- (*PaymentMethod).GetPaytoOk: changed from func() (*PayToInfo, bool) to func() (*PayToResponseInfo, bool)
+- (*PaymentMethod).GetPulse: changed from func() PulseInfo to func() PulseResponseInfo
+- (*PaymentMethod).GetPulseOk: changed from func() (*PulseInfo, bool) to func() (*PulseResponseInfo, bool)
+- (*PaymentMethod).GetSodexo: changed from func() SodexoInfo to func() SodexoResponseInfo
+- (*PaymentMethod).GetSodexoOk: changed from func() (*SodexoInfo, bool) to func() (*SodexoResponseInfo, bool)
+- (*PaymentMethod).GetSofort: changed from func() SofortInfo to func() SofortResponseInfo
+- (*PaymentMethod).GetSofortOk: changed from func() (*SofortInfo, bool) to func() (*SofortResponseInfo, bool)
+- (*PaymentMethod).GetStar: changed from func() StarInfo to func() StarResponseInfo
+- (*PaymentMethod).GetStarOk: changed from func() (*StarInfo, bool) to func() (*StarResponseInfo, bool)
+- (*PaymentMethod).GetSwish: changed from func() SwishInfo to func() SwishResponseInfo
+- (*PaymentMethod).GetSwishOk: changed from func() (*SwishInfo, bool) to func() (*SwishResponseInfo, bool)
+- (*PaymentMethod).GetTicket: changed from func() TicketInfo to func() TicketResponseInfo
+- (*PaymentMethod).GetTicketOk: changed from func() (*TicketInfo, bool) to func() (*TicketResponseInfo, bool)
+- (*PaymentMethod).GetTwint: changed from func() TwintInfo to func() TwintResponseInfo
+- (*PaymentMethod).GetTwintOk: changed from func() (*TwintInfo, bool) to func() (*TwintResponseInfo, bool)
+- (*PaymentMethod).GetVipps: changed from func() VippsInfo to func() VippsResponseInfo
+- (*PaymentMethod).GetVippsOk: changed from func() (*VippsInfo, bool) to func() (*VippsResponseInfo, bool)
+- (*PaymentMethod).GetVisa: changed from func() GenericPmWithTdiInfo to func() VisaResponseInfo
+- (*PaymentMethod).GetVisaOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*VisaResponseInfo, bool)
+- (*PaymentMethod).GetWechatpay: changed from func() WeChatPayInfo to func() WeChatPayResponseInfo
+- (*PaymentMethod).GetWechatpayOk: changed from func() (*WeChatPayInfo, bool) to func() (*WeChatPayResponseInfo, bool)
+- (*PaymentMethod).GetWechatpayPos: changed from func() WeChatPayPosInfo to func() WeChatPayPosResponseInfo
+- (*PaymentMethod).GetWechatpayPosOk: changed from func() (*WeChatPayPosInfo, bool) to func() (*WeChatPayPosResponseInfo, bool)
+- (*PaymentMethod).SetAccel: changed from func(AccelInfo) to func(AccelResponseInfo)
+- (*PaymentMethod).SetAffirm: changed from func(AffirmInfo) to func(AffirmResponseInfo)
+- (*PaymentMethod).SetAfterpayTouch: changed from func(AfterpayTouchInfo) to func(AfterpayTouchResponseInfo)
+- (*PaymentMethod).SetAmex: changed from func(AmexInfo) to func(AmexResponseInfo)
+- (*PaymentMethod).SetApplePay: changed from func(ApplePayInfo) to func(ApplePayResponseInfo)
+- (*PaymentMethod).SetBcmc: changed from func(BcmcInfo) to func(BcmcResponseInfo)
+- (*PaymentMethod).SetCartesBancaires: changed from func(CartesBancairesInfo) to func(CartesBancairesResponseInfo)
+- (*PaymentMethod).SetClearpay: changed from func(ClearpayInfo) to func(ClearpayResponseInfo)
+- (*PaymentMethod).SetCup: changed from func(GenericPmWithTdiInfo) to func(CupResponseInfo)
+- (*PaymentMethod).SetDiners: changed from func(DinersInfo) to func(DinersResponseInfo)
+- (*PaymentMethod).SetDiscover: changed from func(GenericPmWithTdiInfo) to func(DiscoverResponseInfo)
+- (*PaymentMethod).SetEftDirectdebitCA: changed from func(GenericPmWithTdiInfo) to func(EFTDirectDebitCAResponseInfo)
+- (*PaymentMethod).SetEftposAustralia: changed from func(GenericPmWithTdiInfo) to func(EftPosAustraliaResponseInfo)
+- (*PaymentMethod).SetGirocard: changed from func(GenericPmWithTdiInfo) to func(GirocardResponseInfo)
+- (*PaymentMethod).SetGooglePay: changed from func(GooglePayInfo) to func(GooglePayResponseInfo)
+- (*PaymentMethod).SetIdeal: changed from func(GenericPmWithTdiInfo) to func(IdealResponseInfo)
+- (*PaymentMethod).SetInteracCard: changed from func(GenericPmWithTdiInfo) to func(InteracCardResponseInfo)
+- (*PaymentMethod).SetJcb: changed from func(JCBInfo) to func(JCBResponseInfo)
+- (*PaymentMethod).SetKlarna: changed from func(KlarnaInfo) to func(KlarnaResponseInfo)
+- (*PaymentMethod).SetMaestro: changed from func(GenericPmWithTdiInfo) to func(MaestroResponseInfo)
+- (*PaymentMethod).SetMc: changed from func(GenericPmWithTdiInfo) to func(MCResponseInfo)
+- (*PaymentMethod).SetMealVoucherFR: changed from func(MealVoucherFRInfo) to func(MealVoucherFRResponseInfo)
+- (*PaymentMethod).SetNyce: changed from func(NyceInfo) to func(NyceResponseInfo)
+- (*PaymentMethod).SetPaybybankPlaid: changed from func(PayByBankPlaidInfo) to func(PayByBankPlaidResponseInfo)
+- (*PaymentMethod).SetPayme: changed from func(PayMeInfo) to func(PayMeResponseInfo)
+- (*PaymentMethod).SetPaypal: changed from func(PayPalInfo) to func(PayPalResponseInfo)
+- (*PaymentMethod).SetPayto: changed from func(PayToInfo) to func(PayToResponseInfo)
+- (*PaymentMethod).SetPulse: changed from func(PulseInfo) to func(PulseResponseInfo)
+- (*PaymentMethod).SetSodexo: changed from func(SodexoInfo) to func(SodexoResponseInfo)
+- (*PaymentMethod).SetSofort: changed from func(SofortInfo) to func(SofortResponseInfo)
+- (*PaymentMethod).SetStar: changed from func(StarInfo) to func(StarResponseInfo)
+- (*PaymentMethod).SetSwish: changed from func(SwishInfo) to func(SwishResponseInfo)
+- (*PaymentMethod).SetTicket: changed from func(TicketInfo) to func(TicketResponseInfo)
+- (*PaymentMethod).SetTwint: changed from func(TwintInfo) to func(TwintResponseInfo)
+- (*PaymentMethod).SetVipps: changed from func(VippsInfo) to func(VippsResponseInfo)
+- (*PaymentMethod).SetVisa: changed from func(GenericPmWithTdiInfo) to func(VisaResponseInfo)
+- (*PaymentMethod).SetWechatpay: changed from func(WeChatPayInfo) to func(WeChatPayResponseInfo)
+- (*PaymentMethod).SetWechatpayPos: changed from func(WeChatPayPosInfo) to func(WeChatPayPosResponseInfo)
+- (*PaymentMethodsMerchantLevelApi).GetApplePayDomains: changed from func(context.Context, PaymentMethodsMerchantLevelApiGetApplePayDomainsInput) (ApplePayInfo, *net/http.Response, error) to func(context.Context, PaymentMethodsMerchantLevelApiGetApplePayDomainsInput) (ApplePayResponseInfo, *net/http.Response, error)
+- (*SplitConfigurationRule).HasFundingSource: removed
+- (*UpdatePaymentMethodInfo).GetAccel: changed from func() AccelInfo to func() AccelUpdateInfo
+- (*UpdatePaymentMethodInfo).GetAccelOk: changed from func() (*AccelInfo, bool) to func() (*AccelUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetBcmc: changed from func() BcmcInfo to func() BcmcUpdateInfo
+- (*UpdatePaymentMethodInfo).GetBcmcOk: changed from func() (*BcmcInfo, bool) to func() (*BcmcUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetCartesBancaires: changed from func() CartesBancairesInfo to func() CartesBancairesUpdateInfo
+- (*UpdatePaymentMethodInfo).GetCartesBancairesOk: changed from func() (*CartesBancairesInfo, bool) to func() (*CartesBancairesUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetCup: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetCupOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetDiners: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetDinersOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetDiscover: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetDiscoverOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetEftDirectdebitCA: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetEftDirectdebitCAOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetEftposAustralia: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetEftposAustraliaOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetGirocard: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetGirocardOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetIdeal: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetIdealOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetInteracCard: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetInteracCardOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetJcb: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetJcbOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetMaestro: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetMaestroOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetMc: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetMcOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetNyce: changed from func() NyceInfo to func() NyceUpdateInfo
+- (*UpdatePaymentMethodInfo).GetNyceOk: changed from func() (*NyceInfo, bool) to func() (*NyceUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetPaybybankPlaid: changed from func() PayByBankPlaidInfo to func() PayByBankPlaidUpdateInfo
+- (*UpdatePaymentMethodInfo).GetPaybybankPlaidOk: changed from func() (*PayByBankPlaidInfo, bool) to func() (*PayByBankPlaidUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetPulse: changed from func() PulseInfo to func() PulseUpdateInfo
+- (*UpdatePaymentMethodInfo).GetPulseOk: changed from func() (*PulseInfo, bool) to func() (*PulseUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetStar: changed from func() StarInfo to func() StarUpdateInfo
+- (*UpdatePaymentMethodInfo).GetStarOk: changed from func() (*StarInfo, bool) to func() (*StarUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).GetVisa: changed from func() GenericPmWithTdiInfo to func() GenericPmWithTdiUpdateInfo
+- (*UpdatePaymentMethodInfo).GetVisaOk: changed from func() (*GenericPmWithTdiInfo, bool) to func() (*GenericPmWithTdiUpdateInfo, bool)
+- (*UpdatePaymentMethodInfo).SetAccel: changed from func(AccelInfo) to func(AccelUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetBcmc: changed from func(BcmcInfo) to func(BcmcUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetCartesBancaires: changed from func(CartesBancairesInfo) to func(CartesBancairesUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetCup: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetDiners: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetDiscover: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetEftDirectdebitCA: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetEftposAustralia: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetGirocard: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetIdeal: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetInteracCard: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetJcb: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetMaestro: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetMc: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetNyce: changed from func(NyceInfo) to func(NyceUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetPaybybankPlaid: changed from func(PayByBankPlaidInfo) to func(PayByBankPlaidUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetPulse: changed from func(PulseInfo) to func(PulseUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetStar: changed from func(StarInfo) to func(StarUpdateInfo)
+- (*UpdatePaymentMethodInfo).SetVisa: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdateSplitConfigurationRuleRequest).HasFundingSource: removed
+- AccelInfo.ProcessingType: changed from string to *string
+- NewAccelInfo: changed from func(string) *AccelInfo to func() *AccelInfo
+- NewNyceInfo: changed from func(string) *NyceInfo to func() *NyceInfo
+- NewPulseInfo: changed from func(string) *PulseInfo to func() *PulseInfo
+- NewSplitConfigurationRule: changed from func(string, string, string, SplitConfigurationLogic) *SplitConfigurationRule to func(string, string, string, string, SplitConfigurationLogic) *SplitConfigurationRule
+- NewStarInfo: changed from func(string) *StarInfo to func() *StarInfo
+- NewUpdateSplitConfigurationRuleRequest: changed from func(string, string, string) *UpdateSplitConfigurationRuleRequest to func(string, string, string, string) *UpdateSplitConfigurationRuleRequest
+- NyceInfo.ProcessingType: changed from string to *string
+- OfflineProcessing.OfflineSwipeLimits: removed
+- PayByBankPlaidInfo.CountryCode: removed
+- PayByBankPlaidInfo.MerchantCity: removed
+- PayByBankPlaidInfo.MerchantLegalName: removed
+- PayByBankPlaidInfo.MerchantShopUrl: removed
+- PayByBankPlaidInfo.MerchantStateProvince: removed
+- PayByBankPlaidInfo.MerchantStreetAddress: removed
+- PayByBankPlaidInfo.ZipCode: removed
+- PaymentMethod.Accel: changed from *AccelInfo to *AccelResponseInfo
+- PaymentMethod.Affirm: changed from *AffirmInfo to *AffirmResponseInfo
+- PaymentMethod.AfterpayTouch: changed from *AfterpayTouchInfo to *AfterpayTouchResponseInfo
+- PaymentMethod.Amex: changed from *AmexInfo to *AmexResponseInfo
+- PaymentMethod.ApplePay: changed from *ApplePayInfo to *ApplePayResponseInfo
+- PaymentMethod.Bcmc: changed from *BcmcInfo to *BcmcResponseInfo
+- PaymentMethod.CartesBancaires: changed from *CartesBancairesInfo to *CartesBancairesResponseInfo
+- PaymentMethod.Clearpay: changed from *ClearpayInfo to *ClearpayResponseInfo
+- PaymentMethod.Cup: changed from *GenericPmWithTdiInfo to *CupResponseInfo
+- PaymentMethod.Diners: changed from *DinersInfo to *DinersResponseInfo
+- PaymentMethod.Discover: changed from *GenericPmWithTdiInfo to *DiscoverResponseInfo
+- PaymentMethod.EftDirectdebitCA: changed from *GenericPmWithTdiInfo to *EFTDirectDebitCAResponseInfo
+- PaymentMethod.EftposAustralia: changed from *GenericPmWithTdiInfo to *EftPosAustraliaResponseInfo
+- PaymentMethod.Girocard: changed from *GenericPmWithTdiInfo to *GirocardResponseInfo
+- PaymentMethod.GooglePay: changed from *GooglePayInfo to *GooglePayResponseInfo
+- PaymentMethod.Ideal: changed from *GenericPmWithTdiInfo to *IdealResponseInfo
+- PaymentMethod.InteracCard: changed from *GenericPmWithTdiInfo to *InteracCardResponseInfo
+- PaymentMethod.Jcb: changed from *JCBInfo to *JCBResponseInfo
+- PaymentMethod.Klarna: changed from *KlarnaInfo to *KlarnaResponseInfo
+- PaymentMethod.Maestro: changed from *GenericPmWithTdiInfo to *MaestroResponseInfo
+- PaymentMethod.Mc: changed from *GenericPmWithTdiInfo to *MCResponseInfo
+- PaymentMethod.MealVoucherFR: changed from *MealVoucherFRInfo to *MealVoucherFRResponseInfo
+- PaymentMethod.Nyce: changed from *NyceInfo to *NyceResponseInfo
+- PaymentMethod.PaybybankPlaid: changed from *PayByBankPlaidInfo to *PayByBankPlaidResponseInfo
+- PaymentMethod.Payme: changed from *PayMeInfo to *PayMeResponseInfo
+- PaymentMethod.Paypal: changed from *PayPalInfo to *PayPalResponseInfo
+- PaymentMethod.Payto: changed from *PayToInfo to *PayToResponseInfo
+- PaymentMethod.Pulse: changed from *PulseInfo to *PulseResponseInfo
+- PaymentMethod.Sodexo: changed from *SodexoInfo to *SodexoResponseInfo
+- PaymentMethod.Sofort: changed from *SofortInfo to *SofortResponseInfo
+- PaymentMethod.Star: changed from *StarInfo to *StarResponseInfo
+- PaymentMethod.Swish: changed from *SwishInfo to *SwishResponseInfo
+- PaymentMethod.Ticket: changed from *TicketInfo to *TicketResponseInfo
+- PaymentMethod.Twint: changed from *TwintInfo to *TwintResponseInfo
+- PaymentMethod.Vipps: changed from *VippsInfo to *VippsResponseInfo
+- PaymentMethod.Visa: changed from *GenericPmWithTdiInfo to *VisaResponseInfo
+- PaymentMethod.Wechatpay: changed from *WeChatPayInfo to *WeChatPayResponseInfo
+- PaymentMethod.WechatpayPos: changed from *WeChatPayPosInfo to *WeChatPayPosResponseInfo
+- PulseInfo.ProcessingType: changed from string to *string
+- SplitConfigurationRule.FundingSource: changed from *string to string
+- StarInfo.ProcessingType: changed from string to *string
+- Terminal: old is comparable, new is not
+- UpdatePaymentMethodInfo.Accel: changed from *AccelInfo to *AccelUpdateInfo
+- UpdatePaymentMethodInfo.Bcmc: changed from *BcmcInfo to *BcmcUpdateInfo
+- UpdatePaymentMethodInfo.CartesBancaires: changed from *CartesBancairesInfo to *CartesBancairesUpdateInfo
+- UpdatePaymentMethodInfo.Cup: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Diners: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Discover: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.EftDirectdebitCA: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.EftposAustralia: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Girocard: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Ideal: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.InteracCard: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Jcb: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Maestro: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Mc: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdatePaymentMethodInfo.Nyce: changed from *NyceInfo to *NyceUpdateInfo
+- UpdatePaymentMethodInfo.PaybybankPlaid: changed from *PayByBankPlaidInfo to *PayByBankPlaidUpdateInfo
+- UpdatePaymentMethodInfo.Pulse: changed from *PulseInfo to *PulseUpdateInfo
+- UpdatePaymentMethodInfo.Star: changed from *StarInfo to *StarUpdateInfo
+- UpdatePaymentMethodInfo.Visa: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdateSplitConfigurationRuleRequest.FundingSource: changed from *string to string
+Compatible changes:
+- (*AccelInfo).HasProcessingType: added
+- (*AffirmInfo).GetPricePlan: added
+- (*AffirmInfo).GetPricePlanOk: added
+- (*AffirmInfo).HasPricePlan: added
+- (*AffirmInfo).SetPricePlan: added
+- (*ApiCredential).GetSubjectDN: added
+- (*ApiCredential).GetSubjectDNOk: added
+- (*ApiCredential).HasSubjectDN: added
+- (*ApiCredential).SetSubjectDN: added
+- (*CompanyApiCredential).GetSubjectDN: added
+- (*CompanyApiCredential).GetSubjectDNOk: added
+- (*CompanyApiCredential).HasSubjectDN: added
+- (*CompanyApiCredential).SetSubjectDN: added
+- (*CreateApiCredentialResponse).GetSubjectDN: added
+- (*CreateApiCredentialResponse).GetSubjectDNOk: added
+- (*CreateApiCredentialResponse).HasSubjectDN: added
+- (*CreateApiCredentialResponse).SetSubjectDN: added
+- (*CreateCompanyApiCredentialResponse).GetSubjectDN: added
+- (*CreateCompanyApiCredentialResponse).GetSubjectDNOk: added
+- (*CreateCompanyApiCredentialResponse).HasSubjectDN: added
+- (*CreateCompanyApiCredentialResponse).SetSubjectDN: added
+- (*MeApiCredential).GetSubjectDN: added
+- (*MeApiCredential).GetSubjectDNOk: added
+- (*MeApiCredential).HasSubjectDN: added
+- (*MeApiCredential).SetSubjectDN: added
+- (*NyceInfo).HasProcessingType: added
+- (*PaymentMethod).GetAlipayPlus: added
+- (*PaymentMethod).GetAlipayPlusOk: added
+- (*PaymentMethod).GetAncv: added
+- (*PaymentMethod).GetAncvOk: added
+- (*PaymentMethod).GetAssociatedPaymentMethods: added
+- (*PaymentMethod).GetAssociatedPaymentMethodsOk: added
+- (*PaymentMethod).GetBoncard: added
+- (*PaymentMethod).GetBoncardOk: added
+- (*PaymentMethod).GetCarnet: added
+- (*PaymentMethod).GetCarnetOk: added
+- (*PaymentMethod).GetEbt: added
+- (*PaymentMethod).GetEbtOk: added
+- (*PaymentMethod).GetGivex: added
+- (*PaymentMethod).GetGivexOk: added
+- (*PaymentMethod).GetMaestroUsa: added
+- (*PaymentMethod).GetMaestroUsaOk: added
+- (*PaymentMethod).GetMerchantCategoryCode: added
+- (*PaymentMethod).GetMerchantCategoryCodeOk: added
+- (*PaymentMethod).GetMid: added
+- (*PaymentMethod).GetMidOk: added
+- (*PaymentMethod).GetPaybybankPlaidCa: added
+- (*PaymentMethod).GetPaybybankPlaidCaOk: added
+- (*PaymentMethod).GetPix: added
+- (*PaymentMethod).GetPixOk: added
+- (*PaymentMethod).GetSepadirectdebit: added
+- (*PaymentMethod).GetSepadirectdebitOk: added
+- (*PaymentMethod).GetSvs: added
+- (*PaymentMethod).GetSvsOk: added
+- (*PaymentMethod).GetValuelink: added
+- (*PaymentMethod).GetValuelinkOk: added
+- (*PaymentMethod).HasAlipayPlus: added
+- (*PaymentMethod).HasAncv: added
+- (*PaymentMethod).HasAssociatedPaymentMethods: added
+- (*PaymentMethod).HasBoncard: added
+- (*PaymentMethod).HasCarnet: added
+- (*PaymentMethod).HasEbt: added
+- (*PaymentMethod).HasGivex: added
+- (*PaymentMethod).HasMaestroUsa: added
+- (*PaymentMethod).HasMerchantCategoryCode: added
+- (*PaymentMethod).HasMid: added
+- (*PaymentMethod).HasPaybybankPlaidCa: added
+- (*PaymentMethod).HasPix: added
+- (*PaymentMethod).HasSepadirectdebit: added
+- (*PaymentMethod).HasSvs: added
+- (*PaymentMethod).HasValuelink: added
+- (*PaymentMethod).SetAlipayPlus: added
+- (*PaymentMethod).SetAncv: added
+- (*PaymentMethod).SetAssociatedPaymentMethods: added
+- (*PaymentMethod).SetBoncard: added
+- (*PaymentMethod).SetCarnet: added
+- (*PaymentMethod).SetEbt: added
+- (*PaymentMethod).SetGivex: added
+- (*PaymentMethod).SetMaestroUsa: added
+- (*PaymentMethod).SetMerchantCategoryCode: added
+- (*PaymentMethod).SetMid: added
+- (*PaymentMethod).SetPaybybankPlaidCa: added
+- (*PaymentMethod).SetPix: added
+- (*PaymentMethod).SetSepadirectdebit: added
+- (*PaymentMethod).SetSvs: added
+- (*PaymentMethod).SetValuelink: added
+- (*PaymentMethodSetupInfo).GetAlipayPlus: added
+- (*PaymentMethodSetupInfo).GetAlipayPlusOk: added
+- (*PaymentMethodSetupInfo).GetAncv: added
+- (*PaymentMethodSetupInfo).GetAncvOk: added
+- (*PaymentMethodSetupInfo).GetBoncard: added
+- (*PaymentMethodSetupInfo).GetBoncardOk: added
+- (*PaymentMethodSetupInfo).GetCarnet: added
+- (*PaymentMethodSetupInfo).GetCarnetOk: added
+- (*PaymentMethodSetupInfo).GetEbt: added
+- (*PaymentMethodSetupInfo).GetEbtOk: added
+- (*PaymentMethodSetupInfo).GetGivex: added
+- (*PaymentMethodSetupInfo).GetGivexOk: added
+- (*PaymentMethodSetupInfo).GetMaestroUsa: added
+- (*PaymentMethodSetupInfo).GetMaestroUsaOk: added
+- (*PaymentMethodSetupInfo).GetPaybybankPlaidCa: added
+- (*PaymentMethodSetupInfo).GetPaybybankPlaidCaOk: added
+- (*PaymentMethodSetupInfo).GetPix: added
+- (*PaymentMethodSetupInfo).GetPixOk: added
+- (*PaymentMethodSetupInfo).GetSepadirectdebit: added
+- (*PaymentMethodSetupInfo).GetSepadirectdebitOk: added
+- (*PaymentMethodSetupInfo).GetSvs: added
+- (*PaymentMethodSetupInfo).GetSvsOk: added
+- (*PaymentMethodSetupInfo).GetValuelink: added
+- (*PaymentMethodSetupInfo).GetValuelinkOk: added
+- (*PaymentMethodSetupInfo).HasAlipayPlus: added
+- (*PaymentMethodSetupInfo).HasAncv: added
+- (*PaymentMethodSetupInfo).HasBoncard: added
+- (*PaymentMethodSetupInfo).HasCarnet: added
+- (*PaymentMethodSetupInfo).HasEbt: added
+- (*PaymentMethodSetupInfo).HasGivex: added
+- (*PaymentMethodSetupInfo).HasMaestroUsa: added
+- (*PaymentMethodSetupInfo).HasPaybybankPlaidCa: added
+- (*PaymentMethodSetupInfo).HasPix: added
+- (*PaymentMethodSetupInfo).HasSepadirectdebit: added
+- (*PaymentMethodSetupInfo).HasSvs: added
+- (*PaymentMethodSetupInfo).HasValuelink: added
+- (*PaymentMethodSetupInfo).SetAlipayPlus: added
+- (*PaymentMethodSetupInfo).SetAncv: added
+- (*PaymentMethodSetupInfo).SetBoncard: added
+- (*PaymentMethodSetupInfo).SetCarnet: added
+- (*PaymentMethodSetupInfo).SetEbt: added
+- (*PaymentMethodSetupInfo).SetGivex: added
+- (*PaymentMethodSetupInfo).SetMaestroUsa: added
+- (*PaymentMethodSetupInfo).SetPaybybankPlaidCa: added
+- (*PaymentMethodSetupInfo).SetPix: added
+- (*PaymentMethodSetupInfo).SetSepadirectdebit: added
+- (*PaymentMethodSetupInfo).SetSvs: added
+- (*PaymentMethodSetupInfo).SetValuelink: added
+- (*PulseInfo).HasProcessingType: added
+- (*ReceiptOptions).GetHeaderLine1: added
+- (*ReceiptOptions).GetHeaderLine1Ok: added
+- (*ReceiptOptions).GetHeaderLine2: added
+- (*ReceiptOptions).GetHeaderLine2Ok: added
+- (*ReceiptOptions).HasHeaderLine1: added
+- (*ReceiptOptions).HasHeaderLine2: added
+- (*ReceiptOptions).SetHeaderLine1: added
+- (*ReceiptOptions).SetHeaderLine2: added
+- (*Refunds).GetUnreferenced: added
+- (*Refunds).GetUnreferencedOk: added
+- (*Refunds).HasUnreferenced: added
+- (*Refunds).SetUnreferenced: added
+- (*SplitConfigurationLogic).GetDcc: added
+- (*SplitConfigurationLogic).GetDccOk: added
+- (*SplitConfigurationLogic).HasDcc: added
+- (*SplitConfigurationLogic).SetDcc: added
+- (*SplitConfigurationRule).GetCardRegion: added
+- (*SplitConfigurationRule).GetCardRegionOk: added
+- (*SplitConfigurationRule).GetCardUsageType: added
+- (*SplitConfigurationRule).GetCardUsageTypeOk: added
+- (*SplitConfigurationRule).HasCardRegion: added
+- (*SplitConfigurationRule).HasCardUsageType: added
+- (*SplitConfigurationRule).SetCardRegion: added
+- (*SplitConfigurationRule).SetCardUsageType: added
+- (*Standalone).GetMerchantReference: added
+- (*Standalone).GetMerchantReferenceOk: added
+- (*Standalone).HasMerchantReference: added
+- (*Standalone).SetMerchantReference: added
+- (*StarInfo).HasProcessingType: added
+- (*Store).GetLocalizedInformation: added
+- (*Store).GetLocalizedInformationOk: added
+- (*Store).GetSubMerchantData: added
+- (*Store).GetSubMerchantDataOk: added
+- (*Store).HasLocalizedInformation: added
+- (*Store).HasSubMerchantData: added
+- (*Store).SetLocalizedInformation: added
+- (*Store).SetSubMerchantData: added
+- (*StoreCreationRequest).GetLocalizedInformation: added
+- (*StoreCreationRequest).GetLocalizedInformationOk: added
+- (*StoreCreationRequest).GetSubMerchantData: added
+- (*StoreCreationRequest).GetSubMerchantDataOk: added
+- (*StoreCreationRequest).HasLocalizedInformation: added
+- (*StoreCreationRequest).HasSubMerchantData: added
+- (*StoreCreationRequest).SetLocalizedInformation: added
+- (*StoreCreationRequest).SetSubMerchantData: added
+- (*StoreCreationWithMerchantCodeRequest).GetLocalizedInformation: added
+- (*StoreCreationWithMerchantCodeRequest).GetLocalizedInformationOk: added
+- (*StoreCreationWithMerchantCodeRequest).GetSubMerchantData: added
+- (*StoreCreationWithMerchantCodeRequest).GetSubMerchantDataOk: added
+- (*StoreCreationWithMerchantCodeRequest).HasLocalizedInformation: added
+- (*StoreCreationWithMerchantCodeRequest).HasSubMerchantData: added
+- (*StoreCreationWithMerchantCodeRequest).SetLocalizedInformation: added
+- (*StoreCreationWithMerchantCodeRequest).SetSubMerchantData: added
+- (*Surcharge).GetDisclosureOnPresentCard: added
+- (*Surcharge).GetDisclosureOnPresentCardOk: added
+- (*Surcharge).HasDisclosureOnPresentCard: added
+- (*Surcharge).SetDisclosureOnPresentCard: added
+- (*Terminal).GetCloudDeviceApiEndpoint: added
+- (*Terminal).GetCloudDeviceApiEndpointOk: added
+- (*Terminal).GetCountryCode: added
+- (*Terminal).GetCountryCodeOk: added
+- (*Terminal).GetInstalledAPKs: added
+- (*Terminal).GetInstalledAPKsOk: added
+- (*Terminal).HasCloudDeviceApiEndpoint: added
+- (*Terminal).HasCountryCode: added
+- (*Terminal).HasInstalledAPKs: added
+- (*Terminal).SetCloudDeviceApiEndpoint: added
+- (*Terminal).SetCountryCode: added
+- (*Terminal).SetInstalledAPKs: added
+- (*TerminalSettings).GetDcc: added
+- (*TerminalSettings).GetDccOk: added
+- (*TerminalSettings).GetHomeScreen: added
+- (*TerminalSettings).GetHomeScreenOk: added
+- (*TerminalSettings).GetKioskMode: added
+- (*TerminalSettings).GetKioskModeOk: added
+- (*TerminalSettings).GetMoto: added
+- (*TerminalSettings).GetMotoOk: added
+- (*TerminalSettings).GetShowCalculatedPercentageTippingAmount: added
+- (*TerminalSettings).GetShowCalculatedPercentageTippingAmountOk: added
+- (*TerminalSettings).GetSkipTipConfirmationOnTerminal: added
+- (*TerminalSettings).GetSkipTipConfirmationOnTerminalOk: added
+- (*TerminalSettings).HasDcc: added
+- (*TerminalSettings).HasHomeScreen: added
+- (*TerminalSettings).HasKioskMode: added
+- (*TerminalSettings).HasMoto: added
+- (*TerminalSettings).HasShowCalculatedPercentageTippingAmount: added
+- (*TerminalSettings).HasSkipTipConfirmationOnTerminal: added
+- (*TerminalSettings).SetDcc: added
+- (*TerminalSettings).SetHomeScreen: added
+- (*TerminalSettings).SetKioskMode: added
+- (*TerminalSettings).SetMoto: added
+- (*TerminalSettings).SetShowCalculatedPercentageTippingAmount: added
+- (*TerminalSettings).SetShowCalculatedPercentageTippingAmountNil: added
+- (*TerminalSettings).SetSkipTipConfirmationOnTerminal: added
+- (*TerminalSettings).SetSkipTipConfirmationOnTerminalNil: added
+- (*TerminalSettings).UnsetShowCalculatedPercentageTippingAmount: added
+- (*TerminalSettings).UnsetSkipTipConfirmationOnTerminal: added
+- (*UpdateCompanyApiCredentialRequest).GetSubjectDN: added
+- (*UpdateCompanyApiCredentialRequest).GetSubjectDNOk: added
+- (*UpdateCompanyApiCredentialRequest).HasSubjectDN: added
+- (*UpdateCompanyApiCredentialRequest).SetSubjectDN: added
+- (*UpdateMerchantApiCredentialRequest).GetSubjectDN: added
+- (*UpdateMerchantApiCredentialRequest).GetSubjectDNOk: added
+- (*UpdateMerchantApiCredentialRequest).HasSubjectDN: added
+- (*UpdateMerchantApiCredentialRequest).SetSubjectDN: added
+- (*UpdatePaymentMethodInfo).GetAffirm: added
+- (*UpdatePaymentMethodInfo).GetAffirmOk: added
+- (*UpdatePaymentMethodInfo).GetBoncard: added
+- (*UpdatePaymentMethodInfo).GetBoncardOk: added
+- (*UpdatePaymentMethodInfo).GetCarnet: added
+- (*UpdatePaymentMethodInfo).GetCarnetOk: added
+- (*UpdatePaymentMethodInfo).GetCashapp: added
+- (*UpdatePaymentMethodInfo).GetCashappOk: added
+- (*UpdatePaymentMethodInfo).GetEbt: added
+- (*UpdatePaymentMethodInfo).GetEbtOk: added
+- (*UpdatePaymentMethodInfo).GetMaestroUsa: added
+- (*UpdatePaymentMethodInfo).GetMaestroUsaOk: added
+- (*UpdatePaymentMethodInfo).GetPaybybankPlaidCa: added
+- (*UpdatePaymentMethodInfo).GetPaybybankPlaidCaOk: added
+- (*UpdatePaymentMethodInfo).GetSepadirectdebit: added
+- (*UpdatePaymentMethodInfo).GetSepadirectdebitOk: added
+- (*UpdatePaymentMethodInfo).HasAffirm: added
+- (*UpdatePaymentMethodInfo).HasBoncard: added
+- (*UpdatePaymentMethodInfo).HasCarnet: added
+- (*UpdatePaymentMethodInfo).HasCashapp: added
+- (*UpdatePaymentMethodInfo).HasEbt: added
+- (*UpdatePaymentMethodInfo).HasMaestroUsa: added
+- (*UpdatePaymentMethodInfo).HasPaybybankPlaidCa: added
+- (*UpdatePaymentMethodInfo).HasSepadirectdebit: added
+- (*UpdatePaymentMethodInfo).SetAffirm: added
+- (*UpdatePaymentMethodInfo).SetBoncard: added
+- (*UpdatePaymentMethodInfo).SetCarnet: added
+- (*UpdatePaymentMethodInfo).SetCashapp: added
+- (*UpdatePaymentMethodInfo).SetEbt: added
+- (*UpdatePaymentMethodInfo).SetMaestroUsa: added
+- (*UpdatePaymentMethodInfo).SetPaybybankPlaidCa: added
+- (*UpdatePaymentMethodInfo).SetSepadirectdebit: added
+- (*UpdateSplitConfigurationLogicRequest).GetDcc: added
+- (*UpdateSplitConfigurationLogicRequest).GetDccOk: added
+- (*UpdateSplitConfigurationLogicRequest).HasDcc: added
+- (*UpdateSplitConfigurationLogicRequest).SetDcc: added
+- (*UpdateSplitConfigurationRuleRequest).GetCardUsageType: added
+- (*UpdateSplitConfigurationRuleRequest).GetCardUsageTypeOk: added
+- (*UpdateSplitConfigurationRuleRequest).HasCardUsageType: added
+- (*UpdateSplitConfigurationRuleRequest).SetCardUsageType: added
+- (*UpdateStoreRequest).GetSubMerchantData: added
+- (*UpdateStoreRequest).GetSubMerchantDataOk: added
+- (*UpdateStoreRequest).HasSubMerchantData: added
+- (*UpdateStoreRequest).SetSubMerchantData: added
+- APIClient.ClientCertificatesCompanyLevelApi: added
+- APIClient.DonationCampaignsApi: added
+- APIClient.TerminalThemesCompanyLevelApi: added
+- APIClient.TerminalThemesMerchantLevelApi: added
+- APIClient.TerminalThemesStoreLevelApi: added
+- APIClient.TerminalThemesTerminalLevelApi: added
+- AccelResponseInfo: added
+- AccelUpdateInfo: added
+- AffirmInfo.PricePlan: added
+- AffirmResponseInfo: added
+- AffirmUpdateInfo: added
+- AfterpayTouchResponseInfo: added
+- AlipayPlusInfo: added
+- AlipayPlusResponseInfo: added
+- AllowedCampaignStatusTransitionEnumValues: added
+- AllowedDisplayTextFieldEnumValues: added
+- AllowedDonationCampaignStatusEnumValues: added
+- AllowedDonationFlowEnumValues: added
+- AllowedDonationTypeEnumValues: added
+- AllowedThemeModeEnumValues: added
+- AmexResponseInfo: added
+- AncvInfo: added
+- AncvResponseInfo: added
+- ApiCredential.SubjectDN: added
+- ApplePayResponseInfo: added
+- AssociatedPaymentMethod: added
+- BcmcResponseInfo: added
+- BcmcUpdateInfo: added
+- BoncardInfo: added
+- BoncardResponseInfo: added
+- BoncardUpdateInfo: added
+- CAMPAIGNSTATUSTRANSITION_ACTIVATE: added
+- CAMPAIGNSTATUSTRANSITION_END: added
+- CampaignStatusTransition: added
+- CarnetInfo: added
+- CarnetResponseInfo: added
+- CartesBancairesResponseInfo: added
+- CartesBancairesUpdateInfo: added
+- CashAppUpdateInfo: added
+- CertificateSearchResponse: added
+- ClearpayResponseInfo: added
+- ClientCertificateRequest: added
+- ClientCertificateWithChain: added
+- ClientCertificatesCompanyLevelApi: added
+- ClientCertificatesCompanyLevelApiGenerateClientCertificateInput: added
+- ClientCertificatesCompanyLevelApiListClientCertificatesInput: added
+- CompanyApiCredential.SubjectDN: added
+- CreateApiCredentialResponse.SubjectDN: added
+- CreateCompanyApiCredentialResponse.SubjectDN: added
+- CreateThemeRequest: added
+- CreateThemeResponse: added
+- CupResponseInfo: added
+- DISPLAYTEXTFIELD_CAUSE_NAME: added
+- DISPLAYTEXTFIELD_NONPROFIT_NAME: added
+- DONATIONCAMPAIGNSTATUS_ACTIVE: added
+- DONATIONCAMPAIGNSTATUS_ENDED: added
+- DONATIONCAMPAIGNSTATUS_INACTIVE: added
+- DONATIONFLOW_ONE_STEP: added
+- DONATIONFLOW_TWO_STEP: added
+- DONATIONTYPE_FIXED_AMOUNTS: added
+- DONATIONTYPE_FIXED_AMOUNTS_ROUNDUP: added
+- DONATIONTYPE_ROUNDUP: added
+- Dcc: added
+- DefaultErrorResponseEntity: added
+- DinersResponseInfo: added
+- DiscoverResponseInfo: added
+- DisplayTextField: added
+- DonationAmount: added
+- DonationAmountUpdate: added
+- DonationCampaign: added
+- DonationCampaignNonprofitCause: added
+- DonationCampaignRequest: added
+- DonationCampaignStatus: added
+- DonationCampaignUpdate: added
+- DonationCampaignsApi: added
+- DonationCampaignsApiCreateDonationCampaignInput: added
+- DonationCampaignsApiDeleteDonationCampaignInput: added
+- DonationCampaignsApiListDonationCampaignsForAccountHolderInput: added
+- DonationCampaignsApiListNonprofitsInput: added
+- DonationCampaignsApiUpdateDonationCampaignInput: added
+- DonationCampaignsApiUpdateDonationCampaignStatusInput: added
+- DonationFlow: added
+- DonationType: added
+- EFTDirectDebitCAResponseInfo: added
+- EbtInfo: added
+- EbtResponseInfo: added
+- EbtUpdateInfo: added
+- EftPosAustraliaResponseInfo: added
+- ForceRebootDetails: added
+- ForceRebootDetailsAsScheduleTerminalActionsRequestActionDetails: added
+- GenericPmWithTdiUpdateInfo: added
+- GirocardResponseInfo: added
+- GivexInfo: added
+- GivexResponseInfo: added
+- GooglePayResponseInfo: added
+- HomeScreenSettings: added
+- IdealResponseInfo: added
+- InPersonDonationSettings: added
+- InPersonDonationSettingsResponse: added
+- InPersonDonationSettingsUpdate: added
+- InstalledAPKs: added
+- InteracCardResponseInfo: added
+- JCBResponseInfo: added
+- JapaneseLocalizedAddress: added
+- JapaneseLocalizedAddressAsLocalizedInformationLocalizedAddressInner: added
+- JapaneseLocalizedAddressFields: added
+- KioskModeSettings: added
+- KlarnaResponseInfo: added
+- ListDonationCampaignsResponse: added
+- ListNonprofitsRequest: added
+- ListNonprofitsResponse: added
+- ListThemesResponse: added
+- LocalShopperStatement: added
+- LocalStoreName: added
+- LocalizedInformation: added
+- LocalizedInformationLocalizedAddressInner: added
+- MCResponseInfo: added
+- MaestroResponseInfo: added
+- MaestroUSAResponseInfo: added
+- MeApiCredential.SubjectDN: added
+- MealVoucherFRResponseInfo: added
+- Moto: added
+- NewAccelResponseInfo: added
+- NewAccelResponseInfoWithDefaults: added
+- NewAccelUpdateInfo: added
+- NewAccelUpdateInfoWithDefaults: added
+- NewAffirmResponseInfo: added
+- NewAffirmResponseInfoWithDefaults: added
+- NewAffirmUpdateInfo: added
+- NewAffirmUpdateInfoWithDefaults: added
+- NewAfterpayTouchResponseInfo: added
+- NewAfterpayTouchResponseInfoWithDefaults: added
+- NewAlipayPlusInfo: added
+- NewAlipayPlusInfoWithDefaults: added
+- NewAlipayPlusResponseInfo: added
+- NewAlipayPlusResponseInfoWithDefaults: added
+- NewAmexResponseInfo: added
+- NewAmexResponseInfoWithDefaults: added
+- NewAncvInfo: added
+- NewAncvInfoWithDefaults: added
+- NewAncvResponseInfo: added
+- NewAncvResponseInfoWithDefaults: added
+- NewApplePayResponseInfo: added
+- NewApplePayResponseInfoWithDefaults: added
+- NewAssociatedPaymentMethod: added
+- NewAssociatedPaymentMethodWithDefaults: added
+- NewBcmcResponseInfo: added
+- NewBcmcResponseInfoWithDefaults: added
+- NewBcmcUpdateInfo: added
+- NewBcmcUpdateInfoWithDefaults: added
+- NewBoncardInfo: added
+- NewBoncardInfoWithDefaults: added
+- NewBoncardResponseInfo: added
+- NewBoncardResponseInfoWithDefaults: added
+- NewBoncardUpdateInfo: added
+- NewBoncardUpdateInfoWithDefaults: added
+- NewCampaignStatusTransitionFromValue: added
+- NewCarnetInfo: added
+- NewCarnetInfoWithDefaults: added
+- NewCarnetResponseInfo: added
+- NewCarnetResponseInfoWithDefaults: added
+- NewCartesBancairesResponseInfo: added
+- NewCartesBancairesResponseInfoWithDefaults: added
+- NewCartesBancairesUpdateInfo: added
+- NewCartesBancairesUpdateInfoWithDefaults: added
+- NewCashAppUpdateInfo: added
+- NewCashAppUpdateInfoWithDefaults: added
+- NewCertificateSearchResponse: added
+- NewCertificateSearchResponseWithDefaults: added
+- NewClearpayResponseInfo: added
+- NewClearpayResponseInfoWithDefaults: added
+- NewClientCertificateRequest: added
+- NewClientCertificateRequestWithDefaults: added
+- NewClientCertificateWithChain: added
+- NewClientCertificateWithChainWithDefaults: added
+- NewCreateThemeRequest: added
+- NewCreateThemeRequestWithDefaults: added
+- NewCreateThemeResponse: added
+- NewCreateThemeResponseWithDefaults: added
+- NewCupResponseInfo: added
+- NewCupResponseInfoWithDefaults: added
+- NewDcc: added
+- NewDccWithDefaults: added
+- NewDefaultErrorResponseEntity: added
+- NewDefaultErrorResponseEntityWithDefaults: added
+- NewDinersResponseInfo: added
+- NewDinersResponseInfoWithDefaults: added
+- NewDiscoverResponseInfo: added
+- NewDiscoverResponseInfoWithDefaults: added
+- NewDisplayTextFieldFromValue: added
+- NewDonationAmount: added
+- NewDonationAmountUpdate: added
+- NewDonationAmountUpdateWithDefaults: added
+- NewDonationAmountWithDefaults: added
+- NewDonationCampaign: added
+- NewDonationCampaignNonprofitCause: added
+- NewDonationCampaignNonprofitCauseWithDefaults: added
+- NewDonationCampaignRequest: added
+- NewDonationCampaignRequestWithDefaults: added
+- NewDonationCampaignStatusFromValue: added
+- NewDonationCampaignUpdate: added
+- NewDonationCampaignUpdateWithDefaults: added
+- NewDonationCampaignWithDefaults: added
+- NewDonationFlowFromValue: added
+- NewDonationTypeFromValue: added
+- NewEFTDirectDebitCAResponseInfo: added
+- NewEFTDirectDebitCAResponseInfoWithDefaults: added
+- NewEbtInfo: added
+- NewEbtInfoWithDefaults: added
+- NewEbtResponseInfo: added
+- NewEbtResponseInfoWithDefaults: added
+- NewEbtUpdateInfo: added
+- NewEbtUpdateInfoWithDefaults: added
+- NewEftPosAustraliaResponseInfo: added
+- NewEftPosAustraliaResponseInfoWithDefaults: added
+- NewForceRebootDetails: added
+- NewForceRebootDetailsWithDefaults: added
+- NewGenericPmWithTdiUpdateInfo: added
+- NewGenericPmWithTdiUpdateInfoWithDefaults: added
+- NewGirocardResponseInfo: added
+- NewGirocardResponseInfoWithDefaults: added
+- NewGivexInfo: added
+- NewGivexInfoWithDefaults: added
+- NewGivexResponseInfo: added
+- NewGivexResponseInfoWithDefaults: added
+- NewGooglePayResponseInfo: added
+- NewGooglePayResponseInfoWithDefaults: added
+- NewHomeScreenSettings: added
+- NewHomeScreenSettingsWithDefaults: added
+- NewIdealResponseInfo: added
+- NewIdealResponseInfoWithDefaults: added
+- NewInPersonDonationSettings: added
+- NewInPersonDonationSettingsResponse: added
+- NewInPersonDonationSettingsResponseWithDefaults: added
+- NewInPersonDonationSettingsUpdate: added
+- NewInPersonDonationSettingsUpdateWithDefaults: added
+- NewInPersonDonationSettingsWithDefaults: added
+- NewInstalledAPKs: added
+- NewInstalledAPKsWithDefaults: added
+- NewInteracCardResponseInfo: added
+- NewInteracCardResponseInfoWithDefaults: added
+- NewJCBResponseInfo: added
+- NewJCBResponseInfoWithDefaults: added
+- NewJapaneseLocalizedAddress: added
+- NewJapaneseLocalizedAddressFields: added
+- NewJapaneseLocalizedAddressFieldsWithDefaults: added
+- NewJapaneseLocalizedAddressWithDefaults: added
+- NewKioskModeSettings: added
+- NewKioskModeSettingsWithDefaults: added
+- NewKlarnaResponseInfo: added
+- NewKlarnaResponseInfoWithDefaults: added
+- NewListDonationCampaignsResponse: added
+- NewListDonationCampaignsResponseWithDefaults: added
+- NewListNonprofitsRequest: added
+- NewListNonprofitsRequestWithDefaults: added
+- NewListNonprofitsResponse: added
+- NewListNonprofitsResponseWithDefaults: added
+- NewListThemesResponse: added
+- NewListThemesResponseWithDefaults: added
+- NewLocalShopperStatement: added
+- NewLocalShopperStatementWithDefaults: added
+- NewLocalStoreName: added
+- NewLocalStoreNameWithDefaults: added
+- NewLocalizedInformation: added
+- NewLocalizedInformationWithDefaults: added
+- NewMCResponseInfo: added
+- NewMCResponseInfoWithDefaults: added
+- NewMaestroResponseInfo: added
+- NewMaestroResponseInfoWithDefaults: added
+- NewMaestroUSAResponseInfo: added
+- NewMaestroUSAResponseInfoWithDefaults: added
+- NewMealVoucherFRResponseInfo: added
+- NewMealVoucherFRResponseInfoWithDefaults: added
+- NewMoto: added
+- NewMotoWithDefaults: added
+- NewNonprofit: added
+- NewNonprofitCause: added
+- NewNonprofitCauseWithDefaults: added
+- NewNonprofitWithDefaults: added
+- NewNullableAccelResponseInfo: added
+- NewNullableAccelUpdateInfo: added
+- NewNullableAffirmResponseInfo: added
+- NewNullableAffirmUpdateInfo: added
+- NewNullableAfterpayTouchResponseInfo: added
+- NewNullableAlipayPlusInfo: added
+- NewNullableAlipayPlusResponseInfo: added
+- NewNullableAmexResponseInfo: added
+- NewNullableAncvInfo: added
+- NewNullableAncvResponseInfo: added
+- NewNullableApplePayResponseInfo: added
+- NewNullableAssociatedPaymentMethod: added
+- NewNullableBcmcResponseInfo: added
+- NewNullableBcmcUpdateInfo: added
+- NewNullableBoncardInfo: added
+- NewNullableBoncardResponseInfo: added
+- NewNullableBoncardUpdateInfo: added
+- NewNullableCampaignStatusTransition: added
+- NewNullableCarnetInfo: added
+- NewNullableCarnetResponseInfo: added
+- NewNullableCartesBancairesResponseInfo: added
+- NewNullableCartesBancairesUpdateInfo: added
+- NewNullableCashAppUpdateInfo: added
+- NewNullableCertificateSearchResponse: added
+- NewNullableClearpayResponseInfo: added
+- NewNullableClientCertificateRequest: added
+- NewNullableClientCertificateWithChain: added
+- NewNullableCreateThemeRequest: added
+- NewNullableCreateThemeResponse: added
+- NewNullableCupResponseInfo: added
+- NewNullableDcc: added
+- NewNullableDefaultErrorResponseEntity: added
+- NewNullableDinersResponseInfo: added
+- NewNullableDiscoverResponseInfo: added
+- NewNullableDisplayTextField: added
+- NewNullableDonationAmount: added
+- NewNullableDonationAmountUpdate: added
+- NewNullableDonationCampaign: added
+- NewNullableDonationCampaignNonprofitCause: added
+- NewNullableDonationCampaignRequest: added
+- NewNullableDonationCampaignStatus: added
+- NewNullableDonationCampaignUpdate: added
+- NewNullableDonationFlow: added
+- NewNullableDonationType: added
+- NewNullableEFTDirectDebitCAResponseInfo: added
+- NewNullableEbtInfo: added
+- NewNullableEbtResponseInfo: added
+- NewNullableEbtUpdateInfo: added
+- NewNullableEftPosAustraliaResponseInfo: added
+- NewNullableForceRebootDetails: added
+- NewNullableGenericPmWithTdiUpdateInfo: added
+- NewNullableGirocardResponseInfo: added
+- NewNullableGivexInfo: added
+- NewNullableGivexResponseInfo: added
+- NewNullableGooglePayResponseInfo: added
+- NewNullableHomeScreenSettings: added
+- NewNullableIdealResponseInfo: added
+- NewNullableInPersonDonationSettings: added
+- NewNullableInPersonDonationSettingsResponse: added
+- NewNullableInPersonDonationSettingsUpdate: added
+- NewNullableInstalledAPKs: added
+- NewNullableInteracCardResponseInfo: added
+- NewNullableJCBResponseInfo: added
+- NewNullableJapaneseLocalizedAddress: added
+- NewNullableJapaneseLocalizedAddressFields: added
+- NewNullableKioskModeSettings: added
+- NewNullableKlarnaResponseInfo: added
+- NewNullableListDonationCampaignsResponse: added
+- NewNullableListNonprofitsRequest: added
+- NewNullableListNonprofitsResponse: added
+- NewNullableListThemesResponse: added
+- NewNullableLocalShopperStatement: added
+- NewNullableLocalStoreName: added
+- NewNullableLocalizedInformation: added
+- NewNullableLocalizedInformationLocalizedAddressInner: added
+- NewNullableMCResponseInfo: added
+- NewNullableMaestroResponseInfo: added
+- NewNullableMaestroUSAResponseInfo: added
+- NewNullableMealVoucherFRResponseInfo: added
+- NewNullableMoto: added
+- NewNullableNonprofit: added
+- NewNullableNonprofitCause: added
+- NewNullableNyceResponseInfo: added
+- NewNullableNyceUpdateInfo: added
+- NewNullableOnlineDonationSettings: added
+- NewNullableOnlineDonationSettingsResponse: added
+- NewNullableOnlineDonationSettingsUpdate: added
+- NewNullablePayByBankPlaidResponseInfo: added
+- NewNullablePayByBankPlaidUpdateInfo: added
+- NewNullablePayMeResponseInfo: added
+- NewNullablePayPalResponseInfo: added
+- NewNullablePayToResponseInfo: added
+- NewNullablePixInfo: added
+- NewNullablePixResponseInfo: added
+- NewNullablePulseResponseInfo: added
+- NewNullablePulseUpdateInfo: added
+- NewNullableSepaDirectDebitInfo: added
+- NewNullableSepaDirectDebitResponseInfo: added
+- NewNullableSepaDirectDebitUpdateInfo: added
+- NewNullableSodexoResponseInfo: added
+- NewNullableSofortResponseInfo: added
+- NewNullableSplitDcc: added
+- NewNullableStarResponseInfo: added
+- NewNullableStarUpdateInfo: added
+- NewNullableSubMerchantData: added
+- NewNullableSvsInfo: added
+- NewNullableSvsResponseInfo: added
+- NewNullableSwishResponseInfo: added
+- NewNullableThemeAsset: added
+- NewNullableThemeMode: added
+- NewNullableThemeSummary: added
+- NewNullableThemeUpdateRequest: added
+- NewNullableThemeWithAssetDetails: added
+- NewNullableTicketResponseInfo: added
+- NewNullableTransactionDescriptionResponseInfo: added
+- NewNullableTwintResponseInfo: added
+- NewNullableUnreferenced: added
+- NewNullableUpdateThemeResponse: added
+- NewNullableValuelinkInfo: added
+- NewNullableValuelinkResponseInfo: added
+- NewNullableVippsResponseInfo: added
+- NewNullableVisaResponseInfo: added
+- NewNullableWeChatPayPosResponseInfo: added
+- NewNullableWeChatPayResponseInfo: added
+- NewNyceResponseInfo: added
+- NewNyceResponseInfoWithDefaults: added
+- NewNyceUpdateInfo: added
+- NewNyceUpdateInfoWithDefaults: added
+- NewOnlineDonationSettings: added
+- NewOnlineDonationSettingsResponse: added
+- NewOnlineDonationSettingsResponseWithDefaults: added
+- NewOnlineDonationSettingsUpdate: added
+- NewOnlineDonationSettingsUpdateWithDefaults: added
+- NewOnlineDonationSettingsWithDefaults: added
+- NewPayByBankPlaidResponseInfo: added
+- NewPayByBankPlaidResponseInfoWithDefaults: added
+- NewPayByBankPlaidUpdateInfo: added
+- NewPayByBankPlaidUpdateInfoWithDefaults: added
+- NewPayMeResponseInfo: added
+- NewPayMeResponseInfoWithDefaults: added
+- NewPayPalResponseInfo: added
+- NewPayPalResponseInfoWithDefaults: added
+- NewPayToResponseInfo: added
+- NewPayToResponseInfoWithDefaults: added
+- NewPixInfo: added
+- NewPixInfoWithDefaults: added
+- NewPixResponseInfo: added
+- NewPixResponseInfoWithDefaults: added
+- NewPulseResponseInfo: added
+- NewPulseResponseInfoWithDefaults: added
+- NewPulseUpdateInfo: added
+- NewPulseUpdateInfoWithDefaults: added
+- NewSepaDirectDebitInfo: added
+- NewSepaDirectDebitInfoWithDefaults: added
+- NewSepaDirectDebitResponseInfo: added
+- NewSepaDirectDebitResponseInfoWithDefaults: added
+- NewSepaDirectDebitUpdateInfo: added
+- NewSepaDirectDebitUpdateInfoWithDefaults: added
+- NewSodexoResponseInfo: added
+- NewSodexoResponseInfoWithDefaults: added
+- NewSofortResponseInfo: added
+- NewSofortResponseInfoWithDefaults: added
+- NewSplitDcc: added
+- NewSplitDccWithDefaults: added
+- NewStarResponseInfo: added
+- NewStarResponseInfoWithDefaults: added
+- NewStarUpdateInfo: added
+- NewStarUpdateInfoWithDefaults: added
+- NewSubMerchantData: added
+- NewSubMerchantDataWithDefaults: added
+- NewSvsInfo: added
+- NewSvsInfoWithDefaults: added
+- NewSvsResponseInfo: added
+- NewSvsResponseInfoWithDefaults: added
+- NewSwishResponseInfo: added
+- NewSwishResponseInfoWithDefaults: added
+- NewThemeAsset: added
+- NewThemeAssetWithDefaults: added
+- NewThemeModeFromValue: added
+- NewThemeSummary: added
+- NewThemeSummaryWithDefaults: added
+- NewThemeUpdateRequest: added
+- NewThemeUpdateRequestWithDefaults: added
+- NewThemeWithAssetDetails: added
+- NewThemeWithAssetDetailsWithDefaults: added
+- NewTicketResponseInfo: added
+- NewTicketResponseInfoWithDefaults: added
+- NewTransactionDescriptionResponseInfo: added
+- NewTransactionDescriptionResponseInfoWithDefaults: added
+- NewTwintResponseInfo: added
+- NewTwintResponseInfoWithDefaults: added
+- NewUnreferenced: added
+- NewUnreferencedWithDefaults: added
+- NewUpdateThemeResponse: added
+- NewUpdateThemeResponseWithDefaults: added
+- NewValuelinkInfo: added
+- NewValuelinkInfoWithDefaults: added
+- NewValuelinkResponseInfo: added
+- NewValuelinkResponseInfoWithDefaults: added
+- NewVippsResponseInfo: added
+- NewVippsResponseInfoWithDefaults: added
+- NewVisaResponseInfo: added
+- NewVisaResponseInfoWithDefaults: added
+- NewWeChatPayPosResponseInfo: added
+- NewWeChatPayPosResponseInfoWithDefaults: added
+- NewWeChatPayResponseInfo: added
+- NewWeChatPayResponseInfoWithDefaults: added
+- Nonprofit: added
+- NonprofitCause: added
+- NullableAccelResponseInfo: added
+- NullableAccelUpdateInfo: added
+- NullableAffirmResponseInfo: added
+- NullableAffirmUpdateInfo: added
+- NullableAfterpayTouchResponseInfo: added
+- NullableAlipayPlusInfo: added
+- NullableAlipayPlusResponseInfo: added
+- NullableAmexResponseInfo: added
+- NullableAncvInfo: added
+- NullableAncvResponseInfo: added
+- NullableApplePayResponseInfo: added
+- NullableAssociatedPaymentMethod: added
+- NullableBcmcResponseInfo: added
+- NullableBcmcUpdateInfo: added
+- NullableBoncardInfo: added
+- NullableBoncardResponseInfo: added
+- NullableBoncardUpdateInfo: added
+- NullableCampaignStatusTransition: added
+- NullableCarnetInfo: added
+- NullableCarnetResponseInfo: added
+- NullableCartesBancairesResponseInfo: added
+- NullableCartesBancairesUpdateInfo: added
+- NullableCashAppUpdateInfo: added
+- NullableCertificateSearchResponse: added
+- NullableClearpayResponseInfo: added
+- NullableClientCertificateRequest: added
+- NullableClientCertificateWithChain: added
+- NullableCreateThemeRequest: added
+- NullableCreateThemeResponse: added
+- NullableCupResponseInfo: added
+- NullableDcc: added
+- NullableDefaultErrorResponseEntity: added
+- NullableDinersResponseInfo: added
+- NullableDiscoverResponseInfo: added
+- NullableDisplayTextField: added
+- NullableDonationAmount: added
+- NullableDonationAmountUpdate: added
+- NullableDonationCampaign: added
+- NullableDonationCampaignNonprofitCause: added
+- NullableDonationCampaignRequest: added
+- NullableDonationCampaignStatus: added
+- NullableDonationCampaignUpdate: added
+- NullableDonationFlow: added
+- NullableDonationType: added
+- NullableEFTDirectDebitCAResponseInfo: added
+- NullableEbtInfo: added
+- NullableEbtResponseInfo: added
+- NullableEbtUpdateInfo: added
+- NullableEftPosAustraliaResponseInfo: added
+- NullableForceRebootDetails: added
+- NullableGenericPmWithTdiUpdateInfo: added
+- NullableGirocardResponseInfo: added
+- NullableGivexInfo: added
+- NullableGivexResponseInfo: added
+- NullableGooglePayResponseInfo: added
+- NullableHomeScreenSettings: added
+- NullableIdealResponseInfo: added
+- NullableInPersonDonationSettings: added
+- NullableInPersonDonationSettingsResponse: added
+- NullableInPersonDonationSettingsUpdate: added
+- NullableInstalledAPKs: added
+- NullableInteracCardResponseInfo: added
+- NullableJCBResponseInfo: added
+- NullableJapaneseLocalizedAddress: added
+- NullableJapaneseLocalizedAddressFields: added
+- NullableKioskModeSettings: added
+- NullableKlarnaResponseInfo: added
+- NullableListDonationCampaignsResponse: added
+- NullableListNonprofitsRequest: added
+- NullableListNonprofitsResponse: added
+- NullableListThemesResponse: added
+- NullableLocalShopperStatement: added
+- NullableLocalStoreName: added
+- NullableLocalizedInformation: added
+- NullableLocalizedInformationLocalizedAddressInner: added
+- NullableMCResponseInfo: added
+- NullableMaestroResponseInfo: added
+- NullableMaestroUSAResponseInfo: added
+- NullableMealVoucherFRResponseInfo: added
+- NullableMoto: added
+- NullableNonprofit: added
+- NullableNonprofitCause: added
+- NullableNyceResponseInfo: added
+- NullableNyceUpdateInfo: added
+- NullableOnlineDonationSettings: added
+- NullableOnlineDonationSettingsResponse: added
+- NullableOnlineDonationSettingsUpdate: added
+- NullablePayByBankPlaidResponseInfo: added
+- NullablePayByBankPlaidUpdateInfo: added
+- NullablePayMeResponseInfo: added
+- NullablePayPalResponseInfo: added
+- NullablePayToResponseInfo: added
+- NullablePixInfo: added
+- NullablePixResponseInfo: added
+- NullablePulseResponseInfo: added
+- NullablePulseUpdateInfo: added
+- NullableSepaDirectDebitInfo: added
+- NullableSepaDirectDebitResponseInfo: added
+- NullableSepaDirectDebitUpdateInfo: added
+- NullableSodexoResponseInfo: added
+- NullableSofortResponseInfo: added
+- NullableSplitDcc: added
+- NullableStarResponseInfo: added
+- NullableStarUpdateInfo: added
+- NullableSubMerchantData: added
+- NullableSvsInfo: added
+- NullableSvsResponseInfo: added
+- NullableSwishResponseInfo: added
+- NullableThemeAsset: added
+- NullableThemeMode: added
+- NullableThemeSummary: added
+- NullableThemeUpdateRequest: added
+- NullableThemeWithAssetDetails: added
+- NullableTicketResponseInfo: added
+- NullableTransactionDescriptionResponseInfo: added
+- NullableTwintResponseInfo: added
+- NullableUnreferenced: added
+- NullableUpdateThemeResponse: added
+- NullableValuelinkInfo: added
+- NullableValuelinkResponseInfo: added
+- NullableVippsResponseInfo: added
+- NullableVisaResponseInfo: added
+- NullableWeChatPayPosResponseInfo: added
+- NullableWeChatPayResponseInfo: added
+- NyceResponseInfo: added
+- NyceUpdateInfo: added
+- OnlineDonationSettings: added
+- OnlineDonationSettingsResponse: added
+- OnlineDonationSettingsUpdate: added
+- PayByBankPlaidResponseInfo: added
+- PayByBankPlaidUpdateInfo: added
+- PayMeResponseInfo: added
+- PayPalResponseInfo: added
+- PayToResponseInfo: added
+- PaymentMethod.AlipayPlus: added
+- PaymentMethod.Ancv: added
+- PaymentMethod.AssociatedPaymentMethods: added
+- PaymentMethod.Boncard: added
+- PaymentMethod.Carnet: added
+- PaymentMethod.Ebt: added
+- PaymentMethod.Givex: added
+- PaymentMethod.MaestroUsa: added
+- PaymentMethod.MerchantCategoryCode: added
+- PaymentMethod.Mid: added
+- PaymentMethod.PaybybankPlaidCa: added
+- PaymentMethod.Pix: added
+- PaymentMethod.Sepadirectdebit: added
+- PaymentMethod.Svs: added
+- PaymentMethod.Valuelink: added
+- PaymentMethodSetupInfo.AlipayPlus: added
+- PaymentMethodSetupInfo.Ancv: added
+- PaymentMethodSetupInfo.Boncard: added
+- PaymentMethodSetupInfo.Carnet: added
+- PaymentMethodSetupInfo.Ebt: added
+- PaymentMethodSetupInfo.Givex: added
+- PaymentMethodSetupInfo.MaestroUsa: added
+- PaymentMethodSetupInfo.PaybybankPlaidCa: added
+- PaymentMethodSetupInfo.Pix: added
+- PaymentMethodSetupInfo.Sepadirectdebit: added
+- PaymentMethodSetupInfo.Svs: added
+- PaymentMethodSetupInfo.Valuelink: added
+- PixInfo: added
+- PixResponseInfo: added
+- PulseResponseInfo: added
+- PulseUpdateInfo: added
+- ReceiptOptions.HeaderLine1: added
+- ReceiptOptions.HeaderLine2: added
+- Refunds.Unreferenced: added
+- ScheduleTerminalActionsRequestActionDetails.ForceRebootDetails: added
+- SepaDirectDebitInfo: added
+- SepaDirectDebitResponseInfo: added
+- SepaDirectDebitUpdateInfo: added
+- SodexoResponseInfo: added
+- SofortResponseInfo: added
+- SplitConfigurationLogic.Dcc: added
+- SplitConfigurationRule.CardRegion: added
+- SplitConfigurationRule.CardUsageType: added
+- SplitDcc: added
+- Standalone.MerchantReference: added
+- StarResponseInfo: added
+- StarUpdateInfo: added
+- Store.LocalizedInformation: added
+- Store.SubMerchantData: added
+- StoreCreationRequest.LocalizedInformation: added
+- StoreCreationRequest.SubMerchantData: added
+- StoreCreationWithMerchantCodeRequest.LocalizedInformation: added
+- StoreCreationWithMerchantCodeRequest.SubMerchantData: added
+- SubMerchantData: added
+- Surcharge.DisclosureOnPresentCard: added
+- SvsInfo: added
+- SvsResponseInfo: added
+- SwishResponseInfo: added
+- THEMEMODE_DARK: added
+- THEMEMODE_LIGHT: added
+- Terminal.CloudDeviceApiEndpoint: added
+- Terminal.CountryCode: added
+- Terminal.InstalledAPKs: added
+- TerminalSettings.Dcc: added
+- TerminalSettings.HomeScreen: added
+- TerminalSettings.KioskMode: added
+- TerminalSettings.Moto: added
+- TerminalSettings.ShowCalculatedPercentageTippingAmount: added
+- TerminalSettings.SkipTipConfirmationOnTerminal: added
+- TerminalThemesCompanyLevelApi: added
+- TerminalThemesCompanyLevelApiAddTerminalThemeAssetForCompanyInput: added
+- TerminalThemesCompanyLevelApiApplyTerminalThemeForCompanyInput: added
+- TerminalThemesCompanyLevelApiCreateTerminalThemeForCompanyInput: added
+- TerminalThemesCompanyLevelApiDeleteTerminalThemeAssetForCompanyInput: added
+- TerminalThemesCompanyLevelApiDeleteTerminalThemeForCompanyInput: added
+- TerminalThemesCompanyLevelApiEditTerminalThemeAssetForCompanyInput: added
+- TerminalThemesCompanyLevelApiGetTerminalThemeByIdForCompanyInput: added
+- TerminalThemesCompanyLevelApiListTerminalThemesForCompanyInput: added
+- TerminalThemesCompanyLevelApiUnapplyTerminalThemeForCompanyInput: added
+- TerminalThemesCompanyLevelApiUpdateTerminalThemeForCompanyInput: added
+- TerminalThemesMerchantLevelApi: added
+- TerminalThemesMerchantLevelApiAddTerminalThemeAssetForMerchantInput: added
+- TerminalThemesMerchantLevelApiApplyTerminalThemeForMerchantInput: added
+- TerminalThemesMerchantLevelApiCreateTerminalThemeForMerchantInput: added
+- TerminalThemesMerchantLevelApiDeleteTerminalThemeAssetForMerchantInput: added
+- TerminalThemesMerchantLevelApiDeleteTerminalThemeForMerchantInput: added
+- TerminalThemesMerchantLevelApiEditTerminalThemeAssetForMerchantInput: added
+- TerminalThemesMerchantLevelApiGetTerminalThemeByIdForMerchantInput: added
+- TerminalThemesMerchantLevelApiListTerminalThemesForMerchantInput: added
+- TerminalThemesMerchantLevelApiUnapplyTerminalThemeForMerchantInput: added
+- TerminalThemesMerchantLevelApiUpdateTerminalThemeForMerchantInput: added
+- TerminalThemesStoreLevelApi: added
+- TerminalThemesStoreLevelApiApplyTerminalThemeForStoreInput: added
+- TerminalThemesStoreLevelApiUnapplyTerminalThemeForStoreInput: added
+- TerminalThemesTerminalLevelApi: added
+- TerminalThemesTerminalLevelApiApplyTerminalThemeForTerminalInput: added
+- TerminalThemesTerminalLevelApiUnapplyTerminalThemeForTerminalInput: added
+- ThemeAsset: added
+- ThemeMode: added
+- ThemeSummary: added
+- ThemeUpdateRequest: added
+- ThemeWithAssetDetails: added
+- TicketResponseInfo: added
+- TransactionDescriptionResponseInfo: added
+- TwintResponseInfo: added
+- Unreferenced: added
+- UpdateCompanyApiCredentialRequest.SubjectDN: added
+- UpdateMerchantApiCredentialRequest.SubjectDN: added
+- UpdatePaymentMethodInfo.Affirm: added
+- UpdatePaymentMethodInfo.Boncard: added
+- UpdatePaymentMethodInfo.Carnet: added
+- UpdatePaymentMethodInfo.Cashapp: added
+- UpdatePaymentMethodInfo.Ebt: added
+- UpdatePaymentMethodInfo.MaestroUsa: added
+- UpdatePaymentMethodInfo.PaybybankPlaidCa: added
+- UpdatePaymentMethodInfo.Sepadirectdebit: added
+- UpdateSplitConfigurationLogicRequest.Dcc: added
+- UpdateSplitConfigurationRuleRequest.CardUsageType: added
+- UpdateStoreRequest.SubMerchantData: added
+- UpdateThemeResponse: added
+- ValuelinkInfo: added
+- ValuelinkResponseInfo: added
+- VippsResponseInfo: added
+- VisaResponseInfo: added
+- WeChatPayPosResponseInfo: added
+- WeChatPayResponseInfo: added

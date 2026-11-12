@@ -1,0 +1,2 @@
+Incompatible changes:
+- CheckoutAPIVersion: value changed from "v71" to "v72"

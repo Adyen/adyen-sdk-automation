@@ -1,0 +1,11 @@
+Compatible changes:
+- (*BoardingTokenRequest).GetSubMerchantData: added
+- (*BoardingTokenRequest).GetSubMerchantDataOk: added
+- (*BoardingTokenRequest).HasSubMerchantData: added
+- (*BoardingTokenRequest).SetSubMerchantData: added
+- BoardingTokenRequest.SubMerchantData: added
+- NewNullableSubMerchantData: added
+- NewSubMerchantData: added
+- NewSubMerchantDataWithDefaults: added
+- NullableSubMerchantData: added
+- SubMerchantData: added

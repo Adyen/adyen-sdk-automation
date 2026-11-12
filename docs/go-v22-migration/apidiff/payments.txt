@@ -1,0 +1,7 @@
+Incompatible changes:
+- GeneralApi: removed
+- GeneralApiAuthorise3dInput: removed
+- GeneralApiAuthorise3ds2Input: removed
+- GeneralApiAuthoriseInput: removed
+- GeneralApiGetAuthenticationResultInput: removed
+- GeneralApiRetrieve3ds2ResultInput: removed

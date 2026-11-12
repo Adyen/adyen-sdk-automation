@@ -68,6 +68,17 @@ class TestServicesCatalog(unittest.TestCase):
         self.assertEqual(services["PosMobile"]["spec"], "SessionService")
         self.assertEqual(services["PosMobile"]["version"], 68)
 
+    def test_go_generates_management_and_balance_platform(self) -> None:
+        go_services = {
+            service["name"]
+            for service in self.services
+            if "go" not in service.get("excludedProjects", [])
+            and ("projects" not in service or "go" in service["projects"])
+        }
+        self.assertIn("Management", go_services)
+        self.assertIn("BalancePlatform", go_services)
+        self.assertEqual(len(go_services), 31)
+
     def test_service_ids_are_unique(self) -> None:
         ids = [service["name"].lower() for service in self.services]
         duplicates = {service_id for service_id in ids if ids.count(service_id) > 1}

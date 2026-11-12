@@ -192,7 +192,7 @@ class SpecProcessorTest {
         assertThat(props["tags"]).containsEntry("type", listOf("array", "null")).doesNotContainKey("nullable")
         assertThat(props["union"]).isEqualTo(mapOf("type" to listOf("string", "null")))
         assertThat(props["plain"]).isEqualTo(mapOf("type" to "string"))
-        assertThat(props["legacyRef"]).isEqualTo(mapOf("description" to "kept", "oneOf" to listOf(marker, mapOf("type" to "null"))))
+        assertThat(props["legacyRef"]).isEqualTo(mapOf("\$ref" to "#/components/schemas/Amount", "description" to "kept"))
         assertThat(props["unionRef"]).isEqualTo(mapOf("oneOf" to listOf(marker, mapOf("type" to "null"))))
         assertThat(props["amount"]).isEqualTo(mapOf("${'$'}ref" to "#/components/schemas/Amount"))
         assertThat(props["map"]).containsEntry("additionalProperties", mapOf("type" to "string"))

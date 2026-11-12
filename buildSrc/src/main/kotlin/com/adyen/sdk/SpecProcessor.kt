@@ -137,16 +137,15 @@ object SpecProcessor {
     }
 
     // `nullable` is not an OpenAPI 3.1 keyword, so 3.1 parsers ignore it.
+    // Next to a `$ref` it is dropped instead: 3.0 ignores `$ref` siblings too, so v21 and the
+    // other SDKs generate a plain optional reference (Management TerminalSettings).
     @Suppress("UNCHECKED_CAST")
     private fun rewriteLegacyNullable(schema: MutableMap<String, Any?>) {
         val ref = schema["\$ref"]
         val type = schema["type"]
         val oneOf = schema["oneOf"] as? MutableList<Any?>
         when {
-            ref != null -> {
-                schema.remove("\$ref")
-                schema["oneOf"] = mutableListOf(mutableMapOf("\$ref" to ref), mutableMapOf("type" to "null"))
-            }
+            ref != null -> Unit
             type is String -> schema["type"] = mutableListOf(type, "null")
             type is List<*> -> if ("null" !in type) schema["type"] = type + "null"
             oneOf != null -> if (oneOf.none { (it as? Map<*, *>)?.get("type") == "null" }) oneOf.add(mutableMapOf("type" to "null"))

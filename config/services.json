@@ -15,11 +15,11 @@
 
     { "name": "Tapi", "spec": "TerminalAPI", "version": 1, "projects": ["java", "node"], "group": "Terminal API" },
 
-    { "name": "Management", "version": 3, "excludedProjects": ["go"], "group": "Management" },
+    { "name": "Management", "version": 3, "group": "Management" },
     { "name": "BalanceControl", "version": 1, "small": true, "group": "Management" },
 
     { "name": "LegalEntityManagement", "spec": "LegalEntityService", "version": 4, "group": "Adyen for Platforms" },
-    { "name": "BalancePlatform", "version": 2, "excludedProjects": ["go"], "group": "Adyen for Platforms" },
+    { "name": "BalancePlatform", "version": 2, "group": "Adyen for Platforms" },
     { "name": "Transfers", "spec": "TransferService", "version": 4, "group": "Adyen for Platforms" },
     { "name": "DataProtection", "version": 1, "small": true, "group": "Adyen for Platforms" },
     { "name": "SessionAuthentication", "version": 1, "group": "Adyen for Platforms" },

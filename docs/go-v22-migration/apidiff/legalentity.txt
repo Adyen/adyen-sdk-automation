@@ -1,0 +1,59 @@
+Incompatible changes:
+- FinancialReport.DateOfFinancialData: changed from string to *string
+- NewFinancialReport: changed from func(string) *FinancialReport to func() *FinancialReport
+- NewSoleProprietorship: changed from func(string, string, Address) *SoleProprietorship to func(string, Address) *SoleProprietorship
+- SoleProprietorship.CountryOfGoverningLaw: changed from string to *string
+Compatible changes:
+- (*BusinessLine).GetIndustryCodeDescription: added
+- (*BusinessLine).GetIndustryCodeDescriptionOk: added
+- (*BusinessLine).HasIndustryCodeDescription: added
+- (*BusinessLine).SetIndustryCodeDescription: added
+- (*BusinessLineInfo).GetIndustryCodeDescription: added
+- (*BusinessLineInfo).GetIndustryCodeDescriptionOk: added
+- (*BusinessLineInfo).HasIndustryCodeDescription: added
+- (*BusinessLineInfo).SetIndustryCodeDescription: added
+- (*BusinessLineInfoUpdate).GetIndustryCodeDescription: added
+- (*BusinessLineInfoUpdate).GetIndustryCodeDescriptionOk: added
+- (*BusinessLineInfoUpdate).HasIndustryCodeDescription: added
+- (*BusinessLineInfoUpdate).SetIndustryCodeDescription: added
+- (*FinancialReport).HasDateOfFinancialData: added
+- (*IbanAccountIdentification).GetBic: added
+- (*IbanAccountIdentification).GetBicOk: added
+- (*IbanAccountIdentification).HasBic: added
+- (*IbanAccountIdentification).SetBic: added
+- (*LegalEntitiesApi).RequestPeriodicReview: added
+- (*LegalEntitiesApi).RequestPeriodicReviewInput: added
+- (*Organization).GetResidentialAddressIndicator: added
+- (*Organization).GetResidentialAddressIndicatorOk: added
+- (*Organization).HasResidentialAddressIndicator: added
+- (*Organization).SetResidentialAddressIndicator: added
+- (*Organization).SetResidentialAddressIndicatorNil: added
+- (*Organization).UnsetResidentialAddressIndicator: added
+- (*SoleProprietorship).GetResidentialAddressIndicator: added
+- (*SoleProprietorship).GetResidentialAddressIndicatorOk: added
+- (*SoleProprietorship).HasCountryOfGoverningLaw: added
+- (*SoleProprietorship).HasResidentialAddressIndicator: added
+- (*SoleProprietorship).SetResidentialAddressIndicator: added
+- (*SoleProprietorship).SetResidentialAddressIndicatorNil: added
+- (*SoleProprietorship).UnsetResidentialAddressIndicator: added
+- (*Trust).GetResidentialAddressIndicator: added
+- (*Trust).GetResidentialAddressIndicatorOk: added
+- (*Trust).HasResidentialAddressIndicator: added
+- (*Trust).SetResidentialAddressIndicator: added
+- (*Trust).SetResidentialAddressIndicatorNil: added
+- (*Trust).UnsetResidentialAddressIndicator: added
+- (*UnincorporatedPartnership).GetResidentialAddressIndicator: added
+- (*UnincorporatedPartnership).GetResidentialAddressIndicatorOk: added
+- (*UnincorporatedPartnership).HasResidentialAddressIndicator: added
+- (*UnincorporatedPartnership).SetResidentialAddressIndicator: added
+- (*UnincorporatedPartnership).SetResidentialAddressIndicatorNil: added
+- (*UnincorporatedPartnership).UnsetResidentialAddressIndicator: added
+- BusinessLine.IndustryCodeDescription: added
+- BusinessLineInfo.IndustryCodeDescription: added
+- BusinessLineInfoUpdate.IndustryCodeDescription: added
+- IbanAccountIdentification.Bic: added
+- LegalEntitiesApiRequestPeriodicReviewInput: added
+- Organization.ResidentialAddressIndicator: added
+- SoleProprietorship.ResidentialAddressIndicator: added
+- Trust.ResidentialAddressIndicator: added
+- UnincorporatedPartnership.ResidentialAddressIndicator: added

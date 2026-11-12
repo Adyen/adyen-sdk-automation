@@ -20,6 +20,16 @@ Management and Balance Platform restored; every public change recorded.
   `test_resolve_matrix_inputs.py`, and buildSrc fixtures, so CI never schedules a failing job.
 - **Breaking-change ledger** in `docs/go-v22-migration/` listing type, signature, constant, and wire
   changes with their cause.
+- **Catalog first for the restored services.** Gradle only registers tasks for applicable
+  services, so the exclusion is removed before Management and Balance Platform can be generated;
+  the catalog change and its test land in the same automation commit as the regeneration result.
+- **`nullable` next to `$ref` is ignored.** Management `TerminalSettings` declares its 25 sections
+  as `$ref` plus `nullable: true`. Both OpenAPI 3.0 and 3.1 ignore `$ref` siblings, v21 and the
+  other SDKs generate plain pointers, and the PATCH endpoints do not use explicit `null` for
+  sections, so Go staging drops the keyword instead of producing `Nullable*` wrappers.
+- **Generator drift check.** For every package with a 6.5.0 regeneration, `apidiff` against it
+  shows no incompatible change; all incompatible changes against v21.2.3 are spec changes, the
+  Checkout version bump, or the removed orphan `payments.GeneralApi`.
 
 ## Risks / Trade-offs
 

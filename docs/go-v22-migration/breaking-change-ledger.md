@@ -33,9 +33,34 @@ donation settings, Balance Platform `BalanceWebhookSettingInfoUpdate.conditions`
 |------|--------|-------|---------------|
 | `payments.GeneralApi` and its `GeneralApi*Input` types | Removed. The file `src/payments/api_general.go` came from an older generation, was never wired into `payments.APIClient`, and was kept only because deployment cleaned the wrong directory. The same operations stay on `payments.PaymentsApi` (`Authorise`, `Authorise3d`, `Authorise3ds2`, `GetAuthenticationResult`, `Retrieve3ds2Result`) | generator (deployment) | Breaking for code that referenced the type; use `client.Payments().PaymentsApi` |
 | `src/legalentity/api/openapi.yaml` | Removed (stale spec copy from an older generation, not used by any Go code) | generator (deployment) | No API change |
-## Spec changes seen while regenerating (owned by increment 5)
+## Increment 5: regenerated services, Management and Balance Platform restored
 
-| Package | Change | Cause |
-|---------|--------|-------|
-| `transfers` | `Counterparty` removed; `CapitalGrantInfo.Counterparty` is now `*GrantInfoCounterparty`, which has no `AccountHolderId` | spec |
-| `checkout` | 53 incompatible changes against v21.2.3 (for example `ShopperName` replaces `Name` on requests, `DonationPaymentRequest` fields removed, several fields no longer required) | spec |
+Full `apidiff` reports against v21.2.3 are in [`apidiff/`](apidiff/) (one file per package with
+changes). Packages not listed there have no exported change. All changes below come from the
+specs unless the cause says otherwise; for every package except Management and Balance Platform
+this was confirmed by `apidiff` against the 6.5.0 regeneration of the same specs (zero generator
+changes). Management and Balance Platform had no 6.5.0 regeneration (excluded from Go); their
+changes were checked against the source specs.
+
+| Package | Incompatible | Main changes | Cause |
+|---------|--------------|--------------|-------|
+| `adyen` | 1 | `CheckoutAPIVersion` is `"v72"` (was `"v71"`): Checkout requests go to `/checkout/v72` | catalog version |
+| `checkout` | 53 | `ShopperName` replaces `Name` on `PaymentRequest`, `CreateCheckoutSession*`, `DonationPaymentRequest`; `DonationPaymentRequest` loses `AdditionalData`, `ConversionId`, `DeliverAt`, `ThreeDSAuthenticationOnly`, and `PaymentMethod` becomes optional; `PaymentRequest.ConversionId` removed; `CardDetailsRequest.CardNumber`, `Donation.DonationType`, `SepaDirectDebitDetails.Iban`/`OwnerName`, `UpiCollectDetails.BillingSequenceNumber` become optional (pointer) with matching constructor changes; `SessionResultResponse` is no longer comparable | spec |
+| `legalentity` | 4 | `FinancialReport.DateOfFinancialData` and `SoleProprietorship.CountryOfGoverningLaw` become optional, constructors change | spec |
+| `transfers` | 13 | `Counterparty` removed; `CapitalGrant.Counterparty` is `*GrantCounterparty`, `CapitalGrantInfo.Counterparty` is `*GrantInfoCounterparty` (no `AccountHolderId`); new `CashOutApi` | spec |
+| `payments` | 6 | `GeneralApi` and `GeneralApi*Input` removed (see increment 4) | generator (deployment) |
+| `balanceplatform` | 62 | Sweep operations (`CreateSweep`, `GetSweep`, `GetAllSweepsForBalanceAccount`, `UpdateSweep`, `DeleteSweep` and their inputs) move from `BalanceAccountsApi` to the new `CustomPayoutSchedulesSweepsApi` (spec tag "Custom payout schedules (sweeps)"); `DeviceInfo` keeps only `FormFactor`, `OsName`, `Phone`; `Card.Number` becomes optional | spec |
+| `management` | 284 | `PaymentMethod` fields and getters use the new `*ResponseInfo` types and `UpdatePaymentMethodInfo` the new `*UpdateInfo` types (228 of the 284; for example `GetApplePayDomains` returns `ApplePayResponseInfo`); `PayByBankPlaidInfo` keeps only `Logo` and `TransactionDescription`; `OfflineProcessing.OfflineSwipeLimits` removed; `AccelInfo`/`NyceInfo`/`PulseInfo`/`StarInfo.ProcessingType` become optional; `SplitConfigurationRule.FundingSource` becomes required; `Terminal` is no longer comparable | spec |
+| `acswebhook` | 1 | `NewRelayedAuthenticationRequest` takes the newly required fields | spec |
+| `configurationwebhook` | 2 | `Card.Number` becomes optional | spec |
+
+Compatible additions (new fields, models, operations, enum values) are in the same reports, for
+example 1137 in Checkout and 1032 in Management.
+
+### Decisions
+
+- `nullable: true` next to a `$ref` is ignored in Go spec staging, as OpenAPI 3.0 and 3.1 and the
+  other SDKs do. Management `TerminalSettings` sections therefore stay `*CardholderReceipt` and so
+  on, as in v21, instead of becoming `NullableCardholderReceipt` (21 avoided breaking changes).
+  The PATCH terminal settings endpoints do not use explicit `null` for sections.
+- Generated `GetXxxOk` methods no longer contain blank lines (template whitespace fix).
