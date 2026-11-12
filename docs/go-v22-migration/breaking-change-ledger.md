@@ -55,7 +55,7 @@ changes were checked against the source specs.
 | `configurationwebhook` | 2 | `Card.Number` becomes optional | spec |
 
 Compatible additions (new fields, models, operations, enum values) are in the same reports, for
-example 1137 in Checkout and 1032 in Management.
+example 1127 in Checkout and 1032 in Management.
 
 ### Decisions
 
@@ -64,3 +64,29 @@ example 1137 in Checkout and 1032 in Management.
   on, as in v21, instead of becoming `NullableCardholderReceipt` (21 avoided breaking changes).
   The PATCH terminal settings endpoints do not use explicit `null` for sections.
 - Generated `GetXxxOk` methods no longer contain blank lines (template whitespace fix).
+
+## Increment 6: generated webhook handlers
+
+Every webhook package's `webhook_handler.go` is now generated from the `x-webhook-root` models of
+its spec (template `templates/custom/webhook_handler.mustache`). All 36 roots get a
+`Handle<Model>(req string) (*<Model>, error)` function. The 19 v21.2.3 handlers keep their names
+and signatures; only their doc comments change. The classic `webhook` package and
+`hmacvalidator` are unchanged.
+
+| Package | Change | Cause | Compatibility |
+|---------|--------|-------|---------------|
+| `acswebhook` | `HandleRelayedAuthenticationRequest` added | generator (template) | Additive |
+| `balancewebhook` | `HandleReleasedBlockedBalanceNotificationRequest` added | generator (template) | Additive |
+| `configurationwebhook` | Handlers added for `AccountPayoutAutoApplication`, `Mandate`, `NetworkToken`, `PayoutScheduleBA`, `PayoutScheduleBP`, `PayoutScheduleState`, `Score`, `SweepExecution` notification requests and `TopUpConfigurationEventRequest`, `TopUpConfigurationUpdatedEventRequest` | generator (template) | Additive |
+| `managementwebhook` | `HandleTerminalBoardingNotificationRequest`, `HandleTerminalSettingsNotificationRequest` added | generator (template) | Additive |
+| `disputewebhook`, `negativebalancewarningwebhook`, `relayedauthorizationwebhook`, `tokenizationwebhook` | First handlers: `HandleDisputeNotificationRequest`, `HandleNegativeBalanceCompensationWarningNotificationRequest`, `HandleRelayedAuthorisationRequest`, and the four `HandleTokenization*DetailsNotificationRequest` | generator (template) | Additive |
+| `checkout` | `PayToPaymentMethodAllOf`, `UPIPaymentMethodAllOf` (and their constructors and `Nullable*` types), added in increment 5, are removed again | generator (deployment) | Not in v21.2.3; unused leftovers of an earlier generation |
+
+### Decisions
+
+- Generation now deletes the generator output directory before each Go service run. The
+  increment 5 regeneration reused an existing output directory, so two models from an earlier
+  generation were deployed; a regeneration from an empty output directory no longer produces them.
+- Webhook packages render `webhook_handler.go` as their only supporting file; other services keep
+  rendering `client.go`. Deployment no longer keeps any handwritten file.
+- Empty directories created by the generator (`api/`) are not deployed.

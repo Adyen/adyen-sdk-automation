@@ -839,7 +839,6 @@ Compatible changes:
 - NewNullableOpiResponse: added
 - NewNullablePayByBankCADirectDebitDetails: added
 - NewNullablePayToPaymentMethod: added
-- NewNullablePayToPaymentMethodAllOf: added
 - NewNullablePayment: added
 - NewNullablePaymentDetailsResponseAction: added
 - NewNullablePaymentValidations: added
@@ -875,7 +874,6 @@ Compatible changes:
 - NewNullableThirdPartyTokenRedundancyInfo: added
 - NewNullableTokenMandate: added
 - NewNullableUPIPaymentMethod: added
-- NewNullableUPIPaymentMethodAllOf: added
 - NewNullableUpiQrDetails: added
 - NewNullableValidateShopperIdRequest: added
 - NewNullableValidateShopperIdResponse: added
@@ -889,8 +887,6 @@ Compatible changes:
 - NewPayByBankCADirectDebitDetails: added
 - NewPayByBankCADirectDebitDetailsWithDefaults: added
 - NewPayToPaymentMethod: added
-- NewPayToPaymentMethodAllOf: added
-- NewPayToPaymentMethodAllOfWithDefaults: added
 - NewPayToPaymentMethodWithDefaults: added
 - NewPayment: added
 - NewPaymentValidations: added
@@ -955,8 +951,6 @@ Compatible changes:
 - NewTokenMandate: added
 - NewTokenMandateWithDefaults: added
 - NewUPIPaymentMethod: added
-- NewUPIPaymentMethodAllOf: added
-- NewUPIPaymentMethodAllOfWithDefaults: added
 - NewUPIPaymentMethodWithDefaults: added
 - NewUpiQrDetails: added
 - NewUpiQrDetailsWithDefaults: added
@@ -1005,7 +999,6 @@ Compatible changes:
 - NullableOpiResponse: added
 - NullablePayByBankCADirectDebitDetails: added
 - NullablePayToPaymentMethod: added
-- NullablePayToPaymentMethodAllOf: added
 - NullablePayment: added
 - NullablePaymentDetailsResponseAction: added
 - NullablePaymentValidations: added
@@ -1041,7 +1034,6 @@ Compatible changes:
 - NullableThirdPartyTokenRedundancyInfo: added
 - NullableTokenMandate: added
 - NullableUPIPaymentMethod: added
-- NullableUPIPaymentMethodAllOf: added
 - NullableUpiQrDetails: added
 - NullableValidateShopperIdRequest: added
 - NullableValidateShopperIdResponse: added
@@ -1059,7 +1051,6 @@ Compatible changes:
 - PayPayDetails.SdkData: added
 - PayToDetails.SdkData: added
 - PayToPaymentMethod: added
-- PayToPaymentMethodAllOf: added
 - PayUUpiDetails.SdkData: added
 - PayWithGoogleDetails.SdkData: added
 - PayWithGoogleDonations.SdkData: added
@@ -1169,7 +1160,6 @@ Compatible changes:
 - TokenMandate: added
 - TwintDetails.SdkData: added
 - UPIPaymentMethod: added
-- UPIPaymentMethodAllOf: added
 - UpiCollectDetails.SdkData: added
 - UpiIntentDetails.BillingSequenceNumber: added
 - UpiIntentDetails.SdkData: added

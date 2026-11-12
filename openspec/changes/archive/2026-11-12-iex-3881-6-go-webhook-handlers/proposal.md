@@ -22,11 +22,12 @@ stages the `x-webhook-root` metadata for Go. Increment 6 of 8.
 - `go-webhook-handlers`: generated typed webhook handlers for Go.
 
 ### Modified Capabilities
-None.
+- `go-generation-configuration`: webhook packages render their handler instead of keeping a
+  handwritten one; generation starts from an empty output directory.
 
 ## Impact
 
-- Go SDK `templates/custom` and `templates/config.yaml`; `go/build.gradle.kts` deployment rules;
+- Go SDK `templates/custom` and `templates/config.yaml`; `GoServiceLayout`/`GoServices` deployment rules;
   `tests/compat/webhook_contract_test.go` remains the gate.
 - Gate: clean regeneration produces all applicable handlers without manual restoration, and a
   second run leaves no substantive diff.

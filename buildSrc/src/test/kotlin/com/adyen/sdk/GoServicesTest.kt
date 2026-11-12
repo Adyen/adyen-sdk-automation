@@ -79,6 +79,21 @@ class GoServicesTest {
     }
 
     @Test
+    fun `webhook packages render the handler instead of the client`() {
+        val project = goProject()
+
+        mapOf(
+            "AcsWebhooks" to "webhook_handler.go",
+            "Checkout" to "client.go",
+            "Payment" to "client.go",
+        ).forEach { (name, supportingFile) ->
+            assertThat(project.generate(name).globalProperties.get())
+                .`as`("$name global properties")
+                .containsEntry("supportingFiles", supportingFile)
+        }
+    }
+
+    @Test
     fun `each service deploys into its own directory`() {
         val project = goProject()
 

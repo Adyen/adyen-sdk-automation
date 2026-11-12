@@ -1,0 +1,3 @@
+Compatible changes:
+- HandleTerminalBoardingNotificationRequest: added
+- HandleTerminalSettingsNotificationRequest: added

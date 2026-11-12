@@ -11,14 +11,18 @@ data class GoServiceLayout(
     val packageName: String,
     /** `serviceName` template value; selects the `<serviceName>Endpoint` config field. */
     val serviceName: String,
-    /** Webhook packages contain models only; their `client.go` is never deployed. */
+    /** Webhook packages contain models and typed handlers only; they never get a `client.go`. */
     val isWebhook: Boolean,
     /** Catalog `small` flag: the service is expected to have a single `General` tag. */
     val small: Boolean,
-    /** Handwritten files that deployment must keep in the target directory. */
-    val preservedFiles: Set<String>,
 ) {
     val directory: String get() = "src/$packageName"
+
+    /**
+     * Supporting file the generator renders: webhook packages get typed handlers for their
+     * `x-webhook-root` models, other services the `APIClient` in `client.go`.
+     */
+    val supportingFile: String get() = if (isWebhook) WEBHOOK_HANDLER else CLIENT
 
     /**
      * Whether the generated `client.go` is deployed, given the names of the generated files.
@@ -38,6 +42,7 @@ data class GoServiceLayout(
         )
 
         const val WEBHOOK_HANDLER = "webhook_handler.go"
+        const val CLIENT = "client.go"
 
         fun of(service: Service): GoServiceLayout {
             val override = LEGACY[service.name]
@@ -48,7 +53,6 @@ data class GoServiceLayout(
                 serviceName = override?.serviceName ?: service.name,
                 isWebhook = service.isWebhook,
                 small = service.small,
-                preservedFiles = if (service.isWebhook) setOf(WEBHOOK_HANDLER) else emptySet(),
             )
         }
     }

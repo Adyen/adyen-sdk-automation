@@ -15,6 +15,7 @@ Compatible changes:
 - (*RelayedAuthenticationRequest).SetThreeDSRequestorAppURL: added
 - (*RelayedAuthenticationRequest).SetTimestamp: added
 - (*RelayedAuthenticationRequest).SetType: added
+- HandleRelayedAuthenticationRequest: added
 - RelayedAuthenticationRequest.Environment: added
 - RelayedAuthenticationRequest.ThreeDSRequestorAppURL: added
 - RelayedAuthenticationRequest.Timestamp: added

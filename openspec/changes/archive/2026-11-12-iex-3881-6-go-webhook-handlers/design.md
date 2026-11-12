@@ -15,10 +15,13 @@ changing `NotificationRequestItem.AdditionalData`.
 
 - **Generate from existing metadata**; no new spec annotation. Alternative rejected: a handler list
   in the build script (duplicates the spec).
-- **Name compatibility first.** Derive handler names from the v21 exported API; add an explicit
-  name map for handlers whose names do not follow the generated pattern.
-- **Switch deployment last.** Keep preserving `webhook_handler.go` until the generated handler is
-  a superset of the manual one; then delete the preservation rule.
+- **Name compatibility first.** All 19 v21 handlers are named `Handle<Model>` after their root
+  model, so the template needs no name map.
+- **One supporting file per service.** `GoServiceLayout.supportingFile` selects
+  `webhook_handler.go` for webhook packages and `client.go` otherwise, through the generator's
+  `supportingFiles` global property; the preservation rule is gone.
+- **Generate into an empty directory.** The generator never deletes outputs, so stale files of
+  earlier runs reached deployment (two Checkout `*AllOf` models in increment 5).
 
 ## Risks / Trade-offs
 

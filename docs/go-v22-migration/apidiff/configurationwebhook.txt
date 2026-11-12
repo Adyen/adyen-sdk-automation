@@ -47,6 +47,16 @@ Compatible changes:
 - Card.Usage: added
 - CardConfiguration.PrintLine: added
 - Device: added
+- HandleAccountPayoutAutoApplicationNotificationRequest: added
+- HandleMandateNotificationRequest: added
+- HandleNetworkTokenNotificationRequest: added
+- HandlePayoutScheduleBANotificationRequest: added
+- HandlePayoutScheduleBPNotificationRequest: added
+- HandlePayoutScheduleStateNotificationRequest: added
+- HandleScoreNotificationRequest: added
+- HandleSweepExecutionNotificationRequest: added
+- HandleTopUpConfigurationEventRequest: added
+- HandleTopUpConfigurationUpdatedEventRequest: added
 - IbanAccountIdentification.Bic: added
 - Mandate: added
 - MandateBankAccount: added

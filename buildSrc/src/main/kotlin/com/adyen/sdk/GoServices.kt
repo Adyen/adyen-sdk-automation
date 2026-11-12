@@ -20,6 +20,10 @@ fun Project.configureGoServices(services: List<Service>) {
         val generate = tasks.named("generate${svc.name}", GenerateTask::class.java) {
             packageName.set(goLayout.packageName)
             additionalProperties.put("serviceName", goLayout.serviceName)
+            globalProperties.put("supportingFiles", goLayout.supportingFile)
+            // The generator only adds files, so outputs of earlier runs (removed models, a
+            // client.go from before a supporting file change) would otherwise be deployed.
+            doFirst { project.delete(outputDir.get()) }
             // Read at execution time, after prepareSpec<Service> staged the spec.
             additionalProperties.putAll(stagedSpec.map { spec ->
                 if (SpecProcessor.respondsWithSchema(spec.asFile.readText(), REST_SERVICE_ERROR)) {
@@ -37,14 +41,14 @@ fun Project.configureGoServices(services: List<Service>) {
             dependsOn(generate)
             outputs.upToDateWhen { false }
             doFirst {
-                target.asFile.listFiles()
-                    ?.filter { it.name !in goLayout.preservedFiles }
-                    ?.forEach { it.deleteRecursively() }
+                target.asFile.listFiles()?.forEach { it.deleteRecursively() }
             }
             val generated = layout.buildDirectory.dir("services/${svc.id}")
             from(generated)
+            // The generator creates an empty api/ directory even when openapi.yaml is not rendered.
+            includeEmptyDirs = false
             exclude { element ->
-                element.relativePath.pathString == "client.go" &&
+                element.relativePath.pathString == GoServiceLayout.CLIENT &&
                     !goLayout.deploysClient(generated.get().asFile.list()?.toList().orEmpty())
             }
             into(target)

@@ -1,0 +1,2 @@
+Compatible changes:
+- HandleDisputeNotificationRequest: added

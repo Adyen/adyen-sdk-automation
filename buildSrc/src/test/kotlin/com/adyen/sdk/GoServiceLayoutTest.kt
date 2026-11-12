@@ -12,7 +12,7 @@ class GoServiceLayoutTest {
         assertThat(layout.packageName).isEqualTo("checkout")
         assertThat(layout.directory).isEqualTo("src/checkout")
         assertThat(layout.serviceName).isEqualTo("Checkout")
-        assertThat(layout.preservedFiles).isEmpty()
+        assertThat(layout.supportingFile).isEqualTo("client.go")
         assertThat(layout.deploysClient(listOf("api_payments.go", "api_donations.go", "client.go"))).isTrue()
     }
 
@@ -40,12 +40,12 @@ class GoServiceLayoutTest {
     }
 
     @Test
-    fun `webhook package is singular, keeps the handler and has no client`() {
+    fun `webhook package is singular, renders the handler and has no client`() {
         val layout = GoServiceLayout.of(Service(name = "AcsWebhooks", version = 1))
 
         assertThat(layout.packageName).isEqualTo("acswebhook")
         assertThat(layout.directory).isEqualTo("src/acswebhook")
-        assertThat(layout.preservedFiles).containsExactly("webhook_handler.go")
+        assertThat(layout.supportingFile).isEqualTo("webhook_handler.go")
         assertThat(layout.deploysClient(listOf("api_general.go", "api_other.go", "client.go"))).isFalse()
     }
 

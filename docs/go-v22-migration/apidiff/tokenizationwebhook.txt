@@ -1,0 +1,5 @@
+Compatible changes:
+- HandleTokenizationAlreadyExistingDetailsNotificationRequest: added
+- HandleTokenizationCreatedDetailsNotificationRequest: added
+- HandleTokenizationDisabledDetailsNotificationRequest: added
+- HandleTokenizationUpdatedDetailsNotificationRequest: added

@@ -1,0 +1,2 @@
+Compatible changes:
+- HandleReleasedBlockedBalanceNotificationRequest: added
