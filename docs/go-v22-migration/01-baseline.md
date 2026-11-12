@@ -112,6 +112,16 @@ non-determinism. The raw generator output also has "imported and not used" error
   `config/services.json`, so this baseline does not regenerate them (29 applicable entries;
   31 after restoring both). Their stale bot PRs #516 and #523 remain open; #523 fails Go 1.23.
 
+### Working branch
+
+- **B1 (migration, increment 5).** Commit `fee128c7` on `feature/go-generator-upgrade` adds 54
+  new `src/balanceplatform` files that do not compile: `ACTIVE` is declared by both
+  `AssociationStatus` and `LimitStatus` (same unprefixed-enum issue as G3), and
+  `api_balances.go` and others lack `ioutil`/`json` imports (no `make fmt`). The same errors
+  exist on the pre-rebase commit `12e9eee4`, so the rebase did not introduce them. Because
+  `adyen` imports `balanceplatform`, every test package on the branch, including
+  `tests/compat`, fails to build until this is fixed.
+
 ### Wire defaults worth tracking
 
 - **W1.** `checkout.NewPaymentRequest` applies the spec default and sends
@@ -120,7 +130,10 @@ non-determinism. The raw generator output also has "imported and not used" error
 
 ## Compatibility fixtures
 
-Added to the SDK migration branch as `tests/compat` (test-only, no production code changes):
+Committed as `tests/compat` (test-only, no production code changes) in commit `e8a2a494` on
+branch `feature/go-generator-upgrade` of `adyen-sdk-automation/go/repo`, rebased onto v21.2.3.
+The fixtures pass on clean v21.2.3 (Go 1.23 and 1.27.3). On that branch they do not build yet,
+see B1.
 
 - `surface_test.go`: compile-time guards for `adyen.NewClient`, all 15 service accessors,
   request builders and call signatures (Checkout, Transfers), `common.Config` fields,
@@ -137,7 +150,8 @@ Added to the SDK migration branch as `tests/compat` (test-only, no production co
   `false`, discriminated `oneOf` decode, re-decode into the same destination, unknown variant
   rejection, zero amounts.
 - `webhook_contract_test.go`: classic notification decode with non-string `additionalData`,
-  HMAC against Adyen's published sample (computed independently with Python `hmac`),
+  HMAC with a synthetic runtime-built key whose signature was computed independently with
+  Python `hmac`,
   tampered/missing/non-string signatures, a typed payload, and malformed JSON for every
   handler.
 
