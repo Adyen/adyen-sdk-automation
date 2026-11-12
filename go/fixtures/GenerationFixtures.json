@@ -1,0 +1,153 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Go generation fixtures", "version": "1" },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "Amount": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["currency", "value"],
+        "properties": {
+          "currency": { "type": "string" },
+          "value": { "type": "integer", "format": "int64" }
+        }
+      },
+      "NullableFields": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "legacyBool": { "type": "boolean", "nullable": true },
+          "legacyString": { "type": "string", "nullable": true },
+          "legacyArray": { "type": "array", "items": { "type": "string" }, "nullable": true },
+          "legacyRef": { "$ref": "#/components/schemas/Amount", "nullable": true },
+          "unionBool": { "type": ["boolean", "null"] },
+          "unionString": { "type": ["string", "null"] },
+          "unionDate": { "type": ["string", "null"], "format": "date" },
+          "unionInt32": { "type": ["integer", "null"], "format": "int32" },
+          "unionInt64": { "type": ["integer", "null"], "format": "int64" },
+          "unionArray": { "type": ["array", "null"], "items": { "$ref": "#/components/schemas/Amount" } },
+          "unionEnum": { "type": ["string", "null"], "enum": ["active", "inactive"] },
+          "unionRef": { "type": "object", "oneOf": [ { "$ref": "#/components/schemas/Amount" }, { "type": "null" } ] },
+          "legacyObject": { "type": "object", "nullable": true },
+          "unionMap": { "type": ["object", "null"], "additionalProperties": { "type": "string" } },
+          "unionAny": { "type": ["object", "null"], "additionalProperties": true }
+        }
+      },
+      "PlainFields": {
+        "type": "object",
+        "required": ["requiredMap"],
+        "properties": {
+          "name": { "type": "string" },
+          "enabled": { "type": "boolean", "default": false },
+          "count": { "type": "integer", "format": "int32" },
+          "amount": { "$ref": "#/components/schemas/Amount" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "string" } },
+          "amounts": { "type": "object", "additionalProperties": { "$ref": "#/components/schemas/Amount" } },
+          "requiredMap": { "type": "object", "additionalProperties": { "type": "string" } },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "freeForm": { "type": "object" }
+        }
+      },
+      "ShopperIdPaymentMethod": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "payTo": "#/components/schemas/PayToPaymentMethod",
+            "upi_collect": "#/components/schemas/UPIPaymentMethod"
+          }
+        },
+        "properties": { "type": { "type": "string", "maxLength": 50, "minLength": 0, "pattern": "payTo|upi_collect" } },
+        "required": ["type"]
+      },
+      "PayToPaymentMethod": {
+        "type": "object",
+        "allOf": [
+          { "$ref": "#/components/schemas/ShopperIdPaymentMethod" },
+          { "type": "object", "properties": { "shopperReference": { "type": "string", "maxLength": 256, "minLength": 0 } } }
+        ],
+        "required": ["type"]
+      },
+      "UPIPaymentMethod": {
+        "type": "object",
+        "allOf": [
+          { "$ref": "#/components/schemas/ShopperIdPaymentMethod" },
+          { "type": "object", "properties": { "virtualPaymentAddress": { "type": "string" } } }
+        ],
+        "required": ["type"]
+      },
+      "CardDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": { "type": "string", "enum": ["scheme"], "default": "scheme" },
+          "number": { "type": "string" }
+        }
+      },
+      "WalletDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string", "enum": ["paywithgoogle", "applepay"] },
+          "token": { "type": "string" }
+        }
+      },
+      "PaymentMethod": {
+        "oneOf": [
+          { "$ref": "#/components/schemas/CardDetails" },
+          { "$ref": "#/components/schemas/WalletDetails" }
+        ]
+      },
+      "AmountOrWallet": {
+        "oneOf": [
+          { "$ref": "#/components/schemas/Amount" },
+          { "$ref": "#/components/schemas/WalletDetails" }
+        ]
+      },
+      "DiscriminatedMethod": {
+        "oneOf": [
+          { "$ref": "#/components/schemas/PayToPaymentMethod" },
+          { "$ref": "#/components/schemas/UPIPaymentMethod" }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "payTo": "#/components/schemas/PayToPaymentMethod",
+            "upi_collect": "#/components/schemas/UPIPaymentMethod"
+          }
+        }
+      },
+      "AnyOfValue": {
+        "anyOf": [
+          { "$ref": "#/components/schemas/Amount" },
+          { "$ref": "#/components/schemas/WalletDetails" }
+        ]
+      },
+      "PaymentRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["amount", "paymentMethod"],
+        "properties": {
+          "amount": { "$ref": "#/components/schemas/Amount" },
+          "paymentMethod": { "$ref": "#/components/schemas/PaymentMethod" },
+          "threeDSAuthenticationOnly": { "type": "boolean", "default": false },
+          "any": { "$ref": "#/components/schemas/AnyOfValue" }
+        }
+      },
+      "CALocalBankAccountType": { "type": "string", "enum": ["checking", "savings"] },
+      "USLocalBankAccountType": { "type": "string", "enum": ["checking", "savings"] },
+      "CALocalAccountIdentification": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": { "accountType": { "$ref": "#/components/schemas/CALocalBankAccountType" } }
+      },
+      "USLocalAccountIdentification": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": { "accountType": { "$ref": "#/components/schemas/USLocalBankAccountType" } }
+      }
+    }
+  }
+}

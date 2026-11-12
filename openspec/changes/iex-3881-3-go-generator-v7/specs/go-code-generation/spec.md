@@ -9,9 +9,10 @@ report the engine version it actually loaded.
 - **THEN** the log shows OpenAPI Generator 7.11.0
 
 ### Requirement: Nullable values keep their three states
-Generated models SHALL distinguish absent, explicit `null`, and set values for nullable properties
-declared either with `nullable: true` or with a 3.1 type array containing `null`, for primitives,
-arrays, maps, and objects.
+Generated models SHALL distinguish absent, explicit `null`, and set values for nullable primitive
+and object properties declared with `nullable: true`, a 3.1 type array containing `null`, or a
+`oneOf` with a `null` member. Nullable arrays and maps MUST keep the v21 behavior: absent and
+explicit `null` both decode to `nil`.
 
 #### Scenario: Round trip of an explicit null
 - **WHEN** a JSON payload sets a nullable integer to `null` and is decoded and re-encoded
@@ -20,6 +21,10 @@ arrays, maps, and objects.
 #### Scenario: Absent value
 - **WHEN** the property is absent in the payload
 - **THEN** it is absent after re-encoding
+
+#### Scenario: Non-nullable reference to a schema used nullably elsewhere
+- **WHEN** one property references `Amount` through a nullable union and another references it plainly
+- **THEN** only the first property is generated as `NullableAmount`
 
 ### Requirement: Composed schemas compile and decode
 Generated code SHALL compile and decode correctly for `allOf` (including inherited required
@@ -34,10 +39,25 @@ fields), discriminated and non-discriminated `oneOf`, and `anyOf`.
 - **THEN** decoding returns an error rather than a partially filled variant
 
 ### Requirement: Enum constants never collide
-Generated enum constants in one package MUST be unique; when two enums would emit the same
-constant name, the constants SHALL be prefixed with their type name, and non-colliding constants
-keep their current names.
+Generated enum constants in one package MUST be unique: constants of top-level enum types SHALL be
+prefixed with their type name, and constants that exist in v21.2.3 keep their names.
 
 #### Scenario: Capital bank account types
 - **WHEN** Capital is generated with `CALocalBankAccountType` and `USLocalBankAccountType`
 - **THEN** the package compiles
+
+### Requirement: Typed maps stay pointers
+Optional properties with `additionalProperties` of a given type SHALL be generated as
+`*map[string]T`, as in v21; free-form objects stay `map[string]interface{}`.
+
+#### Scenario: Optional metadata map
+- **WHEN** an optional property is `{type: object, additionalProperties: {type: string}}`
+- **THEN** the field type is `*map[string]string`
+
+### Requirement: Go spec staging normalizes for OpenAPI 3.1
+Go spec staging SHALL remove `additionalProperties: false`, rewrite `nullable: true` to the 3.1
+form, and mark `$ref` members of nullable unions; staging for other projects MUST stay unchanged.
+
+#### Scenario: Staged specs
+- **WHEN** all projects stage their specs
+- **THEN** non-Go specs are byte-identical to increment 2 and Go specs equal the source plus the normalization

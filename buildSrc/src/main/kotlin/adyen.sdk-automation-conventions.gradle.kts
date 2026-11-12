@@ -96,6 +96,7 @@ applicableServices.forEach { svc ->
                 downgradeOpenApiVersion = !preserve,
                 generalTagReplacement = if (svc.small && removeTags) svc.name else null,
                 markWebhookRoots = svc.isWebhook,
+                normalizeForOpenApi31 = preserve,
             )
         }
         inputs.file(sourceSpec)

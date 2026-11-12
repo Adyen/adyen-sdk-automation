@@ -12,28 +12,73 @@ kept close to Adyen's current client shape.
 **Non-Goals:** regenerating production services (increment 5); pointer-to-map rewrite; enum
 performance work; webhook handler generation (increment 6).
 
+## Findings (7.11.0 trial with unchanged templates)
+
+Running 7.11.0 on the 3.1 specs with the v21 templates and comparing with a 6.5.0 regeneration of
+the same specs (`apidiff`) showed these root causes. All of them are engine behavior, shared with
+7.22.0 except where noted, so a newer 7.x would not remove the need for the fixes below.
+
+- **`additionalProperties: false` turns models into maps.** swagger-parser parses it as an empty
+  schema under 3.1. The model is then treated as a map: `AdditionalProperties map[string]interface{}`
+  is added to 275 models, and the 3.1 normalizer (which in 7.11 checks `additionalProperties` before
+  `properties`) skips property normalization, so `type: [X, "null"]` unions lose `isNullable`.
+- **Shared `$ref` schema instances.** The parser reuses one `Schema` object for identical `{$ref}`
+  nodes; collapsing `oneOf: [$ref, {type: null}]` marks every plain use of that `$ref` nullable
+  (also in 7.22).
+- **3.0 `nullable: true` is ignored** by the 3.1 parser (LegalEntity `NullableBool` became `*bool`).
+- **Typed maps are flagged `isFreeFormObject`** under 3.1, so the template dropped the `*` from
+  `*map[string]T` (pointer-to-map guardrail).
+- **Discriminator parent embedding.** `allOf` children of a discriminator base get `parent` set and
+  only their own `vars`; the inherited required `type` was dropped (G1).
+- **Generator 7 renames `XxxApi` to `XxxAPI`** and needs explicit options to keep v21 naming.
+
 ## Decisions
 
-- **7.11.0 first.** It already runs for other projects, so engine bugs are known. A newer 7.x is
-  considered only if 7.11.0 fails the gate. Alternative rejected: latest 7.x straight away (two
-  moving parts at once).
-- **Port, do not replace, templates.** Diff upstream `go` templates 6.5.0 → 7.11.0 and apply only
-  changes needed for 3.1, unions, and nullable handling. Alternative rejected: adopt upstream
-  templates wholesale (changes client API and naming).
-- **Fixture-first.** Small purpose-built specs isolate each construct; the real IEX-3881 models
-  (Management, Balance Platform) prove the end-to-end case.
-- **Enum prefixing only on collision**, so existing exported constant names stay stable.
-  Open: whether the collision check can live in the template or needs a generator option
-  (`enumClassPrefix` prefixes all enums, which is a breaking change).
-- **Decoding strictness matches v21.** If v7 rejects unknown fields or enum values that v21 accepts,
-  restore the v21 behavior; the HTTP contract fixtures assert it.
+- **Stay on 7.11.0.** It is the engine Java/PHP already use, and the trial showed the 3.1 issues are
+  shared with newer 7.x. The fixes live in Go-only spec staging and the SDK templates.
+- **Normalize the staged Go spec for 3.1 (`SpecProcessor` option `normalizeForOpenApi31`,
+  enabled only where `preserveOpenApiVersion` is set, i.e. Go):** drop `additionalProperties: false`
+  (absent already means "not allowed" with `disallowAdditionalPropertiesIfNotPresent: true`);
+  rewrite legacy `nullable: true` to the 3.1 form (`$ref` → `oneOf: [$ref, {type: null}]`, scalar
+  type → type array, `oneOf` → extra null member) and drop `nullable: false`; tag `$ref` members of
+  nullable unions with `x-adyen-nullable-ref: true` so the parser cannot share their instance with
+  plain `$ref`s. `example`/`examples` are left untouched. Non-Go staged specs stay byte-identical.
+- **Template and config changes (SDK `templates/`):**
+  - `config.yaml`: `apiNameSuffix: Api` (v21 type names), `enumClassPrefix: true`,
+    `disallowAdditionalPropertiesIfNotPresent: true`.
+  - `model_simple`: flatten inherited fields (`allVars` everywhere, no parent embedding) so `allOf`
+    children keep inherited properties (G1); typed maps (`isMap`) keep the pointer even when the
+    engine also sets `isFreeFormObject`; nullable container types are not qualified with `common.`;
+    `Has<Field>` on nullable containers returns true only when set (upstream 7.x fix).
+  - `model_oneof`: the discriminator path clears all variants before decoding and returns an error
+    for an unknown discriminator value (v21.2.3 behavior); the structural path only calls
+    `isValidType()` on members that define it.
+  - `api`: `serviceError` is declared inside each error branch, so operations whose error
+    responses have no body still compile with `hasRestServiceError`.
+- **Enum prefixing via `enumClassPrefix`.** It only affects top-level enum types. v21.2.3 has none
+  (all its enums are inline and keep their constant names), so the prefix changes no existing
+  constant; new top-level enums (Capital, Balance Platform, Checkout `CalculationType`, ...) get
+  unique `TYPE_VALUE` names.
+- **Fixture-first.** `go/fixtures/GenerationFixtures.json` is staged like a Go service spec and
+  generated by `./gradlew :go:fixtures` into the SDK's `tests/generation/fixtures`, where
+  handwritten tests pin each construct. The tests run with the SDK's `go test ./...`.
+- **Decoding strictness matches v21.** Unknown fields and enum values in responses are still
+  accepted (`tests/compat`).
 
 ## Risks / Trade-offs
 
 - [v7 changes default handling (W1)] → JSON fixtures fail; decide per case, record in the ledger.
 - [Templates and generator drift apart] → keep template and generator revisions in the same PR pair.
 - [goimports version differences] → pin goimports v0.41.0 in the fixture task, as CI does.
+- [Nullable arrays and maps] → like v21, they are plain slices/maps: absent and explicit `null`
+  both decode to `nil`, and an explicit `null` cannot be sent. Management (`DonationCampaignUpdate`,
+  `InPersonDonationSettingsUpdate`, `OnlineDonationSettingsUpdate`) and Balance Platform
+  (`BalanceWebhookSettingInfoUpdate.conditions`) use nullable arrays in PATCH models; decide in
+  increment 5 whether they need a nullable container type.
+- [Structural `oneOf` members without a `type` enum match any object] → such payloads are rejected
+  as ambiguous. No production spec has this shape today; the fixtures pin the behavior.
 
 ## Open Questions
 
-- Does generated code need a minimum Go version above 1.23?
+- Does generated code need a minimum Go version above 1.23? (Generated code builds and passes on
+  Go 1.23.0 and 1.27.4.)
