@@ -13,7 +13,7 @@ Evidence: `apidiff` against a 6.5.0 regeneration of the same specs isolates gene
 |------|--------|-------|---------------|
 | All discriminated `oneOf` types (e.g. `checkout.CheckoutPaymentMethod`) | Decoding selects the variant by the spec's discriminator mapping values (`scheme`, `ideal`, `iban`, ...); model names are still accepted | generator | Wire: payloads that 6.5.0 regeneration could not decode now decode; v21.2.3 matched structurally |
 | All discriminated `oneOf` types | Decoding into a value that already holds a variant clears it first; an unknown discriminator value returns an error and leaves no variant set | generator (template) | Same observable behavior as v21.2.3 (`tests/compat`) |
-| Nullable array/map fields | `Has<Field>()` returns `true` only when the field is set (v21 returned `true` when it was `nil`) | generator (template, upstream 7.x fix) | Behavior change |
+| Nullable map fields | `Has<Field>()` returns `true` only when the field is set (v21 returned `true` when it was `nil`); for nullable arrays see "Nullable arrays" | generator (template, upstream 7.x fix) | Behavior change |
 | `checkout.PayToPaymentMethod`, `checkout.UPIPaymentMethod` | Gain the inherited `Type` field and accessors (G1) | generator | Additive; types are new since v21.2.3 |
 | New top-level enum types (Checkout `CalculationType`, `RemittancePurpose`, `Result`, `SublimitStatus`, `TaxIdentificationType`; Capital; Balance Platform) | Constants are prefixed with the type name (`CALCULATIONTYPE_LRS_TCS`) | generator (`enumClassPrefix`) | No v21.2.3 constant changes; these types are new |
 | Generated doc comments | Descriptions next to `$ref` properties and `x-deprecatedInVersion` messages now appear | generator | Documentation only |
@@ -21,11 +21,11 @@ Evidence: `apidiff` against a 6.5.0 regeneration of the same specs isolates gene
 No exported identifier changed between the 6.5.0 and 7.11.0 regenerations of the same specs
 except the Checkout enum constants above (`apidiff`, 30 packages).
 
-### Known limitation kept from v21
+### Nullable maps
 
-Nullable arrays and maps are plain slices and maps: absent and explicit `null` both decode to `nil`,
-and an explicit `null` cannot be sent. Affected PATCH models arrive with increment 5 (Management
-donation settings, Balance Platform `BalanceWebhookSettingInfoUpdate.conditions`).
+Nullable maps stay plain maps, as in v21: absent and explicit `null` both decode to `nil`, and an
+explicit `null` cannot be sent. No current spec declares a nullable map. Nullable arrays get three
+states; see "Nullable arrays" below.
 
 ## Increment 4: Go build consolidation
 
@@ -122,3 +122,22 @@ additions in `adyen` and `common`).
 - None of the new specs declares an `Idempotency-Key` header; `common.WithIdempotencyKey` works for
   every operation. Server-side support is tracked upstream (PF-3045).
 - The bot PRs for these APIs (#518, #525, #591, #603, #608) are superseded by this increment.
+
+## Nullable arrays
+
+Nullable array properties are generated as `common.NullableSlice[T]` instead of `[]T`, so a PATCH
+request can clear a list by sending `null`. The zero value is absent (not sent), `Set<Field>(v)`
+sends `v` (an empty slice sends `[]`), `Set<Field>Nil()` sends `null`, and `Unset<Field>()` makes
+the field absent again. `Get<Field>()` still returns `[]T`; `Has<Field>()` and the second result of
+`Get<Field>Ok()` are `true` for an explicit `null` too. Struct literals that leave the field out
+keep compiling and do not send it.
+
+| Package | Field | Cause | Compatibility |
+|---------|-------|-------|---------------|
+| `management` | `TerminalSettings.Gratuities` | generator (template) | Breaking: the field type is `common.NullableSlice[Gratuity]`; use `SetGratuities(...)` instead of assigning a slice |
+| `management` | `DonationCampaignUpdate.AccountHolderIds`, `InPersonDonationSettingsUpdate` and `OnlineDonationSettingsUpdate` `.MerchantAccounts` and `.StoreIds` | generator (template) | Models are new since v21.2.3 |
+| `balanceplatform` | `BalanceWebhookSettingInfoUpdate.Conditions` | generator (template) | Model is new since v21.2.3 |
+| `common` | `NullableSlice`, `NewNullableSlice` added | handwritten | Additive |
+
+`apidiff` against v21.2.3: Management has 285 incompatible changes (284 in increment 5 plus
+`TerminalSettings.Gratuities`); no other package gains an incompatible change.

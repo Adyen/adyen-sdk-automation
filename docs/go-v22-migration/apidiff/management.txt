@@ -263,6 +263,7 @@ Incompatible changes:
 - SplitConfigurationRule.FundingSource: changed from *string to string
 - StarInfo.ProcessingType: changed from string to *string
 - Terminal: old is comparable, new is not
+- TerminalSettings.Gratuities: changed from []Gratuity to github.com/adyen/adyen-go-api-library/v21/src/common.NullableSlice[Gratuity]
 - UpdatePaymentMethodInfo.Accel: changed from *AccelInfo to *AccelUpdateInfo
 - UpdatePaymentMethodInfo.Bcmc: changed from *BcmcInfo to *BcmcUpdateInfo
 - UpdatePaymentMethodInfo.CartesBancaires: changed from *CartesBancairesInfo to *CartesBancairesUpdateInfo
@@ -507,6 +508,7 @@ Compatible changes:
 - (*TerminalSettings).HasShowCalculatedPercentageTippingAmount: added
 - (*TerminalSettings).HasSkipTipConfirmationOnTerminal: added
 - (*TerminalSettings).SetDcc: added
+- (*TerminalSettings).SetGratuitiesNil: added
 - (*TerminalSettings).SetHomeScreen: added
 - (*TerminalSettings).SetKioskMode: added
 - (*TerminalSettings).SetMoto: added
@@ -514,6 +516,7 @@ Compatible changes:
 - (*TerminalSettings).SetShowCalculatedPercentageTippingAmountNil: added
 - (*TerminalSettings).SetSkipTipConfirmationOnTerminal: added
 - (*TerminalSettings).SetSkipTipConfirmationOnTerminalNil: added
+- (*TerminalSettings).UnsetGratuities: added
 - (*TerminalSettings).UnsetShowCalculatedPercentageTippingAmount: added
 - (*TerminalSettings).UnsetSkipTipConfirmationOnTerminal: added
 - (*UpdateCompanyApiCredentialRequest).GetSubjectDN: added

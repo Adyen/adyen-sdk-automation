@@ -13,10 +13,12 @@ report the engine version it actually loaded.
 - **THEN** the log shows OpenAPI Generator 7.11.0
 
 ### Requirement: Nullable values keep their three states
-Generated models SHALL distinguish absent, explicit `null`, and set values for nullable primitive
-and object properties declared with `nullable: true`, a 3.1 type array containing `null`, or a
-`oneOf` with a `null` member. Nullable arrays and maps MUST keep the v21 behavior: absent and
-explicit `null` both decode to `nil`.
+Generated models SHALL distinguish absent, explicit `null`, and set values for nullable primitive,
+object, and array properties declared with `nullable: true`, a 3.1 type array containing `null`, or
+a `oneOf` with a `null` member. Nullable arrays SHALL be generated as `common.NullableSlice[T]`,
+whose zero value is absent, with `Set<Field>Nil()` and `Unset<Field>()` accessors; an empty array
+MUST stay distinct from `null`. Nullable maps MUST keep the v21 behavior: absent and explicit `null`
+both decode to `nil`.
 
 #### Scenario: Round trip of an explicit null
 - **WHEN** a JSON payload sets a nullable integer to `null` and is decoded and re-encoded
@@ -29,6 +31,14 @@ explicit `null` both decode to `nil`.
 #### Scenario: Non-nullable reference to a schema used nullably elsewhere
 - **WHEN** one property references `Amount` through a nullable union and another references it plainly
 - **THEN** only the first property is generated as `NullableAmount`
+
+#### Scenario: Clearing a nullable array
+- **WHEN** a client calls `SetGratuitiesNil()` on `management.TerminalSettings` and sends the PATCH request
+- **THEN** the request body contains `"gratuities":null`
+
+#### Scenario: Empty nullable array
+- **WHEN** a nullable array is set to an empty slice
+- **THEN** it is encoded as `[]`, not `null`, and decodes back to a set, empty value
 
 ### Requirement: Composed schemas compile and decode
 Generated code SHALL compile and decode correctly for `allOf` (including inherited required

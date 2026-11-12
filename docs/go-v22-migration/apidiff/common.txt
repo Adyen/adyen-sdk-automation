@@ -6,3 +6,5 @@ Compatible changes:
 - Config.SessionAuthenticationEndpoint: added
 - Config.SoftPOSConfigurationEndpoint: added
 - NewMultipartBody: added
+- NewNullableSlice: added
+- NullableSlice: added
