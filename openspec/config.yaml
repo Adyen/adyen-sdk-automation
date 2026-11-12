@@ -1,0 +1,47 @@
+schema: spec-driven
+
+context: |
+  Repository: adyen-sdk-automation. Gradle (Kotlin DSL) + buildSrc conventions plugin drive
+  OpenAPI Generator over the specs in Adyen/adyen-openapi (cloned into `schema/` by `:specs`)
+  to produce the seven adyen-*-api-library SDKs. `config/services.json` is the single source of
+  truth for the service matrix (see AGENTS.md).
+
+  Active initiative: IEX-3881, migrate the Go SDK (Adyen/adyen-go-api-library) to OpenAPI
+  Generator v7 with Go-only native OpenAPI 3.1, released as the next major, v22. It is delivered
+  as eight increments, one OpenSpec change each, named `iex-3881-<n>-<slug>`:
+    1 baseline and compatibility fixtures      5 regenerate services, restore Management + Balance Platform
+    2 isolate spec preprocessing (Go keeps 3.1) 6 generated webhook handlers
+    3 generator 7.11.0 + templates on fixtures  7 new APIs (Capital, SessionAuthentication,
+    4 consolidate go/build.gradle.kts             ForeignExchange, DocumentCollector, SoftPOSConfiguration)
+                                                8 validate and release v22
+  Each increment has a gate; do not start the next increment before its predecessor's gate is met.
+  The baseline, pinned revisions and failure inventory (E1, S1-S4, G1-G6, B1, W1) live in
+  `docs/go-v22-migration/01-baseline.md`; reference those IDs instead of restating them.
+
+  Guardrails (apply to every change):
+  - Go only. Other languages keep the 3.0.0 downgrade and must produce byte-identical staged
+    specs; the all-language 3.1 rollout is IEX-4094.
+  - No wholesale pointer-to-map rewrite, enum-performance cleanup, or unrelated client redesign.
+  - Never change `webhook.NotificationRequestItem.AdditionalData` (v21.2.1 was retracted for it).
+  - Migration generation is local-only: generate on a developer machine against
+    `feature/go-generator-upgrade` of the Go SDK. Never dispatch the "Update SDKs" workflow from
+    a migration branch of this repository.
+  - The SDK's `tests/compat` fixtures are the compatibility gate. Any expectation change must be
+    recorded in the breaking-change ledger; the only permitted mechanical change is the `/v22`
+    import path in increment 8.
+
+  Validation commands:
+  - `./gradlew :buildSrc:test`
+  - `python3.12 -m unittest discover -s .github/scripts` (CI scripts need Python 3.9+)
+  - Go generation: `./gradlew -DopenapiGeneratorVersion=<version> :go:services`, then
+    `make fmt` (goimports v0.41.0) in the SDK; formatting is part of the generation contract.
+  - SDK: `go build ./... && go vet ./... && go test ./...` on Go 1.23 through the latest release.
+
+rules:
+  proposal:
+    - Reference the IEX-3881 increment number and the failure-inventory IDs it resolves.
+    - State the increment gate explicitly in the Impact section.
+  design:
+    - List rejected alternatives with the reason they were rejected.
+  tasks:
+    - End with the gate verification and the commands that prove it.
