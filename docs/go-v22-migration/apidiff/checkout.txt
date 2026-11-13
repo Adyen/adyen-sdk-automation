@@ -1,16 +1,232 @@
 Incompatible changes:
+- (*AccountInfo).GetAccountAgeIndicator: changed from func() string to func() AccountInfoAccountAgeIndicator
+- (*AccountInfo).GetAccountAgeIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoAccountAgeIndicator, bool)
+- (*AccountInfo).GetAccountChangeIndicator: changed from func() string to func() AccountInfoAccountChangeIndicator
+- (*AccountInfo).GetAccountChangeIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoAccountChangeIndicator, bool)
+- (*AccountInfo).GetAccountType: changed from func() string to func() AccountInfoAccountType
+- (*AccountInfo).GetAccountTypeOk: changed from func() (*string, bool) to func() (*AccountInfoAccountType, bool)
+- (*AccountInfo).GetDeliveryAddressUsageIndicator: changed from func() string to func() AccountInfoDeliveryAddressUsageIndicator
+- (*AccountInfo).GetDeliveryAddressUsageIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoDeliveryAddressUsageIndicator, bool)
+- (*AccountInfo).GetPasswordChangeIndicator: changed from func() string to func() AccountInfoPasswordChangeIndicator
+- (*AccountInfo).GetPasswordChangeIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoPasswordChangeIndicator, bool)
+- (*AccountInfo).GetPaymentAccountIndicator: changed from func() string to func() AccountInfoPaymentAccountIndicator
+- (*AccountInfo).GetPaymentAccountIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoPaymentAccountIndicator, bool)
+- (*AccountInfo).SetAccountAgeIndicator: changed from func(string) to func(AccountInfoAccountAgeIndicator)
+- (*AccountInfo).SetAccountChangeIndicator: changed from func(string) to func(AccountInfoAccountChangeIndicator)
+- (*AccountInfo).SetAccountType: changed from func(string) to func(AccountInfoAccountType)
+- (*AccountInfo).SetDeliveryAddressUsageIndicator: changed from func(string) to func(AccountInfoDeliveryAddressUsageIndicator)
+- (*AccountInfo).SetPasswordChangeIndicator: changed from func(string) to func(AccountInfoPasswordChangeIndicator)
+- (*AccountInfo).SetPaymentAccountIndicator: changed from func(string) to func(AccountInfoPaymentAccountIndicator)
+- (*AcctInfo).GetChAccAgeInd: changed from func() string to func() AcctInfoChAccAgeInd
+- (*AcctInfo).GetChAccAgeIndOk: changed from func() (*string, bool) to func() (*AcctInfoChAccAgeInd, bool)
+- (*AcctInfo).GetChAccChangeInd: changed from func() string to func() AcctInfoChAccChangeInd
+- (*AcctInfo).GetChAccChangeIndOk: changed from func() (*string, bool) to func() (*AcctInfoChAccChangeInd, bool)
+- (*AcctInfo).GetChAccPwChangeInd: changed from func() string to func() AcctInfoChAccPwChangeInd
+- (*AcctInfo).GetChAccPwChangeIndOk: changed from func() (*string, bool) to func() (*AcctInfoChAccPwChangeInd, bool)
+- (*AcctInfo).GetPaymentAccInd: changed from func() string to func() AcctInfoPaymentAccInd
+- (*AcctInfo).GetPaymentAccIndOk: changed from func() (*string, bool) to func() (*AcctInfoPaymentAccInd, bool)
+- (*AcctInfo).GetShipAddressUsageInd: changed from func() string to func() AcctInfoShipAddressUsageInd
+- (*AcctInfo).GetShipAddressUsageIndOk: changed from func() (*string, bool) to func() (*AcctInfoShipAddressUsageInd, bool)
+- (*AcctInfo).GetShipNameIndicator: changed from func() string to func() AcctInfoShipNameIndicator
+- (*AcctInfo).GetShipNameIndicatorOk: changed from func() (*string, bool) to func() (*AcctInfoShipNameIndicator, bool)
+- (*AcctInfo).GetSuspiciousAccActivity: changed from func() string to func() AcctInfoSuspiciousAccActivity
+- (*AcctInfo).GetSuspiciousAccActivityOk: changed from func() (*string, bool) to func() (*AcctInfoSuspiciousAccActivity, bool)
+- (*AcctInfo).SetChAccAgeInd: changed from func(string) to func(AcctInfoChAccAgeInd)
+- (*AcctInfo).SetChAccChangeInd: changed from func(string) to func(AcctInfoChAccChangeInd)
+- (*AcctInfo).SetChAccPwChangeInd: changed from func(string) to func(AcctInfoChAccPwChangeInd)
+- (*AcctInfo).SetPaymentAccInd: changed from func(string) to func(AcctInfoPaymentAccInd)
+- (*AcctInfo).SetShipAddressUsageInd: changed from func(string) to func(AcctInfoShipAddressUsageInd)
+- (*AcctInfo).SetShipNameIndicator: changed from func(string) to func(AcctInfoShipNameIndicator)
+- (*AcctInfo).SetSuspiciousAccActivity: changed from func(string) to func(AcctInfoSuspiciousAccActivity)
+- (*AchDetails).GetAccountHolderType: changed from func() string to func() AchDetailsAccountHolderType
+- (*AchDetails).GetAccountHolderTypeOk: changed from func() (*string, bool) to func() (*AchDetailsAccountHolderType, bool)
+- (*AchDetails).GetBankAccountType: changed from func() string to func() AchDetailsBankAccountType
+- (*AchDetails).GetBankAccountTypeOk: changed from func() (*string, bool) to func() (*AchDetailsBankAccountType, bool)
+- (*AchDetails).GetType: changed from func() string to func() AchDetailsType
+- (*AchDetails).GetTypeOk: changed from func() (*string, bool) to func() (*AchDetailsType, bool)
+- (*AchDetails).SetAccountHolderType: changed from func(string) to func(AchDetailsAccountHolderType)
+- (*AchDetails).SetBankAccountType: changed from func(string) to func(AchDetailsBankAccountType)
+- (*AchDetails).SetType: changed from func(string) to func(AchDetailsType)
+- (*AdditionalData3DSecure).GetChallengeWindowSize: changed from func() string to func() AdditionalData3DSecureChallengeWindowSize
+- (*AdditionalData3DSecure).GetChallengeWindowSizeOk: changed from func() (*string, bool) to func() (*AdditionalData3DSecureChallengeWindowSize, bool)
+- (*AdditionalData3DSecure).SetChallengeWindowSize: changed from func(string) to func(AdditionalData3DSecureChallengeWindowSize)
+- (*AdditionalDataCommon).GetIndustryUsage: changed from func() string to func() AdditionalDataCommonIndustryUsage
+- (*AdditionalDataCommon).GetIndustryUsageOk: changed from func() (*string, bool) to func() (*AdditionalDataCommonIndustryUsage, bool)
+- (*AdditionalDataCommon).SetIndustryUsage: changed from func(string) to func(AdditionalDataCommonIndustryUsage)
+- (*AffirmDetails).GetType: changed from func() string to func() AffirmDetailsType
+- (*AffirmDetails).GetTypeOk: changed from func() (*string, bool) to func() (*AffirmDetailsType, bool)
+- (*AffirmDetails).SetType: changed from func(string) to func(AffirmDetailsType)
+- (*AfterpayDetails).GetType: changed from func() string to func() AfterpayDetailsType
+- (*AfterpayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*AfterpayDetailsType, bool)
+- (*AfterpayDetails).SetType: changed from func(string) to func(AfterpayDetailsType)
+- (*AmazonPayDetails).GetType: changed from func() string to func() AmazonPayDetailsType
+- (*AmazonPayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*AmazonPayDetailsType, bool)
+- (*AmazonPayDetails).SetType: changed from func(string) to func(AmazonPayDetailsType)
+- (*AncvDetails).GetType: changed from func() string to func() AncvDetailsType
+- (*AncvDetails).GetTypeOk: changed from func() (*string, bool) to func() (*AncvDetailsType, bool)
+- (*AncvDetails).SetType: changed from func(string) to func(AncvDetailsType)
+- (*AndroidPayDetails).GetType: changed from func() string to func() AndroidPayDetailsType
+- (*AndroidPayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*AndroidPayDetailsType, bool)
+- (*AndroidPayDetails).SetType: changed from func(string) to func(AndroidPayDetailsType)
+- (*ApplePayDetails).GetFundingSource: changed from func() string to func() ApplePayDetailsFundingSource
+- (*ApplePayDetails).GetFundingSourceOk: changed from func() (*string, bool) to func() (*ApplePayDetailsFundingSource, bool)
+- (*ApplePayDetails).GetType: changed from func() string to func() ApplePayDetailsType
+- (*ApplePayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*ApplePayDetailsType, bool)
+- (*ApplePayDetails).SetFundingSource: changed from func(string) to func(ApplePayDetailsFundingSource)
+- (*ApplePayDetails).SetType: changed from func(string) to func(ApplePayDetailsType)
+- (*ApplePayDonations).GetFundingSource: changed from func() string to func() ApplePayDetailsFundingSource
+- (*ApplePayDonations).GetFundingSourceOk: changed from func() (*string, bool) to func() (*ApplePayDetailsFundingSource, bool)
+- (*ApplePayDonations).GetType: changed from func() string to func() ApplePayDetailsType
+- (*ApplePayDonations).GetTypeOk: changed from func() (*string, bool) to func() (*ApplePayDetailsType, bool)
+- (*ApplePayDonations).SetFundingSource: changed from func(string) to func(ApplePayDetailsFundingSource)
+- (*ApplePayDonations).SetType: changed from func(string) to func(ApplePayDetailsType)
+- (*AuthenticationData).GetAttemptAuthentication: changed from func() string to func() AuthenticationDataAttemptAuthentication
+- (*AuthenticationData).GetAttemptAuthenticationOk: changed from func() (*string, bool) to func() (*AuthenticationDataAttemptAuthentication, bool)
+- (*AuthenticationData).SetAttemptAuthentication: changed from func(string) to func(AuthenticationDataAttemptAuthentication)
+- (*BacsDirectDebitDetails).GetType: changed from func() string to func() BacsDirectDebitDetailsType
+- (*BacsDirectDebitDetails).GetTypeOk: changed from func() (*string, bool) to func() (*BacsDirectDebitDetailsType, bool)
+- (*BacsDirectDebitDetails).SetType: changed from func(string) to func(BacsDirectDebitDetailsType)
+- (*BalanceCheckRequest).GetRecurringProcessingModel: changed from func() string to func() BalanceCheckRequestRecurringProcessingModel
+- (*BalanceCheckRequest).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*BalanceCheckRequestRecurringProcessingModel, bool)
+- (*BalanceCheckRequest).GetShopperInteraction: changed from func() string to func() BalanceCheckRequestShopperInteraction
+- (*BalanceCheckRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*BalanceCheckRequestShopperInteraction, bool)
+- (*BalanceCheckRequest).SetRecurringProcessingModel: changed from func(string) to func(BalanceCheckRequestRecurringProcessingModel)
+- (*BalanceCheckRequest).SetShopperInteraction: changed from func(string) to func(BalanceCheckRequestShopperInteraction)
+- (*BalanceCheckResponse).GetResultCode: changed from func() string to func() BalanceCheckResponseResultCode
+- (*BalanceCheckResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*BalanceCheckResponseResultCode, bool)
+- (*BalanceCheckResponse).SetResultCode: changed from func(string) to func(BalanceCheckResponseResultCode)
+- (*BillDeskDetails).GetType: changed from func() string to func() BillDeskDetailsType
+- (*BillDeskDetails).GetTypeOk: changed from func() (*string, bool) to func() (*BillDeskDetailsType, bool)
+- (*BillDeskDetails).SetType: changed from func(string) to func(BillDeskDetailsType)
+- (*BlikDetails).GetType: changed from func() string to func() BlikDetailsType
+- (*BlikDetails).GetTypeOk: changed from func() (*string, bool) to func() (*BlikDetailsType, bool)
+- (*BlikDetails).SetType: changed from func(string) to func(BlikDetailsType)
+- (*CancelOrderResponse).GetResultCode: changed from func() string to func() CancelOrderResponseResultCode
+- (*CancelOrderResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*CancelOrderResponseResultCode, bool)
+- (*CancelOrderResponse).SetResultCode: changed from func(string) to func(CancelOrderResponseResultCode)
+- (*CardDetails).GetFundingSource: changed from func() string to func() CardDetailsFundingSource
+- (*CardDetails).GetFundingSourceOk: changed from func() (*string, bool) to func() (*CardDetailsFundingSource, bool)
+- (*CardDetails).GetType: changed from func() string to func() CardDetailsType
+- (*CardDetails).GetTypeOk: changed from func() (*string, bool) to func() (*CardDetailsType, bool)
+- (*CardDetails).SetFundingSource: changed from func(string) to func(CardDetailsFundingSource)
+- (*CardDetails).SetType: changed from func(string) to func(CardDetailsType)
+- (*CardDonations).GetFundingSource: changed from func() string to func() CardDetailsFundingSource
+- (*CardDonations).GetFundingSourceOk: changed from func() (*string, bool) to func() (*CardDetailsFundingSource, bool)
+- (*CardDonations).GetType: changed from func() string to func() CardDetailsType
+- (*CardDonations).GetTypeOk: changed from func() (*string, bool) to func() (*CardDetailsType, bool)
+- (*CardDonations).SetFundingSource: changed from func(string) to func(CardDetailsFundingSource)
+- (*CardDonations).SetType: changed from func(string) to func(CardDetailsType)
+- (*CashAppDetails).GetType: changed from func() string to func() CashAppDetailsType
+- (*CashAppDetails).GetTypeOk: changed from func() (*string, bool) to func() (*CashAppDetailsType, bool)
+- (*CashAppDetails).SetType: changed from func(string) to func(CashAppDetailsType)
+- (*CellulantDetails).GetType: changed from func() string to func() CellulantDetailsType
+- (*CellulantDetails).GetTypeOk: changed from func() (*string, bool) to func() (*CellulantDetailsType, bool)
+- (*CellulantDetails).SetType: changed from func(string) to func(CellulantDetailsType)
+- (*CheckoutAwaitAction).GetType: changed from func() string to func() CheckoutAwaitActionType
+- (*CheckoutAwaitAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutAwaitActionType, bool)
+- (*CheckoutAwaitAction).SetType: changed from func(string) to func(CheckoutAwaitActionType)
+- (*CheckoutBankAccount).GetAccountType: changed from func() string to func() CheckoutBankAccountAccountType
+- (*CheckoutBankAccount).GetAccountTypeOk: changed from func() (*string, bool) to func() (*CheckoutBankAccountAccountType, bool)
+- (*CheckoutBankAccount).SetAccountType: changed from func(string) to func(CheckoutBankAccountAccountType)
+- (*CheckoutBankTransferAction).GetType: changed from func() string to func() CheckoutBankTransferActionType
+- (*CheckoutBankTransferAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutBankTransferActionType, bool)
+- (*CheckoutBankTransferAction).SetType: changed from func(string) to func(CheckoutBankTransferActionType)
+- (*CheckoutDelegatedAuthenticationAction).GetType: changed from func() string to func() CheckoutDelegatedAuthenticationActionType
+- (*CheckoutDelegatedAuthenticationAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutDelegatedAuthenticationActionType, bool)
+- (*CheckoutDelegatedAuthenticationAction).SetType: changed from func(string) to func(CheckoutDelegatedAuthenticationActionType)
+- (*CheckoutNativeRedirectAction).GetType: changed from func() string to func() CheckoutNativeRedirectActionType
+- (*CheckoutNativeRedirectAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutNativeRedirectActionType, bool)
+- (*CheckoutNativeRedirectAction).SetType: changed from func(string) to func(CheckoutNativeRedirectActionType)
+- (*CheckoutQrCodeAction).GetType: changed from func() string to func() CheckoutQrCodeActionType
+- (*CheckoutQrCodeAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutQrCodeActionType, bool)
+- (*CheckoutQrCodeAction).SetType: changed from func(string) to func(CheckoutQrCodeActionType)
+- (*CheckoutRedirectAction).GetType: changed from func() string to func() CheckoutRedirectActionType
+- (*CheckoutRedirectAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutRedirectActionType, bool)
+- (*CheckoutRedirectAction).SetType: changed from func(string) to func(CheckoutRedirectActionType)
+- (*CheckoutSDKAction).GetType: changed from func() string to func() CheckoutSDKActionType
+- (*CheckoutSDKAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutSDKActionType, bool)
+- (*CheckoutSDKAction).SetType: changed from func(string) to func(CheckoutSDKActionType)
+- (*CheckoutSessionInstallmentOption).GetPlans: changed from func() []string to func() []CheckoutSessionInstallmentOptionPlans
+- (*CheckoutSessionInstallmentOption).GetPlansOk: changed from func() ([]string, bool) to func() ([]CheckoutSessionInstallmentOptionPlans, bool)
+- (*CheckoutSessionInstallmentOption).SetPlans: changed from func([]string) to func([]CheckoutSessionInstallmentOptionPlans)
+- (*CheckoutSessionThreeDS2RequestData).GetThreeDSRequestorChallengeInd: changed from func() string to func() CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd
+- (*CheckoutSessionThreeDS2RequestData).GetThreeDSRequestorChallengeIndOk: changed from func() (*string, bool) to func() (*CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd, bool)
+- (*CheckoutSessionThreeDS2RequestData).SetThreeDSRequestorChallengeInd: changed from func(string) to func(CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd)
+- (*CheckoutThreeDS2Action).GetType: changed from func() string to func() CheckoutThreeDS2ActionType
+- (*CheckoutThreeDS2Action).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutThreeDS2ActionType, bool)
+- (*CheckoutThreeDS2Action).SetType: changed from func(string) to func(CheckoutThreeDS2ActionType)
+- (*CheckoutVoucherAction).GetType: changed from func() string to func() CheckoutVoucherActionType
+- (*CheckoutVoucherAction).GetTypeOk: changed from func() (*string, bool) to func() (*CheckoutVoucherActionType, bool)
+- (*CheckoutVoucherAction).SetType: changed from func(string) to func(CheckoutVoucherActionType)
+- (*CreateCheckoutSessionRequest).GetChannel: changed from func() string to func() CreateCheckoutSessionRequestChannel
+- (*CreateCheckoutSessionRequest).GetChannelOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionRequestChannel, bool)
+- (*CreateCheckoutSessionRequest).GetMode: changed from func() string to func() CreateCheckoutSessionRequestMode
+- (*CreateCheckoutSessionRequest).GetModeOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionRequestMode, bool)
+- (*CreateCheckoutSessionRequest).GetRecurringProcessingModel: changed from func() string to func() CreateCheckoutSessionRequestRecurringProcessingModel
+- (*CreateCheckoutSessionRequest).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionRequestRecurringProcessingModel, bool)
+- (*CreateCheckoutSessionRequest).GetShopperInteraction: changed from func() string to func() CreateCheckoutSessionRequestShopperInteraction
+- (*CreateCheckoutSessionRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionRequestShopperInteraction, bool)
 - (*CreateCheckoutSessionRequest).GetShopperName: changed from func() Name to func() ShopperName
 - (*CreateCheckoutSessionRequest).GetShopperNameOk: changed from func() (*Name, bool) to func() (*ShopperName, bool)
+- (*CreateCheckoutSessionRequest).GetStoreFiltrationMode: changed from func() string to func() CreateCheckoutSessionRequestStoreFiltrationMode
+- (*CreateCheckoutSessionRequest).GetStoreFiltrationModeOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionRequestStoreFiltrationMode, bool)
+- (*CreateCheckoutSessionRequest).GetStorePaymentMethodMode: changed from func() string to func() CreateCheckoutSessionRequestStorePaymentMethodMode
+- (*CreateCheckoutSessionRequest).GetStorePaymentMethodModeOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionRequestStorePaymentMethodMode, bool)
+- (*CreateCheckoutSessionRequest).SetChannel: changed from func(string) to func(CreateCheckoutSessionRequestChannel)
+- (*CreateCheckoutSessionRequest).SetMode: changed from func(string) to func(CreateCheckoutSessionRequestMode)
+- (*CreateCheckoutSessionRequest).SetRecurringProcessingModel: changed from func(string) to func(CreateCheckoutSessionRequestRecurringProcessingModel)
+- (*CreateCheckoutSessionRequest).SetShopperInteraction: changed from func(string) to func(CreateCheckoutSessionRequestShopperInteraction)
 - (*CreateCheckoutSessionRequest).SetShopperName: changed from func(Name) to func(ShopperName)
+- (*CreateCheckoutSessionRequest).SetStoreFiltrationMode: changed from func(string) to func(CreateCheckoutSessionRequestStoreFiltrationMode)
+- (*CreateCheckoutSessionRequest).SetStorePaymentMethodMode: changed from func(string) to func(CreateCheckoutSessionRequestStorePaymentMethodMode)
+- (*CreateCheckoutSessionResponse).GetChannel: changed from func() string to func() CreateCheckoutSessionResponseChannel
+- (*CreateCheckoutSessionResponse).GetChannelOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionResponseChannel, bool)
+- (*CreateCheckoutSessionResponse).GetMode: changed from func() string to func() CreateCheckoutSessionResponseMode
+- (*CreateCheckoutSessionResponse).GetModeOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionResponseMode, bool)
+- (*CreateCheckoutSessionResponse).GetRecurringProcessingModel: changed from func() string to func() CreateCheckoutSessionResponseRecurringProcessingModel
+- (*CreateCheckoutSessionResponse).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionResponseRecurringProcessingModel, bool)
+- (*CreateCheckoutSessionResponse).GetShopperInteraction: changed from func() string to func() CreateCheckoutSessionResponseShopperInteraction
+- (*CreateCheckoutSessionResponse).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionResponseShopperInteraction, bool)
 - (*CreateCheckoutSessionResponse).GetShopperName: changed from func() Name to func() ShopperName
 - (*CreateCheckoutSessionResponse).GetShopperNameOk: changed from func() (*Name, bool) to func() (*ShopperName, bool)
+- (*CreateCheckoutSessionResponse).GetStoreFiltrationMode: changed from func() string to func() CreateCheckoutSessionResponseStoreFiltrationMode
+- (*CreateCheckoutSessionResponse).GetStoreFiltrationModeOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionResponseStoreFiltrationMode, bool)
+- (*CreateCheckoutSessionResponse).GetStorePaymentMethodMode: changed from func() string to func() CreateCheckoutSessionResponseStorePaymentMethodMode
+- (*CreateCheckoutSessionResponse).GetStorePaymentMethodModeOk: changed from func() (*string, bool) to func() (*CreateCheckoutSessionResponseStorePaymentMethodMode, bool)
+- (*CreateCheckoutSessionResponse).SetChannel: changed from func(string) to func(CreateCheckoutSessionResponseChannel)
+- (*CreateCheckoutSessionResponse).SetMode: changed from func(string) to func(CreateCheckoutSessionResponseMode)
+- (*CreateCheckoutSessionResponse).SetRecurringProcessingModel: changed from func(string) to func(CreateCheckoutSessionResponseRecurringProcessingModel)
+- (*CreateCheckoutSessionResponse).SetShopperInteraction: changed from func(string) to func(CreateCheckoutSessionResponseShopperInteraction)
 - (*CreateCheckoutSessionResponse).SetShopperName: changed from func(Name) to func(ShopperName)
+- (*CreateCheckoutSessionResponse).SetStoreFiltrationMode: changed from func(string) to func(CreateCheckoutSessionResponseStoreFiltrationMode)
+- (*CreateCheckoutSessionResponse).SetStorePaymentMethodMode: changed from func(string) to func(CreateCheckoutSessionResponseStorePaymentMethodMode)
+- (*CreateOrderResponse).GetResultCode: changed from func() string to func() CreateOrderResponseResultCode
+- (*CreateOrderResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*CreateOrderResponseResultCode, bool)
+- (*CreateOrderResponse).SetResultCode: changed from func(string) to func(CreateOrderResponseResultCode)
+- (*DeliveryMethod).GetType: changed from func() string to func() DeliveryMethodType
+- (*DeliveryMethod).GetTypeOk: changed from func() (*string, bool) to func() (*DeliveryMethodType, bool)
+- (*DeliveryMethod).SetType: changed from func(string) to func(DeliveryMethodType)
+- (*DeviceRenderOptions).GetSdkInterface: changed from func() string to func() DeviceRenderOptionsSdkInterface
+- (*DeviceRenderOptions).GetSdkInterfaceOk: changed from func() (*string, bool) to func() (*DeviceRenderOptionsSdkInterface, bool)
+- (*DeviceRenderOptions).GetSdkUiType: changed from func() []string to func() []DeviceRenderOptionsSdkUiType
+- (*DeviceRenderOptions).GetSdkUiTypeOk: changed from func() ([]string, bool) to func() ([]DeviceRenderOptionsSdkUiType, bool)
+- (*DeviceRenderOptions).SetSdkInterface: changed from func(string) to func(DeviceRenderOptionsSdkInterface)
+- (*DeviceRenderOptions).SetSdkUiType: changed from func([]string) to func([]DeviceRenderOptionsSdkUiType)
+- (*DokuDetails).GetType: changed from func() string to func() DokuDetailsType
+- (*DokuDetails).GetTypeOk: changed from func() (*string, bool) to func() (*DokuDetailsType, bool)
+- (*DokuDetails).SetType: changed from func(string) to func(DokuDetailsType)
 - (*DonationPaymentRequest).GetAdditionalData: removed
 - (*DonationPaymentRequest).GetAdditionalDataOk: removed
+- (*DonationPaymentRequest).GetChannel: changed from func() string to func() DonationPaymentRequestChannel
+- (*DonationPaymentRequest).GetChannelOk: changed from func() (*string, bool) to func() (*DonationPaymentRequestChannel, bool)
 - (*DonationPaymentRequest).GetConversionId: removed
 - (*DonationPaymentRequest).GetConversionIdOk: removed
 - (*DonationPaymentRequest).GetDeliverAt: removed
 - (*DonationPaymentRequest).GetDeliverAtOk: removed
+- (*DonationPaymentRequest).GetRecurringProcessingModel: changed from func() string to func() DonationPaymentRequestRecurringProcessingModel
+- (*DonationPaymentRequest).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*DonationPaymentRequestRecurringProcessingModel, bool)
+- (*DonationPaymentRequest).GetShopperInteraction: changed from func() string to func() DonationPaymentRequestShopperInteraction
+- (*DonationPaymentRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*DonationPaymentRequestShopperInteraction, bool)
 - (*DonationPaymentRequest).GetShopperName: changed from func() Name to func() ShopperName
 - (*DonationPaymentRequest).GetShopperNameOk: changed from func() (*Name, bool) to func() (*ShopperName, bool)
 - (*DonationPaymentRequest).GetThreeDSAuthenticationOnly: removed
@@ -20,38 +236,651 @@ Incompatible changes:
 - (*DonationPaymentRequest).HasDeliverAt: removed
 - (*DonationPaymentRequest).HasThreeDSAuthenticationOnly: removed
 - (*DonationPaymentRequest).SetAdditionalData: removed
+- (*DonationPaymentRequest).SetChannel: changed from func(string) to func(DonationPaymentRequestChannel)
 - (*DonationPaymentRequest).SetConversionId: removed
 - (*DonationPaymentRequest).SetDeliverAt: removed
+- (*DonationPaymentRequest).SetRecurringProcessingModel: changed from func(string) to func(DonationPaymentRequestRecurringProcessingModel)
+- (*DonationPaymentRequest).SetShopperInteraction: changed from func(string) to func(DonationPaymentRequestShopperInteraction)
 - (*DonationPaymentRequest).SetShopperName: changed from func(Name) to func(ShopperName)
 - (*DonationPaymentRequest).SetThreeDSAuthenticationOnly: removed
+- (*DonationPaymentResponse).GetStatus: changed from func() string to func() DonationPaymentResponseStatus
+- (*DonationPaymentResponse).GetStatusOk: changed from func() (*string, bool) to func() (*DonationPaymentResponseStatus, bool)
+- (*DonationPaymentResponse).SetStatus: changed from func(string) to func(DonationPaymentResponseStatus)
+- (*DragonpayDetails).GetType: changed from func() string to func() DragonpayDetailsType
+- (*DragonpayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*DragonpayDetailsType, bool)
+- (*DragonpayDetails).SetType: changed from func(string) to func(DragonpayDetailsType)
+- (*EBankingFinlandDetails).GetType: changed from func() string to func() EBankingFinlandDetailsType
+- (*EBankingFinlandDetails).GetTypeOk: changed from func() (*string, bool) to func() (*EBankingFinlandDetailsType, bool)
+- (*EBankingFinlandDetails).SetType: changed from func(string) to func(EBankingFinlandDetailsType)
+- (*EcontextVoucherDetails).GetType: changed from func() string to func() EcontextVoucherDetailsType
+- (*EcontextVoucherDetails).GetTypeOk: changed from func() (*string, bool) to func() (*EcontextVoucherDetailsType, bool)
+- (*EcontextVoucherDetails).SetType: changed from func(string) to func(EcontextVoucherDetailsType)
+- (*EftDetails).GetType: changed from func() string to func() EftDetailsType
+- (*EftDetails).GetTypeOk: changed from func() (*string, bool) to func() (*EftDetailsType, bool)
+- (*EftDetails).SetType: changed from func(string) to func(EftDetailsType)
+- (*FastlaneDetails).GetType: changed from func() string to func() FastlaneDetailsType
+- (*FastlaneDetails).GetTypeOk: changed from func() (*string, bool) to func() (*FastlaneDetailsType, bool)
+- (*FastlaneDetails).SetType: changed from func(string) to func(FastlaneDetailsType)
+- (*FundRecipient).GetWalletPurpose: changed from func() string to func() FundRecipientWalletPurpose
+- (*FundRecipient).GetWalletPurposeOk: changed from func() (*string, bool) to func() (*FundRecipientWalletPurpose, bool)
+- (*FundRecipient).SetWalletPurpose: changed from func(string) to func(FundRecipientWalletPurpose)
+- (*GenericIssuerPaymentMethodDetails).GetType: changed from func() string to func() GenericIssuerPaymentMethodDetailsType
+- (*GenericIssuerPaymentMethodDetails).GetTypeOk: changed from func() (*string, bool) to func() (*GenericIssuerPaymentMethodDetailsType, bool)
+- (*GenericIssuerPaymentMethodDetails).SetType: changed from func(string) to func(GenericIssuerPaymentMethodDetailsType)
+- (*GooglePayDetails).GetFundingSource: changed from func() string to func() GooglePayDetailsFundingSource
+- (*GooglePayDetails).GetFundingSourceOk: changed from func() (*string, bool) to func() (*GooglePayDetailsFundingSource, bool)
+- (*GooglePayDetails).GetType: changed from func() string to func() GooglePayDetailsType
+- (*GooglePayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*GooglePayDetailsType, bool)
+- (*GooglePayDetails).SetFundingSource: changed from func(string) to func(GooglePayDetailsFundingSource)
+- (*GooglePayDetails).SetType: changed from func(string) to func(GooglePayDetailsType)
+- (*GooglePayDonations).GetFundingSource: changed from func() string to func() GooglePayDetailsFundingSource
+- (*GooglePayDonations).GetFundingSourceOk: changed from func() (*string, bool) to func() (*GooglePayDetailsFundingSource, bool)
+- (*GooglePayDonations).GetType: changed from func() string to func() GooglePayDetailsType
+- (*GooglePayDonations).GetTypeOk: changed from func() (*string, bool) to func() (*GooglePayDetailsType, bool)
+- (*GooglePayDonations).SetFundingSource: changed from func(string) to func(GooglePayDetailsFundingSource)
+- (*GooglePayDonations).SetType: changed from func(string) to func(GooglePayDetailsType)
+- (*IdealDetails).GetType: changed from func() string to func() IdealDetailsType
+- (*IdealDetails).GetTypeOk: changed from func() (*string, bool) to func() (*IdealDetailsType, bool)
+- (*IdealDetails).SetType: changed from func(string) to func(IdealDetailsType)
+- (*IdealDonations).GetType: changed from func() string to func() IdealDetailsType
+- (*IdealDonations).GetTypeOk: changed from func() (*string, bool) to func() (*IdealDetailsType, bool)
+- (*IdealDonations).SetType: changed from func(string) to func(IdealDetailsType)
+- (*InstallmentOption).GetPlans: changed from func() []string to func() []InstallmentOptionPlans
+- (*InstallmentOption).GetPlansOk: changed from func() ([]string, bool) to func() ([]InstallmentOptionPlans, bool)
+- (*InstallmentOption).SetPlans: changed from func([]string) to func([]InstallmentOptionPlans)
+- (*Installments).GetPlan: changed from func() string to func() InstallmentsPlan
+- (*Installments).GetPlanOk: changed from func() (*string, bool) to func() (*InstallmentsPlan, bool)
+- (*Installments).SetPlan: changed from func(string) to func(InstallmentsPlan)
+- (*KlarnaDetails).GetType: changed from func() string to func() KlarnaDetailsType
+- (*KlarnaDetails).GetTypeOk: changed from func() (*string, bool) to func() (*KlarnaDetailsType, bool)
+- (*KlarnaDetails).SetType: changed from func(string) to func(KlarnaDetailsType)
+- (*Mandate).GetAmountRule: changed from func() string to func() MandateAmountRule
+- (*Mandate).GetAmountRuleOk: changed from func() (*string, bool) to func() (*MandateAmountRule, bool)
+- (*Mandate).GetBillingAttemptsRule: changed from func() string to func() MandateBillingAttemptsRule
+- (*Mandate).GetBillingAttemptsRuleOk: changed from func() (*string, bool) to func() (*MandateBillingAttemptsRule, bool)
+- (*Mandate).GetFrequency: changed from func() string to func() MandateFrequency
+- (*Mandate).GetFrequencyOk: changed from func() (*string, bool) to func() (*MandateFrequency, bool)
+- (*Mandate).SetAmountRule: changed from func(string) to func(MandateAmountRule)
+- (*Mandate).SetBillingAttemptsRule: changed from func(string) to func(MandateBillingAttemptsRule)
+- (*Mandate).SetFrequency: changed from func(string) to func(MandateFrequency)
+- (*MasterpassDetails).GetFundingSource: changed from func() string to func() MasterpassDetailsFundingSource
+- (*MasterpassDetails).GetFundingSourceOk: changed from func() (*string, bool) to func() (*MasterpassDetailsFundingSource, bool)
+- (*MasterpassDetails).GetType: changed from func() string to func() MasterpassDetailsType
+- (*MasterpassDetails).GetTypeOk: changed from func() (*string, bool) to func() (*MasterpassDetailsType, bool)
+- (*MasterpassDetails).SetFundingSource: changed from func(string) to func(MasterpassDetailsFundingSource)
+- (*MasterpassDetails).SetType: changed from func(string) to func(MasterpassDetailsType)
+- (*MbwayDetails).GetType: changed from func() string to func() MbwayDetailsType
+- (*MbwayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*MbwayDetailsType, bool)
+- (*MbwayDetails).SetType: changed from func(string) to func(MbwayDetailsType)
+- (*MerchantRiskIndicator).GetDeliveryAddressIndicator: changed from func() string to func() MerchantRiskIndicatorDeliveryAddressIndicator
+- (*MerchantRiskIndicator).GetDeliveryAddressIndicatorOk: changed from func() (*string, bool) to func() (*MerchantRiskIndicatorDeliveryAddressIndicator, bool)
+- (*MerchantRiskIndicator).GetDeliveryTimeframe: changed from func() string to func() MerchantRiskIndicatorDeliveryTimeframe
+- (*MerchantRiskIndicator).GetDeliveryTimeframeOk: changed from func() (*string, bool) to func() (*MerchantRiskIndicatorDeliveryTimeframe, bool)
+- (*MerchantRiskIndicator).SetDeliveryAddressIndicator: changed from func(string) to func(MerchantRiskIndicatorDeliveryAddressIndicator)
+- (*MerchantRiskIndicator).SetDeliveryTimeframe: changed from func(string) to func(MerchantRiskIndicatorDeliveryTimeframe)
+- (*MobilePayDetails).GetType: changed from func() string to func() MobilePayDetailsType
+- (*MobilePayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*MobilePayDetailsType, bool)
+- (*MobilePayDetails).SetType: changed from func(string) to func(MobilePayDetailsType)
+- (*MolPayDetails).GetType: changed from func() string to func() MolPayDetailsType
+- (*MolPayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*MolPayDetailsType, bool)
+- (*MolPayDetails).SetType: changed from func(string) to func(MolPayDetailsType)
+- (*OpenInvoiceDetails).GetType: changed from func() string to func() OpenInvoiceDetailsType
+- (*OpenInvoiceDetails).GetTypeOk: changed from func() (*string, bool) to func() (*OpenInvoiceDetailsType, bool)
+- (*OpenInvoiceDetails).SetType: changed from func(string) to func(OpenInvoiceDetailsType)
+- (*PayByBankAISDirectDebitDetails).GetType: changed from func() string to func() PayByBankAISDirectDebitDetailsType
+- (*PayByBankAISDirectDebitDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PayByBankAISDirectDebitDetailsType, bool)
+- (*PayByBankAISDirectDebitDetails).SetType: changed from func(string) to func(PayByBankAISDirectDebitDetailsType)
+- (*PayByBankDetails).GetType: changed from func() string to func() PayByBankDetailsType
+- (*PayByBankDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PayByBankDetailsType, bool)
+- (*PayByBankDetails).SetType: changed from func(string) to func(PayByBankDetailsType)
+- (*PayPalDetails).GetSubtype: changed from func() string to func() PayPalDetailsSubtype
+- (*PayPalDetails).GetSubtypeOk: changed from func() (*string, bool) to func() (*PayPalDetailsSubtype, bool)
+- (*PayPalDetails).GetType: changed from func() string to func() PayPalDetailsType
+- (*PayPalDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PayPalDetailsType, bool)
+- (*PayPalDetails).SetSubtype: changed from func(string) to func(PayPalDetailsSubtype)
+- (*PayPalDetails).SetType: changed from func(string) to func(PayPalDetailsType)
+- (*PayPayDetails).GetType: changed from func() string to func() PayPayDetailsType
+- (*PayPayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PayPayDetailsType, bool)
+- (*PayPayDetails).SetType: changed from func(string) to func(PayPayDetailsType)
+- (*PayToDetails).GetType: changed from func() string to func() PayToDetailsType
+- (*PayToDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PayToDetailsType, bool)
+- (*PayToDetails).SetType: changed from func(string) to func(PayToDetailsType)
+- (*PayUUpiDetails).GetType: changed from func() string to func() PayUUpiDetailsType
+- (*PayUUpiDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PayUUpiDetailsType, bool)
+- (*PayUUpiDetails).SetType: changed from func(string) to func(PayUUpiDetailsType)
+- (*PayWithGoogleDetails).GetFundingSource: changed from func() string to func() PayWithGoogleDetailsFundingSource
+- (*PayWithGoogleDetails).GetFundingSourceOk: changed from func() (*string, bool) to func() (*PayWithGoogleDetailsFundingSource, bool)
+- (*PayWithGoogleDetails).GetType: changed from func() string to func() PayWithGoogleDetailsType
+- (*PayWithGoogleDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PayWithGoogleDetailsType, bool)
+- (*PayWithGoogleDetails).SetFundingSource: changed from func(string) to func(PayWithGoogleDetailsFundingSource)
+- (*PayWithGoogleDetails).SetType: changed from func(string) to func(PayWithGoogleDetailsType)
+- (*PayWithGoogleDonations).GetFundingSource: changed from func() string to func() PayWithGoogleDetailsFundingSource
+- (*PayWithGoogleDonations).GetFundingSourceOk: changed from func() (*string, bool) to func() (*PayWithGoogleDetailsFundingSource, bool)
+- (*PayWithGoogleDonations).GetType: changed from func() string to func() PayWithGoogleDetailsType
+- (*PayWithGoogleDonations).GetTypeOk: changed from func() (*string, bool) to func() (*PayWithGoogleDetailsType, bool)
+- (*PayWithGoogleDonations).SetFundingSource: changed from func(string) to func(PayWithGoogleDetailsFundingSource)
+- (*PayWithGoogleDonations).SetType: changed from func(string) to func(PayWithGoogleDetailsType)
+- (*PaymentAmountUpdateRequest).GetIndustryUsage: changed from func() string to func() PaymentAmountUpdateRequestIndustryUsage
+- (*PaymentAmountUpdateRequest).GetIndustryUsageOk: changed from func() (*string, bool) to func() (*PaymentAmountUpdateRequestIndustryUsage, bool)
+- (*PaymentAmountUpdateRequest).SetIndustryUsage: changed from func(string) to func(PaymentAmountUpdateRequestIndustryUsage)
+- (*PaymentAmountUpdateResponse).GetIndustryUsage: changed from func() string to func() PaymentAmountUpdateResponseIndustryUsage
+- (*PaymentAmountUpdateResponse).GetIndustryUsageOk: changed from func() (*string, bool) to func() (*PaymentAmountUpdateResponseIndustryUsage, bool)
+- (*PaymentAmountUpdateResponse).GetStatus: changed from func() string to func() PaymentAmountUpdateResponseStatus
+- (*PaymentAmountUpdateResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentAmountUpdateResponseStatus, bool)
+- (*PaymentAmountUpdateResponse).SetIndustryUsage: changed from func(string) to func(PaymentAmountUpdateResponseIndustryUsage)
+- (*PaymentAmountUpdateResponse).SetStatus: changed from func(string) to func(PaymentAmountUpdateResponseStatus)
+- (*PaymentCancelResponse).GetStatus: changed from func() string to func() PaymentCancelResponseStatus
+- (*PaymentCancelResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentCancelResponseStatus, bool)
+- (*PaymentCancelResponse).SetStatus: changed from func(string) to func(PaymentCancelResponseStatus)
+- (*PaymentCaptureResponse).GetStatus: changed from func() string to func() PaymentCaptureResponseStatus
+- (*PaymentCaptureResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentCaptureResponseStatus, bool)
+- (*PaymentCaptureResponse).SetStatus: changed from func(string) to func(PaymentCaptureResponseStatus)
+- (*PaymentDetails).GetType: changed from func() string to func() PaymentDetailsType
+- (*PaymentDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentDetailsType, bool)
+- (*PaymentDetails).SetType: changed from func(string) to func(PaymentDetailsType)
+- (*PaymentDetailsResponse).GetResultCode: changed from func() string to func() PaymentDetailsResponseResultCode
+- (*PaymentDetailsResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*PaymentDetailsResponseResultCode, bool)
+- (*PaymentDetailsResponse).SetResultCode: changed from func(string) to func(PaymentDetailsResponseResultCode)
+- (*PaymentLinkRequest).GetRecurringProcessingModel: changed from func() string to func() PaymentLinkRequestRecurringProcessingModel
+- (*PaymentLinkRequest).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*PaymentLinkRequestRecurringProcessingModel, bool)
+- (*PaymentLinkRequest).GetRequiredShopperFields: changed from func() []string to func() []PaymentLinkRequestRequiredShopperFields
+- (*PaymentLinkRequest).GetRequiredShopperFieldsOk: changed from func() ([]string, bool) to func() ([]PaymentLinkRequestRequiredShopperFields, bool)
+- (*PaymentLinkRequest).GetStorePaymentMethodMode: changed from func() string to func() PaymentLinkRequestStorePaymentMethodMode
+- (*PaymentLinkRequest).GetStorePaymentMethodModeOk: changed from func() (*string, bool) to func() (*PaymentLinkRequestStorePaymentMethodMode, bool)
+- (*PaymentLinkRequest).SetRecurringProcessingModel: changed from func(string) to func(PaymentLinkRequestRecurringProcessingModel)
+- (*PaymentLinkRequest).SetRequiredShopperFields: changed from func([]string) to func([]PaymentLinkRequestRequiredShopperFields)
+- (*PaymentLinkRequest).SetStorePaymentMethodMode: changed from func(string) to func(PaymentLinkRequestStorePaymentMethodMode)
+- (*PaymentLinkResponse).GetRecurringProcessingModel: changed from func() string to func() PaymentLinkResponseRecurringProcessingModel
+- (*PaymentLinkResponse).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*PaymentLinkResponseRecurringProcessingModel, bool)
+- (*PaymentLinkResponse).GetRequiredShopperFields: changed from func() []string to func() []PaymentLinkResponseRequiredShopperFields
+- (*PaymentLinkResponse).GetRequiredShopperFieldsOk: changed from func() ([]string, bool) to func() ([]PaymentLinkResponseRequiredShopperFields, bool)
+- (*PaymentLinkResponse).GetStatus: changed from func() string to func() PaymentLinkResponseStatus
+- (*PaymentLinkResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentLinkResponseStatus, bool)
+- (*PaymentLinkResponse).GetStorePaymentMethodMode: changed from func() string to func() PaymentLinkResponseStorePaymentMethodMode
+- (*PaymentLinkResponse).GetStorePaymentMethodModeOk: changed from func() (*string, bool) to func() (*PaymentLinkResponseStorePaymentMethodMode, bool)
+- (*PaymentLinkResponse).SetRecurringProcessingModel: changed from func(string) to func(PaymentLinkResponseRecurringProcessingModel)
+- (*PaymentLinkResponse).SetRequiredShopperFields: changed from func([]string) to func([]PaymentLinkResponseRequiredShopperFields)
+- (*PaymentLinkResponse).SetStatus: changed from func(string) to func(PaymentLinkResponseStatus)
+- (*PaymentLinkResponse).SetStorePaymentMethodMode: changed from func(string) to func(PaymentLinkResponseStorePaymentMethodMode)
+- (*PaymentMethod).GetFundingSource: changed from func() string to func() PaymentMethodFundingSource
+- (*PaymentMethod).GetFundingSourceOk: changed from func() (*string, bool) to func() (*PaymentMethodFundingSource, bool)
+- (*PaymentMethod).SetFundingSource: changed from func(string) to func(PaymentMethodFundingSource)
+- (*PaymentMethodsRequest).GetChannel: changed from func() string to func() PaymentMethodsRequestChannel
+- (*PaymentMethodsRequest).GetChannelOk: changed from func() (*string, bool) to func() (*PaymentMethodsRequestChannel, bool)
+- (*PaymentMethodsRequest).GetStoreFiltrationMode: changed from func() string to func() PaymentMethodsRequestStoreFiltrationMode
+- (*PaymentMethodsRequest).GetStoreFiltrationModeOk: changed from func() (*string, bool) to func() (*PaymentMethodsRequestStoreFiltrationMode, bool)
+- (*PaymentMethodsRequest).SetChannel: changed from func(string) to func(PaymentMethodsRequestChannel)
+- (*PaymentMethodsRequest).SetStoreFiltrationMode: changed from func(string) to func(PaymentMethodsRequestStoreFiltrationMode)
+- (*PaymentRefundRequest).GetMerchantRefundReason: changed from func() string to func() PaymentRefundRequestMerchantRefundReason
+- (*PaymentRefundRequest).GetMerchantRefundReasonOk: changed from func() (*string, bool) to func() (*PaymentRefundRequestMerchantRefundReason, bool)
+- (*PaymentRefundRequest).SetMerchantRefundReason: changed from func(string) to func(PaymentRefundRequestMerchantRefundReason)
+- (*PaymentRefundResponse).GetMerchantRefundReason: changed from func() string to func() PaymentRefundResponseMerchantRefundReason
+- (*PaymentRefundResponse).GetMerchantRefundReasonOk: changed from func() (*string, bool) to func() (*PaymentRefundResponseMerchantRefundReason, bool)
+- (*PaymentRefundResponse).GetStatus: changed from func() string to func() PaymentRefundResponseStatus
+- (*PaymentRefundResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentRefundResponseStatus, bool)
+- (*PaymentRefundResponse).SetMerchantRefundReason: changed from func(string) to func(PaymentRefundResponseMerchantRefundReason)
+- (*PaymentRefundResponse).SetStatus: changed from func(string) to func(PaymentRefundResponseStatus)
+- (*PaymentRequest).GetChannel: changed from func() string to func() PaymentRequestChannel
+- (*PaymentRequest).GetChannelOk: changed from func() (*string, bool) to func() (*PaymentRequestChannel, bool)
 - (*PaymentRequest).GetConversionId: removed
 - (*PaymentRequest).GetConversionIdOk: removed
+- (*PaymentRequest).GetEntityType: changed from func() string to func() PaymentRequestEntityType
+- (*PaymentRequest).GetEntityTypeOk: changed from func() (*string, bool) to func() (*PaymentRequestEntityType, bool)
+- (*PaymentRequest).GetIndustryUsage: changed from func() string to func() PaymentRequestIndustryUsage
+- (*PaymentRequest).GetIndustryUsageOk: changed from func() (*string, bool) to func() (*PaymentRequestIndustryUsage, bool)
+- (*PaymentRequest).GetRecurringProcessingModel: changed from func() string to func() PaymentRequestRecurringProcessingModel
+- (*PaymentRequest).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*PaymentRequestRecurringProcessingModel, bool)
+- (*PaymentRequest).GetShopperInteraction: changed from func() string to func() PaymentRequestShopperInteraction
+- (*PaymentRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*PaymentRequestShopperInteraction, bool)
 - (*PaymentRequest).GetShopperName: changed from func() Name to func() ShopperName
 - (*PaymentRequest).GetShopperNameOk: changed from func() (*Name, bool) to func() (*ShopperName, bool)
 - (*PaymentRequest).HasConversionId: removed
+- (*PaymentRequest).SetChannel: changed from func(string) to func(PaymentRequestChannel)
 - (*PaymentRequest).SetConversionId: removed
+- (*PaymentRequest).SetEntityType: changed from func(string) to func(PaymentRequestEntityType)
+- (*PaymentRequest).SetIndustryUsage: changed from func(string) to func(PaymentRequestIndustryUsage)
+- (*PaymentRequest).SetRecurringProcessingModel: changed from func(string) to func(PaymentRequestRecurringProcessingModel)
+- (*PaymentRequest).SetShopperInteraction: changed from func(string) to func(PaymentRequestShopperInteraction)
 - (*PaymentRequest).SetShopperName: changed from func(Name) to func(ShopperName)
+- (*PaymentResponse).GetResultCode: changed from func() string to func() PaymentResponseResultCode
+- (*PaymentResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*PaymentResponseResultCode, bool)
+- (*PaymentResponse).SetResultCode: changed from func(string) to func(PaymentResponseResultCode)
+- (*PaymentReversalResponse).GetStatus: changed from func() string to func() PaymentReversalResponseStatus
+- (*PaymentReversalResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentReversalResponseStatus, bool)
+- (*PaymentReversalResponse).SetStatus: changed from func(string) to func(PaymentReversalResponseStatus)
+- (*PaypalUpdateOrderResponse).GetStatus: changed from func() string to func() PaypalUpdateOrderResponseStatus
+- (*PaypalUpdateOrderResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PaypalUpdateOrderResponseStatus, bool)
+- (*PaypalUpdateOrderResponse).SetStatus: changed from func(string) to func(PaypalUpdateOrderResponseStatus)
+- (*PixDetails).GetType: changed from func() string to func() PixDetailsType
+- (*PixDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PixDetailsType, bool)
+- (*PixDetails).SetType: changed from func(string) to func(PixDetailsType)
+- (*PixRecurring).GetFrequency: changed from func() string to func() PixRecurringFrequency
+- (*PixRecurring).GetFrequencyOk: changed from func() (*string, bool) to func() (*PixRecurringFrequency, bool)
+- (*PixRecurring).SetFrequency: changed from func(string) to func(PixRecurringFrequency)
+- (*PlatformChargebackLogic).GetBehavior: changed from func() string to func() PlatformChargebackLogicBehavior
+- (*PlatformChargebackLogic).GetBehaviorOk: changed from func() (*string, bool) to func() (*PlatformChargebackLogicBehavior, bool)
+- (*PlatformChargebackLogic).SetBehavior: changed from func(string) to func(PlatformChargebackLogicBehavior)
+- (*PseDetails).GetType: changed from func() string to func() PseDetailsType
+- (*PseDetails).GetTypeOk: changed from func() (*string, bool) to func() (*PseDetailsType, bool)
+- (*PseDetails).SetType: changed from func(string) to func(PseDetailsType)
+- (*RakutenPayDetails).GetType: changed from func() string to func() RakutenPayDetailsType
+- (*RakutenPayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*RakutenPayDetailsType, bool)
+- (*RakutenPayDetails).SetType: changed from func(string) to func(RakutenPayDetailsType)
+- (*RatepayDetails).GetType: changed from func() string to func() RatepayDetailsType
+- (*RatepayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*RatepayDetailsType, bool)
+- (*RatepayDetails).SetType: changed from func(string) to func(RatepayDetailsType)
+- (*Recurring).GetContract: changed from func() string to func() RecurringContract
+- (*Recurring).GetContractOk: changed from func() (*string, bool) to func() (*RecurringContract, bool)
+- (*Recurring).GetTokenService: changed from func() string to func() RecurringTokenService
+- (*Recurring).GetTokenServiceOk: changed from func() (*string, bool) to func() (*RecurringTokenService, bool)
+- (*Recurring).SetContract: changed from func(string) to func(RecurringContract)
+- (*Recurring).SetTokenService: changed from func(string) to func(RecurringTokenService)
+- (*ResponseAdditionalDataCommon).GetFraudResultType: changed from func() string to func() ResponseAdditionalDataCommonFraudResultType
+- (*ResponseAdditionalDataCommon).GetFraudResultTypeOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonFraudResultType, bool)
+- (*ResponseAdditionalDataCommon).GetFraudRiskLevel: changed from func() string to func() ResponseAdditionalDataCommonFraudRiskLevel
+- (*ResponseAdditionalDataCommon).GetFraudRiskLevelOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonFraudRiskLevel, bool)
+- (*ResponseAdditionalDataCommon).GetRecurringProcessingModel: changed from func() string to func() ResponseAdditionalDataCommonRecurringProcessingModel
+- (*ResponseAdditionalDataCommon).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonRecurringProcessingModel, bool)
+- (*ResponseAdditionalDataCommon).GetTokenizationStoreOperationType: changed from func() string to func() ResponseAdditionalDataCommonTokenizationStoreOperationType
+- (*ResponseAdditionalDataCommon).GetTokenizationStoreOperationTypeOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonTokenizationStoreOperationType, bool)
+- (*ResponseAdditionalDataCommon).SetFraudResultType: changed from func(string) to func(ResponseAdditionalDataCommonFraudResultType)
+- (*ResponseAdditionalDataCommon).SetFraudRiskLevel: changed from func(string) to func(ResponseAdditionalDataCommonFraudRiskLevel)
+- (*ResponseAdditionalDataCommon).SetRecurringProcessingModel: changed from func(string) to func(ResponseAdditionalDataCommonRecurringProcessingModel)
+- (*ResponseAdditionalDataCommon).SetTokenizationStoreOperationType: changed from func(string) to func(ResponseAdditionalDataCommonTokenizationStoreOperationType)
+- (*RivertyDetails).GetType: changed from func() string to func() RivertyDetailsType
+- (*RivertyDetails).GetTypeOk: changed from func() (*string, bool) to func() (*RivertyDetailsType, bool)
+- (*RivertyDetails).SetType: changed from func(string) to func(RivertyDetailsType)
+- (*SamsungPayDetails).GetFundingSource: changed from func() string to func() SamsungPayDetailsFundingSource
+- (*SamsungPayDetails).GetFundingSourceOk: changed from func() (*string, bool) to func() (*SamsungPayDetailsFundingSource, bool)
+- (*SamsungPayDetails).GetType: changed from func() string to func() SamsungPayDetailsType
+- (*SamsungPayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*SamsungPayDetailsType, bool)
+- (*SamsungPayDetails).SetFundingSource: changed from func(string) to func(SamsungPayDetailsFundingSource)
+- (*SamsungPayDetails).SetType: changed from func(string) to func(SamsungPayDetailsType)
+- (*SepaDirectDebitDetails).GetType: changed from func() string to func() SepaDirectDebitDetailsType
+- (*SepaDirectDebitDetails).GetTypeOk: changed from func() (*string, bool) to func() (*SepaDirectDebitDetailsType, bool)
+- (*SepaDirectDebitDetails).SetType: changed from func(string) to func(SepaDirectDebitDetailsType)
+- (*SessionResultResponse).GetStatus: changed from func() string to func() SessionResultResponseStatus
+- (*SessionResultResponse).GetStatusOk: changed from func() (*string, bool) to func() (*SessionResultResponseStatus, bool)
+- (*SessionResultResponse).SetStatus: changed from func(string) to func(SessionResultResponseStatus)
+- (*Split).GetType: changed from func() string to func() SplitType
+- (*Split).GetTypeOk: changed from func() (*string, bool) to func() (*SplitType, bool)
+- (*Split).SetType: changed from func(string) to func(SplitType)
+- (*StandalonePaymentCancelResponse).GetStatus: changed from func() string to func() StandalonePaymentCancelResponseStatus
+- (*StandalonePaymentCancelResponse).GetStatusOk: changed from func() (*string, bool) to func() (*StandalonePaymentCancelResponseStatus, bool)
+- (*StandalonePaymentCancelResponse).SetStatus: changed from func(string) to func(StandalonePaymentCancelResponseStatus)
+- (*StoredPaymentMethodDetails).GetType: changed from func() string to func() StoredPaymentMethodDetailsType
+- (*StoredPaymentMethodDetails).GetTypeOk: changed from func() (*string, bool) to func() (*StoredPaymentMethodDetailsType, bool)
+- (*StoredPaymentMethodDetails).SetType: changed from func(string) to func(StoredPaymentMethodDetailsType)
+- (*StoredPaymentMethodRequest).GetRecurringProcessingModel: changed from func() string to func() StoredPaymentMethodRequestRecurringProcessingModel
+- (*StoredPaymentMethodRequest).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*StoredPaymentMethodRequestRecurringProcessingModel, bool)
+- (*StoredPaymentMethodRequest).SetRecurringProcessingModel: changed from func(string) to func(StoredPaymentMethodRequestRecurringProcessingModel)
+- (*ThreeDS2RequestData).GetAcctType: changed from func() string to func() ThreeDS2RequestDataAcctType
+- (*ThreeDS2RequestData).GetAcctTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataAcctType, bool)
+- (*ThreeDS2RequestData).GetAddrMatch: changed from func() string to func() ThreeDS2RequestDataAddrMatch
+- (*ThreeDS2RequestData).GetAddrMatchOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataAddrMatch, bool)
+- (*ThreeDS2RequestData).GetChallengeIndicator: changed from func() string to func() ThreeDS2RequestDataChallengeIndicator
+- (*ThreeDS2RequestData).GetChallengeIndicatorOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataChallengeIndicator, bool)
+- (*ThreeDS2RequestData).GetThreeDSRequestorChallengeInd: changed from func() string to func() ThreeDS2RequestDataThreeDSRequestorChallengeInd
+- (*ThreeDS2RequestData).GetThreeDSRequestorChallengeIndOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataThreeDSRequestorChallengeInd, bool)
+- (*ThreeDS2RequestData).GetTransType: changed from func() string to func() ThreeDS2RequestDataTransType
+- (*ThreeDS2RequestData).GetTransTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataTransType, bool)
+- (*ThreeDS2RequestData).GetTransactionType: changed from func() string to func() ThreeDS2RequestDataTransactionType
+- (*ThreeDS2RequestData).GetTransactionTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataTransactionType, bool)
+- (*ThreeDS2RequestData).SetAcctType: changed from func(string) to func(ThreeDS2RequestDataAcctType)
+- (*ThreeDS2RequestData).SetAddrMatch: changed from func(string) to func(ThreeDS2RequestDataAddrMatch)
+- (*ThreeDS2RequestData).SetChallengeIndicator: changed from func(string) to func(ThreeDS2RequestDataChallengeIndicator)
+- (*ThreeDS2RequestData).SetThreeDSRequestorChallengeInd: changed from func(string) to func(ThreeDS2RequestDataThreeDSRequestorChallengeInd)
+- (*ThreeDS2RequestData).SetTransType: changed from func(string) to func(ThreeDS2RequestDataTransType)
+- (*ThreeDS2RequestData).SetTransactionType: changed from func(string) to func(ThreeDS2RequestDataTransactionType)
+- (*ThreeDS2RequestFields).GetAcctType: changed from func() string to func() ThreeDS2RequestFieldsAcctType
+- (*ThreeDS2RequestFields).GetAcctTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestFieldsAcctType, bool)
+- (*ThreeDS2RequestFields).GetAddrMatch: changed from func() string to func() ThreeDS2RequestFieldsAddrMatch
+- (*ThreeDS2RequestFields).GetAddrMatchOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestFieldsAddrMatch, bool)
+- (*ThreeDS2RequestFields).GetChallengeIndicator: changed from func() string to func() ThreeDS2RequestFieldsChallengeIndicator
+- (*ThreeDS2RequestFields).GetChallengeIndicatorOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestFieldsChallengeIndicator, bool)
+- (*ThreeDS2RequestFields).GetThreeDSRequestorChallengeInd: changed from func() string to func() ThreeDS2RequestFieldsThreeDSRequestorChallengeInd
+- (*ThreeDS2RequestFields).GetThreeDSRequestorChallengeIndOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestFieldsThreeDSRequestorChallengeInd, bool)
+- (*ThreeDS2RequestFields).GetTransType: changed from func() string to func() ThreeDS2RequestFieldsTransType
+- (*ThreeDS2RequestFields).GetTransTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestFieldsTransType, bool)
+- (*ThreeDS2RequestFields).GetTransactionType: changed from func() string to func() ThreeDS2RequestFieldsTransactionType
+- (*ThreeDS2RequestFields).GetTransactionTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestFieldsTransactionType, bool)
+- (*ThreeDS2RequestFields).SetAcctType: changed from func(string) to func(ThreeDS2RequestFieldsAcctType)
+- (*ThreeDS2RequestFields).SetAddrMatch: changed from func(string) to func(ThreeDS2RequestFieldsAddrMatch)
+- (*ThreeDS2RequestFields).SetChallengeIndicator: changed from func(string) to func(ThreeDS2RequestFieldsChallengeIndicator)
+- (*ThreeDS2RequestFields).SetThreeDSRequestorChallengeInd: changed from func(string) to func(ThreeDS2RequestFieldsThreeDSRequestorChallengeInd)
+- (*ThreeDS2RequestFields).SetTransType: changed from func(string) to func(ThreeDS2RequestFieldsTransType)
+- (*ThreeDS2RequestFields).SetTransactionType: changed from func(string) to func(ThreeDS2RequestFieldsTransactionType)
+- (*ThreeDS2Result).GetChallengeCancel: changed from func() string to func() ThreeDS2ResultChallengeCancel
+- (*ThreeDS2Result).GetChallengeCancelOk: changed from func() (*string, bool) to func() (*ThreeDS2ResultChallengeCancel, bool)
+- (*ThreeDS2Result).GetExemptionIndicator: changed from func() string to func() ThreeDS2ResultExemptionIndicator
+- (*ThreeDS2Result).GetExemptionIndicatorOk: changed from func() (*string, bool) to func() (*ThreeDS2ResultExemptionIndicator, bool)
+- (*ThreeDS2Result).GetThreeDSRequestorChallengeInd: changed from func() string to func() ThreeDS2ResultThreeDSRequestorChallengeInd
+- (*ThreeDS2Result).GetThreeDSRequestorChallengeIndOk: changed from func() (*string, bool) to func() (*ThreeDS2ResultThreeDSRequestorChallengeInd, bool)
+- (*ThreeDS2Result).SetChallengeCancel: changed from func(string) to func(ThreeDS2ResultChallengeCancel)
+- (*ThreeDS2Result).SetExemptionIndicator: changed from func(string) to func(ThreeDS2ResultExemptionIndicator)
+- (*ThreeDS2Result).SetThreeDSRequestorChallengeInd: changed from func(string) to func(ThreeDS2ResultThreeDSRequestorChallengeInd)
+- (*ThreeDSRequestData).GetChallengeWindowSize: changed from func() string to func() ThreeDSRequestDataChallengeWindowSize
+- (*ThreeDSRequestData).GetChallengeWindowSizeOk: changed from func() (*string, bool) to func() (*ThreeDSRequestDataChallengeWindowSize, bool)
+- (*ThreeDSRequestData).GetDataOnly: changed from func() string to func() ThreeDSRequestDataDataOnly
+- (*ThreeDSRequestData).GetDataOnlyOk: changed from func() (*string, bool) to func() (*ThreeDSRequestDataDataOnly, bool)
+- (*ThreeDSRequestData).GetNativeThreeDS: changed from func() string to func() ThreeDSRequestDataNativeThreeDS
+- (*ThreeDSRequestData).GetNativeThreeDSOk: changed from func() (*string, bool) to func() (*ThreeDSRequestDataNativeThreeDS, bool)
+- (*ThreeDSRequestData).GetThreeDSVersion: changed from func() string to func() ThreeDSRequestDataThreeDSVersion
+- (*ThreeDSRequestData).GetThreeDSVersionOk: changed from func() (*string, bool) to func() (*ThreeDSRequestDataThreeDSVersion, bool)
+- (*ThreeDSRequestData).SetChallengeWindowSize: changed from func(string) to func(ThreeDSRequestDataChallengeWindowSize)
+- (*ThreeDSRequestData).SetDataOnly: changed from func(string) to func(ThreeDSRequestDataDataOnly)
+- (*ThreeDSRequestData).SetNativeThreeDS: changed from func(string) to func(ThreeDSRequestDataNativeThreeDS)
+- (*ThreeDSRequestData).SetThreeDSVersion: changed from func(string) to func(ThreeDSRequestDataThreeDSVersion)
+- (*ThreeDSRequestorAuthenticationInfo).GetThreeDSReqAuthMethod: changed from func() string to func() ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod
+- (*ThreeDSRequestorAuthenticationInfo).GetThreeDSReqAuthMethodOk: changed from func() (*string, bool) to func() (*ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod, bool)
+- (*ThreeDSRequestorAuthenticationInfo).SetThreeDSReqAuthMethod: changed from func(string) to func(ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod)
+- (*ThreeDSRequestorPriorAuthenticationInfo).GetThreeDSReqPriorAuthMethod: changed from func() string to func() ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod
+- (*ThreeDSRequestorPriorAuthenticationInfo).GetThreeDSReqPriorAuthMethodOk: changed from func() (*string, bool) to func() (*ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod, bool)
+- (*ThreeDSRequestorPriorAuthenticationInfo).SetThreeDSReqPriorAuthMethod: changed from func(string) to func(ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod)
+- (*ThreeDSecureData).GetAuthenticationResponse: changed from func() string to func() ThreeDSecureDataAuthenticationResponse
+- (*ThreeDSecureData).GetAuthenticationResponseOk: changed from func() (*string, bool) to func() (*ThreeDSecureDataAuthenticationResponse, bool)
+- (*ThreeDSecureData).GetChallengeCancel: changed from func() string to func() ThreeDSecureDataChallengeCancel
+- (*ThreeDSecureData).GetChallengeCancelOk: changed from func() (*string, bool) to func() (*ThreeDSecureDataChallengeCancel, bool)
+- (*ThreeDSecureData).GetDirectoryResponse: changed from func() string to func() ThreeDSecureDataDirectoryResponse
+- (*ThreeDSecureData).GetDirectoryResponseOk: changed from func() (*string, bool) to func() (*ThreeDSecureDataDirectoryResponse, bool)
+- (*ThreeDSecureData).SetAuthenticationResponse: changed from func(string) to func(ThreeDSecureDataAuthenticationResponse)
+- (*ThreeDSecureData).SetChallengeCancel: changed from func(string) to func(ThreeDSecureDataChallengeCancel)
+- (*ThreeDSecureData).SetDirectoryResponse: changed from func(string) to func(ThreeDSecureDataDirectoryResponse)
+- (*TwintDetails).GetType: changed from func() string to func() TwintDetailsType
+- (*TwintDetails).GetTypeOk: changed from func() (*string, bool) to func() (*TwintDetailsType, bool)
+- (*TwintDetails).SetType: changed from func(string) to func(TwintDetailsType)
+- (*UpdatePaymentLinkRequest).GetStatus: changed from func() string to func() UpdatePaymentLinkRequestStatus
+- (*UpdatePaymentLinkRequest).GetStatusOk: changed from func() (*string, bool) to func() (*UpdatePaymentLinkRequestStatus, bool)
+- (*UpdatePaymentLinkRequest).SetStatus: changed from func(string) to func(UpdatePaymentLinkRequestStatus)
+- (*UpiCollectDetails).GetType: changed from func() string to func() UpiCollectDetailsType
+- (*UpiCollectDetails).GetTypeOk: changed from func() (*string, bool) to func() (*UpiCollectDetailsType, bool)
+- (*UpiCollectDetails).SetType: changed from func(string) to func(UpiCollectDetailsType)
+- (*UpiIntentDetails).GetType: changed from func() string to func() UpiIntentDetailsType
+- (*UpiIntentDetails).GetTypeOk: changed from func() (*string, bool) to func() (*UpiIntentDetailsType, bool)
+- (*UpiIntentDetails).SetType: changed from func(string) to func(UpiIntentDetailsType)
+- (*VippsDetails).GetType: changed from func() string to func() VippsDetailsType
+- (*VippsDetails).GetTypeOk: changed from func() (*string, bool) to func() (*VippsDetailsType, bool)
+- (*VippsDetails).SetType: changed from func(string) to func(VippsDetailsType)
+- (*VisaCheckoutDetails).GetFundingSource: changed from func() string to func() VisaCheckoutDetailsFundingSource
+- (*VisaCheckoutDetails).GetFundingSourceOk: changed from func() (*string, bool) to func() (*VisaCheckoutDetailsFundingSource, bool)
+- (*VisaCheckoutDetails).GetType: changed from func() string to func() VisaCheckoutDetailsType
+- (*VisaCheckoutDetails).GetTypeOk: changed from func() (*string, bool) to func() (*VisaCheckoutDetailsType, bool)
+- (*VisaCheckoutDetails).SetFundingSource: changed from func(string) to func(VisaCheckoutDetailsFundingSource)
+- (*VisaCheckoutDetails).SetType: changed from func(string) to func(VisaCheckoutDetailsType)
+- (*WeChatPayDetails).GetType: changed from func() string to func() WeChatPayDetailsType
+- (*WeChatPayDetails).GetTypeOk: changed from func() (*string, bool) to func() (*WeChatPayDetailsType, bool)
+- (*WeChatPayDetails).SetType: changed from func(string) to func(WeChatPayDetailsType)
+- (*WeChatPayMiniProgramDetails).GetType: changed from func() string to func() WeChatPayMiniProgramDetailsType
+- (*WeChatPayMiniProgramDetails).GetTypeOk: changed from func() (*string, bool) to func() (*WeChatPayMiniProgramDetailsType, bool)
+- (*WeChatPayMiniProgramDetails).SetType: changed from func(string) to func(WeChatPayMiniProgramDetailsType)
+- (*ZipDetails).GetType: changed from func() string to func() ZipDetailsType
+- (*ZipDetails).GetTypeOk: changed from func() (*string, bool) to func() (*ZipDetailsType, bool)
+- (*ZipDetails).SetType: changed from func(string) to func(ZipDetailsType)
+- AccountInfo.AccountAgeIndicator: changed from *string to *AccountInfoAccountAgeIndicator
+- AccountInfo.AccountChangeIndicator: changed from *string to *AccountInfoAccountChangeIndicator
+- AccountInfo.AccountType: changed from *string to *AccountInfoAccountType
+- AccountInfo.DeliveryAddressUsageIndicator: changed from *string to *AccountInfoDeliveryAddressUsageIndicator
+- AccountInfo.PasswordChangeIndicator: changed from *string to *AccountInfoPasswordChangeIndicator
+- AccountInfo.PaymentAccountIndicator: changed from *string to *AccountInfoPaymentAccountIndicator
+- AcctInfo.ChAccAgeInd: changed from *string to *AcctInfoChAccAgeInd
+- AcctInfo.ChAccChangeInd: changed from *string to *AcctInfoChAccChangeInd
+- AcctInfo.ChAccPwChangeInd: changed from *string to *AcctInfoChAccPwChangeInd
+- AcctInfo.PaymentAccInd: changed from *string to *AcctInfoPaymentAccInd
+- AcctInfo.ShipAddressUsageInd: changed from *string to *AcctInfoShipAddressUsageInd
+- AcctInfo.ShipNameIndicator: changed from *string to *AcctInfoShipNameIndicator
+- AcctInfo.SuspiciousAccActivity: changed from *string to *AcctInfoSuspiciousAccActivity
+- AchDetails.AccountHolderType: changed from *string to *AchDetailsAccountHolderType
+- AchDetails.BankAccountType: changed from *string to *AchDetailsBankAccountType
+- AchDetails.Type: changed from *string to *AchDetailsType
+- AdditionalData3DSecure.ChallengeWindowSize: changed from *string to *AdditionalData3DSecureChallengeWindowSize
+- AdditionalDataCommon.IndustryUsage: changed from *string to *AdditionalDataCommonIndustryUsage
+- AffirmDetails.Type: changed from *string to *AffirmDetailsType
+- AfterpayDetails.Type: changed from string to AfterpayDetailsType
+- AmazonPayDetails.Type: changed from *string to *AmazonPayDetailsType
+- AncvDetails.Type: changed from *string to *AncvDetailsType
+- AndroidPayDetails.Type: changed from *string to *AndroidPayDetailsType
+- ApplePayDetails.FundingSource: changed from *string to *ApplePayDetailsFundingSource
+- ApplePayDetails.Type: changed from *string to *ApplePayDetailsType
+- ApplePayDonations.FundingSource: changed from *string to *ApplePayDetailsFundingSource
+- ApplePayDonations.Type: changed from *string to *ApplePayDetailsType
+- AuthenticationData.AttemptAuthentication: changed from *string to *AuthenticationDataAttemptAuthentication
+- BacsDirectDebitDetails.Type: changed from *string to *BacsDirectDebitDetailsType
+- BalanceCheckRequest.RecurringProcessingModel: changed from *string to *BalanceCheckRequestRecurringProcessingModel
+- BalanceCheckRequest.ShopperInteraction: changed from *string to *BalanceCheckRequestShopperInteraction
+- BalanceCheckResponse.ResultCode: changed from string to BalanceCheckResponseResultCode
+- BillDeskDetails.Type: changed from string to BillDeskDetailsType
+- BlikDetails.Type: changed from *string to *BlikDetailsType
+- CancelOrderResponse.ResultCode: changed from string to CancelOrderResponseResultCode
+- CardDetails.FundingSource: changed from *string to *CardDetailsFundingSource
+- CardDetails.Type: changed from *string to *CardDetailsType
 - CardDetailsRequest.CardNumber: changed from string to *string
+- CardDonations.FundingSource: changed from *string to *CardDetailsFundingSource
+- CardDonations.Type: changed from *string to *CardDetailsType
+- CashAppDetails.Type: changed from *string to *CashAppDetailsType
+- CellulantDetails.Type: changed from *string to *CellulantDetailsType
+- CheckoutAwaitAction.Type: changed from string to CheckoutAwaitActionType
+- CheckoutBankAccount.AccountType: changed from *string to *CheckoutBankAccountAccountType
+- CheckoutBankTransferAction.Type: changed from string to CheckoutBankTransferActionType
+- CheckoutDelegatedAuthenticationAction.Type: changed from string to CheckoutDelegatedAuthenticationActionType
+- CheckoutNativeRedirectAction.Type: changed from string to CheckoutNativeRedirectActionType
+- CheckoutQrCodeAction.Type: changed from string to CheckoutQrCodeActionType
+- CheckoutRedirectAction.Type: changed from string to CheckoutRedirectActionType
+- CheckoutSDKAction.Type: changed from string to CheckoutSDKActionType
+- CheckoutSessionInstallmentOption.Plans: changed from []string to []CheckoutSessionInstallmentOptionPlans
+- CheckoutSessionThreeDS2RequestData.ThreeDSRequestorChallengeInd: changed from *string to *CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd
+- CheckoutThreeDS2Action.Type: changed from string to CheckoutThreeDS2ActionType
+- CheckoutVoucherAction.Type: changed from string to CheckoutVoucherActionType
+- CreateCheckoutSessionRequest.Channel: changed from *string to *CreateCheckoutSessionRequestChannel
+- CreateCheckoutSessionRequest.Mode: changed from *string to *CreateCheckoutSessionRequestMode
+- CreateCheckoutSessionRequest.RecurringProcessingModel: changed from *string to *CreateCheckoutSessionRequestRecurringProcessingModel
+- CreateCheckoutSessionRequest.ShopperInteraction: changed from *string to *CreateCheckoutSessionRequestShopperInteraction
 - CreateCheckoutSessionRequest.ShopperName: changed from *Name to *ShopperName
+- CreateCheckoutSessionRequest.StoreFiltrationMode: changed from *string to *CreateCheckoutSessionRequestStoreFiltrationMode
+- CreateCheckoutSessionRequest.StorePaymentMethodMode: changed from *string to *CreateCheckoutSessionRequestStorePaymentMethodMode
+- CreateCheckoutSessionResponse.Channel: changed from *string to *CreateCheckoutSessionResponseChannel
+- CreateCheckoutSessionResponse.Mode: changed from *string to *CreateCheckoutSessionResponseMode
+- CreateCheckoutSessionResponse.RecurringProcessingModel: changed from *string to *CreateCheckoutSessionResponseRecurringProcessingModel
+- CreateCheckoutSessionResponse.ShopperInteraction: changed from *string to *CreateCheckoutSessionResponseShopperInteraction
 - CreateCheckoutSessionResponse.ShopperName: changed from *Name to *ShopperName
+- CreateCheckoutSessionResponse.StoreFiltrationMode: changed from *string to *CreateCheckoutSessionResponseStoreFiltrationMode
+- CreateCheckoutSessionResponse.StorePaymentMethodMode: changed from *string to *CreateCheckoutSessionResponseStorePaymentMethodMode
+- CreateOrderResponse.ResultCode: changed from string to CreateOrderResponseResultCode
+- DeliveryMethod.Type: changed from *string to *DeliveryMethodType
+- DeviceRenderOptions.SdkInterface: changed from *string to *DeviceRenderOptionsSdkInterface
+- DeviceRenderOptions.SdkUiType: changed from []string to []DeviceRenderOptionsSdkUiType
+- DokuDetails.Type: changed from string to DokuDetailsType
 - Donation.DonationType: changed from string to *string
 - DonationPaymentRequest.AdditionalData: removed
+- DonationPaymentRequest.Channel: changed from *string to *DonationPaymentRequestChannel
 - DonationPaymentRequest.ConversionId: removed
 - DonationPaymentRequest.DeliverAt: removed
 - DonationPaymentRequest.PaymentMethod: changed from DonationPaymentMethod to *DonationPaymentMethod
+- DonationPaymentRequest.RecurringProcessingModel: changed from *string to *DonationPaymentRequestRecurringProcessingModel
+- DonationPaymentRequest.ShopperInteraction: changed from *string to *DonationPaymentRequestShopperInteraction
 - DonationPaymentRequest.ShopperName: changed from *Name to *ShopperName
 - DonationPaymentRequest.ThreeDSAuthenticationOnly: removed
+- DonationPaymentResponse.Status: changed from *string to *DonationPaymentResponseStatus
+- DonationsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- DragonpayDetails.Type: changed from string to DragonpayDetailsType
+- EBankingFinlandDetails.Type: changed from string to EBankingFinlandDetailsType
+- EcontextVoucherDetails.Type: changed from string to EcontextVoucherDetailsType
+- EftDetails.Type: changed from *string to *EftDetailsType
+- FastlaneDetails.Type: changed from string to FastlaneDetailsType
+- FundRecipient.WalletPurpose: changed from *string to *FundRecipientWalletPurpose
+- GenericIssuerPaymentMethodDetails.Type: changed from string to GenericIssuerPaymentMethodDetailsType
+- GooglePayDetails.FundingSource: changed from *string to *GooglePayDetailsFundingSource
+- GooglePayDetails.Type: changed from *string to *GooglePayDetailsType
+- GooglePayDonations.FundingSource: changed from *string to *GooglePayDetailsFundingSource
+- GooglePayDonations.Type: changed from *string to *GooglePayDetailsType
+- IdealDetails.Type: changed from *string to *IdealDetailsType
+- IdealDonations.Type: changed from *string to *IdealDetailsType
+- InstallmentOption.Plans: changed from []string to []InstallmentOptionPlans
+- Installments.Plan: changed from *string to *InstallmentsPlan
+- KlarnaDetails.Type: changed from string to KlarnaDetailsType
+- Mandate.AmountRule: changed from *string to *MandateAmountRule
+- Mandate.BillingAttemptsRule: changed from *string to *MandateBillingAttemptsRule
+- Mandate.Frequency: changed from string to MandateFrequency
+- MasterpassDetails.FundingSource: changed from *string to *MasterpassDetailsFundingSource
+- MasterpassDetails.Type: changed from *string to *MasterpassDetailsType
+- MbwayDetails.Type: changed from *string to *MbwayDetailsType
+- MerchantRiskIndicator.DeliveryAddressIndicator: changed from *string to *MerchantRiskIndicatorDeliveryAddressIndicator
+- MerchantRiskIndicator.DeliveryTimeframe: changed from *string to *MerchantRiskIndicatorDeliveryTimeframe
+- MobilePayDetails.Type: changed from *string to *MobilePayDetailsType
+- ModificationsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- MolPayDetails.Type: changed from string to MolPayDetailsType
+- NewAPIClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Client) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Client) *APIClient
+- NewAfterpayDetails: changed from func(string) *AfterpayDetails to func(AfterpayDetailsType) *AfterpayDetails
+- NewBalanceCheckResponse: changed from func(Amount, string) *BalanceCheckResponse to func(Amount, BalanceCheckResponseResultCode) *BalanceCheckResponse
+- NewBillDeskDetails: changed from func(string, string) *BillDeskDetails to func(string, BillDeskDetailsType) *BillDeskDetails
+- NewCancelOrderResponse: changed from func(string, string) *CancelOrderResponse to func(string, CancelOrderResponseResultCode) *CancelOrderResponse
 - NewCardDetailsRequest: changed from func(string, string) *CardDetailsRequest to func(string) *CardDetailsRequest
+- NewCheckoutAwaitAction: changed from func(string) *CheckoutAwaitAction to func(CheckoutAwaitActionType) *CheckoutAwaitAction
+- NewCheckoutBankTransferAction: changed from func(string) *CheckoutBankTransferAction to func(CheckoutBankTransferActionType) *CheckoutBankTransferAction
+- NewCheckoutDelegatedAuthenticationAction: changed from func(string) *CheckoutDelegatedAuthenticationAction to func(CheckoutDelegatedAuthenticationActionType) *CheckoutDelegatedAuthenticationAction
+- NewCheckoutNativeRedirectAction: changed from func(string) *CheckoutNativeRedirectAction to func(CheckoutNativeRedirectActionType) *CheckoutNativeRedirectAction
+- NewCheckoutQrCodeAction: changed from func(string) *CheckoutQrCodeAction to func(CheckoutQrCodeActionType) *CheckoutQrCodeAction
+- NewCheckoutRedirectAction: changed from func(string) *CheckoutRedirectAction to func(CheckoutRedirectActionType) *CheckoutRedirectAction
+- NewCheckoutSDKAction: changed from func(string) *CheckoutSDKAction to func(CheckoutSDKActionType) *CheckoutSDKAction
+- NewCheckoutThreeDS2Action: changed from func(string) *CheckoutThreeDS2Action to func(CheckoutThreeDS2ActionType) *CheckoutThreeDS2Action
+- NewCheckoutVoucherAction: changed from func(string) *CheckoutVoucherAction to func(CheckoutVoucherActionType) *CheckoutVoucherAction
+- NewCreateOrderResponse: changed from func(Amount, string, string, Amount, string) *CreateOrderResponse to func(Amount, string, string, Amount, CreateOrderResponseResultCode) *CreateOrderResponse
+- NewDokuDetails: changed from func(string, string, string, string) *DokuDetails to func(string, string, string, DokuDetailsType) *DokuDetails
 - NewDonation: changed from func(string, string, string) *Donation to func(string, string) *Donation
 - NewDonationPaymentRequest: changed from func(Amount, string, DonationPaymentMethod, string, string) *DonationPaymentRequest to func(Amount, string, string, string) *DonationPaymentRequest
+- NewDragonpayDetails: changed from func(string, string) *DragonpayDetails to func(string, DragonpayDetailsType) *DragonpayDetails
+- NewEBankingFinlandDetails: changed from func(string) *EBankingFinlandDetails to func(EBankingFinlandDetailsType) *EBankingFinlandDetails
+- NewEcontextVoucherDetails: changed from func(string, string, string, string, string) *EcontextVoucherDetails to func(string, string, string, string, EcontextVoucherDetailsType) *EcontextVoucherDetails
+- NewFastlaneDetails: changed from func(string, string) *FastlaneDetails to func(string, FastlaneDetailsType) *FastlaneDetails
+- NewGenericIssuerPaymentMethodDetails: changed from func(string, string) *GenericIssuerPaymentMethodDetails to func(string, GenericIssuerPaymentMethodDetailsType) *GenericIssuerPaymentMethodDetails
+- NewKlarnaDetails: changed from func(string) *KlarnaDetails to func(KlarnaDetailsType) *KlarnaDetails
+- NewMandate: changed from func(string, string, string) *Mandate to func(string, string, MandateFrequency) *Mandate
+- NewMolPayDetails: changed from func(string, string) *MolPayDetails to func(string, MolPayDetailsType) *MolPayDetails
+- NewPayByBankAISDirectDebitDetails: changed from func(string) *PayByBankAISDirectDebitDetails to func(PayByBankAISDirectDebitDetailsType) *PayByBankAISDirectDebitDetails
+- NewPayByBankDetails: changed from func(string) *PayByBankDetails to func(PayByBankDetailsType) *PayByBankDetails
+- NewPayPalDetails: changed from func(string) *PayPalDetails to func(PayPalDetailsType) *PayPalDetails
+- NewPayUUpiDetails: changed from func(string) *PayUUpiDetails to func(PayUUpiDetailsType) *PayUUpiDetails
+- NewPaymentAmountUpdateResponse: changed from func(Amount, string, string, string, string, string) *PaymentAmountUpdateResponse to func(Amount, string, string, string, string, PaymentAmountUpdateResponseStatus) *PaymentAmountUpdateResponse
+- NewPaymentCancelResponse: changed from func(string, string, string, string) *PaymentCancelResponse to func(string, string, string, PaymentCancelResponseStatus) *PaymentCancelResponse
+- NewPaymentCaptureResponse: changed from func(Amount, string, string, string, string) *PaymentCaptureResponse to func(Amount, string, string, string, PaymentCaptureResponseStatus) *PaymentCaptureResponse
+- NewPaymentLinkResponse: changed from func(Amount, string, string, string, string, string) *PaymentLinkResponse to func(Amount, string, string, string, PaymentLinkResponseStatus, string) *PaymentLinkResponse
+- NewPaymentRefundResponse: changed from func(Amount, string, string, string, string) *PaymentRefundResponse to func(Amount, string, string, string, PaymentRefundResponseStatus) *PaymentRefundResponse
+- NewPaymentReversalResponse: changed from func(string, string, string, string) *PaymentReversalResponse to func(string, string, string, PaymentReversalResponseStatus) *PaymentReversalResponse
+- NewPaypalUpdateOrderResponse: changed from func(string, string) *PaypalUpdateOrderResponse to func(string, PaypalUpdateOrderResponseStatus) *PaypalUpdateOrderResponse
+- NewRatepayDetails: changed from func(string) *RatepayDetails to func(RatepayDetailsType) *RatepayDetails
+- NewRivertyDetails: changed from func(string) *RivertyDetails to func(RivertyDetailsType) *RivertyDetails
 - NewSepaDirectDebitDetails: changed from func(string, string) *SepaDirectDebitDetails to func() *SepaDirectDebitDetails
-- NewUpiCollectDetails: changed from func(string, string) *UpiCollectDetails to func(string) *UpiCollectDetails
+- NewSplit: changed from func(string) *Split to func(SplitType) *Split
+- NewStandalonePaymentCancelResponse: changed from func(string, string, string, string) *StandalonePaymentCancelResponse to func(string, string, string, StandalonePaymentCancelResponseStatus) *StandalonePaymentCancelResponse
+- NewStoredPaymentMethodRequest: changed from func(string, PaymentMethodToStore, string, string) *StoredPaymentMethodRequest to func(string, PaymentMethodToStore, StoredPaymentMethodRequestRecurringProcessingModel, string) *StoredPaymentMethodRequest
+- NewUpdatePaymentLinkRequest: changed from func(string) *UpdatePaymentLinkRequest to func(UpdatePaymentLinkRequestStatus) *UpdatePaymentLinkRequest
+- NewUpiCollectDetails: changed from func(string, string) *UpiCollectDetails to func(UpiCollectDetailsType) *UpiCollectDetails
+- NewUpiIntentDetails: changed from func(string) *UpiIntentDetails to func(UpiIntentDetailsType) *UpiIntentDetails
+- OpenInvoiceDetails.Type: changed from *string to *OpenInvoiceDetailsType
+- OrdersApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PayByBankAISDirectDebitDetails.Type: changed from string to PayByBankAISDirectDebitDetailsType
+- PayByBankDetails.Type: changed from string to PayByBankDetailsType
+- PayPalDetails.Subtype: changed from *string to *PayPalDetailsSubtype
+- PayPalDetails.Type: changed from string to PayPalDetailsType
+- PayPayDetails.Type: changed from *string to *PayPayDetailsType
+- PayToDetails.Type: changed from *string to *PayToDetailsType
+- PayUUpiDetails.Type: changed from string to PayUUpiDetailsType
+- PayWithGoogleDetails.FundingSource: changed from *string to *PayWithGoogleDetailsFundingSource
+- PayWithGoogleDetails.Type: changed from *string to *PayWithGoogleDetailsType
+- PayWithGoogleDonations.FundingSource: changed from *string to *PayWithGoogleDetailsFundingSource
+- PayWithGoogleDonations.Type: changed from *string to *PayWithGoogleDetailsType
+- PaymentAmountUpdateRequest.IndustryUsage: changed from *string to *PaymentAmountUpdateRequestIndustryUsage
+- PaymentAmountUpdateResponse.IndustryUsage: changed from *string to *PaymentAmountUpdateResponseIndustryUsage
+- PaymentAmountUpdateResponse.Status: changed from string to PaymentAmountUpdateResponseStatus
+- PaymentCancelResponse.Status: changed from string to PaymentCancelResponseStatus
+- PaymentCaptureResponse.Status: changed from string to PaymentCaptureResponseStatus
+- PaymentDetails.Type: changed from *string to *PaymentDetailsType
+- PaymentDetailsResponse.ResultCode: changed from *string to *PaymentDetailsResponseResultCode
+- PaymentLinkRequest.RecurringProcessingModel: changed from *string to *PaymentLinkRequestRecurringProcessingModel
+- PaymentLinkRequest.RequiredShopperFields: changed from []string to []PaymentLinkRequestRequiredShopperFields
+- PaymentLinkRequest.StorePaymentMethodMode: changed from *string to *PaymentLinkRequestStorePaymentMethodMode
+- PaymentLinkResponse.RecurringProcessingModel: changed from *string to *PaymentLinkResponseRecurringProcessingModel
+- PaymentLinkResponse.RequiredShopperFields: changed from []string to []PaymentLinkResponseRequiredShopperFields
+- PaymentLinkResponse.Status: changed from string to PaymentLinkResponseStatus
+- PaymentLinkResponse.StorePaymentMethodMode: changed from *string to *PaymentLinkResponseStorePaymentMethodMode
+- PaymentLinksApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PaymentMethod.FundingSource: changed from *string to *PaymentMethodFundingSource
+- PaymentMethodsRequest.Channel: changed from *string to *PaymentMethodsRequestChannel
+- PaymentMethodsRequest.StoreFiltrationMode: changed from *string to *PaymentMethodsRequestStoreFiltrationMode
+- PaymentRefundRequest.MerchantRefundReason: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableString to NullablePaymentRefundRequestMerchantRefundReason
+- PaymentRefundResponse.MerchantRefundReason: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableString to NullablePaymentRefundResponseMerchantRefundReason
+- PaymentRefundResponse.Status: changed from string to PaymentRefundResponseStatus
+- PaymentRequest.Channel: changed from *string to *PaymentRequestChannel
 - PaymentRequest.ConversionId: removed
+- PaymentRequest.EntityType: changed from *string to *PaymentRequestEntityType
+- PaymentRequest.IndustryUsage: changed from *string to *PaymentRequestIndustryUsage
+- PaymentRequest.RecurringProcessingModel: changed from *string to *PaymentRequestRecurringProcessingModel
+- PaymentRequest.ShopperInteraction: changed from *string to *PaymentRequestShopperInteraction
 - PaymentRequest.ShopperName: changed from *Name to *ShopperName
+- PaymentResponse.ResultCode: changed from *string to *PaymentResponseResultCode
+- PaymentReversalResponse.Status: changed from string to PaymentReversalResponseStatus
+- PaymentsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PaypalUpdateOrderResponse.Status: changed from string to PaypalUpdateOrderResponseStatus
+- PixDetails.Type: changed from *string to *PixDetailsType
+- PixRecurring.Frequency: changed from *string to *PixRecurringFrequency
+- PlatformChargebackLogic.Behavior: changed from *string to *PlatformChargebackLogicBehavior
+- PseDetails.Type: changed from *string to *PseDetailsType
+- RakutenPayDetails.Type: changed from *string to *RakutenPayDetailsType
+- RatepayDetails.Type: changed from string to RatepayDetailsType
+- Recurring.Contract: changed from *string to *RecurringContract
+- Recurring.TokenService: changed from *string to *RecurringTokenService
+- RecurringApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- ResponseAdditionalDataCommon.FraudResultType: changed from *string to *ResponseAdditionalDataCommonFraudResultType
+- ResponseAdditionalDataCommon.FraudRiskLevel: changed from *string to *ResponseAdditionalDataCommonFraudRiskLevel
+- ResponseAdditionalDataCommon.RecurringProcessingModel: changed from *string to *ResponseAdditionalDataCommonRecurringProcessingModel
+- ResponseAdditionalDataCommon.TokenizationStoreOperationType: changed from *string to *ResponseAdditionalDataCommonTokenizationStoreOperationType
+- RivertyDetails.Type: changed from string to RivertyDetailsType
+- SamsungPayDetails.FundingSource: changed from *string to *SamsungPayDetailsFundingSource
+- SamsungPayDetails.Type: changed from *string to *SamsungPayDetailsType
 - SepaDirectDebitDetails.Iban: changed from string to *string
 - SepaDirectDebitDetails.OwnerName: changed from string to *string
+- SepaDirectDebitDetails.Type: changed from *string to *SepaDirectDebitDetailsType
+- SessionResultResponse.Status: changed from *string to *SessionResultResponseStatus
 - SessionResultResponse: old is comparable, new is not
+- Split.Type: changed from string to SplitType
+- StandalonePaymentCancelResponse.Status: changed from string to StandalonePaymentCancelResponseStatus
+- StoredPaymentMethodDetails.Type: changed from *string to *StoredPaymentMethodDetailsType
+- StoredPaymentMethodRequest.RecurringProcessingModel: changed from string to StoredPaymentMethodRequestRecurringProcessingModel
+- ThreeDS2RequestData.AcctType: changed from *string to *ThreeDS2RequestDataAcctType
+- ThreeDS2RequestData.AddrMatch: changed from *string to *ThreeDS2RequestDataAddrMatch
+- ThreeDS2RequestData.ChallengeIndicator: changed from *string to *ThreeDS2RequestDataChallengeIndicator
+- ThreeDS2RequestData.ThreeDSRequestorChallengeInd: changed from *string to *ThreeDS2RequestDataThreeDSRequestorChallengeInd
+- ThreeDS2RequestData.TransType: changed from *string to *ThreeDS2RequestDataTransType
+- ThreeDS2RequestData.TransactionType: changed from *string to *ThreeDS2RequestDataTransactionType
+- ThreeDS2RequestFields.AcctType: changed from *string to *ThreeDS2RequestFieldsAcctType
+- ThreeDS2RequestFields.AddrMatch: changed from *string to *ThreeDS2RequestFieldsAddrMatch
+- ThreeDS2RequestFields.ChallengeIndicator: changed from *string to *ThreeDS2RequestFieldsChallengeIndicator
+- ThreeDS2RequestFields.ThreeDSRequestorChallengeInd: changed from *string to *ThreeDS2RequestFieldsThreeDSRequestorChallengeInd
+- ThreeDS2RequestFields.TransType: changed from *string to *ThreeDS2RequestFieldsTransType
+- ThreeDS2RequestFields.TransactionType: changed from *string to *ThreeDS2RequestFieldsTransactionType
+- ThreeDS2Result.ChallengeCancel: changed from *string to *ThreeDS2ResultChallengeCancel
+- ThreeDS2Result.ExemptionIndicator: changed from *string to *ThreeDS2ResultExemptionIndicator
+- ThreeDS2Result.ThreeDSRequestorChallengeInd: changed from *string to *ThreeDS2ResultThreeDSRequestorChallengeInd
+- ThreeDSRequestData.ChallengeWindowSize: changed from *string to *ThreeDSRequestDataChallengeWindowSize
+- ThreeDSRequestData.DataOnly: changed from *string to *ThreeDSRequestDataDataOnly
+- ThreeDSRequestData.NativeThreeDS: changed from *string to *ThreeDSRequestDataNativeThreeDS
+- ThreeDSRequestData.ThreeDSVersion: changed from *string to *ThreeDSRequestDataThreeDSVersion
+- ThreeDSRequestorAuthenticationInfo.ThreeDSReqAuthMethod: changed from *string to *ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod
+- ThreeDSRequestorPriorAuthenticationInfo.ThreeDSReqPriorAuthMethod: changed from *string to *ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod
+- ThreeDSecureData.AuthenticationResponse: changed from *string to *ThreeDSecureDataAuthenticationResponse
+- ThreeDSecureData.ChallengeCancel: changed from *string to *ThreeDSecureDataChallengeCancel
+- ThreeDSecureData.DirectoryResponse: changed from *string to *ThreeDSecureDataDirectoryResponse
+- TwintDetails.Type: changed from *string to *TwintDetailsType
+- UpdatePaymentLinkRequest.Status: changed from string to UpdatePaymentLinkRequestStatus
 - UpiCollectDetails.BillingSequenceNumber: changed from string to *string
+- UpiCollectDetails.Type: changed from string to UpiCollectDetailsType
+- UpiIntentDetails.Type: changed from string to UpiIntentDetailsType
+- UtilityApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- VippsDetails.Type: changed from *string to *VippsDetailsType
+- VisaCheckoutDetails.FundingSource: changed from *string to *VisaCheckoutDetailsFundingSource
+- VisaCheckoutDetails.Type: changed from *string to *VisaCheckoutDetailsType
+- WeChatPayDetails.Type: changed from *string to *WeChatPayDetailsType
+- WeChatPayMiniProgramDetails.Type: changed from *string to *WeChatPayMiniProgramDetailsType
+- ZipDetails.Type: changed from *string to *ZipDetailsType
 Compatible changes:
 - (*AchDetails).GetSdkData: added
 - (*AchDetails).GetSdkDataOk: added
@@ -625,27 +1454,33 @@ Compatible changes:
 - (*ZipDetails).GetSdkDataOk: added
 - (*ZipDetails).HasSdkData: added
 - (*ZipDetails).SetSdkData: added
+- AccountInfoAccountAgeIndicator: added
 - AccountInfoAccountAgeIndicatorFrom30To60Days: added
 - AccountInfoAccountAgeIndicatorLessThan30Days: added
 - AccountInfoAccountAgeIndicatorMoreThan60Days: added
 - AccountInfoAccountAgeIndicatorNotApplicable: added
 - AccountInfoAccountAgeIndicatorThisTransaction: added
+- AccountInfoAccountChangeIndicator: added
 - AccountInfoAccountChangeIndicatorFrom30To60Days: added
 - AccountInfoAccountChangeIndicatorLessThan30Days: added
 - AccountInfoAccountChangeIndicatorMoreThan60Days: added
 - AccountInfoAccountChangeIndicatorThisTransaction: added
+- AccountInfoAccountType: added
 - AccountInfoAccountTypeCredit: added
 - AccountInfoAccountTypeDebit: added
 - AccountInfoAccountTypeNotApplicable: added
+- AccountInfoDeliveryAddressUsageIndicator: added
 - AccountInfoDeliveryAddressUsageIndicatorFrom30To60Days: added
 - AccountInfoDeliveryAddressUsageIndicatorLessThan30Days: added
 - AccountInfoDeliveryAddressUsageIndicatorMoreThan60Days: added
 - AccountInfoDeliveryAddressUsageIndicatorThisTransaction: added
+- AccountInfoPasswordChangeIndicator: added
 - AccountInfoPasswordChangeIndicatorFrom30To60Days: added
 - AccountInfoPasswordChangeIndicatorLessThan30Days: added
 - AccountInfoPasswordChangeIndicatorMoreThan60Days: added
 - AccountInfoPasswordChangeIndicatorNotApplicable: added
 - AccountInfoPasswordChangeIndicatorThisTransaction: added
+- AccountInfoPaymentAccountIndicator: added
 - AccountInfoPaymentAccountIndicatorFrom30To60Days: added
 - AccountInfoPaymentAccountIndicatorLessThan30Days: added
 - AccountInfoPaymentAccountIndicatorMoreThan60Days: added
@@ -656,31 +1491,40 @@ Compatible changes:
 - AcctInfoChAccAgeInd03: added
 - AcctInfoChAccAgeInd04: added
 - AcctInfoChAccAgeInd05: added
+- AcctInfoChAccAgeInd: added
 - AcctInfoChAccChangeInd01: added
 - AcctInfoChAccChangeInd02: added
 - AcctInfoChAccChangeInd03: added
 - AcctInfoChAccChangeInd04: added
+- AcctInfoChAccChangeInd: added
 - AcctInfoChAccPwChangeInd01: added
 - AcctInfoChAccPwChangeInd02: added
 - AcctInfoChAccPwChangeInd03: added
 - AcctInfoChAccPwChangeInd04: added
 - AcctInfoChAccPwChangeInd05: added
+- AcctInfoChAccPwChangeInd: added
 - AcctInfoPaymentAccInd01: added
 - AcctInfoPaymentAccInd02: added
 - AcctInfoPaymentAccInd03: added
 - AcctInfoPaymentAccInd04: added
 - AcctInfoPaymentAccInd05: added
+- AcctInfoPaymentAccInd: added
 - AcctInfoShipAddressUsageInd01: added
 - AcctInfoShipAddressUsageInd02: added
 - AcctInfoShipAddressUsageInd03: added
 - AcctInfoShipAddressUsageInd04: added
+- AcctInfoShipAddressUsageInd: added
 - AcctInfoShipNameIndicator01: added
 - AcctInfoShipNameIndicator02: added
+- AcctInfoShipNameIndicator: added
 - AcctInfoSuspiciousAccActivity01: added
 - AcctInfoSuspiciousAccActivity02: added
+- AcctInfoSuspiciousAccActivity: added
 - AchDetails.SdkData: added
+- AchDetailsAccountHolderType: added
 - AchDetailsAccountHolderTypeBusiness: added
 - AchDetailsAccountHolderTypePersonal: added
+- AchDetailsBankAccountType: added
 - AchDetailsBankAccountTypeBalance: added
 - AchDetailsBankAccountTypeChecking: added
 - AchDetailsBankAccountTypeDeposit: added
@@ -688,6 +1532,7 @@ Compatible changes:
 - AchDetailsBankAccountTypeOther: added
 - AchDetailsBankAccountTypePayment: added
 - AchDetailsBankAccountTypeSavings: added
+- AchDetailsType: added
 - AchDetailsTypeAch: added
 - AchDetailsTypeAchPlaid: added
 - AdditionalData3DSecureChallengeWindowSize01: added
@@ -695,82 +1540,312 @@ Compatible changes:
 - AdditionalData3DSecureChallengeWindowSize03: added
 - AdditionalData3DSecureChallengeWindowSize04: added
 - AdditionalData3DSecureChallengeWindowSize05: added
+- AdditionalData3DSecureChallengeWindowSize: added
 - AdditionalDataCommon.TransactionLinkId: added
+- AdditionalDataCommonIndustryUsage: added
 - AdditionalDataCommonIndustryUsageDelayedCharge: added
 - AdditionalDataCommonIndustryUsageNoShow: added
 - AffirmDetails.FinancingProgram: added
 - AffirmDetails.SdkData: added
+- AffirmDetailsType: added
 - AffirmDetailsTypeAffirm: added
 - AfterpayDetails.SdkData: added
+- AfterpayDetailsType: added
 - AfterpayDetailsTypeAfterpayB2b: added
 - AfterpayDetailsTypeAfterpayDefault: added
 - AfterpayDetailsTypeAfterpaytouch: added
 - AfterpayDetailsTypeAfterpaytouchUS: added
 - AfterpayDetailsTypeClearpay: added
+- AllowedAccountInfoAccountAgeIndicatorEnumValues: added
+- AllowedAccountInfoAccountChangeIndicatorEnumValues: added
+- AllowedAccountInfoAccountTypeEnumValues: added
+- AllowedAccountInfoDeliveryAddressUsageIndicatorEnumValues: added
+- AllowedAccountInfoPasswordChangeIndicatorEnumValues: added
+- AllowedAccountInfoPaymentAccountIndicatorEnumValues: added
+- AllowedAcctInfoChAccAgeIndEnumValues: added
+- AllowedAcctInfoChAccChangeIndEnumValues: added
+- AllowedAcctInfoChAccPwChangeIndEnumValues: added
+- AllowedAcctInfoPaymentAccIndEnumValues: added
+- AllowedAcctInfoShipAddressUsageIndEnumValues: added
+- AllowedAcctInfoShipNameIndicatorEnumValues: added
+- AllowedAcctInfoSuspiciousAccActivityEnumValues: added
+- AllowedAchDetailsAccountHolderTypeEnumValues: added
+- AllowedAchDetailsBankAccountTypeEnumValues: added
+- AllowedAchDetailsTypeEnumValues: added
+- AllowedAdditionalData3DSecureChallengeWindowSizeEnumValues: added
+- AllowedAdditionalDataCommonIndustryUsageEnumValues: added
+- AllowedAffirmDetailsTypeEnumValues: added
+- AllowedAfterpayDetailsTypeEnumValues: added
+- AllowedAlmaDetailsFeeTypeEnumValues: added
+- AllowedAlmaDetailsTypeEnumValues: added
+- AllowedAmazonPayDetailsTypeEnumValues: added
+- AllowedAncvDetailsTypeEnumValues: added
+- AllowedAndroidPayDetailsTypeEnumValues: added
+- AllowedApplePayDetailsFundingSourceEnumValues: added
+- AllowedApplePayDetailsTypeEnumValues: added
+- AllowedAuPayDetailsTypeEnumValues: added
+- AllowedAuthenticationDataAttemptAuthenticationEnumValues: added
+- AllowedBacsDirectDebitDetailsTypeEnumValues: added
+- AllowedBalanceCheckRequestRecurringProcessingModelEnumValues: added
+- AllowedBalanceCheckRequestShopperInteractionEnumValues: added
+- AllowedBalanceCheckResponseResultCodeEnumValues: added
+- AllowedBillDeskDetailsTypeEnumValues: added
+- AllowedBlikDetailsTypeEnumValues: added
 - AllowedCalculationTypeEnumValues: added
+- AllowedCancelOrderResponseResultCodeEnumValues: added
+- AllowedCarRentalRateTypeEnumValues: added
+- AllowedCardDetailsFundingSourceEnumValues: added
+- AllowedCardDetailsTypeEnumValues: added
+- AllowedCashAppDetailsTypeEnumValues: added
+- AllowedCellulantDetailsTypeEnumValues: added
+- AllowedCheckoutAwaitActionTypeEnumValues: added
+- AllowedCheckoutBankAccountAccountTypeEnumValues: added
+- AllowedCheckoutBankTransferActionTypeEnumValues: added
+- AllowedCheckoutDelegatedAuthenticationActionTypeEnumValues: added
+- AllowedCheckoutForwardAccountUpdateResultResultEnumValues: added
+- AllowedCheckoutForwardRequestCardTypeEnumValues: added
+- AllowedCheckoutNativeRedirectActionTypeEnumValues: added
+- AllowedCheckoutOutgoingForwardRequestHttpMethodEnumValues: added
+- AllowedCheckoutQrCodeActionTypeEnumValues: added
+- AllowedCheckoutRedirectActionTypeEnumValues: added
+- AllowedCheckoutSDKActionTypeEnumValues: added
+- AllowedCheckoutSessionInstallmentOptionPlansEnumValues: added
+- AllowedCheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeIndEnumValues: added
+- AllowedCheckoutThreeDS2ActionTypeEnumValues: added
+- AllowedCheckoutVoucherActionTypeEnumValues: added
+- AllowedCreateCheckoutSessionRequestChannelEnumValues: added
+- AllowedCreateCheckoutSessionRequestModeEnumValues: added
+- AllowedCreateCheckoutSessionRequestRecurringProcessingModelEnumValues: added
+- AllowedCreateCheckoutSessionRequestShopperInteractionEnumValues: added
+- AllowedCreateCheckoutSessionRequestStoreFiltrationModeEnumValues: added
+- AllowedCreateCheckoutSessionRequestStorePaymentMethodModeEnumValues: added
+- AllowedCreateCheckoutSessionResponseChannelEnumValues: added
+- AllowedCreateCheckoutSessionResponseModeEnumValues: added
+- AllowedCreateCheckoutSessionResponseRecurringProcessingModelEnumValues: added
+- AllowedCreateCheckoutSessionResponseShopperInteractionEnumValues: added
+- AllowedCreateCheckoutSessionResponseStoreFiltrationModeEnumValues: added
+- AllowedCreateCheckoutSessionResponseStorePaymentMethodModeEnumValues: added
+- AllowedCreateOrderResponseResultCodeEnumValues: added
+- AllowedDBaraiDetailsTypeEnumValues: added
+- AllowedDeliveryMethodTypeEnumValues: added
+- AllowedDeviceRenderOptionsSdkInterfaceEnumValues: added
+- AllowedDeviceRenderOptionsSdkUiTypeEnumValues: added
+- AllowedDirectDebitAuDetailsTypeEnumValues: added
+- AllowedDokuDetailsTypeEnumValues: added
+- AllowedDonationPaymentRequestChannelEnumValues: added
+- AllowedDonationPaymentRequestRecurringProcessingModelEnumValues: added
+- AllowedDonationPaymentRequestShopperInteractionEnumValues: added
+- AllowedDonationPaymentResponseStatusEnumValues: added
+- AllowedDragonpayDetailsTypeEnumValues: added
+- AllowedEBankingFinlandDetailsTypeEnumValues: added
+- AllowedEcontextVoucherDetailsTypeEnumValues: added
+- AllowedEftDetailsTypeEnumValues: added
+- AllowedExternalTokenDetailsSubtypeEnumValues: added
+- AllowedExternalTokenDetailsTypeEnumValues: added
+- AllowedFastlaneDetailsTypeEnumValues: added
+- AllowedFundRecipientWalletPurposeEnumValues: added
+- AllowedGenericIssuerPaymentMethodDetailsTypeEnumValues: added
+- AllowedGooglePayDetailsFundingSourceEnumValues: added
+- AllowedGooglePayDetailsTypeEnumValues: added
+- AllowedIdealDetailsTypeEnumValues: added
+- AllowedInstallmentOptionPlansEnumValues: added
+- AllowedInstallmentsPlanEnumValues: added
+- AllowedKlarnaDetailsTypeEnumValues: added
+- AllowedKlarnaNetworkDetailsSubtypeEnumValues: added
+- AllowedKlarnaNetworkDetailsTypeEnumValues: added
+- AllowedLodgingLodgingChargeTypeEnumValues: added
+- AllowedMandateAmountRuleEnumValues: added
+- AllowedMandateBillingAttemptsRuleEnumValues: added
+- AllowedMandateFrequencyEnumValues: added
+- AllowedMasterpassDetailsFundingSourceEnumValues: added
+- AllowedMasterpassDetailsTypeEnumValues: added
+- AllowedMbwayDetailsTypeEnumValues: added
+- AllowedMerchantRiskIndicatorDeliveryAddressIndicatorEnumValues: added
+- AllowedMerchantRiskIndicatorDeliveryTimeframeEnumValues: added
+- AllowedMobilePayDetailsTypeEnumValues: added
+- AllowedMolPayDetailsTypeEnumValues: added
+- AllowedOpenInvoiceDetailsTypeEnumValues: added
+- AllowedPayByBankAISDirectDebitDetailsTypeEnumValues: added
+- AllowedPayByBankCADirectDebitDetailsTypeEnumValues: added
+- AllowedPayByBankDetailsTypeEnumValues: added
+- AllowedPayPalDetailsSubtypeEnumValues: added
+- AllowedPayPalDetailsTypeEnumValues: added
+- AllowedPayPayDetailsTypeEnumValues: added
+- AllowedPayToDetailsTypeEnumValues: added
+- AllowedPayUUpiDetailsTypeEnumValues: added
+- AllowedPayWithGoogleDetailsFundingSourceEnumValues: added
+- AllowedPayWithGoogleDetailsTypeEnumValues: added
+- AllowedPaymentAmountUpdateRequestAdjustAuthTypeEnumValues: added
+- AllowedPaymentAmountUpdateRequestIndustryUsageEnumValues: added
+- AllowedPaymentAmountUpdateResponseIndustryUsageEnumValues: added
+- AllowedPaymentAmountUpdateResponseStatusEnumValues: added
+- AllowedPaymentCancelResponseStatusEnumValues: added
+- AllowedPaymentCaptureResponseStatusEnumValues: added
+- AllowedPaymentDetailsResponseResultCodeEnumValues: added
+- AllowedPaymentDetailsTypeEnumValues: added
+- AllowedPaymentLinkRequestRecurringProcessingModelEnumValues: added
+- AllowedPaymentLinkRequestRequiredShopperFieldsEnumValues: added
+- AllowedPaymentLinkRequestStorePaymentMethodModeEnumValues: added
+- AllowedPaymentLinkResponseRecurringProcessingModelEnumValues: added
+- AllowedPaymentLinkResponseRequiredShopperFieldsEnumValues: added
+- AllowedPaymentLinkResponseStatusEnumValues: added
+- AllowedPaymentLinkResponseStorePaymentMethodModeEnumValues: added
+- AllowedPaymentMethodFundingSourceEnumValues: added
+- AllowedPaymentMethodsRequestChannelEnumValues: added
+- AllowedPaymentMethodsRequestStoreFiltrationModeEnumValues: added
+- AllowedPaymentRefundRequestMerchantRefundReasonEnumValues: added
+- AllowedPaymentRefundResponseMerchantRefundReasonEnumValues: added
+- AllowedPaymentRefundResponseStatusEnumValues: added
+- AllowedPaymentRequestChannelEnumValues: added
+- AllowedPaymentRequestEntityTypeEnumValues: added
+- AllowedPaymentRequestIndustryUsageEnumValues: added
+- AllowedPaymentRequestRecurringProcessingModelEnumValues: added
+- AllowedPaymentRequestShopperInteractionEnumValues: added
+- AllowedPaymentResponseResultCodeEnumValues: added
+- AllowedPaymentResultCodeEnumValues: added
+- AllowedPaymentReversalResponseStatusEnumValues: added
+- AllowedPaymentValidationsNameResponseStatusEnumValues: added
+- AllowedPaypalUpdateOrderResponseStatusEnumValues: added
+- AllowedPixDetailsTypeEnumValues: added
+- AllowedPixPayByBankDetailsTypeEnumValues: added
+- AllowedPixRecurringFrequencyEnumValues: added
+- AllowedPlatformChargebackLogicBehaviorEnumValues: added
+- AllowedPseDetailsTypeEnumValues: added
+- AllowedRakutenPayDetailsTypeEnumValues: added
+- AllowedRatepayDetailsTypeEnumValues: added
+- AllowedRecurringContractEnumValues: added
+- AllowedRecurringTokenServiceEnumValues: added
 - AllowedRemittancePurposeEnumValues: added
+- AllowedResponseAdditionalDataCommonFraudResultTypeEnumValues: added
+- AllowedResponseAdditionalDataCommonFraudRiskLevelEnumValues: added
+- AllowedResponseAdditionalDataCommonRecurringProcessingModelEnumValues: added
+- AllowedResponseAdditionalDataCommonTokenizationStoreOperationTypeEnumValues: added
 - AllowedResultEnumValues: added
+- AllowedRivertyDetailsTypeEnumValues: added
+- AllowedSamsungPayDetailsFundingSourceEnumValues: added
+- AllowedSamsungPayDetailsTypeEnumValues: added
+- AllowedSepaDirectDebitDetailsTypeEnumValues: added
+- AllowedSepaDirectDebitDonationsTypeEnumValues: added
+- AllowedSessionResultResponseStatusEnumValues: added
+- AllowedSplitTypeEnumValues: added
+- AllowedStandalonePaymentCancelResponseStatusEnumValues: added
+- AllowedStoredPaymentMethodDetailsTypeEnumValues: added
+- AllowedStoredPaymentMethodRequestRecurringProcessingModelEnumValues: added
 - AllowedSublimitStatusEnumValues: added
 - AllowedTaxIdentificationTypeEnumValues: added
+- AllowedThreeDS2RequestDataAcctTypeEnumValues: added
+- AllowedThreeDS2RequestDataAddrMatchEnumValues: added
+- AllowedThreeDS2RequestDataChallengeIndicatorEnumValues: added
+- AllowedThreeDS2RequestDataThreeDSRequestorChallengeIndEnumValues: added
+- AllowedThreeDS2RequestDataTransTypeEnumValues: added
+- AllowedThreeDS2RequestDataTransactionTypeEnumValues: added
+- AllowedThreeDS2RequestFieldsAcctTypeEnumValues: added
+- AllowedThreeDS2RequestFieldsAddrMatchEnumValues: added
+- AllowedThreeDS2RequestFieldsChallengeIndicatorEnumValues: added
+- AllowedThreeDS2RequestFieldsThreeDSRequestorChallengeIndEnumValues: added
+- AllowedThreeDS2RequestFieldsTransTypeEnumValues: added
+- AllowedThreeDS2RequestFieldsTransactionTypeEnumValues: added
+- AllowedThreeDS2ResultChallengeCancelEnumValues: added
+- AllowedThreeDS2ResultExemptionIndicatorEnumValues: added
+- AllowedThreeDS2ResultThreeDSRequestorChallengeIndEnumValues: added
+- AllowedThreeDSRequestDataChallengeWindowSizeEnumValues: added
+- AllowedThreeDSRequestDataDataOnlyEnumValues: added
+- AllowedThreeDSRequestDataNativeThreeDSEnumValues: added
+- AllowedThreeDSRequestDataThreeDSVersionEnumValues: added
+- AllowedThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethodEnumValues: added
+- AllowedThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethodEnumValues: added
+- AllowedThreeDSecureDataAuthenticationResponseEnumValues: added
+- AllowedThreeDSecureDataChallengeCancelEnumValues: added
+- AllowedThreeDSecureDataDirectoryResponseEnumValues: added
+- AllowedTokenMandateAmountRuleEnumValues: added
+- AllowedTokenMandateBillingAttemptsRuleEnumValues: added
+- AllowedTokenMandateFrequencyEnumValues: added
+- AllowedTokenMandateRetryPolicyEnumValues: added
+- AllowedTwintDetailsTypeEnumValues: added
+- AllowedUpdatePaymentLinkRequestStatusEnumValues: added
+- AllowedUpiCollectDetailsTypeEnumValues: added
+- AllowedUpiIntentDetailsTypeEnumValues: added
+- AllowedUpiQrDetailsTypeEnumValues: added
+- AllowedVippsDetailsTypeEnumValues: added
+- AllowedVisaCheckoutDetailsFundingSourceEnumValues: added
+- AllowedVisaCheckoutDetailsTypeEnumValues: added
+- AllowedWeChatPayDetailsTypeEnumValues: added
+- AllowedWeChatPayMiniProgramDetailsTypeEnumValues: added
+- AllowedZipDetailsTypeEnumValues: added
 - AlmaDetails: added
 - AlmaDetailsAsCheckoutPaymentMethod: added
+- AlmaDetailsFeeType: added
 - AlmaDetailsFeeTypeMerchantPays: added
 - AlmaDetailsFeeTypeShopperPays: added
+- AlmaDetailsType: added
 - AlmaDetailsTypeAlma: added
 - AmazonPayDetails.SdkData: added
+- AmazonPayDetailsType: added
 - AmazonPayDetailsTypeAmazonpay: added
 - AncvDetails.SdkData: added
+- AncvDetailsType: added
 - AncvDetailsTypeAncv: added
 - AndroidPayDetails.SdkData: added
+- AndroidPayDetailsType: added
 - AndroidPayDetailsTypeAndroidpay: added
 - AppIdentifierInfo: added
 - ApplePayDetails.SdkData: added
+- ApplePayDetailsFundingSource: added
 - ApplePayDetailsFundingSourceCredit: added
 - ApplePayDetailsFundingSourceDebit: added
 - ApplePayDetailsFundingSourcePrepaid: added
+- ApplePayDetailsType: added
 - ApplePayDetailsTypeApplepay: added
 - ApplePayDonations.SdkData: added
-- ApplePayDonationsFundingSourceCredit: added
-- ApplePayDonationsFundingSourceDebit: added
-- ApplePayDonationsFundingSourcePrepaid: added
-- ApplePayDonationsTypeApplepay: added
 - AuPayDetails: added
 - AuPayDetailsAsCheckoutPaymentMethod: added
+- AuPayDetailsType: added
 - AuPayDetailsTypeAupay: added
+- AuthenticationDataAttemptAuthentication: added
 - AuthenticationDataAttemptAuthenticationAlways: added
 - AuthenticationDataAttemptAuthenticationNever: added
 - BacsDirectDebitDetails.SdkData: added
+- BacsDirectDebitDetailsType: added
 - BacsDirectDebitDetailsTypeDirectdebitGB: added
+- BalanceCheckRequestRecurringProcessingModel: added
 - BalanceCheckRequestRecurringProcessingModelCardOnFile: added
 - BalanceCheckRequestRecurringProcessingModelSubscription: added
 - BalanceCheckRequestRecurringProcessingModelUnscheduledCardOnFile: added
+- BalanceCheckRequestShopperInteraction: added
 - BalanceCheckRequestShopperInteractionContAuth: added
 - BalanceCheckRequestShopperInteractionEcommerce: added
 - BalanceCheckRequestShopperInteractionMoto: added
 - BalanceCheckRequestShopperInteractionPOS: added
+- BalanceCheckResponseResultCode: added
 - BalanceCheckResponseResultCodeFailed: added
 - BalanceCheckResponseResultCodeNotEnoughBalance: added
 - BalanceCheckResponseResultCodeSuccess: added
 - BillDeskDetails.SdkData: added
+- BillDeskDetailsType: added
 - BillDeskDetailsTypeBilldeskOnline: added
 - BillDeskDetailsTypeBilldeskWallet: added
 - BlikDetails.SdkData: added
+- BlikDetailsType: added
 - BlikDetailsTypeBlik: added
-- CALCULATIONTYPE_LRS_TCS: added
 - CalculateTaxRequest: added
 - CalculateTaxResponse: added
 - CalculationType: added
+- CalculationTypeLRSTCS: added
+- CancelOrderResponseResultCode: added
 - CancelOrderResponseResultCodeReceived: added
 - CarRental: added
+- CarRentalRateType: added
 - CarRentalRateTypeDaily: added
 - CarRentalRateTypeWeekly: added
 - CardBrandDetails.Healthcare: added
 - CardDetails.BillingSequenceNumber: added
 - CardDetails.EncryptedPassword: added
 - CardDetails.SdkData: added
+- CardDetailsFundingSource: added
 - CardDetailsFundingSourceCredit: added
 - CardDetailsFundingSourceDebit: added
 - CardDetailsFundingSourcePrepaid: added
+- CardDetailsType: added
 - CardDetailsTypeBcmc: added
 - CardDetailsTypeCard: added
 - CardDetailsTypeClicktopay: added
@@ -780,20 +1855,15 @@ Compatible changes:
 - CardDonations.BillingSequenceNumber: added
 - CardDonations.EncryptedPassword: added
 - CardDonations.SdkData: added
-- CardDonationsFundingSourceCredit: added
-- CardDonationsFundingSourceDebit: added
-- CardDonationsFundingSourcePrepaid: added
-- CardDonationsTypeBcmc: added
-- CardDonationsTypeCard: added
-- CardDonationsTypeClicktopay: added
-- CardDonationsTypeGiftcard: added
-- CardDonationsTypeNetworkToken: added
-- CardDonationsTypeScheme: added
 - CashAppDetails.SdkData: added
+- CashAppDetailsType: added
 - CashAppDetailsTypeCashapp: added
 - CellulantDetails.SdkData: added
+- CellulantDetailsType: added
 - CellulantDetailsTypeCellulant: added
+- CheckoutAwaitActionType: added
 - CheckoutAwaitActionTypeAwait: added
+- CheckoutBankAccountAccountType: added
 - CheckoutBankAccountAccountTypeBalance: added
 - CheckoutBankAccountAccountTypeChecking: added
 - CheckoutBankAccountAccountTypeDeposit: added
@@ -803,10 +1873,13 @@ Compatible changes:
 - CheckoutBankAccountAccountTypeSavings: added
 - CheckoutBankTransferAction.BankCode: added
 - CheckoutBankTransferAction.BranchCode: added
+- CheckoutBankTransferActionType: added
 - CheckoutBankTransferActionTypeBankTransfer: added
+- CheckoutDelegatedAuthenticationActionType: added
 - CheckoutDelegatedAuthenticationActionTypeDelegatedAuthentication: added
 - CheckoutErrorResponseEntity: added
 - CheckoutForwardAccountUpdateResult: added
+- CheckoutForwardAccountUpdateResultResult: added
 - CheckoutForwardAccountUpdateResultResultCardChanged: added
 - CheckoutForwardAccountUpdateResultResultCardExpiryChanged: added
 - CheckoutForwardAccountUpdateResultResultCloseAccount: added
@@ -816,13 +1889,16 @@ Compatible changes:
 - CheckoutForwardNetworkTokenResult: added
 - CheckoutForwardRequest: added
 - CheckoutForwardRequestCard: added
+- CheckoutForwardRequestCardType: added
 - CheckoutForwardRequestCardTypeScheme: added
 - CheckoutForwardRequestOptions: added
 - CheckoutForwardResponse: added
 - CheckoutForwardResponseFromUrl: added
+- CheckoutNativeRedirectActionType: added
 - CheckoutNativeRedirectActionTypeNativeRedirect: added
 - CheckoutNetworkTokenOption: added
 - CheckoutOutgoingForwardRequest: added
+- CheckoutOutgoingForwardRequestHttpMethod: added
 - CheckoutOutgoingForwardRequestHttpMethodPatch: added
 - CheckoutOutgoingForwardRequestHttpMethodPost: added
 - CheckoutOutgoingForwardRequestHttpMethodPut: added
@@ -835,10 +1911,14 @@ Compatible changes:
 - CheckoutPaymentMethod.PayByBankCADirectDebitDetails: added
 - CheckoutPaymentMethod.PixPayByBankDetails: added
 - CheckoutPaymentMethod.UpiQrDetails: added
+- CheckoutQrCodeActionType: added
 - CheckoutQrCodeActionTypeQrCode: added
+- CheckoutRedirectActionType: added
 - CheckoutRedirectActionTypeRedirect: added
+- CheckoutSDKActionType: added
 - CheckoutSDKActionTypeSdk: added
 - CheckoutSDKActionTypeWechatpaySDK: added
+- CheckoutSessionInstallmentOptionPlans: added
 - CheckoutSessionInstallmentOptionPlansBonus: added
 - CheckoutSessionInstallmentOptionPlansBuynowPaylater: added
 - CheckoutSessionInstallmentOptionPlansInteresRefundPrctg: added
@@ -857,62 +1937,82 @@ Compatible changes:
 - CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd04: added
 - CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd05: added
 - CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd06: added
+- CheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd: added
 - CheckoutThreeDS2ActionAsPaymentDetailsResponseAction: added
+- CheckoutThreeDS2ActionType: added
 - CheckoutThreeDS2ActionTypeThreeDS2: added
+- CheckoutVoucherActionType: added
 - CheckoutVoucherActionTypeVoucher: added
 - ConfidenceScore: added
 - CreateCheckoutSessionRequest.EnhancedSchemeData: added
 - CreateCheckoutSessionRequest.Payable: added
 - CreateCheckoutSessionRequest.ShopperConversionId: added
 - CreateCheckoutSessionRequest.ThirdPartyTokenRedundancyInfo: added
+- CreateCheckoutSessionRequestChannel: added
 - CreateCheckoutSessionRequestChannelAndroid: added
 - CreateCheckoutSessionRequestChannelIOS: added
 - CreateCheckoutSessionRequestChannelWeb: added
+- CreateCheckoutSessionRequestMode: added
 - CreateCheckoutSessionRequestModeEmbedded: added
 - CreateCheckoutSessionRequestModeHosted: added
+- CreateCheckoutSessionRequestRecurringProcessingModel: added
 - CreateCheckoutSessionRequestRecurringProcessingModelCardOnFile: added
 - CreateCheckoutSessionRequestRecurringProcessingModelSubscription: added
 - CreateCheckoutSessionRequestRecurringProcessingModelUnscheduledCardOnFile: added
+- CreateCheckoutSessionRequestShopperInteraction: added
 - CreateCheckoutSessionRequestShopperInteractionContAuth: added
 - CreateCheckoutSessionRequestShopperInteractionEcommerce: added
 - CreateCheckoutSessionRequestShopperInteractionMoto: added
 - CreateCheckoutSessionRequestShopperInteractionPOS: added
+- CreateCheckoutSessionRequestStoreFiltrationMode: added
 - CreateCheckoutSessionRequestStoreFiltrationModeExclusive: added
 - CreateCheckoutSessionRequestStoreFiltrationModeInclusive: added
 - CreateCheckoutSessionRequestStoreFiltrationModeSkipFilter: added
+- CreateCheckoutSessionRequestStorePaymentMethodMode: added
 - CreateCheckoutSessionRequestStorePaymentMethodModeAskForConsent: added
 - CreateCheckoutSessionRequestStorePaymentMethodModeDisabled: added
 - CreateCheckoutSessionRequestStorePaymentMethodModeEnabled: added
 - CreateCheckoutSessionResponse.EnhancedSchemeData: added
 - CreateCheckoutSessionResponse.Payable: added
 - CreateCheckoutSessionResponse.ThirdPartyTokenRedundancyInfo: added
+- CreateCheckoutSessionResponseChannel: added
 - CreateCheckoutSessionResponseChannelAndroid: added
 - CreateCheckoutSessionResponseChannelIOS: added
 - CreateCheckoutSessionResponseChannelWeb: added
+- CreateCheckoutSessionResponseMode: added
 - CreateCheckoutSessionResponseModeEmbedded: added
 - CreateCheckoutSessionResponseModeHosted: added
+- CreateCheckoutSessionResponseRecurringProcessingModel: added
 - CreateCheckoutSessionResponseRecurringProcessingModelCardOnFile: added
 - CreateCheckoutSessionResponseRecurringProcessingModelSubscription: added
 - CreateCheckoutSessionResponseRecurringProcessingModelUnscheduledCardOnFile: added
+- CreateCheckoutSessionResponseShopperInteraction: added
 - CreateCheckoutSessionResponseShopperInteractionContAuth: added
 - CreateCheckoutSessionResponseShopperInteractionEcommerce: added
 - CreateCheckoutSessionResponseShopperInteractionMoto: added
 - CreateCheckoutSessionResponseShopperInteractionPOS: added
+- CreateCheckoutSessionResponseStoreFiltrationMode: added
 - CreateCheckoutSessionResponseStoreFiltrationModeExclusive: added
 - CreateCheckoutSessionResponseStoreFiltrationModeInclusive: added
 - CreateCheckoutSessionResponseStoreFiltrationModeSkipFilter: added
+- CreateCheckoutSessionResponseStorePaymentMethodMode: added
 - CreateCheckoutSessionResponseStorePaymentMethodModeAskForConsent: added
 - CreateCheckoutSessionResponseStorePaymentMethodModeDisabled: added
 - CreateCheckoutSessionResponseStorePaymentMethodModeEnabled: added
+- CreateOrderResponseResultCode: added
 - CreateOrderResponseResultCodeSuccess: added
 - DBaraiDetails: added
 - DBaraiDetailsAsCheckoutPaymentMethod: added
+- DBaraiDetailsType: added
 - DBaraiDetailsTypeDbarai: added
+- DeliveryMethodType: added
 - DeliveryMethodTypeShipping: added
 - Destination: added
+- DeviceRenderOptionsSdkInterface: added
 - DeviceRenderOptionsSdkInterfaceBoth: added
 - DeviceRenderOptionsSdkInterfaceHtml: added
 - DeviceRenderOptionsSdkInterfaceNative: added
+- DeviceRenderOptionsSdkUiType: added
 - DeviceRenderOptionsSdkUiTypeMultiSelect: added
 - DeviceRenderOptionsSdkUiTypeOtherHtml: added
 - DeviceRenderOptionsSdkUiTypeOutOfBand: added
@@ -920,8 +2020,10 @@ Compatible changes:
 - DeviceRenderOptionsSdkUiTypeText: added
 - DirectDebitAuDetails: added
 - DirectDebitAuDetailsAsCheckoutPaymentMethod: added
+- DirectDebitAuDetailsType: added
 - DirectDebitAuDetailsTypeDirectdebitAU: added
 - DokuDetails.SdkData: added
+- DokuDetailsType: added
 - DokuDetailsTypeDokuAlfamart: added
 - DokuDetailsTypeDokuBcaVa: added
 - DokuDetailsTypeDokuBniVa: added
@@ -937,33 +2039,41 @@ Compatible changes:
 - DonationCampaignsRequest.Store: added
 - DonationPaymentMethod.SepaDirectDebitDonations: added
 - DonationPaymentRequest.Store: added
+- DonationPaymentRequestChannel: added
 - DonationPaymentRequestChannelAndroid: added
 - DonationPaymentRequestChannelIOS: added
 - DonationPaymentRequestChannelWeb: added
+- DonationPaymentRequestRecurringProcessingModel: added
 - DonationPaymentRequestRecurringProcessingModelCardOnFile: added
 - DonationPaymentRequestRecurringProcessingModelSubscription: added
 - DonationPaymentRequestRecurringProcessingModelUnscheduledCardOnFile: added
+- DonationPaymentRequestShopperInteraction: added
 - DonationPaymentRequestShopperInteractionContAuth: added
 - DonationPaymentRequestShopperInteractionEcommerce: added
 - DonationPaymentRequestShopperInteractionMoto: added
 - DonationPaymentRequestShopperInteractionPOS: added
+- DonationPaymentResponseStatus: added
 - DonationPaymentResponseStatusCompleted: added
 - DonationPaymentResponseStatusPending: added
 - DonationPaymentResponseStatusRefused: added
 - DragonpayDetails.SdkData: added
+- DragonpayDetailsType: added
 - DragonpayDetailsTypeDragonpayEbanking: added
 - DragonpayDetailsTypeDragonpayOtcBanking: added
 - DragonpayDetailsTypeDragonpayOtcNonBanking: added
 - DragonpayDetailsTypeDragonpayOtcPhilippines: added
 - EBankingFinlandDetails.SdkData: added
+- EBankingFinlandDetailsType: added
 - EBankingFinlandDetailsTypeEbankingFI: added
 - EcontextVoucherDetails.SdkData: added
+- EcontextVoucherDetailsType: added
 - EcontextVoucherDetailsTypeEcontext: added
 - EcontextVoucherDetailsTypeEcontextAtm: added
 - EcontextVoucherDetailsTypeEcontextOnline: added
 - EcontextVoucherDetailsTypeEcontextSevenEleven: added
 - EcontextVoucherDetailsTypeEcontextStores: added
 - EftDetails.SdkData: added
+- EftDetailsType: added
 - EftDetailsTypeEftDirectdebitCA: added
 - EnhancedSchemeData.CarRental: added
 - EnhancedSchemeData.Healthcare: added
@@ -972,37 +2082,41 @@ Compatible changes:
 - EnhancedSchemeData.TemporaryServices: added
 - ExternalTokenDetails: added
 - ExternalTokenDetailsAsCheckoutPaymentMethod: added
+- ExternalTokenDetailsSubtype: added
 - ExternalTokenDetailsSubtypeHilton: added
+- ExternalTokenDetailsType: added
 - ExternalTokenDetailsTypeExternalToken: added
 - FastlaneDetails.SdkData: added
+- FastlaneDetailsType: added
 - FastlaneDetailsTypeFastlane: added
 - Folio: added
+- FundRecipientWalletPurpose: added
 - FundRecipientWalletPurposeIdentifiedBoleto: added
 - FundRecipientWalletPurposeTransferDifferentWallet: added
 - FundRecipientWalletPurposeTransferOwnWallet: added
 - FundRecipientWalletPurposeTransferSameWallet: added
 - FundRecipientWalletPurposeUnidentifiedBoleto: added
 - GenericIssuerPaymentMethodDetails.SdkData: added
+- GenericIssuerPaymentMethodDetailsType: added
 - GenericIssuerPaymentMethodDetailsTypeEps: added
 - GenericIssuerPaymentMethodDetailsTypeOnlineBankingCZ: added
 - GenericIssuerPaymentMethodDetailsTypeOnlineBankingPL: added
 - GenericIssuerPaymentMethodDetailsTypeOnlineBankingSK: added
 - GenericIssuerPaymentMethodDetailsTypeOnlinebankingIN: added
 - GooglePayDetails.SdkData: added
+- GooglePayDetailsFundingSource: added
 - GooglePayDetailsFundingSourceCredit: added
 - GooglePayDetailsFundingSourceDebit: added
 - GooglePayDetailsFundingSourcePrepaid: added
+- GooglePayDetailsType: added
 - GooglePayDetailsTypeGooglepay: added
 - GooglePayDonations.SdkData: added
-- GooglePayDonationsFundingSourceCredit: added
-- GooglePayDonationsFundingSourceDebit: added
-- GooglePayDonationsFundingSourcePrepaid: added
-- GooglePayDonationsTypeGooglepay: added
 - Healthcare: added
 - IdealDetails.SdkData: added
+- IdealDetailsType: added
 - IdealDetailsTypeIdeal: added
 - IdealDonations.SdkData: added
-- IdealDonationsTypeIdeal: added
+- InstallmentOptionPlans: added
 - InstallmentOptionPlansBonus: added
 - InstallmentOptionPlansBuynowPaylater: added
 - InstallmentOptionPlansInteresRefundPrctg: added
@@ -1013,6 +2127,7 @@ Compatible changes:
 - InstallmentOptionPlansRegular: added
 - InstallmentOptionPlansRevolving: added
 - InstallmentOptionPlansWithInterest: added
+- InstallmentsPlan: added
 - InstallmentsPlanBonus: added
 - InstallmentsPlanBuynowPaylater: added
 - InstallmentsPlanInteresRefundPrctg: added
@@ -1026,6 +2141,7 @@ Compatible changes:
 - ItemDetailLine: added
 - KlarnaDetails.MerchantData: added
 - KlarnaDetails.SdkData: added
+- KlarnaDetailsType: added
 - KlarnaDetailsTypeKlarna: added
 - KlarnaDetailsTypeKlarnaAccount: added
 - KlarnaDetailsTypeKlarnaB2b: added
@@ -1035,8 +2151,10 @@ Compatible changes:
 - KlarnaDetailsTypeKlarnapaymentsB2b: added
 - KlarnaNetworkDetails: added
 - KlarnaNetworkDetailsAsCheckoutPaymentMethod: added
+- KlarnaNetworkDetailsSubtype: added
 - KlarnaNetworkDetailsSubtypeRedirect: added
 - KlarnaNetworkDetailsSubtypeSdk: added
+- KlarnaNetworkDetailsType: added
 - KlarnaNetworkDetailsTypeKlarnaNetwork: added
 - LevelTwoThree: added
 - LineItem.ReturnShippingCompany: added
@@ -1048,15 +2166,19 @@ Compatible changes:
 - LineItem.TrackingNumber: added
 - LineItem.TrackingUri: added
 - Lodging: added
+- LodgingLodgingChargeType: added
 - LodgingLodgingChargeTypeAdvanceDeposit: added
 - LodgingLodgingChargeTypeNoShow: added
 - LodgingLodgingChargeTypeStay: added
 - LrsContext: added
+- MandateAmountRule: added
 - MandateAmountRuleExact: added
 - MandateAmountRuleMax: added
+- MandateBillingAttemptsRule: added
 - MandateBillingAttemptsRuleAfter: added
 - MandateBillingAttemptsRuleBefore: added
 - MandateBillingAttemptsRuleOn: added
+- MandateFrequency: added
 - MandateFrequencyAdhoc: added
 - MandateFrequencyBiWeekly: added
 - MandateFrequencyDaily: added
@@ -1066,12 +2188,16 @@ Compatible changes:
 - MandateFrequencyWeekly: added
 - MandateFrequencyYearly: added
 - MasterpassDetails.SdkData: added
+- MasterpassDetailsFundingSource: added
 - MasterpassDetailsFundingSourceCredit: added
 - MasterpassDetailsFundingSourceDebit: added
 - MasterpassDetailsFundingSourcePrepaid: added
+- MasterpassDetailsType: added
 - MasterpassDetailsTypeMasterpass: added
 - MbwayDetails.SdkData: added
+- MbwayDetailsType: added
 - MbwayDetailsTypeMbway: added
+- MerchantRiskIndicatorDeliveryAddressIndicator: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorDigitalGoods: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorGoodsNotShipped: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorOther: added
@@ -1079,36 +2205,86 @@ Compatible changes:
 - MerchantRiskIndicatorDeliveryAddressIndicatorShipToNewAddress: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorShipToStore: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorShipToVerifiedAddress: added
+- MerchantRiskIndicatorDeliveryTimeframe: added
 - MerchantRiskIndicatorDeliveryTimeframeElectronicDelivery: added
 - MerchantRiskIndicatorDeliveryTimeframeOvernightShipping: added
 - MerchantRiskIndicatorDeliveryTimeframeSameDayShipping: added
 - MerchantRiskIndicatorDeliveryTimeframeTwoOrMoreDaysShipping: added
 - MobilePayDetails.SdkData: added
+- MobilePayDetailsType: added
 - MobilePayDetailsTypeMobilepay: added
 - MolPayDetails.SdkData: added
+- MolPayDetailsType: added
 - MolPayDetailsTypeMolpayEbankingFpxMY: added
 - MolPayDetailsTypeMolpayEbankingTH: added
+- NewAccountInfoAccountAgeIndicatorFromValue: added
+- NewAccountInfoAccountChangeIndicatorFromValue: added
+- NewAccountInfoAccountTypeFromValue: added
+- NewAccountInfoDeliveryAddressUsageIndicatorFromValue: added
+- NewAccountInfoPasswordChangeIndicatorFromValue: added
+- NewAccountInfoPaymentAccountIndicatorFromValue: added
+- NewAcctInfoChAccAgeIndFromValue: added
+- NewAcctInfoChAccChangeIndFromValue: added
+- NewAcctInfoChAccPwChangeIndFromValue: added
+- NewAcctInfoPaymentAccIndFromValue: added
+- NewAcctInfoShipAddressUsageIndFromValue: added
+- NewAcctInfoShipNameIndicatorFromValue: added
+- NewAcctInfoSuspiciousAccActivityFromValue: added
+- NewAchDetailsAccountHolderTypeFromValue: added
+- NewAchDetailsBankAccountTypeFromValue: added
+- NewAchDetailsTypeFromValue: added
+- NewAdditionalData3DSecureChallengeWindowSizeFromValue: added
+- NewAdditionalDataCommonIndustryUsageFromValue: added
+- NewAffirmDetailsTypeFromValue: added
+- NewAfterpayDetailsTypeFromValue: added
 - NewAlmaDetails: added
+- NewAlmaDetailsFeeTypeFromValue: added
+- NewAlmaDetailsTypeFromValue: added
 - NewAlmaDetailsWithDefaults: added
+- NewAmazonPayDetailsTypeFromValue: added
+- NewAncvDetailsTypeFromValue: added
+- NewAndroidPayDetailsTypeFromValue: added
 - NewAppIdentifierInfo: added
 - NewAppIdentifierInfoWithDefaults: added
+- NewApplePayDetailsFundingSourceFromValue: added
+- NewApplePayDetailsTypeFromValue: added
 - NewAuPayDetails: added
+- NewAuPayDetailsTypeFromValue: added
 - NewAuPayDetailsWithDefaults: added
+- NewAuthenticationDataAttemptAuthenticationFromValue: added
+- NewBacsDirectDebitDetailsTypeFromValue: added
+- NewBalanceCheckRequestRecurringProcessingModelFromValue: added
+- NewBalanceCheckRequestShopperInteractionFromValue: added
+- NewBalanceCheckResponseResultCodeFromValue: added
+- NewBillDeskDetailsTypeFromValue: added
+- NewBlikDetailsTypeFromValue: added
 - NewCalculateTaxRequest: added
 - NewCalculateTaxRequestWithDefaults: added
 - NewCalculateTaxResponse: added
 - NewCalculateTaxResponseWithDefaults: added
 - NewCalculationTypeFromValue: added
+- NewCancelOrderResponseResultCodeFromValue: added
 - NewCarRental: added
+- NewCarRentalRateTypeFromValue: added
 - NewCarRentalWithDefaults: added
+- NewCardDetailsFundingSourceFromValue: added
+- NewCardDetailsTypeFromValue: added
+- NewCashAppDetailsTypeFromValue: added
+- NewCellulantDetailsTypeFromValue: added
+- NewCheckoutAwaitActionTypeFromValue: added
+- NewCheckoutBankAccountAccountTypeFromValue: added
+- NewCheckoutBankTransferActionTypeFromValue: added
+- NewCheckoutDelegatedAuthenticationActionTypeFromValue: added
 - NewCheckoutErrorResponseEntity: added
 - NewCheckoutErrorResponseEntityWithDefaults: added
 - NewCheckoutForwardAccountUpdateResult: added
+- NewCheckoutForwardAccountUpdateResultResultFromValue: added
 - NewCheckoutForwardAccountUpdateResultWithDefaults: added
 - NewCheckoutForwardNetworkTokenResult: added
 - NewCheckoutForwardNetworkTokenResultWithDefaults: added
 - NewCheckoutForwardRequest: added
 - NewCheckoutForwardRequestCard: added
+- NewCheckoutForwardRequestCardTypeFromValue: added
 - NewCheckoutForwardRequestCardWithDefaults: added
 - NewCheckoutForwardRequestOptions: added
 - NewCheckoutForwardRequestOptionsWithDefaults: added
@@ -1117,97 +2293,329 @@ Compatible changes:
 - NewCheckoutForwardResponseFromUrl: added
 - NewCheckoutForwardResponseFromUrlWithDefaults: added
 - NewCheckoutForwardResponseWithDefaults: added
+- NewCheckoutNativeRedirectActionTypeFromValue: added
 - NewCheckoutNetworkTokenOption: added
 - NewCheckoutNetworkTokenOptionWithDefaults: added
 - NewCheckoutOutgoingForwardRequest: added
+- NewCheckoutOutgoingForwardRequestHttpMethodFromValue: added
 - NewCheckoutOutgoingForwardRequestWithDefaults: added
+- NewCheckoutQrCodeActionTypeFromValue: added
+- NewCheckoutRedirectActionTypeFromValue: added
+- NewCheckoutSDKActionTypeFromValue: added
+- NewCheckoutSessionInstallmentOptionPlansFromValue: added
 - NewCheckoutSessionPatchSessionRequest: added
 - NewCheckoutSessionPatchSessionRequestWithDefaults: added
 - NewCheckoutSessionPatchSessionResponse: added
 - NewCheckoutSessionPatchSessionResponseWithDefaults: added
+- NewCheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeIndFromValue: added
+- NewCheckoutThreeDS2ActionTypeFromValue: added
+- NewCheckoutVoucherActionTypeFromValue: added
 - NewConfidenceScore: added
 - NewConfidenceScoreWithDefaults: added
+- NewCreateCheckoutSessionRequestChannelFromValue: added
+- NewCreateCheckoutSessionRequestModeFromValue: added
+- NewCreateCheckoutSessionRequestRecurringProcessingModelFromValue: added
+- NewCreateCheckoutSessionRequestShopperInteractionFromValue: added
+- NewCreateCheckoutSessionRequestStoreFiltrationModeFromValue: added
+- NewCreateCheckoutSessionRequestStorePaymentMethodModeFromValue: added
+- NewCreateCheckoutSessionResponseChannelFromValue: added
+- NewCreateCheckoutSessionResponseModeFromValue: added
+- NewCreateCheckoutSessionResponseRecurringProcessingModelFromValue: added
+- NewCreateCheckoutSessionResponseShopperInteractionFromValue: added
+- NewCreateCheckoutSessionResponseStoreFiltrationModeFromValue: added
+- NewCreateCheckoutSessionResponseStorePaymentMethodModeFromValue: added
+- NewCreateOrderResponseResultCodeFromValue: added
 - NewDBaraiDetails: added
+- NewDBaraiDetailsTypeFromValue: added
 - NewDBaraiDetailsWithDefaults: added
+- NewDeliveryMethodTypeFromValue: added
 - NewDestination: added
 - NewDestinationWithDefaults: added
+- NewDeviceRenderOptionsSdkInterfaceFromValue: added
+- NewDeviceRenderOptionsSdkUiTypeFromValue: added
 - NewDirectDebitAuDetails: added
+- NewDirectDebitAuDetailsTypeFromValue: added
 - NewDirectDebitAuDetailsWithDefaults: added
+- NewDokuDetailsTypeFromValue: added
+- NewDonationPaymentRequestChannelFromValue: added
+- NewDonationPaymentRequestRecurringProcessingModelFromValue: added
+- NewDonationPaymentRequestShopperInteractionFromValue: added
+- NewDonationPaymentResponseStatusFromValue: added
+- NewDragonpayDetailsTypeFromValue: added
+- NewEBankingFinlandDetailsTypeFromValue: added
+- NewEcontextVoucherDetailsTypeFromValue: added
+- NewEftDetailsTypeFromValue: added
 - NewExternalTokenDetails: added
+- NewExternalTokenDetailsSubtypeFromValue: added
+- NewExternalTokenDetailsTypeFromValue: added
 - NewExternalTokenDetailsWithDefaults: added
+- NewFastlaneDetailsTypeFromValue: added
 - NewFolio: added
 - NewFolioWithDefaults: added
+- NewFundRecipientWalletPurposeFromValue: added
+- NewGenericIssuerPaymentMethodDetailsTypeFromValue: added
+- NewGooglePayDetailsFundingSourceFromValue: added
+- NewGooglePayDetailsTypeFromValue: added
 - NewHealthcare: added
 - NewHealthcareWithDefaults: added
+- NewIdealDetailsTypeFromValue: added
+- NewInstallmentOptionPlansFromValue: added
+- NewInstallmentsPlanFromValue: added
 - NewItemDetailLine: added
 - NewItemDetailLineWithDefaults: added
+- NewKlarnaDetailsTypeFromValue: added
 - NewKlarnaNetworkDetails: added
+- NewKlarnaNetworkDetailsSubtypeFromValue: added
+- NewKlarnaNetworkDetailsTypeFromValue: added
 - NewKlarnaNetworkDetailsWithDefaults: added
 - NewLevelTwoThree: added
 - NewLevelTwoThreeWithDefaults: added
 - NewLodging: added
+- NewLodgingLodgingChargeTypeFromValue: added
 - NewLodgingWithDefaults: added
 - NewLrsContext: added
 - NewLrsContextWithDefaults: added
+- NewMandateAmountRuleFromValue: added
+- NewMandateBillingAttemptsRuleFromValue: added
+- NewMandateFrequencyFromValue: added
+- NewMasterpassDetailsFundingSourceFromValue: added
+- NewMasterpassDetailsTypeFromValue: added
+- NewMbwayDetailsTypeFromValue: added
+- NewMerchantRiskIndicatorDeliveryAddressIndicatorFromValue: added
+- NewMerchantRiskIndicatorDeliveryTimeframeFromValue: added
+- NewMobilePayDetailsTypeFromValue: added
+- NewMolPayDetailsTypeFromValue: added
+- NewNullableAccountInfoAccountAgeIndicator: added
+- NewNullableAccountInfoAccountChangeIndicator: added
+- NewNullableAccountInfoAccountType: added
+- NewNullableAccountInfoDeliveryAddressUsageIndicator: added
+- NewNullableAccountInfoPasswordChangeIndicator: added
+- NewNullableAccountInfoPaymentAccountIndicator: added
+- NewNullableAcctInfoChAccAgeInd: added
+- NewNullableAcctInfoChAccChangeInd: added
+- NewNullableAcctInfoChAccPwChangeInd: added
+- NewNullableAcctInfoPaymentAccInd: added
+- NewNullableAcctInfoShipAddressUsageInd: added
+- NewNullableAcctInfoShipNameIndicator: added
+- NewNullableAcctInfoSuspiciousAccActivity: added
+- NewNullableAchDetailsAccountHolderType: added
+- NewNullableAchDetailsBankAccountType: added
+- NewNullableAchDetailsType: added
+- NewNullableAdditionalData3DSecureChallengeWindowSize: added
+- NewNullableAdditionalDataCommonIndustryUsage: added
+- NewNullableAffirmDetailsType: added
+- NewNullableAfterpayDetailsType: added
 - NewNullableAlmaDetails: added
+- NewNullableAlmaDetailsFeeType: added
+- NewNullableAlmaDetailsType: added
+- NewNullableAmazonPayDetailsType: added
+- NewNullableAncvDetailsType: added
+- NewNullableAndroidPayDetailsType: added
 - NewNullableAppIdentifierInfo: added
+- NewNullableApplePayDetailsFundingSource: added
+- NewNullableApplePayDetailsType: added
 - NewNullableAuPayDetails: added
+- NewNullableAuPayDetailsType: added
+- NewNullableAuthenticationDataAttemptAuthentication: added
+- NewNullableBacsDirectDebitDetailsType: added
+- NewNullableBalanceCheckRequestRecurringProcessingModel: added
+- NewNullableBalanceCheckRequestShopperInteraction: added
+- NewNullableBalanceCheckResponseResultCode: added
+- NewNullableBillDeskDetailsType: added
+- NewNullableBlikDetailsType: added
 - NewNullableCalculateTaxRequest: added
 - NewNullableCalculateTaxResponse: added
 - NewNullableCalculationType: added
+- NewNullableCancelOrderResponseResultCode: added
 - NewNullableCarRental: added
+- NewNullableCarRentalRateType: added
+- NewNullableCardDetailsFundingSource: added
+- NewNullableCardDetailsType: added
+- NewNullableCashAppDetailsType: added
+- NewNullableCellulantDetailsType: added
+- NewNullableCheckoutAwaitActionType: added
+- NewNullableCheckoutBankAccountAccountType: added
+- NewNullableCheckoutBankTransferActionType: added
+- NewNullableCheckoutDelegatedAuthenticationActionType: added
 - NewNullableCheckoutErrorResponseEntity: added
 - NewNullableCheckoutForwardAccountUpdateResult: added
+- NewNullableCheckoutForwardAccountUpdateResultResult: added
 - NewNullableCheckoutForwardNetworkTokenResult: added
 - NewNullableCheckoutForwardRequest: added
 - NewNullableCheckoutForwardRequestCard: added
+- NewNullableCheckoutForwardRequestCardType: added
 - NewNullableCheckoutForwardRequestOptions: added
 - NewNullableCheckoutForwardResponse: added
 - NewNullableCheckoutForwardResponseFromUrl: added
+- NewNullableCheckoutNativeRedirectActionType: added
 - NewNullableCheckoutNetworkTokenOption: added
 - NewNullableCheckoutOutgoingForwardRequest: added
+- NewNullableCheckoutOutgoingForwardRequestHttpMethod: added
+- NewNullableCheckoutQrCodeActionType: added
+- NewNullableCheckoutRedirectActionType: added
+- NewNullableCheckoutSDKActionType: added
+- NewNullableCheckoutSessionInstallmentOptionPlans: added
 - NewNullableCheckoutSessionPatchSessionRequest: added
 - NewNullableCheckoutSessionPatchSessionResponse: added
+- NewNullableCheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd: added
+- NewNullableCheckoutThreeDS2ActionType: added
+- NewNullableCheckoutVoucherActionType: added
 - NewNullableConfidenceScore: added
+- NewNullableCreateCheckoutSessionRequestChannel: added
+- NewNullableCreateCheckoutSessionRequestMode: added
+- NewNullableCreateCheckoutSessionRequestRecurringProcessingModel: added
+- NewNullableCreateCheckoutSessionRequestShopperInteraction: added
+- NewNullableCreateCheckoutSessionRequestStoreFiltrationMode: added
+- NewNullableCreateCheckoutSessionRequestStorePaymentMethodMode: added
+- NewNullableCreateCheckoutSessionResponseChannel: added
+- NewNullableCreateCheckoutSessionResponseMode: added
+- NewNullableCreateCheckoutSessionResponseRecurringProcessingModel: added
+- NewNullableCreateCheckoutSessionResponseShopperInteraction: added
+- NewNullableCreateCheckoutSessionResponseStoreFiltrationMode: added
+- NewNullableCreateCheckoutSessionResponseStorePaymentMethodMode: added
+- NewNullableCreateOrderResponseResultCode: added
 - NewNullableDBaraiDetails: added
+- NewNullableDBaraiDetailsType: added
+- NewNullableDeliveryMethodType: added
 - NewNullableDestination: added
+- NewNullableDeviceRenderOptionsSdkInterface: added
+- NewNullableDeviceRenderOptionsSdkUiType: added
 - NewNullableDirectDebitAuDetails: added
+- NewNullableDirectDebitAuDetailsType: added
+- NewNullableDokuDetailsType: added
+- NewNullableDonationPaymentRequestChannel: added
+- NewNullableDonationPaymentRequestRecurringProcessingModel: added
+- NewNullableDonationPaymentRequestShopperInteraction: added
+- NewNullableDonationPaymentResponseStatus: added
+- NewNullableDragonpayDetailsType: added
+- NewNullableEBankingFinlandDetailsType: added
+- NewNullableEcontextVoucherDetailsType: added
+- NewNullableEftDetailsType: added
 - NewNullableExternalTokenDetails: added
+- NewNullableExternalTokenDetailsSubtype: added
+- NewNullableExternalTokenDetailsType: added
+- NewNullableFastlaneDetailsType: added
 - NewNullableFolio: added
+- NewNullableFundRecipientWalletPurpose: added
+- NewNullableGenericIssuerPaymentMethodDetailsType: added
+- NewNullableGooglePayDetailsFundingSource: added
+- NewNullableGooglePayDetailsType: added
 - NewNullableHealthcare: added
+- NewNullableIdealDetailsType: added
+- NewNullableInstallmentOptionPlans: added
+- NewNullableInstallmentsPlan: added
 - NewNullableItemDetailLine: added
+- NewNullableKlarnaDetailsType: added
 - NewNullableKlarnaNetworkDetails: added
+- NewNullableKlarnaNetworkDetailsSubtype: added
+- NewNullableKlarnaNetworkDetailsType: added
 - NewNullableLevelTwoThree: added
 - NewNullableLodging: added
+- NewNullableLodgingLodgingChargeType: added
 - NewNullableLrsContext: added
+- NewNullableMandateAmountRule: added
+- NewNullableMandateBillingAttemptsRule: added
+- NewNullableMandateFrequency: added
+- NewNullableMasterpassDetailsFundingSource: added
+- NewNullableMasterpassDetailsType: added
+- NewNullableMbwayDetailsType: added
+- NewNullableMerchantRiskIndicatorDeliveryAddressIndicator: added
+- NewNullableMerchantRiskIndicatorDeliveryTimeframe: added
+- NewNullableMobilePayDetailsType: added
+- NewNullableMolPayDetailsType: added
+- NewNullableOpenInvoiceDetailsType: added
 - NewNullableOpiRequest: added
 - NewNullableOpiResponse: added
+- NewNullablePayByBankAISDirectDebitDetailsType: added
 - NewNullablePayByBankCADirectDebitDetails: added
+- NewNullablePayByBankCADirectDebitDetailsType: added
+- NewNullablePayByBankDetailsType: added
+- NewNullablePayPalDetailsSubtype: added
+- NewNullablePayPalDetailsType: added
+- NewNullablePayPayDetailsType: added
+- NewNullablePayToDetailsType: added
 - NewNullablePayToPaymentMethod: added
+- NewNullablePayUUpiDetailsType: added
+- NewNullablePayWithGoogleDetailsFundingSource: added
+- NewNullablePayWithGoogleDetailsType: added
 - NewNullablePayment: added
+- NewNullablePaymentAmountUpdateRequestAdjustAuthType: added
+- NewNullablePaymentAmountUpdateRequestIndustryUsage: added
+- NewNullablePaymentAmountUpdateResponseIndustryUsage: added
+- NewNullablePaymentAmountUpdateResponseStatus: added
+- NewNullablePaymentCancelResponseStatus: added
+- NewNullablePaymentCaptureResponseStatus: added
 - NewNullablePaymentDetailsResponseAction: added
+- NewNullablePaymentDetailsResponseResultCode: added
+- NewNullablePaymentDetailsType: added
+- NewNullablePaymentLinkRequestRecurringProcessingModel: added
+- NewNullablePaymentLinkRequestRequiredShopperFields: added
+- NewNullablePaymentLinkRequestStorePaymentMethodMode: added
+- NewNullablePaymentLinkResponseRecurringProcessingModel: added
+- NewNullablePaymentLinkResponseRequiredShopperFields: added
+- NewNullablePaymentLinkResponseStatus: added
+- NewNullablePaymentLinkResponseStorePaymentMethodMode: added
+- NewNullablePaymentMethodFundingSource: added
+- NewNullablePaymentMethodsRequestChannel: added
+- NewNullablePaymentMethodsRequestStoreFiltrationMode: added
+- NewNullablePaymentRefundRequestMerchantRefundReason: added
+- NewNullablePaymentRefundResponseMerchantRefundReason: added
+- NewNullablePaymentRefundResponseStatus: added
+- NewNullablePaymentRequestChannel: added
+- NewNullablePaymentRequestEntityType: added
+- NewNullablePaymentRequestIndustryUsage: added
+- NewNullablePaymentRequestRecurringProcessingModel: added
+- NewNullablePaymentRequestShopperInteraction: added
+- NewNullablePaymentResponseResultCode: added
+- NewNullablePaymentResultCode: added
+- NewNullablePaymentReversalResponseStatus: added
 - NewNullablePaymentValidations: added
 - NewNullablePaymentValidationsNameRequest: added
 - NewNullablePaymentValidationsNameResponse: added
+- NewNullablePaymentValidationsNameResponseStatus: added
 - NewNullablePaymentValidationsNameResultRawResponse: added
 - NewNullablePaymentValidationsNameResultResponse: added
 - NewNullablePaymentValidationsResponse: added
+- NewNullablePaypalUpdateOrderResponseStatus: added
 - NewNullablePickupInfo: added
+- NewNullablePixDetailsType: added
 - NewNullablePixPayByBankDetails: added
+- NewNullablePixPayByBankDetailsType: added
 - NewNullablePixPayByBankRiskSignals: added
+- NewNullablePixRecurringFrequency: added
+- NewNullablePlatformChargebackLogicBehavior: added
+- NewNullablePseDetailsType: added
+- NewNullableRakutenPayDetailsType: added
+- NewNullableRatepayDetailsType: added
+- NewNullableRecurringContract: added
+- NewNullableRecurringTokenService: added
 - NewNullableRemittancePurpose: added
 - NewNullableRentalSurcharges: added
+- NewNullableResponseAdditionalDataCommonFraudResultType: added
+- NewNullableResponseAdditionalDataCommonFraudRiskLevel: added
+- NewNullableResponseAdditionalDataCommonRecurringProcessingModel: added
+- NewNullableResponseAdditionalDataCommonTokenizationStoreOperationType: added
 - NewNullableResponseAdditionalDataSwish: added
 - NewNullableResult: added
 - NewNullableReturnInfo: added
+- NewNullableRivertyDetailsType: added
 - NewNullableRoom: added
+- NewNullableSamsungPayDetailsFundingSource: added
+- NewNullableSamsungPayDetailsType: added
 - NewNullableScreenDimensions: added
+- NewNullableSepaDirectDebitDetailsType: added
 - NewNullableSepaDirectDebitDonations: added
+- NewNullableSepaDirectDebitDonationsType: added
 - NewNullableSessionAmountUpdate: added
+- NewNullableSessionResultResponseStatus: added
 - NewNullableShopperIdPaymentMethod: added
 - NewNullableShopperName: added
 - NewNullableShopperTaxIdentification: added
 - NewNullableShopperTaxInfo: added
+- NewNullableSplitType: added
+- NewNullableStandalonePaymentCancelResponseStatus: added
+- NewNullableStoredPaymentMethodDetailsType: added
+- NewNullableStoredPaymentMethodRequestRecurringProcessingModel: added
 - NewNullableSublimitStatus: added
 - NewNullableTaxAmount: added
 - NewNullableTaxCalculation: added
@@ -1217,27 +2625,107 @@ Compatible changes:
 - NewNullableTaxableAmount: added
 - NewNullableTemporaryServices: added
 - NewNullableThirdPartyTokenRedundancyInfo: added
+- NewNullableThreeDS2RequestDataAcctType: added
+- NewNullableThreeDS2RequestDataAddrMatch: added
+- NewNullableThreeDS2RequestDataChallengeIndicator: added
+- NewNullableThreeDS2RequestDataThreeDSRequestorChallengeInd: added
+- NewNullableThreeDS2RequestDataTransType: added
+- NewNullableThreeDS2RequestDataTransactionType: added
+- NewNullableThreeDS2RequestFieldsAcctType: added
+- NewNullableThreeDS2RequestFieldsAddrMatch: added
+- NewNullableThreeDS2RequestFieldsChallengeIndicator: added
+- NewNullableThreeDS2RequestFieldsThreeDSRequestorChallengeInd: added
+- NewNullableThreeDS2RequestFieldsTransType: added
+- NewNullableThreeDS2RequestFieldsTransactionType: added
+- NewNullableThreeDS2ResultChallengeCancel: added
+- NewNullableThreeDS2ResultExemptionIndicator: added
+- NewNullableThreeDS2ResultThreeDSRequestorChallengeInd: added
+- NewNullableThreeDSRequestDataChallengeWindowSize: added
+- NewNullableThreeDSRequestDataDataOnly: added
+- NewNullableThreeDSRequestDataNativeThreeDS: added
+- NewNullableThreeDSRequestDataThreeDSVersion: added
+- NewNullableThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod: added
+- NewNullableThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod: added
+- NewNullableThreeDSecureDataAuthenticationResponse: added
+- NewNullableThreeDSecureDataChallengeCancel: added
+- NewNullableThreeDSecureDataDirectoryResponse: added
 - NewNullableTokenMandate: added
+- NewNullableTokenMandateAmountRule: added
+- NewNullableTokenMandateBillingAttemptsRule: added
+- NewNullableTokenMandateFrequency: added
+- NewNullableTokenMandateRetryPolicy: added
+- NewNullableTwintDetailsType: added
 - NewNullableUPIPaymentMethod: added
+- NewNullableUpdatePaymentLinkRequestStatus: added
+- NewNullableUpiCollectDetailsType: added
+- NewNullableUpiIntentDetailsType: added
 - NewNullableUpiQrDetails: added
+- NewNullableUpiQrDetailsType: added
 - NewNullableValidateShopperIdRequest: added
 - NewNullableValidateShopperIdResponse: added
 - NewNullableVerifiedShopperTaxIdentification: added
 - NewNullableVerifyShopperTaxIdentificationRequest: added
 - NewNullableVerifyShopperTaxIdentificationResponse: added
+- NewNullableVippsDetailsType: added
+- NewNullableVisaCheckoutDetailsFundingSource: added
+- NewNullableVisaCheckoutDetailsType: added
+- NewNullableWeChatPayDetailsType: added
+- NewNullableWeChatPayMiniProgramDetailsType: added
+- NewNullableZipDetailsType: added
+- NewOpenInvoiceDetailsTypeFromValue: added
 - NewOpiRequest: added
 - NewOpiRequestWithDefaults: added
 - NewOpiResponse: added
 - NewOpiResponseWithDefaults: added
+- NewPayByBankAISDirectDebitDetailsTypeFromValue: added
 - NewPayByBankCADirectDebitDetails: added
+- NewPayByBankCADirectDebitDetailsTypeFromValue: added
 - NewPayByBankCADirectDebitDetailsWithDefaults: added
+- NewPayByBankDetailsTypeFromValue: added
+- NewPayPalDetailsSubtypeFromValue: added
+- NewPayPalDetailsTypeFromValue: added
+- NewPayPayDetailsTypeFromValue: added
+- NewPayToDetailsTypeFromValue: added
 - NewPayToPaymentMethod: added
 - NewPayToPaymentMethodWithDefaults: added
+- NewPayUUpiDetailsTypeFromValue: added
+- NewPayWithGoogleDetailsFundingSourceFromValue: added
+- NewPayWithGoogleDetailsTypeFromValue: added
 - NewPayment: added
+- NewPaymentAmountUpdateRequestAdjustAuthTypeFromValue: added
+- NewPaymentAmountUpdateRequestIndustryUsageFromValue: added
+- NewPaymentAmountUpdateResponseIndustryUsageFromValue: added
+- NewPaymentAmountUpdateResponseStatusFromValue: added
+- NewPaymentCancelResponseStatusFromValue: added
+- NewPaymentCaptureResponseStatusFromValue: added
+- NewPaymentDetailsResponseResultCodeFromValue: added
+- NewPaymentDetailsTypeFromValue: added
+- NewPaymentLinkRequestRecurringProcessingModelFromValue: added
+- NewPaymentLinkRequestRequiredShopperFieldsFromValue: added
+- NewPaymentLinkRequestStorePaymentMethodModeFromValue: added
+- NewPaymentLinkResponseRecurringProcessingModelFromValue: added
+- NewPaymentLinkResponseRequiredShopperFieldsFromValue: added
+- NewPaymentLinkResponseStatusFromValue: added
+- NewPaymentLinkResponseStorePaymentMethodModeFromValue: added
+- NewPaymentMethodFundingSourceFromValue: added
+- NewPaymentMethodsRequestChannelFromValue: added
+- NewPaymentMethodsRequestStoreFiltrationModeFromValue: added
+- NewPaymentRefundRequestMerchantRefundReasonFromValue: added
+- NewPaymentRefundResponseMerchantRefundReasonFromValue: added
+- NewPaymentRefundResponseStatusFromValue: added
+- NewPaymentRequestChannelFromValue: added
+- NewPaymentRequestEntityTypeFromValue: added
+- NewPaymentRequestIndustryUsageFromValue: added
+- NewPaymentRequestRecurringProcessingModelFromValue: added
+- NewPaymentRequestShopperInteractionFromValue: added
+- NewPaymentResponseResultCodeFromValue: added
+- NewPaymentResultCodeFromValue: added
+- NewPaymentReversalResponseStatusFromValue: added
 - NewPaymentValidations: added
 - NewPaymentValidationsNameRequest: added
 - NewPaymentValidationsNameRequestWithDefaults: added
 - NewPaymentValidationsNameResponse: added
+- NewPaymentValidationsNameResponseStatusFromValue: added
 - NewPaymentValidationsNameResponseWithDefaults: added
 - NewPaymentValidationsNameResultRawResponse: added
 - NewPaymentValidationsNameResultRawResponseWithDefaults: added
@@ -1247,28 +2735,48 @@ Compatible changes:
 - NewPaymentValidationsResponseWithDefaults: added
 - NewPaymentValidationsWithDefaults: added
 - NewPaymentWithDefaults: added
+- NewPaypalUpdateOrderResponseStatusFromValue: added
 - NewPickupInfo: added
 - NewPickupInfoWithDefaults: added
+- NewPixDetailsTypeFromValue: added
 - NewPixPayByBankDetails: added
+- NewPixPayByBankDetailsTypeFromValue: added
 - NewPixPayByBankDetailsWithDefaults: added
 - NewPixPayByBankRiskSignals: added
 - NewPixPayByBankRiskSignalsWithDefaults: added
+- NewPixRecurringFrequencyFromValue: added
+- NewPlatformChargebackLogicBehaviorFromValue: added
+- NewPseDetailsTypeFromValue: added
+- NewRakutenPayDetailsTypeFromValue: added
+- NewRatepayDetailsTypeFromValue: added
+- NewRecurringContractFromValue: added
+- NewRecurringTokenServiceFromValue: added
 - NewRemittancePurposeFromValue: added
 - NewRentalSurcharges: added
 - NewRentalSurchargesWithDefaults: added
+- NewResponseAdditionalDataCommonFraudResultTypeFromValue: added
+- NewResponseAdditionalDataCommonFraudRiskLevelFromValue: added
+- NewResponseAdditionalDataCommonRecurringProcessingModelFromValue: added
+- NewResponseAdditionalDataCommonTokenizationStoreOperationTypeFromValue: added
 - NewResponseAdditionalDataSwish: added
 - NewResponseAdditionalDataSwishWithDefaults: added
 - NewResultFromValue: added
 - NewReturnInfo: added
 - NewReturnInfoWithDefaults: added
+- NewRivertyDetailsTypeFromValue: added
 - NewRoom: added
 - NewRoomWithDefaults: added
+- NewSamsungPayDetailsFundingSourceFromValue: added
+- NewSamsungPayDetailsTypeFromValue: added
 - NewScreenDimensions: added
 - NewScreenDimensionsWithDefaults: added
+- NewSepaDirectDebitDetailsTypeFromValue: added
 - NewSepaDirectDebitDonations: added
+- NewSepaDirectDebitDonationsTypeFromValue: added
 - NewSepaDirectDebitDonationsWithDefaults: added
 - NewSessionAmountUpdate: added
 - NewSessionAmountUpdateWithDefaults: added
+- NewSessionResultResponseStatusFromValue: added
 - NewShopperIdPaymentMethod: added
 - NewShopperIdPaymentMethodWithDefaults: added
 - NewShopperName: added
@@ -1277,6 +2785,10 @@ Compatible changes:
 - NewShopperTaxIdentificationWithDefaults: added
 - NewShopperTaxInfo: added
 - NewShopperTaxInfoWithDefaults: added
+- NewSplitTypeFromValue: added
+- NewStandalonePaymentCancelResponseStatusFromValue: added
+- NewStoredPaymentMethodDetailsTypeFromValue: added
+- NewStoredPaymentMethodRequestRecurringProcessingModelFromValue: added
 - NewSublimitStatusFromValue: added
 - NewTaxAmount: added
 - NewTaxAmountWithDefaults: added
@@ -1293,11 +2805,44 @@ Compatible changes:
 - NewTemporaryServicesWithDefaults: added
 - NewThirdPartyTokenRedundancyInfo: added
 - NewThirdPartyTokenRedundancyInfoWithDefaults: added
+- NewThreeDS2RequestDataAcctTypeFromValue: added
+- NewThreeDS2RequestDataAddrMatchFromValue: added
+- NewThreeDS2RequestDataChallengeIndicatorFromValue: added
+- NewThreeDS2RequestDataThreeDSRequestorChallengeIndFromValue: added
+- NewThreeDS2RequestDataTransTypeFromValue: added
+- NewThreeDS2RequestDataTransactionTypeFromValue: added
+- NewThreeDS2RequestFieldsAcctTypeFromValue: added
+- NewThreeDS2RequestFieldsAddrMatchFromValue: added
+- NewThreeDS2RequestFieldsChallengeIndicatorFromValue: added
+- NewThreeDS2RequestFieldsThreeDSRequestorChallengeIndFromValue: added
+- NewThreeDS2RequestFieldsTransTypeFromValue: added
+- NewThreeDS2RequestFieldsTransactionTypeFromValue: added
+- NewThreeDS2ResultChallengeCancelFromValue: added
+- NewThreeDS2ResultExemptionIndicatorFromValue: added
+- NewThreeDS2ResultThreeDSRequestorChallengeIndFromValue: added
+- NewThreeDSRequestDataChallengeWindowSizeFromValue: added
+- NewThreeDSRequestDataDataOnlyFromValue: added
+- NewThreeDSRequestDataNativeThreeDSFromValue: added
+- NewThreeDSRequestDataThreeDSVersionFromValue: added
+- NewThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethodFromValue: added
+- NewThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethodFromValue: added
+- NewThreeDSecureDataAuthenticationResponseFromValue: added
+- NewThreeDSecureDataChallengeCancelFromValue: added
+- NewThreeDSecureDataDirectoryResponseFromValue: added
 - NewTokenMandate: added
+- NewTokenMandateAmountRuleFromValue: added
+- NewTokenMandateBillingAttemptsRuleFromValue: added
+- NewTokenMandateFrequencyFromValue: added
+- NewTokenMandateRetryPolicyFromValue: added
 - NewTokenMandateWithDefaults: added
+- NewTwintDetailsTypeFromValue: added
 - NewUPIPaymentMethod: added
 - NewUPIPaymentMethodWithDefaults: added
+- NewUpdatePaymentLinkRequestStatusFromValue: added
+- NewUpiCollectDetailsTypeFromValue: added
+- NewUpiIntentDetailsTypeFromValue: added
 - NewUpiQrDetails: added
+- NewUpiQrDetailsTypeFromValue: added
 - NewUpiQrDetailsWithDefaults: added
 - NewValidateShopperIdRequest: added
 - NewValidateShopperIdRequestWithDefaults: added
@@ -1309,65 +2854,243 @@ Compatible changes:
 - NewVerifyShopperTaxIdentificationRequestWithDefaults: added
 - NewVerifyShopperTaxIdentificationResponse: added
 - NewVerifyShopperTaxIdentificationResponseWithDefaults: added
+- NewVippsDetailsTypeFromValue: added
+- NewVisaCheckoutDetailsFundingSourceFromValue: added
+- NewVisaCheckoutDetailsTypeFromValue: added
+- NewWeChatPayDetailsTypeFromValue: added
+- NewWeChatPayMiniProgramDetailsTypeFromValue: added
+- NewZipDetailsTypeFromValue: added
+- NullableAccountInfoAccountAgeIndicator: added
+- NullableAccountInfoAccountChangeIndicator: added
+- NullableAccountInfoAccountType: added
+- NullableAccountInfoDeliveryAddressUsageIndicator: added
+- NullableAccountInfoPasswordChangeIndicator: added
+- NullableAccountInfoPaymentAccountIndicator: added
+- NullableAcctInfoChAccAgeInd: added
+- NullableAcctInfoChAccChangeInd: added
+- NullableAcctInfoChAccPwChangeInd: added
+- NullableAcctInfoPaymentAccInd: added
+- NullableAcctInfoShipAddressUsageInd: added
+- NullableAcctInfoShipNameIndicator: added
+- NullableAcctInfoSuspiciousAccActivity: added
+- NullableAchDetailsAccountHolderType: added
+- NullableAchDetailsBankAccountType: added
+- NullableAchDetailsType: added
+- NullableAdditionalData3DSecureChallengeWindowSize: added
+- NullableAdditionalDataCommonIndustryUsage: added
+- NullableAffirmDetailsType: added
+- NullableAfterpayDetailsType: added
 - NullableAlmaDetails: added
+- NullableAlmaDetailsFeeType: added
+- NullableAlmaDetailsType: added
+- NullableAmazonPayDetailsType: added
+- NullableAncvDetailsType: added
+- NullableAndroidPayDetailsType: added
 - NullableAppIdentifierInfo: added
+- NullableApplePayDetailsFundingSource: added
+- NullableApplePayDetailsType: added
 - NullableAuPayDetails: added
+- NullableAuPayDetailsType: added
+- NullableAuthenticationDataAttemptAuthentication: added
+- NullableBacsDirectDebitDetailsType: added
+- NullableBalanceCheckRequestRecurringProcessingModel: added
+- NullableBalanceCheckRequestShopperInteraction: added
+- NullableBalanceCheckResponseResultCode: added
+- NullableBillDeskDetailsType: added
+- NullableBlikDetailsType: added
 - NullableCalculateTaxRequest: added
 - NullableCalculateTaxResponse: added
 - NullableCalculationType: added
+- NullableCancelOrderResponseResultCode: added
 - NullableCarRental: added
+- NullableCarRentalRateType: added
+- NullableCardDetailsFundingSource: added
+- NullableCardDetailsType: added
+- NullableCashAppDetailsType: added
+- NullableCellulantDetailsType: added
+- NullableCheckoutAwaitActionType: added
+- NullableCheckoutBankAccountAccountType: added
+- NullableCheckoutBankTransferActionType: added
+- NullableCheckoutDelegatedAuthenticationActionType: added
 - NullableCheckoutErrorResponseEntity: added
 - NullableCheckoutForwardAccountUpdateResult: added
+- NullableCheckoutForwardAccountUpdateResultResult: added
 - NullableCheckoutForwardNetworkTokenResult: added
 - NullableCheckoutForwardRequest: added
 - NullableCheckoutForwardRequestCard: added
+- NullableCheckoutForwardRequestCardType: added
 - NullableCheckoutForwardRequestOptions: added
 - NullableCheckoutForwardResponse: added
 - NullableCheckoutForwardResponseFromUrl: added
+- NullableCheckoutNativeRedirectActionType: added
 - NullableCheckoutNetworkTokenOption: added
 - NullableCheckoutOutgoingForwardRequest: added
+- NullableCheckoutOutgoingForwardRequestHttpMethod: added
+- NullableCheckoutQrCodeActionType: added
+- NullableCheckoutRedirectActionType: added
+- NullableCheckoutSDKActionType: added
+- NullableCheckoutSessionInstallmentOptionPlans: added
 - NullableCheckoutSessionPatchSessionRequest: added
 - NullableCheckoutSessionPatchSessionResponse: added
+- NullableCheckoutSessionThreeDS2RequestDataThreeDSRequestorChallengeInd: added
+- NullableCheckoutThreeDS2ActionType: added
+- NullableCheckoutVoucherActionType: added
 - NullableConfidenceScore: added
+- NullableCreateCheckoutSessionRequestChannel: added
+- NullableCreateCheckoutSessionRequestMode: added
+- NullableCreateCheckoutSessionRequestRecurringProcessingModel: added
+- NullableCreateCheckoutSessionRequestShopperInteraction: added
+- NullableCreateCheckoutSessionRequestStoreFiltrationMode: added
+- NullableCreateCheckoutSessionRequestStorePaymentMethodMode: added
+- NullableCreateCheckoutSessionResponseChannel: added
+- NullableCreateCheckoutSessionResponseMode: added
+- NullableCreateCheckoutSessionResponseRecurringProcessingModel: added
+- NullableCreateCheckoutSessionResponseShopperInteraction: added
+- NullableCreateCheckoutSessionResponseStoreFiltrationMode: added
+- NullableCreateCheckoutSessionResponseStorePaymentMethodMode: added
+- NullableCreateOrderResponseResultCode: added
 - NullableDBaraiDetails: added
+- NullableDBaraiDetailsType: added
+- NullableDeliveryMethodType: added
 - NullableDestination: added
+- NullableDeviceRenderOptionsSdkInterface: added
+- NullableDeviceRenderOptionsSdkUiType: added
 - NullableDirectDebitAuDetails: added
+- NullableDirectDebitAuDetailsType: added
+- NullableDokuDetailsType: added
+- NullableDonationPaymentRequestChannel: added
+- NullableDonationPaymentRequestRecurringProcessingModel: added
+- NullableDonationPaymentRequestShopperInteraction: added
+- NullableDonationPaymentResponseStatus: added
+- NullableDragonpayDetailsType: added
+- NullableEBankingFinlandDetailsType: added
+- NullableEcontextVoucherDetailsType: added
+- NullableEftDetailsType: added
 - NullableExternalTokenDetails: added
+- NullableExternalTokenDetailsSubtype: added
+- NullableExternalTokenDetailsType: added
+- NullableFastlaneDetailsType: added
 - NullableFolio: added
+- NullableFundRecipientWalletPurpose: added
+- NullableGenericIssuerPaymentMethodDetailsType: added
+- NullableGooglePayDetailsFundingSource: added
+- NullableGooglePayDetailsType: added
 - NullableHealthcare: added
+- NullableIdealDetailsType: added
+- NullableInstallmentOptionPlans: added
+- NullableInstallmentsPlan: added
 - NullableItemDetailLine: added
+- NullableKlarnaDetailsType: added
 - NullableKlarnaNetworkDetails: added
+- NullableKlarnaNetworkDetailsSubtype: added
+- NullableKlarnaNetworkDetailsType: added
 - NullableLevelTwoThree: added
 - NullableLodging: added
+- NullableLodgingLodgingChargeType: added
 - NullableLrsContext: added
+- NullableMandateAmountRule: added
+- NullableMandateBillingAttemptsRule: added
+- NullableMandateFrequency: added
+- NullableMasterpassDetailsFundingSource: added
+- NullableMasterpassDetailsType: added
+- NullableMbwayDetailsType: added
+- NullableMerchantRiskIndicatorDeliveryAddressIndicator: added
+- NullableMerchantRiskIndicatorDeliveryTimeframe: added
+- NullableMobilePayDetailsType: added
+- NullableMolPayDetailsType: added
+- NullableOpenInvoiceDetailsType: added
 - NullableOpiRequest: added
 - NullableOpiResponse: added
+- NullablePayByBankAISDirectDebitDetailsType: added
 - NullablePayByBankCADirectDebitDetails: added
+- NullablePayByBankCADirectDebitDetailsType: added
+- NullablePayByBankDetailsType: added
+- NullablePayPalDetailsSubtype: added
+- NullablePayPalDetailsType: added
+- NullablePayPayDetailsType: added
+- NullablePayToDetailsType: added
 - NullablePayToPaymentMethod: added
+- NullablePayUUpiDetailsType: added
+- NullablePayWithGoogleDetailsFundingSource: added
+- NullablePayWithGoogleDetailsType: added
 - NullablePayment: added
+- NullablePaymentAmountUpdateRequestAdjustAuthType: added
+- NullablePaymentAmountUpdateRequestIndustryUsage: added
+- NullablePaymentAmountUpdateResponseIndustryUsage: added
+- NullablePaymentAmountUpdateResponseStatus: added
+- NullablePaymentCancelResponseStatus: added
+- NullablePaymentCaptureResponseStatus: added
 - NullablePaymentDetailsResponseAction: added
+- NullablePaymentDetailsResponseResultCode: added
+- NullablePaymentDetailsType: added
+- NullablePaymentLinkRequestRecurringProcessingModel: added
+- NullablePaymentLinkRequestRequiredShopperFields: added
+- NullablePaymentLinkRequestStorePaymentMethodMode: added
+- NullablePaymentLinkResponseRecurringProcessingModel: added
+- NullablePaymentLinkResponseRequiredShopperFields: added
+- NullablePaymentLinkResponseStatus: added
+- NullablePaymentLinkResponseStorePaymentMethodMode: added
+- NullablePaymentMethodFundingSource: added
+- NullablePaymentMethodsRequestChannel: added
+- NullablePaymentMethodsRequestStoreFiltrationMode: added
+- NullablePaymentRefundRequestMerchantRefundReason: added
+- NullablePaymentRefundResponseMerchantRefundReason: added
+- NullablePaymentRefundResponseStatus: added
+- NullablePaymentRequestChannel: added
+- NullablePaymentRequestEntityType: added
+- NullablePaymentRequestIndustryUsage: added
+- NullablePaymentRequestRecurringProcessingModel: added
+- NullablePaymentRequestShopperInteraction: added
+- NullablePaymentResponseResultCode: added
+- NullablePaymentResultCode: added
+- NullablePaymentReversalResponseStatus: added
 - NullablePaymentValidations: added
 - NullablePaymentValidationsNameRequest: added
 - NullablePaymentValidationsNameResponse: added
+- NullablePaymentValidationsNameResponseStatus: added
 - NullablePaymentValidationsNameResultRawResponse: added
 - NullablePaymentValidationsNameResultResponse: added
 - NullablePaymentValidationsResponse: added
+- NullablePaypalUpdateOrderResponseStatus: added
 - NullablePickupInfo: added
+- NullablePixDetailsType: added
 - NullablePixPayByBankDetails: added
+- NullablePixPayByBankDetailsType: added
 - NullablePixPayByBankRiskSignals: added
+- NullablePixRecurringFrequency: added
+- NullablePlatformChargebackLogicBehavior: added
+- NullablePseDetailsType: added
+- NullableRakutenPayDetailsType: added
+- NullableRatepayDetailsType: added
+- NullableRecurringContract: added
+- NullableRecurringTokenService: added
 - NullableRemittancePurpose: added
 - NullableRentalSurcharges: added
+- NullableResponseAdditionalDataCommonFraudResultType: added
+- NullableResponseAdditionalDataCommonFraudRiskLevel: added
+- NullableResponseAdditionalDataCommonRecurringProcessingModel: added
+- NullableResponseAdditionalDataCommonTokenizationStoreOperationType: added
 - NullableResponseAdditionalDataSwish: added
 - NullableResult: added
 - NullableReturnInfo: added
+- NullableRivertyDetailsType: added
 - NullableRoom: added
+- NullableSamsungPayDetailsFundingSource: added
+- NullableSamsungPayDetailsType: added
 - NullableScreenDimensions: added
+- NullableSepaDirectDebitDetailsType: added
 - NullableSepaDirectDebitDonations: added
+- NullableSepaDirectDebitDonationsType: added
 - NullableSessionAmountUpdate: added
+- NullableSessionResultResponseStatus: added
 - NullableShopperIdPaymentMethod: added
 - NullableShopperName: added
 - NullableShopperTaxIdentification: added
 - NullableShopperTaxInfo: added
+- NullableSplitType: added
+- NullableStandalonePaymentCancelResponseStatus: added
+- NullableStoredPaymentMethodDetailsType: added
+- NullableStoredPaymentMethodRequestRecurringProcessingModel: added
 - NullableSublimitStatus: added
 - NullableTaxAmount: added
 - NullableTaxCalculation: added
@@ -1377,72 +3100,125 @@ Compatible changes:
 - NullableTaxableAmount: added
 - NullableTemporaryServices: added
 - NullableThirdPartyTokenRedundancyInfo: added
+- NullableThreeDS2RequestDataAcctType: added
+- NullableThreeDS2RequestDataAddrMatch: added
+- NullableThreeDS2RequestDataChallengeIndicator: added
+- NullableThreeDS2RequestDataThreeDSRequestorChallengeInd: added
+- NullableThreeDS2RequestDataTransType: added
+- NullableThreeDS2RequestDataTransactionType: added
+- NullableThreeDS2RequestFieldsAcctType: added
+- NullableThreeDS2RequestFieldsAddrMatch: added
+- NullableThreeDS2RequestFieldsChallengeIndicator: added
+- NullableThreeDS2RequestFieldsThreeDSRequestorChallengeInd: added
+- NullableThreeDS2RequestFieldsTransType: added
+- NullableThreeDS2RequestFieldsTransactionType: added
+- NullableThreeDS2ResultChallengeCancel: added
+- NullableThreeDS2ResultExemptionIndicator: added
+- NullableThreeDS2ResultThreeDSRequestorChallengeInd: added
+- NullableThreeDSRequestDataChallengeWindowSize: added
+- NullableThreeDSRequestDataDataOnly: added
+- NullableThreeDSRequestDataNativeThreeDS: added
+- NullableThreeDSRequestDataThreeDSVersion: added
+- NullableThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod: added
+- NullableThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod: added
+- NullableThreeDSecureDataAuthenticationResponse: added
+- NullableThreeDSecureDataChallengeCancel: added
+- NullableThreeDSecureDataDirectoryResponse: added
 - NullableTokenMandate: added
+- NullableTokenMandateAmountRule: added
+- NullableTokenMandateBillingAttemptsRule: added
+- NullableTokenMandateFrequency: added
+- NullableTokenMandateRetryPolicy: added
+- NullableTwintDetailsType: added
 - NullableUPIPaymentMethod: added
+- NullableUpdatePaymentLinkRequestStatus: added
+- NullableUpiCollectDetailsType: added
+- NullableUpiIntentDetailsType: added
 - NullableUpiQrDetails: added
+- NullableUpiQrDetailsType: added
 - NullableValidateShopperIdRequest: added
 - NullableValidateShopperIdResponse: added
 - NullableVerifiedShopperTaxIdentification: added
 - NullableVerifyShopperTaxIdentificationRequest: added
 - NullableVerifyShopperTaxIdentificationResponse: added
+- NullableVippsDetailsType: added
+- NullableVisaCheckoutDetailsFundingSource: added
+- NullableVisaCheckoutDetailsType: added
+- NullableWeChatPayDetailsType: added
+- NullableWeChatPayMiniProgramDetailsType: added
+- NullableZipDetailsType: added
 - OpenInvoiceDetails.SdkData: added
+- OpenInvoiceDetailsType: added
 - OpenInvoiceDetailsTypeAfterpayDirectdebit: added
 - OpenInvoiceDetailsTypeAtomePos: added
 - OpenInvoiceDetailsTypeOpeninvoice: added
 - OpiRequest: added
 - OpiResponse: added
 - PayByBankAISDirectDebitDetails.SdkData: added
+- PayByBankAISDirectDebitDetailsType: added
 - PayByBankAISDirectDebitDetailsTypePaybybankAISDD: added
 - PayByBankCADirectDebitDetails: added
 - PayByBankCADirectDebitDetailsAsCheckoutPaymentMethod: added
+- PayByBankCADirectDebitDetailsType: added
 - PayByBankCADirectDebitDetailsTypePaybybankCa: added
 - PayByBankDetails.SdkData: added
+- PayByBankDetailsType: added
 - PayByBankDetailsTypePaybybank: added
 - PayPalDetails.SdkData: added
+- PayPalDetailsSubtype: added
 - PayPalDetailsSubtypeExpress: added
 - PayPalDetailsSubtypeRedirect: added
 - PayPalDetailsSubtypeSdk: added
+- PayPalDetailsType: added
 - PayPalDetailsTypePaypal: added
 - PayPayDetails.SdkData: added
+- PayPayDetailsType: added
 - PayPayDetailsTypePaypay: added
 - PayToDetails.SdkData: added
+- PayToDetailsType: added
 - PayToDetailsTypePayto: added
 - PayToPaymentMethod: added
 - PayUUpiDetails.SdkData: added
+- PayUUpiDetailsType: added
 - PayUUpiDetailsTypePayuINUpi: added
 - PayWithGoogleDetails.SdkData: added
+- PayWithGoogleDetailsFundingSource: added
 - PayWithGoogleDetailsFundingSourceCredit: added
 - PayWithGoogleDetailsFundingSourceDebit: added
 - PayWithGoogleDetailsFundingSourcePrepaid: added
+- PayWithGoogleDetailsType: added
 - PayWithGoogleDetailsTypePaywithgoogle: added
 - PayWithGoogleDonations.SdkData: added
-- PayWithGoogleDonationsFundingSourceCredit: added
-- PayWithGoogleDonationsFundingSourceDebit: added
-- PayWithGoogleDonationsFundingSourcePrepaid: added
-- PayWithGoogleDonationsTypePaywithgoogle: added
 - Payment: added
 - PaymentAmountUpdateRequest.AdjustAuthType: added
 - PaymentAmountUpdateRequest.AdjustAuthorisationData: added
 - PaymentAmountUpdateRequest.MpiData: added
+- PaymentAmountUpdateRequestAdjustAuthType: added
 - PaymentAmountUpdateRequestAdjustAuthTypeCardholderInitiatedTransaction: added
 - PaymentAmountUpdateRequestAdjustAuthTypeMerchantInitiatedTransaction: added
+- PaymentAmountUpdateRequestIndustryUsage: added
 - PaymentAmountUpdateRequestIndustryUsageDelayedCharge: added
 - PaymentAmountUpdateRequestIndustryUsageInstallment: added
 - PaymentAmountUpdateRequestIndustryUsageNoShow: added
 - PaymentAmountUpdateResponse.AdjustAuthorisationData: added
+- PaymentAmountUpdateResponseIndustryUsage: added
 - PaymentAmountUpdateResponseIndustryUsageDelayedCharge: added
 - PaymentAmountUpdateResponseIndustryUsageInstallment: added
 - PaymentAmountUpdateResponseIndustryUsageNoShow: added
+- PaymentAmountUpdateResponseStatus: added
 - PaymentAmountUpdateResponseStatusAuthorised: added
 - PaymentAmountUpdateResponseStatusReceived: added
 - PaymentAmountUpdateResponseStatusRefused: added
+- PaymentCancelResponseStatus: added
 - PaymentCancelResponseStatusReceived: added
+- PaymentCaptureResponseStatus: added
 - PaymentCaptureResponseStatusReceived: added
 - PaymentDetails.SdkData: added
 - PaymentDetailsResponse.Action: added
 - PaymentDetailsResponse.Opi: added
 - PaymentDetailsResponse.PaymentValidations: added
 - PaymentDetailsResponseAction: added
+- PaymentDetailsResponseResultCode: added
 - PaymentDetailsResponseResultCodeAuthenticationFinished: added
 - PaymentDetailsResponseResultCodeAuthenticationNotRequired: added
 - PaymentDetailsResponseResultCodeAuthorised: added
@@ -1457,6 +3233,7 @@ Compatible changes:
 - PaymentDetailsResponseResultCodeRedirectShopper: added
 - PaymentDetailsResponseResultCodeRefused: added
 - PaymentDetailsResponseResultCodeSuccess: added
+- PaymentDetailsType: added
 - PaymentDetailsTypeAffirmPos: added
 - PaymentDetailsTypeAlipay: added
 - PaymentDetailsTypeAlipayHk: added
@@ -1543,34 +3320,42 @@ Compatible changes:
 - PaymentDetailsTypeWechatpaySDK: added
 - PaymentDetailsTypeWechatpayWeb: added
 - PaymentDetailsTypeWero: added
+- PaymentLinkRequestRecurringProcessingModel: added
 - PaymentLinkRequestRecurringProcessingModelCardOnFile: added
 - PaymentLinkRequestRecurringProcessingModelSubscription: added
 - PaymentLinkRequestRecurringProcessingModelUnscheduledCardOnFile: added
+- PaymentLinkRequestRequiredShopperFields: added
 - PaymentLinkRequestRequiredShopperFieldsBillingAddress: added
 - PaymentLinkRequestRequiredShopperFieldsDeliveryAddress: added
 - PaymentLinkRequestRequiredShopperFieldsShopperEmail: added
 - PaymentLinkRequestRequiredShopperFieldsShopperName: added
 - PaymentLinkRequestRequiredShopperFieldsTelephoneNumber: added
+- PaymentLinkRequestStorePaymentMethodMode: added
 - PaymentLinkRequestStorePaymentMethodModeAskForConsent: added
 - PaymentLinkRequestStorePaymentMethodModeDisabled: added
 - PaymentLinkRequestStorePaymentMethodModeEnabled: added
+- PaymentLinkResponseRecurringProcessingModel: added
 - PaymentLinkResponseRecurringProcessingModelCardOnFile: added
 - PaymentLinkResponseRecurringProcessingModelSubscription: added
 - PaymentLinkResponseRecurringProcessingModelUnscheduledCardOnFile: added
+- PaymentLinkResponseRequiredShopperFields: added
 - PaymentLinkResponseRequiredShopperFieldsBillingAddress: added
 - PaymentLinkResponseRequiredShopperFieldsDeliveryAddress: added
 - PaymentLinkResponseRequiredShopperFieldsShopperEmail: added
 - PaymentLinkResponseRequiredShopperFieldsShopperName: added
 - PaymentLinkResponseRequiredShopperFieldsTelephoneNumber: added
+- PaymentLinkResponseStatus: added
 - PaymentLinkResponseStatusActive: added
 - PaymentLinkResponseStatusCompleted: added
 - PaymentLinkResponseStatusExpired: added
 - PaymentLinkResponseStatusPaid: added
 - PaymentLinkResponseStatusPaymentPending: added
+- PaymentLinkResponseStorePaymentMethodMode: added
 - PaymentLinkResponseStorePaymentMethodModeAskForConsent: added
 - PaymentLinkResponseStorePaymentMethodModeDisabled: added
 - PaymentLinkResponseStorePaymentMethodModeEnabled: added
 - PaymentMethod.Promoted: added
+- PaymentMethodFundingSource: added
 - PaymentMethodFundingSourceCredit: added
 - PaymentMethodFundingSourceDebit: added
 - PaymentMethodFundingSourcePrepaid: added
@@ -1579,46 +3364,57 @@ Compatible changes:
 - PaymentMethodsRequest.ShopperEmail: added
 - PaymentMethodsRequest.ShopperIP: added
 - PaymentMethodsRequest.TelephoneNumber: added
+- PaymentMethodsRequestChannel: added
 - PaymentMethodsRequestChannelAndroid: added
 - PaymentMethodsRequestChannelIOS: added
 - PaymentMethodsRequestChannelWeb: added
+- PaymentMethodsRequestStoreFiltrationMode: added
 - PaymentMethodsRequestStoreFiltrationModeExclusive: added
 - PaymentMethodsRequestStoreFiltrationModeInclusive: added
 - PaymentMethodsRequestStoreFiltrationModeSkipFilter: added
 - PaymentRefundRequest.CapturePspReference: added
 - PaymentRefundRequest.EnhancedSchemeData: added
+- PaymentRefundRequestMerchantRefundReason: added
 - PaymentRefundRequestMerchantRefundReasonCUSTOMERREQUEST: added
 - PaymentRefundRequestMerchantRefundReasonDUPLICATE: added
 - PaymentRefundRequestMerchantRefundReasonFRAUD: added
 - PaymentRefundRequestMerchantRefundReasonOTHER: added
 - PaymentRefundRequestMerchantRefundReasonRETURN: added
+- PaymentRefundResponseMerchantRefundReason: added
 - PaymentRefundResponseMerchantRefundReasonCUSTOMERREQUEST: added
 - PaymentRefundResponseMerchantRefundReasonDUPLICATE: added
 - PaymentRefundResponseMerchantRefundReasonFRAUD: added
 - PaymentRefundResponseMerchantRefundReasonOTHER: added
 - PaymentRefundResponseMerchantRefundReasonRETURN: added
+- PaymentRefundResponseStatus: added
 - PaymentRefundResponseStatusReceived: added
 - PaymentRequest.Opi: added
 - PaymentRequest.PaymentValidations: added
 - PaymentRequest.ShopperTaxInfo: added
 - PaymentRequest.ThirdPartyTokenRedundancyInfo: added
+- PaymentRequestChannel: added
 - PaymentRequestChannelAndroid: added
 - PaymentRequestChannelIOS: added
 - PaymentRequestChannelWeb: added
+- PaymentRequestEntityType: added
 - PaymentRequestEntityTypeCompanyName: added
 - PaymentRequestEntityTypeNaturalPerson: added
+- PaymentRequestIndustryUsage: added
 - PaymentRequestIndustryUsageDelayedCharge: added
 - PaymentRequestIndustryUsageInstallment: added
 - PaymentRequestIndustryUsageNoShow: added
+- PaymentRequestRecurringProcessingModel: added
 - PaymentRequestRecurringProcessingModelCardOnFile: added
 - PaymentRequestRecurringProcessingModelSubscription: added
 - PaymentRequestRecurringProcessingModelUnscheduledCardOnFile: added
+- PaymentRequestShopperInteraction: added
 - PaymentRequestShopperInteractionContAuth: added
 - PaymentRequestShopperInteractionEcommerce: added
 - PaymentRequestShopperInteractionMoto: added
 - PaymentRequestShopperInteractionPOS: added
 - PaymentResponse.Opi: added
 - PaymentResponse.PaymentValidations: added
+- PaymentResponseResultCode: added
 - PaymentResponseResultCodeAuthenticationFinished: added
 - PaymentResponseResultCodeAuthenticationNotRequired: added
 - PaymentResponseResultCodeAuthorised: added
@@ -1633,13 +3429,16 @@ Compatible changes:
 - PaymentResponseResultCodeRedirectShopper: added
 - PaymentResponseResultCodeRefused: added
 - PaymentResponseResultCodeSuccess: added
+- PaymentResultCode: added
 - PaymentResultCodeAuthorised: added
 - PaymentResultCodePending: added
 - PaymentResultCodeReceived: added
+- PaymentReversalResponseStatus: added
 - PaymentReversalResponseStatusReceived: added
 - PaymentValidations: added
 - PaymentValidationsNameRequest: added
 - PaymentValidationsNameResponse: added
+- PaymentValidationsNameResponseStatus: added
 - PaymentValidationsNameResponseStatusNotPerformed: added
 - PaymentValidationsNameResponseStatusNotSupported: added
 - PaymentValidationsNameResponseStatusPerformed: added
@@ -1650,99 +3449,117 @@ Compatible changes:
 - PaypalUpdateOrderRequest.DeliveryAddress: added
 - PaypalUpdateOrderRequest.DiscountAmount: added
 - PaypalUpdateOrderRequest.ShippingAmount: added
+- PaypalUpdateOrderResponseStatus: added
 - PaypalUpdateOrderResponseStatusError: added
 - PaypalUpdateOrderResponseStatusSuccess: added
 - PickupInfo: added
 - PixDetails.SdkData: added
+- PixDetailsType: added
 - PixDetailsTypePix: added
 - PixPayByBankDetails: added
 - PixPayByBankDetailsAsCheckoutPaymentMethod: added
+- PixPayByBankDetailsType: added
 - PixPayByBankDetailsTypePaybybankPix: added
 - PixPayByBankRiskSignals: added
 - PixRecurring.BusinessDayOnly: added
+- PixRecurringFrequency: added
 - PixRecurringFrequencyHalfYearly: added
 - PixRecurringFrequencyMonthly: added
 - PixRecurringFrequencyQuarterly: added
 - PixRecurringFrequencyWeekly: added
 - PixRecurringFrequencyYearly: added
+- PlatformChargebackLogicBehavior: added
 - PlatformChargebackLogicBehaviorDeductAccordingToSplitRatio: added
 - PlatformChargebackLogicBehaviorDeductFromLiableAccount: added
 - PlatformChargebackLogicBehaviorDeductFromOneBalanceAccount: added
 - PseDetails.SdkData: added
+- PseDetailsType: added
 - PseDetailsTypePsePayulatam: added
-- REMITTANCEPURPOSE_DIGITAL: added
-- REMITTANCEPURPOSE_EDUCATION: added
-- REMITTANCEPURPOSE_TOUR_PROGRAMME: added
-- REMITTANCEPURPOSE_TRAVEL_NON_TOUR: added
-- RESULT_INVALID: added
-- RESULT_NOT_REQUIRED: added
-- RESULT_UNKNOWN: added
-- RESULT_VALID: added
 - RakutenPayDetails.SdkData: added
+- RakutenPayDetailsType: added
 - RakutenPayDetailsTypeRakutenpay: added
 - RatepayDetails.SdkData: added
+- RatepayDetailsType: added
 - RatepayDetailsTypeRatepay: added
 - RatepayDetailsTypeRatepayDirectdebit: added
 - RecurringApiForwardInput: added
+- RecurringContract: added
 - RecurringContractEXTERNAL: added
 - RecurringContractONECLICK: added
 - RecurringContractONECLICKRECURRING: added
 - RecurringContractPAYOUT: added
 - RecurringContractRECURRING: added
+- RecurringTokenService: added
 - RecurringTokenServiceAMEXTOKENSERVICE: added
 - RecurringTokenServiceMCTOKENSERVICE: added
 - RecurringTokenServiceTOKENSHARING: added
 - RecurringTokenServiceVISATOKENSERVICE: added
 - RemittancePurpose: added
+- RemittancePurposeDIGITAL: added
+- RemittancePurposeEDUCATION: added
+- RemittancePurposeTOURPROGRAMME: added
+- RemittancePurposeTRAVELNONTOUR: added
 - RentalSurcharges: added
 - ResponseAdditionalDataCard.CardAltID: added
 - ResponseAdditionalDataCommon.NetworkProcessingMode: added
 - ResponseAdditionalDataCommon.TransactionLinkId: added
+- ResponseAdditionalDataCommonFraudResultType: added
 - ResponseAdditionalDataCommonFraudResultTypeAMBER: added
 - ResponseAdditionalDataCommonFraudResultTypeGREEN: added
 - ResponseAdditionalDataCommonFraudResultTypeRED: added
+- ResponseAdditionalDataCommonFraudRiskLevel: added
 - ResponseAdditionalDataCommonFraudRiskLevelHigh: added
 - ResponseAdditionalDataCommonFraudRiskLevelLow: added
 - ResponseAdditionalDataCommonFraudRiskLevelMedium: added
 - ResponseAdditionalDataCommonFraudRiskLevelVeryHigh: added
 - ResponseAdditionalDataCommonFraudRiskLevelVeryLow: added
+- ResponseAdditionalDataCommonRecurringProcessingModel: added
 - ResponseAdditionalDataCommonRecurringProcessingModelCardOnFile: added
 - ResponseAdditionalDataCommonRecurringProcessingModelSubscription: added
 - ResponseAdditionalDataCommonRecurringProcessingModelUnscheduledCardOnFile: added
+- ResponseAdditionalDataCommonTokenizationStoreOperationType: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeAlreadyExisting: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeCreated: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeUpdated: added
 - ResponseAdditionalDataSepa.SepadirectdebitSepadirectdebitDueDate: added
 - ResponseAdditionalDataSwish: added
 - Result: added
+- ResultINVALID: added
+- ResultNOTREQUIRED: added
+- ResultUNKNOWN: added
+- ResultVALID: added
 - ReturnInfo: added
 - RivertyDetails.MerchantData: added
 - RivertyDetails.SdkData: added
 - RivertyDetails.Subtype: added
+- RivertyDetailsType: added
 - RivertyDetailsTypeRiverty: added
 - RivertyDetailsTypeRivertyAccount: added
 - RivertyDetailsTypeRivertyInstallments: added
 - RivertyDetailsTypeSepadirectdebitRiverty: added
 - Room: added
-- SUBLIMITSTATUS_EXCEEDED: added
-- SUBLIMITSTATUS_NOT_EXCEEDED: added
 - SamsungPayDetails.SdkData: added
+- SamsungPayDetailsFundingSource: added
 - SamsungPayDetailsFundingSourceCredit: added
 - SamsungPayDetailsFundingSourceDebit: added
 - SamsungPayDetailsFundingSourcePrepaid: added
+- SamsungPayDetailsType: added
 - SamsungPayDetailsTypeSamsungpay: added
 - ScreenDimensions: added
 - SepaDirectDebitDetails.DueDate: added
 - SepaDirectDebitDetails.SdkData: added
+- SepaDirectDebitDetailsType: added
 - SepaDirectDebitDetailsTypeSepadirectdebit: added
 - SepaDirectDebitDetailsTypeSepadirectdebitAmazonpay: added
 - SepaDirectDebitDonations: added
 - SepaDirectDebitDonationsAsDonationPaymentMethod: added
+- SepaDirectDebitDonationsType: added
 - SepaDirectDebitDonationsTypeSepadirectdebit: added
 - SessionAmountUpdate: added
 - SessionResultResponse.AdditionalData: added
 - SessionResultResponse.Payments: added
 - SessionResultResponse.Reference: added
+- SessionResultResponseStatus: added
 - SessionResultResponseStatusActive: added
 - SessionResultResponseStatusCanceled: added
 - SessionResultResponseStatusCompleted: added
@@ -1753,6 +3570,7 @@ Compatible changes:
 - ShopperName: added
 - ShopperTaxIdentification: added
 - ShopperTaxInfo: added
+- SplitType: added
 - SplitTypeAcquiringFees: added
 - SplitTypeAdyenCommission: added
 - SplitTypeAdyenFees: added
@@ -1769,10 +3587,12 @@ Compatible changes:
 - SplitTypeTip: added
 - SplitTypeTopUp: added
 - SplitTypeVAT: added
+- StandalonePaymentCancelResponseStatus: added
 - StandalonePaymentCancelResponseStatusReceived: added
 - StoredPaymentMethod.Cashtag: added
 - StoredPaymentMethod.ExternalToken: added
 - StoredPaymentMethodDetails.SdkData: added
+- StoredPaymentMethodDetailsType: added
 - StoredPaymentMethodDetailsTypeAlipayPlus: added
 - StoredPaymentMethodDetailsTypeAlipayPlusAlipayCn: added
 - StoredPaymentMethodDetailsTypeAlipayPlusAlipayHk: added
@@ -1806,6 +3626,7 @@ Compatible changes:
 - StoredPaymentMethodDetailsTypeRevolutpay: added
 - StoredPaymentMethodDetailsTypeTruemoney: added
 - StoredPaymentMethodRequest.Opi: added
+- StoredPaymentMethodRequestRecurringProcessingModel: added
 - StoredPaymentMethodRequestRecurringProcessingModelCardOnFile: added
 - StoredPaymentMethodRequestRecurringProcessingModelSubscription: added
 - StoredPaymentMethodRequestRecurringProcessingModelUnscheduledCardOnFile: added
@@ -1818,20 +3639,25 @@ Compatible changes:
 - StoredPaymentMethodResource.Mandate: added
 - StoredPaymentMethodResource.Opi: added
 - SublimitStatus: added
-- TAXIDENTIFICATIONTYPE_PAN: added
+- SublimitStatusEXCEEDED: added
+- SublimitStatusNOTEXCEEDED: added
 - TaxAmount: added
 - TaxCalculation: added
 - TaxCalculationComponent: added
 - TaxCalculationContext: added
 - TaxIdentificationType: added
+- TaxIdentificationTypePAN: added
 - TaxableAmount: added
 - TemporaryServices: added
 - ThirdPartyTokenRedundancyInfo: added
 - ThreeDS2RequestDataAcctType01: added
 - ThreeDS2RequestDataAcctType02: added
 - ThreeDS2RequestDataAcctType03: added
+- ThreeDS2RequestDataAcctType: added
+- ThreeDS2RequestDataAddrMatch: added
 - ThreeDS2RequestDataAddrMatchN: added
 - ThreeDS2RequestDataAddrMatchY: added
+- ThreeDS2RequestDataChallengeIndicator: added
 - ThreeDS2RequestDataChallengeIndicatorNoPreference: added
 - ThreeDS2RequestDataChallengeIndicatorRequestChallenge: added
 - ThreeDS2RequestDataChallengeIndicatorRequestChallengeAsMandate: added
@@ -1842,11 +3668,14 @@ Compatible changes:
 - ThreeDS2RequestDataThreeDSRequestorChallengeInd04: added
 - ThreeDS2RequestDataThreeDSRequestorChallengeInd05: added
 - ThreeDS2RequestDataThreeDSRequestorChallengeInd06: added
+- ThreeDS2RequestDataThreeDSRequestorChallengeInd: added
 - ThreeDS2RequestDataTransType01: added
 - ThreeDS2RequestDataTransType03: added
 - ThreeDS2RequestDataTransType10: added
 - ThreeDS2RequestDataTransType11: added
 - ThreeDS2RequestDataTransType28: added
+- ThreeDS2RequestDataTransType: added
+- ThreeDS2RequestDataTransactionType: added
 - ThreeDS2RequestDataTransactionTypeAccountFunding: added
 - ThreeDS2RequestDataTransactionTypeCheckAcceptance: added
 - ThreeDS2RequestDataTransactionTypeGoodsOrServicePurchase: added
@@ -1855,8 +3684,11 @@ Compatible changes:
 - ThreeDS2RequestFieldsAcctType01: added
 - ThreeDS2RequestFieldsAcctType02: added
 - ThreeDS2RequestFieldsAcctType03: added
+- ThreeDS2RequestFieldsAcctType: added
+- ThreeDS2RequestFieldsAddrMatch: added
 - ThreeDS2RequestFieldsAddrMatchN: added
 - ThreeDS2RequestFieldsAddrMatchY: added
+- ThreeDS2RequestFieldsChallengeIndicator: added
 - ThreeDS2RequestFieldsChallengeIndicatorNoPreference: added
 - ThreeDS2RequestFieldsChallengeIndicatorRequestChallenge: added
 - ThreeDS2RequestFieldsChallengeIndicatorRequestChallengeAsMandate: added
@@ -1867,11 +3699,14 @@ Compatible changes:
 - ThreeDS2RequestFieldsThreeDSRequestorChallengeInd04: added
 - ThreeDS2RequestFieldsThreeDSRequestorChallengeInd05: added
 - ThreeDS2RequestFieldsThreeDSRequestorChallengeInd06: added
+- ThreeDS2RequestFieldsThreeDSRequestorChallengeInd: added
 - ThreeDS2RequestFieldsTransType01: added
 - ThreeDS2RequestFieldsTransType03: added
 - ThreeDS2RequestFieldsTransType10: added
 - ThreeDS2RequestFieldsTransType11: added
 - ThreeDS2RequestFieldsTransType28: added
+- ThreeDS2RequestFieldsTransType: added
+- ThreeDS2RequestFieldsTransactionType: added
 - ThreeDS2RequestFieldsTransactionTypeAccountFunding: added
 - ThreeDS2RequestFieldsTransactionTypeCheckAcceptance: added
 - ThreeDS2RequestFieldsTransactionTypeGoodsOrServicePurchase: added
@@ -1884,6 +3719,8 @@ Compatible changes:
 - ThreeDS2ResultChallengeCancel05: added
 - ThreeDS2ResultChallengeCancel06: added
 - ThreeDS2ResultChallengeCancel07: added
+- ThreeDS2ResultChallengeCancel: added
+- ThreeDS2ResultExemptionIndicator: added
 - ThreeDS2ResultExemptionIndicatorLowValue: added
 - ThreeDS2ResultExemptionIndicatorSecureCorporate: added
 - ThreeDS2ResultExemptionIndicatorTransactionRiskAnalysis: added
@@ -1894,27 +3731,35 @@ Compatible changes:
 - ThreeDS2ResultThreeDSRequestorChallengeInd04: added
 - ThreeDS2ResultThreeDSRequestorChallengeInd05: added
 - ThreeDS2ResultThreeDSRequestorChallengeInd06: added
+- ThreeDS2ResultThreeDSRequestorChallengeInd: added
 - ThreeDSRequestDataChallengeWindowSize01: added
 - ThreeDSRequestDataChallengeWindowSize02: added
 - ThreeDSRequestDataChallengeWindowSize03: added
 - ThreeDSRequestDataChallengeWindowSize04: added
 - ThreeDSRequestDataChallengeWindowSize05: added
+- ThreeDSRequestDataChallengeWindowSize: added
+- ThreeDSRequestDataDataOnly: added
 - ThreeDSRequestDataDataOnlyFalse: added
 - ThreeDSRequestDataDataOnlyTrue: added
+- ThreeDSRequestDataNativeThreeDS: added
 - ThreeDSRequestDataNativeThreeDSDisabled: added
 - ThreeDSRequestDataNativeThreeDSPreferred: added
 - ThreeDSRequestDataThreeDSVersion210: added
 - ThreeDSRequestDataThreeDSVersion220: added
+- ThreeDSRequestDataThreeDSVersion: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod01: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod02: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod03: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod04: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod05: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod06: added
+- ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod01: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod02: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod03: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod04: added
+- ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod: added
+- ThreeDSecureDataAuthenticationResponse: added
 - ThreeDSecureDataAuthenticationResponseA: added
 - ThreeDSecureDataAuthenticationResponseN: added
 - ThreeDSecureDataAuthenticationResponseU: added
@@ -1926,6 +3771,8 @@ Compatible changes:
 - ThreeDSecureDataChallengeCancel05: added
 - ThreeDSecureDataChallengeCancel06: added
 - ThreeDSecureDataChallengeCancel07: added
+- ThreeDSecureDataChallengeCancel: added
+- ThreeDSecureDataDirectoryResponse: added
 - ThreeDSecureDataDirectoryResponseA: added
 - ThreeDSecureDataDirectoryResponseC: added
 - ThreeDSecureDataDirectoryResponseD: added
@@ -1935,11 +3782,14 @@ Compatible changes:
 - ThreeDSecureDataDirectoryResponseU: added
 - ThreeDSecureDataDirectoryResponseY: added
 - TokenMandate: added
+- TokenMandateAmountRule: added
 - TokenMandateAmountRuleExact: added
 - TokenMandateAmountRuleMax: added
+- TokenMandateBillingAttemptsRule: added
 - TokenMandateBillingAttemptsRuleAfter: added
 - TokenMandateBillingAttemptsRuleBefore: added
 - TokenMandateBillingAttemptsRuleOn: added
+- TokenMandateFrequency: added
 - TokenMandateFrequencyAdhoc: added
 - TokenMandateFrequencyBiWeekly: added
 - TokenMandateFrequencyDaily: added
@@ -1948,19 +3798,25 @@ Compatible changes:
 - TokenMandateFrequencyQuarterly: added
 - TokenMandateFrequencyWeekly: added
 - TokenMandateFrequencyYearly: added
+- TokenMandateRetryPolicy: added
 - TokenMandateRetryPolicyFalse: added
 - TokenMandateRetryPolicyTrue: added
 - TwintDetails.SdkData: added
+- TwintDetailsType: added
 - TwintDetailsTypeTwint: added
 - UPIPaymentMethod: added
+- UpdatePaymentLinkRequestStatus: added
 - UpdatePaymentLinkRequestStatusExpired: added
 - UpiCollectDetails.SdkData: added
+- UpiCollectDetailsType: added
 - UpiCollectDetailsTypeUpiCollect: added
 - UpiIntentDetails.BillingSequenceNumber: added
 - UpiIntentDetails.SdkData: added
+- UpiIntentDetailsType: added
 - UpiIntentDetailsTypeUpiIntent: added
 - UpiQrDetails: added
 - UpiQrDetailsAsCheckoutPaymentMethod: added
+- UpiQrDetailsType: added
 - UpiQrDetailsTypeUpiQr: added
 - UtilityApiCalculateTaxInput: added
 - UtilityApiValidateShopperIdInput: added
@@ -1971,19 +3827,25 @@ Compatible changes:
 - VerifyShopperTaxIdentificationRequest: added
 - VerifyShopperTaxIdentificationResponse: added
 - VippsDetails.SdkData: added
+- VippsDetailsType: added
 - VippsDetailsTypeVipps: added
 - VisaCheckoutDetails.SdkData: added
+- VisaCheckoutDetailsFundingSource: added
 - VisaCheckoutDetailsFundingSourceCredit: added
 - VisaCheckoutDetailsFundingSourceDebit: added
 - VisaCheckoutDetailsFundingSourcePrepaid: added
+- VisaCheckoutDetailsType: added
 - VisaCheckoutDetailsTypeVisacheckout: added
 - WeChatPayDetails.SdkData: added
+- WeChatPayDetailsType: added
 - WeChatPayDetailsTypeWechatpay: added
 - WeChatPayDetailsTypeWechatpayPos: added
 - WeChatPayMiniProgramDetails.RecurringDetailReference: added
 - WeChatPayMiniProgramDetails.SdkData: added
 - WeChatPayMiniProgramDetails.StoredPaymentMethodId: added
+- WeChatPayMiniProgramDetailsType: added
 - WeChatPayMiniProgramDetailsTypeWechatpayMiniProgram: added
 - ZipDetails.SdkData: added
+- ZipDetailsType: added
 - ZipDetailsTypeZip: added
 - ZipDetailsTypeZipPos: added

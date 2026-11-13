@@ -1,2 +1,13 @@
+Incompatible changes:
+- (*ReportNotificationRequest).GetType: changed from func() string to func() ReportNotificationRequestType
+- (*ReportNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*ReportNotificationRequestType, bool)
+- (*ReportNotificationRequest).SetType: changed from func(string) to func(ReportNotificationRequestType)
+- NewReportNotificationRequest: changed from func(ReportNotificationData, string, string) *ReportNotificationRequest to func(ReportNotificationData, string, ReportNotificationRequestType) *ReportNotificationRequest
+- ReportNotificationRequest.Type: changed from string to ReportNotificationRequestType
 Compatible changes:
+- AllowedReportNotificationRequestTypeEnumValues: added
+- NewNullableReportNotificationRequestType: added
+- NewReportNotificationRequestTypeFromValue: added
+- NullableReportNotificationRequestType: added
+- ReportNotificationRequestType: added
 - ReportNotificationRequestTypeBalancePlatformReportCreated: added

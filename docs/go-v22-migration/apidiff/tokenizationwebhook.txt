@@ -1,17 +1,94 @@
+Incompatible changes:
+- (*TokenizationAlreadyExistingDetailsNotificationRequest).GetEnvironment: changed from func() string to func() TokenizationAlreadyExistingDetailsNotificationRequestEnvironment
+- (*TokenizationAlreadyExistingDetailsNotificationRequest).GetEnvironmentOk: changed from func() (*string, bool) to func() (*TokenizationAlreadyExistingDetailsNotificationRequestEnvironment, bool)
+- (*TokenizationAlreadyExistingDetailsNotificationRequest).GetType: changed from func() string to func() TokenizationAlreadyExistingDetailsNotificationRequestType
+- (*TokenizationAlreadyExistingDetailsNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*TokenizationAlreadyExistingDetailsNotificationRequestType, bool)
+- (*TokenizationAlreadyExistingDetailsNotificationRequest).SetEnvironment: changed from func(string) to func(TokenizationAlreadyExistingDetailsNotificationRequestEnvironment)
+- (*TokenizationAlreadyExistingDetailsNotificationRequest).SetType: changed from func(string) to func(TokenizationAlreadyExistingDetailsNotificationRequestType)
+- (*TokenizationCreatedDetailsNotificationRequest).GetEnvironment: changed from func() string to func() TokenizationCreatedDetailsNotificationRequestEnvironment
+- (*TokenizationCreatedDetailsNotificationRequest).GetEnvironmentOk: changed from func() (*string, bool) to func() (*TokenizationCreatedDetailsNotificationRequestEnvironment, bool)
+- (*TokenizationCreatedDetailsNotificationRequest).GetType: changed from func() string to func() TokenizationCreatedDetailsNotificationRequestType
+- (*TokenizationCreatedDetailsNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*TokenizationCreatedDetailsNotificationRequestType, bool)
+- (*TokenizationCreatedDetailsNotificationRequest).SetEnvironment: changed from func(string) to func(TokenizationCreatedDetailsNotificationRequestEnvironment)
+- (*TokenizationCreatedDetailsNotificationRequest).SetType: changed from func(string) to func(TokenizationCreatedDetailsNotificationRequestType)
+- (*TokenizationDisabledDetailsNotificationRequest).GetEnvironment: changed from func() string to func() TokenizationDisabledDetailsNotificationRequestEnvironment
+- (*TokenizationDisabledDetailsNotificationRequest).GetEnvironmentOk: changed from func() (*string, bool) to func() (*TokenizationDisabledDetailsNotificationRequestEnvironment, bool)
+- (*TokenizationDisabledDetailsNotificationRequest).GetType: changed from func() string to func() TokenizationDisabledDetailsNotificationRequestType
+- (*TokenizationDisabledDetailsNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*TokenizationDisabledDetailsNotificationRequestType, bool)
+- (*TokenizationDisabledDetailsNotificationRequest).SetEnvironment: changed from func(string) to func(TokenizationDisabledDetailsNotificationRequestEnvironment)
+- (*TokenizationDisabledDetailsNotificationRequest).SetType: changed from func(string) to func(TokenizationDisabledDetailsNotificationRequestType)
+- (*TokenizationUpdatedDetailsNotificationRequest).GetEnvironment: changed from func() string to func() TokenizationUpdatedDetailsNotificationRequestEnvironment
+- (*TokenizationUpdatedDetailsNotificationRequest).GetEnvironmentOk: changed from func() (*string, bool) to func() (*TokenizationUpdatedDetailsNotificationRequestEnvironment, bool)
+- (*TokenizationUpdatedDetailsNotificationRequest).GetType: changed from func() string to func() TokenizationUpdatedDetailsNotificationRequestType
+- (*TokenizationUpdatedDetailsNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*TokenizationUpdatedDetailsNotificationRequestType, bool)
+- (*TokenizationUpdatedDetailsNotificationRequest).SetEnvironment: changed from func(string) to func(TokenizationUpdatedDetailsNotificationRequestEnvironment)
+- (*TokenizationUpdatedDetailsNotificationRequest).SetType: changed from func(string) to func(TokenizationUpdatedDetailsNotificationRequestType)
+- NewTokenizationAlreadyExistingDetailsNotificationRequest: changed from func(time.Time, RecurringTokenStoreOperation, string, string, string) *TokenizationAlreadyExistingDetailsNotificationRequest to func(time.Time, RecurringTokenStoreOperation, TokenizationAlreadyExistingDetailsNotificationRequestEnvironment, string, TokenizationAlreadyExistingDetailsNotificationRequestType) *TokenizationAlreadyExistingDetailsNotificationRequest
+- NewTokenizationCreatedDetailsNotificationRequest: changed from func(time.Time, RecurringTokenStoreOperation, string, string, string) *TokenizationCreatedDetailsNotificationRequest to func(time.Time, RecurringTokenStoreOperation, TokenizationCreatedDetailsNotificationRequestEnvironment, string, TokenizationCreatedDetailsNotificationRequestType) *TokenizationCreatedDetailsNotificationRequest
+- NewTokenizationDisabledDetailsNotificationRequest: changed from func(time.Time, RecurringToken, string, string, string) *TokenizationDisabledDetailsNotificationRequest to func(time.Time, RecurringToken, TokenizationDisabledDetailsNotificationRequestEnvironment, string, TokenizationDisabledDetailsNotificationRequestType) *TokenizationDisabledDetailsNotificationRequest
+- NewTokenizationUpdatedDetailsNotificationRequest: changed from func(time.Time, RecurringTokenStoreOperation, string, string, string) *TokenizationUpdatedDetailsNotificationRequest to func(time.Time, RecurringTokenStoreOperation, TokenizationUpdatedDetailsNotificationRequestEnvironment, string, TokenizationUpdatedDetailsNotificationRequestType) *TokenizationUpdatedDetailsNotificationRequest
+- TokenizationAlreadyExistingDetailsNotificationRequest.Environment: changed from string to TokenizationAlreadyExistingDetailsNotificationRequestEnvironment
+- TokenizationAlreadyExistingDetailsNotificationRequest.Type: changed from string to TokenizationAlreadyExistingDetailsNotificationRequestType
+- TokenizationCreatedDetailsNotificationRequest.Environment: changed from string to TokenizationCreatedDetailsNotificationRequestEnvironment
+- TokenizationCreatedDetailsNotificationRequest.Type: changed from string to TokenizationCreatedDetailsNotificationRequestType
+- TokenizationDisabledDetailsNotificationRequest.Environment: changed from string to TokenizationDisabledDetailsNotificationRequestEnvironment
+- TokenizationDisabledDetailsNotificationRequest.Type: changed from string to TokenizationDisabledDetailsNotificationRequestType
+- TokenizationUpdatedDetailsNotificationRequest.Environment: changed from string to TokenizationUpdatedDetailsNotificationRequestEnvironment
+- TokenizationUpdatedDetailsNotificationRequest.Type: changed from string to TokenizationUpdatedDetailsNotificationRequestType
 Compatible changes:
+- AllowedTokenizationAlreadyExistingDetailsNotificationRequestEnvironmentEnumValues: added
+- AllowedTokenizationAlreadyExistingDetailsNotificationRequestTypeEnumValues: added
+- AllowedTokenizationCreatedDetailsNotificationRequestEnvironmentEnumValues: added
+- AllowedTokenizationCreatedDetailsNotificationRequestTypeEnumValues: added
+- AllowedTokenizationDisabledDetailsNotificationRequestEnvironmentEnumValues: added
+- AllowedTokenizationDisabledDetailsNotificationRequestTypeEnumValues: added
+- AllowedTokenizationUpdatedDetailsNotificationRequestEnvironmentEnumValues: added
+- AllowedTokenizationUpdatedDetailsNotificationRequestTypeEnumValues: added
 - HandleTokenizationAlreadyExistingDetailsNotificationRequest: added
 - HandleTokenizationCreatedDetailsNotificationRequest: added
 - HandleTokenizationDisabledDetailsNotificationRequest: added
 - HandleTokenizationUpdatedDetailsNotificationRequest: added
+- NewNullableTokenizationAlreadyExistingDetailsNotificationRequestEnvironment: added
+- NewNullableTokenizationAlreadyExistingDetailsNotificationRequestType: added
+- NewNullableTokenizationCreatedDetailsNotificationRequestEnvironment: added
+- NewNullableTokenizationCreatedDetailsNotificationRequestType: added
+- NewNullableTokenizationDisabledDetailsNotificationRequestEnvironment: added
+- NewNullableTokenizationDisabledDetailsNotificationRequestType: added
+- NewNullableTokenizationUpdatedDetailsNotificationRequestEnvironment: added
+- NewNullableTokenizationUpdatedDetailsNotificationRequestType: added
+- NewTokenizationAlreadyExistingDetailsNotificationRequestEnvironmentFromValue: added
+- NewTokenizationAlreadyExistingDetailsNotificationRequestTypeFromValue: added
+- NewTokenizationCreatedDetailsNotificationRequestEnvironmentFromValue: added
+- NewTokenizationCreatedDetailsNotificationRequestTypeFromValue: added
+- NewTokenizationDisabledDetailsNotificationRequestEnvironmentFromValue: added
+- NewTokenizationDisabledDetailsNotificationRequestTypeFromValue: added
+- NewTokenizationUpdatedDetailsNotificationRequestEnvironmentFromValue: added
+- NewTokenizationUpdatedDetailsNotificationRequestTypeFromValue: added
+- NullableTokenizationAlreadyExistingDetailsNotificationRequestEnvironment: added
+- NullableTokenizationAlreadyExistingDetailsNotificationRequestType: added
+- NullableTokenizationCreatedDetailsNotificationRequestEnvironment: added
+- NullableTokenizationCreatedDetailsNotificationRequestType: added
+- NullableTokenizationDisabledDetailsNotificationRequestEnvironment: added
+- NullableTokenizationDisabledDetailsNotificationRequestType: added
+- NullableTokenizationUpdatedDetailsNotificationRequestEnvironment: added
+- NullableTokenizationUpdatedDetailsNotificationRequestType: added
+- TokenizationAlreadyExistingDetailsNotificationRequestEnvironment: added
 - TokenizationAlreadyExistingDetailsNotificationRequestEnvironmentLive: added
 - TokenizationAlreadyExistingDetailsNotificationRequestEnvironmentTest: added
+- TokenizationAlreadyExistingDetailsNotificationRequestType: added
 - TokenizationAlreadyExistingDetailsNotificationRequestTypeRecurringTokenAlreadyExisting: added
+- TokenizationCreatedDetailsNotificationRequestEnvironment: added
 - TokenizationCreatedDetailsNotificationRequestEnvironmentLive: added
 - TokenizationCreatedDetailsNotificationRequestEnvironmentTest: added
+- TokenizationCreatedDetailsNotificationRequestType: added
 - TokenizationCreatedDetailsNotificationRequestTypeRecurringTokenCreated: added
+- TokenizationDisabledDetailsNotificationRequestEnvironment: added
 - TokenizationDisabledDetailsNotificationRequestEnvironmentLive: added
 - TokenizationDisabledDetailsNotificationRequestEnvironmentTest: added
+- TokenizationDisabledDetailsNotificationRequestType: added
 - TokenizationDisabledDetailsNotificationRequestTypeRecurringTokenDisabled: added
+- TokenizationUpdatedDetailsNotificationRequestEnvironment: added
 - TokenizationUpdatedDetailsNotificationRequestEnvironmentLive: added
 - TokenizationUpdatedDetailsNotificationRequestEnvironmentTest: added
+- TokenizationUpdatedDetailsNotificationRequestType: added
 - TokenizationUpdatedDetailsNotificationRequestTypeRecurringTokenUpdated: added

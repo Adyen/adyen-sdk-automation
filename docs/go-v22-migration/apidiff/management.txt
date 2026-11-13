@@ -1,8 +1,68 @@
 Incompatible changes:
+- (*AccelInfo).GetProcessingType: changed from func() string to func() AccelInfoProcessingType
+- (*AccelInfo).GetProcessingTypeOk: changed from func() (*string, bool) to func() (*AccelInfoProcessingType, bool)
+- (*AccelInfo).SetProcessingType: changed from func(string) to func(AccelInfoProcessingType)
+- (*AmexInfo).GetServiceLevel: changed from func() string to func() AmexInfoServiceLevel
+- (*AmexInfo).GetServiceLevelOk: changed from func() (*string, bool) to func() (*AmexInfoServiceLevel, bool)
+- (*AmexInfo).SetServiceLevel: changed from func(string) to func(AmexInfoServiceLevel)
+- (*AndroidApp).GetStatus: changed from func() string to func() AndroidAppStatus
+- (*AndroidApp).GetStatusOk: changed from func() (*string, bool) to func() (*AndroidAppStatus, bool)
+- (*AndroidApp).SetStatus: changed from func(string) to func(AndroidAppStatus)
+- (*Connectivity).GetSimcardStatus: changed from func() string to func() ConnectivitySimcardStatus
+- (*Connectivity).GetSimcardStatusOk: changed from func() (*string, bool) to func() (*ConnectivitySimcardStatus, bool)
+- (*Connectivity).SetSimcardStatus: changed from func(string) to func(ConnectivitySimcardStatus)
+- (*CreateCompanyWebhookRequest).GetCommunicationFormat: changed from func() string to func() CreateCompanyWebhookRequestCommunicationFormat
+- (*CreateCompanyWebhookRequest).GetCommunicationFormatOk: changed from func() (*string, bool) to func() (*CreateCompanyWebhookRequestCommunicationFormat, bool)
+- (*CreateCompanyWebhookRequest).GetEncryptionProtocol: changed from func() string to func() CreateCompanyWebhookRequestEncryptionProtocol
+- (*CreateCompanyWebhookRequest).GetEncryptionProtocolOk: changed from func() (*string, bool) to func() (*CreateCompanyWebhookRequestEncryptionProtocol, bool)
+- (*CreateCompanyWebhookRequest).GetFilterMerchantAccountType: changed from func() string to func() CreateCompanyWebhookRequestFilterMerchantAccountType
+- (*CreateCompanyWebhookRequest).GetFilterMerchantAccountTypeOk: changed from func() (*string, bool) to func() (*CreateCompanyWebhookRequestFilterMerchantAccountType, bool)
+- (*CreateCompanyWebhookRequest).GetNetworkType: changed from func() string to func() CreateCompanyWebhookRequestNetworkType
+- (*CreateCompanyWebhookRequest).GetNetworkTypeOk: changed from func() (*string, bool) to func() (*CreateCompanyWebhookRequestNetworkType, bool)
+- (*CreateCompanyWebhookRequest).SetCommunicationFormat: changed from func(string) to func(CreateCompanyWebhookRequestCommunicationFormat)
+- (*CreateCompanyWebhookRequest).SetEncryptionProtocol: changed from func(string) to func(CreateCompanyWebhookRequestEncryptionProtocol)
+- (*CreateCompanyWebhookRequest).SetFilterMerchantAccountType: changed from func(string) to func(CreateCompanyWebhookRequestFilterMerchantAccountType)
+- (*CreateCompanyWebhookRequest).SetNetworkType: changed from func(string) to func(CreateCompanyWebhookRequestNetworkType)
+- (*CreateMerchantWebhookRequest).GetCommunicationFormat: changed from func() string to func() CreateMerchantWebhookRequestCommunicationFormat
+- (*CreateMerchantWebhookRequest).GetCommunicationFormatOk: changed from func() (*string, bool) to func() (*CreateMerchantWebhookRequestCommunicationFormat, bool)
+- (*CreateMerchantWebhookRequest).GetEncryptionProtocol: changed from func() string to func() CreateMerchantWebhookRequestEncryptionProtocol
+- (*CreateMerchantWebhookRequest).GetEncryptionProtocolOk: changed from func() (*string, bool) to func() (*CreateMerchantWebhookRequestEncryptionProtocol, bool)
+- (*CreateMerchantWebhookRequest).GetNetworkType: changed from func() string to func() CreateMerchantWebhookRequestNetworkType
+- (*CreateMerchantWebhookRequest).GetNetworkTypeOk: changed from func() (*string, bool) to func() (*CreateMerchantWebhookRequestNetworkType, bool)
+- (*CreateMerchantWebhookRequest).SetCommunicationFormat: changed from func(string) to func(CreateMerchantWebhookRequestCommunicationFormat)
+- (*CreateMerchantWebhookRequest).SetEncryptionProtocol: changed from func(string) to func(CreateMerchantWebhookRequestEncryptionProtocol)
+- (*CreateMerchantWebhookRequest).SetNetworkType: changed from func(string) to func(CreateMerchantWebhookRequestNetworkType)
+- (*DinersInfo).GetServiceLevel: changed from func() string to func() DinersInfoServiceLevel
+- (*DinersInfo).GetServiceLevelOk: changed from func() (*string, bool) to func() (*DinersInfoServiceLevel, bool)
+- (*DinersInfo).SetServiceLevel: changed from func(string) to func(DinersInfoServiceLevel)
+- (*InstallAndroidAppDetails).GetType: changed from func() string to func() InstallAndroidAppDetailsType
+- (*InstallAndroidAppDetails).GetTypeOk: changed from func() (*string, bool) to func() (*InstallAndroidAppDetailsType, bool)
+- (*InstallAndroidAppDetails).SetType: changed from func(string) to func(InstallAndroidAppDetailsType)
+- (*InstallAndroidCertificateDetails).GetType: changed from func() string to func() InstallAndroidCertificateDetailsType
+- (*InstallAndroidCertificateDetails).GetTypeOk: changed from func() (*string, bool) to func() (*InstallAndroidCertificateDetailsType, bool)
+- (*InstallAndroidCertificateDetails).SetType: changed from func(string) to func(InstallAndroidCertificateDetailsType)
+- (*JCBInfo).GetServiceLevel: changed from func() string to func() JCBInfoServiceLevel
+- (*JCBInfo).GetServiceLevelOk: changed from func() (*string, bool) to func() (*JCBInfoServiceLevel, bool)
+- (*JCBInfo).SetServiceLevel: changed from func(string) to func(JCBInfoServiceLevel)
+- (*KlarnaInfo).GetRegion: changed from func() string to func() KlarnaInfoRegion
+- (*KlarnaInfo).GetRegionOk: changed from func() (*string, bool) to func() (*KlarnaInfoRegion, bool)
+- (*KlarnaInfo).SetRegion: changed from func(string) to func(KlarnaInfoRegion)
+- (*Notification).GetCategory: changed from func() string to func() NotificationCategory
+- (*Notification).GetCategoryOk: changed from func() (*string, bool) to func() (*NotificationCategory, bool)
+- (*Notification).SetCategory: changed from func(string) to func(NotificationCategory)
+- (*NyceInfo).GetProcessingType: changed from func() string to func() AccelInfoProcessingType
+- (*NyceInfo).GetProcessingTypeOk: changed from func() (*string, bool) to func() (*AccelInfoProcessingType, bool)
+- (*NyceInfo).SetProcessingType: changed from func(string) to func(AccelInfoProcessingType)
 - (*OfflineProcessing).GetOfflineSwipeLimits: removed
 - (*OfflineProcessing).GetOfflineSwipeLimitsOk: removed
 - (*OfflineProcessing).HasOfflineSwipeLimits: removed
 - (*OfflineProcessing).SetOfflineSwipeLimits: removed
+- (*PayAtTable).GetAuthenticationMethod: changed from func() string to func() PayAtTableAuthenticationMethod
+- (*PayAtTable).GetAuthenticationMethodOk: changed from func() (*string, bool) to func() (*PayAtTableAuthenticationMethod, bool)
+- (*PayAtTable).GetPaymentInstrument: changed from func() string to func() PayAtTablePaymentInstrument
+- (*PayAtTable).GetPaymentInstrumentOk: changed from func() (*string, bool) to func() (*PayAtTablePaymentInstrument, bool)
+- (*PayAtTable).SetAuthenticationMethod: changed from func(string) to func(PayAtTableAuthenticationMethod)
+- (*PayAtTable).SetPaymentInstrument: changed from func(string) to func(PayAtTablePaymentInstrument)
 - (*PayByBankPlaidInfo).GetCountryCode: removed
 - (*PayByBankPlaidInfo).GetCountryCodeOk: removed
 - (*PayByBankPlaidInfo).GetMerchantCity: removed
@@ -99,6 +159,8 @@ Incompatible changes:
 - (*PaymentMethod).GetTicketOk: changed from func() (*TicketInfo, bool) to func() (*TicketResponseInfo, bool)
 - (*PaymentMethod).GetTwint: changed from func() TwintInfo to func() TwintResponseInfo
 - (*PaymentMethod).GetTwintOk: changed from func() (*TwintInfo, bool) to func() (*TwintResponseInfo, bool)
+- (*PaymentMethod).GetVerificationStatus: changed from func() string to func() PaymentMethodVerificationStatus
+- (*PaymentMethod).GetVerificationStatusOk: changed from func() (*string, bool) to func() (*PaymentMethodVerificationStatus, bool)
 - (*PaymentMethod).GetVipps: changed from func() VippsInfo to func() VippsResponseInfo
 - (*PaymentMethod).GetVippsOk: changed from func() (*VippsInfo, bool) to func() (*VippsResponseInfo, bool)
 - (*PaymentMethod).GetVisa: changed from func() GenericPmWithTdiInfo to func() VisaResponseInfo
@@ -141,12 +203,127 @@ Incompatible changes:
 - (*PaymentMethod).SetSwish: changed from func(SwishInfo) to func(SwishResponseInfo)
 - (*PaymentMethod).SetTicket: changed from func(TicketInfo) to func(TicketResponseInfo)
 - (*PaymentMethod).SetTwint: changed from func(TwintInfo) to func(TwintResponseInfo)
+- (*PaymentMethod).SetVerificationStatus: changed from func(string) to func(PaymentMethodVerificationStatus)
 - (*PaymentMethod).SetVipps: changed from func(VippsInfo) to func(VippsResponseInfo)
 - (*PaymentMethod).SetVisa: changed from func(GenericPmWithTdiInfo) to func(VisaResponseInfo)
 - (*PaymentMethod).SetWechatpay: changed from func(WeChatPayInfo) to func(WeChatPayResponseInfo)
 - (*PaymentMethod).SetWechatpayPos: changed from func(WeChatPayPosInfo) to func(WeChatPayPosResponseInfo)
+- (*PaymentMethodResponse).GetTypesWithErrors: changed from func() []string to func() []PaymentMethodResponseTypesWithErrors
+- (*PaymentMethodResponse).GetTypesWithErrorsOk: changed from func() ([]string, bool) to func() ([]PaymentMethodResponseTypesWithErrors, bool)
+- (*PaymentMethodResponse).SetTypesWithErrors: changed from func([]string) to func([]PaymentMethodResponseTypesWithErrors)
+- (*PaymentMethodSetupInfo).GetShopperInteraction: changed from func() string to func() PaymentMethodSetupInfoShopperInteraction
+- (*PaymentMethodSetupInfo).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*PaymentMethodSetupInfoShopperInteraction, bool)
+- (*PaymentMethodSetupInfo).GetType: changed from func() string to func() PaymentMethodSetupInfoType
+- (*PaymentMethodSetupInfo).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentMethodSetupInfoType, bool)
+- (*PaymentMethodSetupInfo).SetShopperInteraction: changed from func(string) to func(PaymentMethodSetupInfoShopperInteraction)
+- (*PaymentMethodSetupInfo).SetType: changed from func(string) to func(PaymentMethodSetupInfoType)
 - (*PaymentMethodsMerchantLevelApi).GetApplePayDomains: changed from func(context.Context, PaymentMethodsMerchantLevelApiGetApplePayDomainsInput) (ApplePayInfo, *net/http.Response, error) to func(context.Context, PaymentMethodsMerchantLevelApiGetApplePayDomainsInput) (ApplePayResponseInfo, *net/http.Response, error)
+- (*PayoutSettings).GetPriority: changed from func() string to func() PayoutSettingsPriority
+- (*PayoutSettings).GetPriorityOk: changed from func() (*string, bool) to func() (*PayoutSettingsPriority, bool)
+- (*PayoutSettings).GetVerificationStatus: changed from func() string to func() PayoutSettingsVerificationStatus
+- (*PayoutSettings).GetVerificationStatusOk: changed from func() (*string, bool) to func() (*PayoutSettingsVerificationStatus, bool)
+- (*PayoutSettings).SetPriority: changed from func(string) to func(PayoutSettingsPriority)
+- (*PayoutSettings).SetVerificationStatus: changed from func(string) to func(PayoutSettingsVerificationStatus)
+- (*PulseInfo).GetProcessingType: changed from func() string to func() AccelInfoProcessingType
+- (*PulseInfo).GetProcessingTypeOk: changed from func() (*string, bool) to func() (*AccelInfoProcessingType, bool)
+- (*PulseInfo).SetProcessingType: changed from func(string) to func(AccelInfoProcessingType)
+- (*ReleaseUpdateDetails).GetType: changed from func() string to func() ReleaseUpdateDetailsType
+- (*ReleaseUpdateDetails).GetTypeOk: changed from func() (*string, bool) to func() (*ReleaseUpdateDetailsType, bool)
+- (*ReleaseUpdateDetails).SetType: changed from func(string) to func(ReleaseUpdateDetailsType)
+- (*ScheduleTerminalActionsResponse).GetActionDetails: changed from func() ScheduleTerminalActionsRequestActionDetails to func() ScheduleTerminalActionsResponseActionDetails
+- (*ScheduleTerminalActionsResponse).GetActionDetailsOk: changed from func() (*ScheduleTerminalActionsRequestActionDetails, bool) to func() (*ScheduleTerminalActionsResponseActionDetails, bool)
+- (*ScheduleTerminalActionsResponse).SetActionDetails: changed from func(ScheduleTerminalActionsRequestActionDetails) to func(ScheduleTerminalActionsResponseActionDetails)
+- (*SplitConfigurationLogic).GetAcquiringFees: changed from func() string to func() SplitConfigurationLogicAcquiringFees
+- (*SplitConfigurationLogic).GetAcquiringFeesOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAcquiringFees, bool)
+- (*SplitConfigurationLogic).GetAdyenCommission: changed from func() string to func() SplitConfigurationLogicAdyenCommission
+- (*SplitConfigurationLogic).GetAdyenCommissionOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAdyenCommission, bool)
+- (*SplitConfigurationLogic).GetAdyenFees: changed from func() string to func() SplitConfigurationLogicAdyenFees
+- (*SplitConfigurationLogic).GetAdyenFeesOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAdyenFees, bool)
+- (*SplitConfigurationLogic).GetAdyenMarkup: changed from func() string to func() SplitConfigurationLogicAdyenMarkup
+- (*SplitConfigurationLogic).GetAdyenMarkupOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAdyenMarkup, bool)
+- (*SplitConfigurationLogic).GetChargeback: changed from func() string to func() SplitConfigurationLogicChargeback
+- (*SplitConfigurationLogic).GetChargebackCostAllocation: changed from func() string to func() SplitConfigurationLogicChargebackCostAllocation
+- (*SplitConfigurationLogic).GetChargebackCostAllocationOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicChargebackCostAllocation, bool)
+- (*SplitConfigurationLogic).GetChargebackOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicChargeback, bool)
+- (*SplitConfigurationLogic).GetInterchange: changed from func() string to func() SplitConfigurationLogicInterchange
+- (*SplitConfigurationLogic).GetInterchangeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicInterchange, bool)
+- (*SplitConfigurationLogic).GetPaymentFee: changed from func() string to func() SplitConfigurationLogicPaymentFee
+- (*SplitConfigurationLogic).GetPaymentFeeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicPaymentFee, bool)
+- (*SplitConfigurationLogic).GetRefund: changed from func() string to func() SplitConfigurationLogicRefund
+- (*SplitConfigurationLogic).GetRefundCostAllocation: changed from func() string to func() SplitConfigurationLogicRefundCostAllocation
+- (*SplitConfigurationLogic).GetRefundCostAllocationOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicRefundCostAllocation, bool)
+- (*SplitConfigurationLogic).GetRefundOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicRefund, bool)
+- (*SplitConfigurationLogic).GetRemainder: changed from func() string to func() SplitConfigurationLogicRemainder
+- (*SplitConfigurationLogic).GetRemainderOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicRemainder, bool)
+- (*SplitConfigurationLogic).GetSchemeFee: changed from func() string to func() SplitConfigurationLogicSchemeFee
+- (*SplitConfigurationLogic).GetSchemeFeeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicSchemeFee, bool)
+- (*SplitConfigurationLogic).GetSurcharge: changed from func() string to func() SplitConfigurationLogicSurcharge
+- (*SplitConfigurationLogic).GetSurchargeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicSurcharge, bool)
+- (*SplitConfigurationLogic).GetTip: changed from func() string to func() SplitConfigurationLogicTip
+- (*SplitConfigurationLogic).GetTipOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicTip, bool)
+- (*SplitConfigurationLogic).SetAcquiringFees: changed from func(string) to func(SplitConfigurationLogicAcquiringFees)
+- (*SplitConfigurationLogic).SetAdyenCommission: changed from func(string) to func(SplitConfigurationLogicAdyenCommission)
+- (*SplitConfigurationLogic).SetAdyenFees: changed from func(string) to func(SplitConfigurationLogicAdyenFees)
+- (*SplitConfigurationLogic).SetAdyenMarkup: changed from func(string) to func(SplitConfigurationLogicAdyenMarkup)
+- (*SplitConfigurationLogic).SetChargeback: changed from func(string) to func(SplitConfigurationLogicChargeback)
+- (*SplitConfigurationLogic).SetChargebackCostAllocation: changed from func(string) to func(SplitConfigurationLogicChargebackCostAllocation)
+- (*SplitConfigurationLogic).SetInterchange: changed from func(string) to func(SplitConfigurationLogicInterchange)
+- (*SplitConfigurationLogic).SetPaymentFee: changed from func(string) to func(SplitConfigurationLogicPaymentFee)
+- (*SplitConfigurationLogic).SetRefund: changed from func(string) to func(SplitConfigurationLogicRefund)
+- (*SplitConfigurationLogic).SetRefundCostAllocation: changed from func(string) to func(SplitConfigurationLogicRefundCostAllocation)
+- (*SplitConfigurationLogic).SetRemainder: changed from func(string) to func(SplitConfigurationLogicRemainder)
+- (*SplitConfigurationLogic).SetSchemeFee: changed from func(string) to func(SplitConfigurationLogicSchemeFee)
+- (*SplitConfigurationLogic).SetSurcharge: changed from func(string) to func(SplitConfigurationLogicSurcharge)
+- (*SplitConfigurationLogic).SetTip: changed from func(string) to func(SplitConfigurationLogicTip)
+- (*SplitConfigurationRule).GetFundingSource: changed from func() string to func() SplitConfigurationRuleFundingSource
+- (*SplitConfigurationRule).GetFundingSourceOk: changed from func() (*string, bool) to func() (*SplitConfigurationRuleFundingSource, bool)
+- (*SplitConfigurationRule).GetShopperInteraction: changed from func() string to func() SplitConfigurationRuleShopperInteraction
+- (*SplitConfigurationRule).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*SplitConfigurationRuleShopperInteraction, bool)
 - (*SplitConfigurationRule).HasFundingSource: removed
+- (*SplitConfigurationRule).SetFundingSource: changed from func(string) to func(SplitConfigurationRuleFundingSource)
+- (*SplitConfigurationRule).SetShopperInteraction: changed from func(string) to func(SplitConfigurationRuleShopperInteraction)
+- (*StarInfo).GetProcessingType: changed from func() string to func() AccelInfoProcessingType
+- (*StarInfo).GetProcessingTypeOk: changed from func() (*string, bool) to func() (*AccelInfoProcessingType, bool)
+- (*StarInfo).SetProcessingType: changed from func(string) to func(AccelInfoProcessingType)
+- (*Store).GetStatus: changed from func() string to func() StoreStatus
+- (*Store).GetStatusOk: changed from func() (*string, bool) to func() (*StoreStatus, bool)
+- (*Store).SetStatus: changed from func(string) to func(StoreStatus)
+- (*TerminalAssignment).GetStatus: changed from func() string to func() TerminalAssignmentStatus
+- (*TerminalAssignment).GetStatusOk: changed from func() (*string, bool) to func() (*TerminalAssignmentStatus, bool)
+- (*TerminalAssignment).SetStatus: changed from func(string) to func(TerminalAssignmentStatus)
+- (*TerminalConnectivityCellular).GetStatus: changed from func() string to func() TerminalConnectivityCellularStatus
+- (*TerminalConnectivityCellular).GetStatusOk: changed from func() (*string, bool) to func() (*TerminalConnectivityCellularStatus, bool)
+- (*TerminalConnectivityCellular).SetStatus: changed from func(string) to func(TerminalConnectivityCellularStatus)
+- (*TransactionDescriptionInfo).GetType: changed from func() string to func() TransactionDescriptionInfoType
+- (*TransactionDescriptionInfo).GetTypeOk: changed from func() (*string, bool) to func() (*TransactionDescriptionInfoType, bool)
+- (*TransactionDescriptionInfo).SetType: changed from func(string) to func(TransactionDescriptionInfoType)
+- (*UninstallAndroidAppDetails).GetType: changed from func() string to func() UninstallAndroidAppDetailsType
+- (*UninstallAndroidAppDetails).GetTypeOk: changed from func() (*string, bool) to func() (*UninstallAndroidAppDetailsType, bool)
+- (*UninstallAndroidAppDetails).SetType: changed from func(string) to func(UninstallAndroidAppDetailsType)
+- (*UninstallAndroidCertificateDetails).GetType: changed from func() string to func() UninstallAndroidCertificateDetailsType
+- (*UninstallAndroidCertificateDetails).GetTypeOk: changed from func() (*string, bool) to func() (*UninstallAndroidCertificateDetailsType, bool)
+- (*UninstallAndroidCertificateDetails).SetType: changed from func(string) to func(UninstallAndroidCertificateDetailsType)
+- (*UpdateCompanyWebhookRequest).GetCommunicationFormat: changed from func() string to func() UpdateCompanyWebhookRequestCommunicationFormat
+- (*UpdateCompanyWebhookRequest).GetCommunicationFormatOk: changed from func() (*string, bool) to func() (*UpdateCompanyWebhookRequestCommunicationFormat, bool)
+- (*UpdateCompanyWebhookRequest).GetEncryptionProtocol: changed from func() string to func() UpdateCompanyWebhookRequestEncryptionProtocol
+- (*UpdateCompanyWebhookRequest).GetEncryptionProtocolOk: changed from func() (*string, bool) to func() (*UpdateCompanyWebhookRequestEncryptionProtocol, bool)
+- (*UpdateCompanyWebhookRequest).GetFilterMerchantAccountType: changed from func() string to func() UpdateCompanyWebhookRequestFilterMerchantAccountType
+- (*UpdateCompanyWebhookRequest).GetFilterMerchantAccountTypeOk: changed from func() (*string, bool) to func() (*UpdateCompanyWebhookRequestFilterMerchantAccountType, bool)
+- (*UpdateCompanyWebhookRequest).GetNetworkType: changed from func() string to func() UpdateCompanyWebhookRequestNetworkType
+- (*UpdateCompanyWebhookRequest).GetNetworkTypeOk: changed from func() (*string, bool) to func() (*UpdateCompanyWebhookRequestNetworkType, bool)
+- (*UpdateCompanyWebhookRequest).SetCommunicationFormat: changed from func(string) to func(UpdateCompanyWebhookRequestCommunicationFormat)
+- (*UpdateCompanyWebhookRequest).SetEncryptionProtocol: changed from func(string) to func(UpdateCompanyWebhookRequestEncryptionProtocol)
+- (*UpdateCompanyWebhookRequest).SetFilterMerchantAccountType: changed from func(string) to func(UpdateCompanyWebhookRequestFilterMerchantAccountType)
+- (*UpdateCompanyWebhookRequest).SetNetworkType: changed from func(string) to func(UpdateCompanyWebhookRequestNetworkType)
+- (*UpdateMerchantWebhookRequest).GetCommunicationFormat: changed from func() string to func() UpdateMerchantWebhookRequestCommunicationFormat
+- (*UpdateMerchantWebhookRequest).GetCommunicationFormatOk: changed from func() (*string, bool) to func() (*UpdateMerchantWebhookRequestCommunicationFormat, bool)
+- (*UpdateMerchantWebhookRequest).GetEncryptionProtocol: changed from func() string to func() UpdateMerchantWebhookRequestEncryptionProtocol
+- (*UpdateMerchantWebhookRequest).GetEncryptionProtocolOk: changed from func() (*string, bool) to func() (*UpdateMerchantWebhookRequestEncryptionProtocol, bool)
+- (*UpdateMerchantWebhookRequest).GetNetworkType: changed from func() string to func() UpdateMerchantWebhookRequestNetworkType
+- (*UpdateMerchantWebhookRequest).GetNetworkTypeOk: changed from func() (*string, bool) to func() (*UpdateMerchantWebhookRequestNetworkType, bool)
+- (*UpdateMerchantWebhookRequest).SetCommunicationFormat: changed from func(string) to func(UpdateMerchantWebhookRequestCommunicationFormat)
+- (*UpdateMerchantWebhookRequest).SetEncryptionProtocol: changed from func(string) to func(UpdateMerchantWebhookRequestEncryptionProtocol)
+- (*UpdateMerchantWebhookRequest).SetNetworkType: changed from func(string) to func(UpdateMerchantWebhookRequestNetworkType)
 - (*UpdatePaymentMethodInfo).GetAccel: changed from func() AccelInfo to func() AccelUpdateInfo
 - (*UpdatePaymentMethodInfo).GetAccelOk: changed from func() (*AccelInfo, bool) to func() (*AccelUpdateInfo, bool)
 - (*UpdatePaymentMethodInfo).GetBcmc: changed from func() BcmcInfo to func() BcmcUpdateInfo
@@ -204,16 +381,113 @@ Incompatible changes:
 - (*UpdatePaymentMethodInfo).SetPulse: changed from func(PulseInfo) to func(PulseUpdateInfo)
 - (*UpdatePaymentMethodInfo).SetStar: changed from func(StarInfo) to func(StarUpdateInfo)
 - (*UpdatePaymentMethodInfo).SetVisa: changed from func(GenericPmWithTdiInfo) to func(GenericPmWithTdiUpdateInfo)
+- (*UpdateSplitConfigurationLogicRequest).GetAcquiringFees: changed from func() string to func() SplitConfigurationLogicAcquiringFees
+- (*UpdateSplitConfigurationLogicRequest).GetAcquiringFeesOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAcquiringFees, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetAdyenCommission: changed from func() string to func() SplitConfigurationLogicAdyenCommission
+- (*UpdateSplitConfigurationLogicRequest).GetAdyenCommissionOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAdyenCommission, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetAdyenFees: changed from func() string to func() SplitConfigurationLogicAdyenFees
+- (*UpdateSplitConfigurationLogicRequest).GetAdyenFeesOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAdyenFees, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetAdyenMarkup: changed from func() string to func() SplitConfigurationLogicAdyenMarkup
+- (*UpdateSplitConfigurationLogicRequest).GetAdyenMarkupOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicAdyenMarkup, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetChargeback: changed from func() string to func() SplitConfigurationLogicChargeback
+- (*UpdateSplitConfigurationLogicRequest).GetChargebackCostAllocation: changed from func() string to func() SplitConfigurationLogicChargebackCostAllocation
+- (*UpdateSplitConfigurationLogicRequest).GetChargebackCostAllocationOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicChargebackCostAllocation, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetChargebackOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicChargeback, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetInterchange: changed from func() string to func() SplitConfigurationLogicInterchange
+- (*UpdateSplitConfigurationLogicRequest).GetInterchangeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicInterchange, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetPaymentFee: changed from func() string to func() SplitConfigurationLogicPaymentFee
+- (*UpdateSplitConfigurationLogicRequest).GetPaymentFeeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicPaymentFee, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetRefund: changed from func() string to func() SplitConfigurationLogicRefund
+- (*UpdateSplitConfigurationLogicRequest).GetRefundCostAllocation: changed from func() string to func() SplitConfigurationLogicRefundCostAllocation
+- (*UpdateSplitConfigurationLogicRequest).GetRefundCostAllocationOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicRefundCostAllocation, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetRefundOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicRefund, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetRemainder: changed from func() string to func() SplitConfigurationLogicRemainder
+- (*UpdateSplitConfigurationLogicRequest).GetRemainderOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicRemainder, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetSchemeFee: changed from func() string to func() SplitConfigurationLogicSchemeFee
+- (*UpdateSplitConfigurationLogicRequest).GetSchemeFeeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicSchemeFee, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetSurcharge: changed from func() string to func() SplitConfigurationLogicSurcharge
+- (*UpdateSplitConfigurationLogicRequest).GetSurchargeOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicSurcharge, bool)
+- (*UpdateSplitConfigurationLogicRequest).GetTip: changed from func() string to func() SplitConfigurationLogicTip
+- (*UpdateSplitConfigurationLogicRequest).GetTipOk: changed from func() (*string, bool) to func() (*SplitConfigurationLogicTip, bool)
+- (*UpdateSplitConfigurationLogicRequest).SetAcquiringFees: changed from func(string) to func(SplitConfigurationLogicAcquiringFees)
+- (*UpdateSplitConfigurationLogicRequest).SetAdyenCommission: changed from func(string) to func(SplitConfigurationLogicAdyenCommission)
+- (*UpdateSplitConfigurationLogicRequest).SetAdyenFees: changed from func(string) to func(SplitConfigurationLogicAdyenFees)
+- (*UpdateSplitConfigurationLogicRequest).SetAdyenMarkup: changed from func(string) to func(SplitConfigurationLogicAdyenMarkup)
+- (*UpdateSplitConfigurationLogicRequest).SetChargeback: changed from func(string) to func(SplitConfigurationLogicChargeback)
+- (*UpdateSplitConfigurationLogicRequest).SetChargebackCostAllocation: changed from func(string) to func(SplitConfigurationLogicChargebackCostAllocation)
+- (*UpdateSplitConfigurationLogicRequest).SetInterchange: changed from func(string) to func(SplitConfigurationLogicInterchange)
+- (*UpdateSplitConfigurationLogicRequest).SetPaymentFee: changed from func(string) to func(SplitConfigurationLogicPaymentFee)
+- (*UpdateSplitConfigurationLogicRequest).SetRefund: changed from func(string) to func(SplitConfigurationLogicRefund)
+- (*UpdateSplitConfigurationLogicRequest).SetRefundCostAllocation: changed from func(string) to func(SplitConfigurationLogicRefundCostAllocation)
+- (*UpdateSplitConfigurationLogicRequest).SetRemainder: changed from func(string) to func(SplitConfigurationLogicRemainder)
+- (*UpdateSplitConfigurationLogicRequest).SetSchemeFee: changed from func(string) to func(SplitConfigurationLogicSchemeFee)
+- (*UpdateSplitConfigurationLogicRequest).SetSurcharge: changed from func(string) to func(SplitConfigurationLogicSurcharge)
+- (*UpdateSplitConfigurationLogicRequest).SetTip: changed from func(string) to func(SplitConfigurationLogicTip)
 - (*UpdateSplitConfigurationRuleRequest).HasFundingSource: removed
-- AccelInfo.ProcessingType: changed from string to *string
+- (*UpdateStoreRequest).GetStatus: changed from func() string to func() UpdateStoreRequestStatus
+- (*UpdateStoreRequest).GetStatusOk: changed from func() (*string, bool) to func() (*UpdateStoreRequestStatus, bool)
+- (*UpdateStoreRequest).SetStatus: changed from func(string) to func(UpdateStoreRequestStatus)
+- (*Webhook).GetCommunicationFormat: changed from func() string to func() WebhookCommunicationFormat
+- (*Webhook).GetCommunicationFormatOk: changed from func() (*string, bool) to func() (*WebhookCommunicationFormat, bool)
+- (*Webhook).GetEncryptionProtocol: changed from func() string to func() WebhookEncryptionProtocol
+- (*Webhook).GetEncryptionProtocolOk: changed from func() (*string, bool) to func() (*WebhookEncryptionProtocol, bool)
+- (*Webhook).GetFilterMerchantAccountType: changed from func() string to func() WebhookFilterMerchantAccountType
+- (*Webhook).GetFilterMerchantAccountTypeOk: changed from func() (*string, bool) to func() (*WebhookFilterMerchantAccountType, bool)
+- (*Webhook).GetNetworkType: changed from func() string to func() WebhookNetworkType
+- (*Webhook).GetNetworkTypeOk: changed from func() (*string, bool) to func() (*WebhookNetworkType, bool)
+- (*Webhook).SetCommunicationFormat: changed from func(string) to func(WebhookCommunicationFormat)
+- (*Webhook).SetEncryptionProtocol: changed from func(string) to func(WebhookEncryptionProtocol)
+- (*Webhook).SetFilterMerchantAccountType: changed from func(string) to func(WebhookFilterMerchantAccountType)
+- (*Webhook).SetNetworkType: changed from func(string) to func(WebhookNetworkType)
+- APICredentialsCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- APICredentialsMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- APIKeyCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- APIKeyMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- AccelInfo.ProcessingType: changed from string to *AccelInfoProcessingType
+- AccountCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- AccountMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- AccountStoreLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- AllowedOriginsCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- AllowedOriginsMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- AmexInfo.ServiceLevel: changed from string to AmexInfoServiceLevel
+- AndroidApp.Status: changed from string to AndroidAppStatus
+- AndroidFilesCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- ClientKeyCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- ClientKeyMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- Connectivity.SimcardStatus: changed from *string to *ConnectivitySimcardStatus
+- CreateCompanyWebhookRequest.CommunicationFormat: changed from string to CreateCompanyWebhookRequestCommunicationFormat
+- CreateCompanyWebhookRequest.EncryptionProtocol: changed from *string to *CreateCompanyWebhookRequestEncryptionProtocol
+- CreateCompanyWebhookRequest.FilterMerchantAccountType: changed from string to CreateCompanyWebhookRequestFilterMerchantAccountType
+- CreateCompanyWebhookRequest.NetworkType: changed from *string to *CreateCompanyWebhookRequestNetworkType
+- CreateMerchantWebhookRequest.CommunicationFormat: changed from string to CreateMerchantWebhookRequestCommunicationFormat
+- CreateMerchantWebhookRequest.EncryptionProtocol: changed from *string to *CreateMerchantWebhookRequestEncryptionProtocol
+- CreateMerchantWebhookRequest.NetworkType: changed from *string to *CreateMerchantWebhookRequestNetworkType
+- DinersInfo.ServiceLevel: changed from *string to *DinersInfoServiceLevel
+- InstallAndroidAppDetails.Type: changed from *string to *InstallAndroidAppDetailsType
+- InstallAndroidCertificateDetails.Type: changed from *string to *InstallAndroidCertificateDetailsType
+- JCBInfo.ServiceLevel: changed from *string to *JCBInfoServiceLevel
+- KlarnaInfo.Region: changed from string to KlarnaInfoRegion
+- MyAPICredentialApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- NewAPIClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Client) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Client) *APIClient
 - NewAccelInfo: changed from func(string) *AccelInfo to func() *AccelInfo
+- NewAmexInfo: changed from func(string) *AmexInfo to func(AmexInfoServiceLevel) *AmexInfo
+- NewAndroidApp: changed from func(string, string) *AndroidApp to func(string, AndroidAppStatus) *AndroidApp
+- NewCreateCompanyWebhookRequest: changed from func(bool, string, string, []string, string, string) *CreateCompanyWebhookRequest to func(bool, CreateCompanyWebhookRequestCommunicationFormat, CreateCompanyWebhookRequestFilterMerchantAccountType, []string, string, string) *CreateCompanyWebhookRequest
+- NewCreateMerchantWebhookRequest: changed from func(bool, string, string, string) *CreateMerchantWebhookRequest to func(bool, CreateMerchantWebhookRequestCommunicationFormat, string, string) *CreateMerchantWebhookRequest
+- NewKlarnaInfo: changed from func(string, string, string) *KlarnaInfo to func(string, KlarnaInfoRegion, string) *KlarnaInfo
 - NewNyceInfo: changed from func(string) *NyceInfo to func() *NyceInfo
+- NewPaymentMethodSetupInfo: changed from func(string) *PaymentMethodSetupInfo to func(PaymentMethodSetupInfoType) *PaymentMethodSetupInfo
 - NewPulseInfo: changed from func(string) *PulseInfo to func() *PulseInfo
-- NewSplitConfigurationRule: changed from func(string, string, string, SplitConfigurationLogic) *SplitConfigurationRule to func(string, string, string, string, SplitConfigurationLogic) *SplitConfigurationRule
+- NewSplitConfigurationRule: changed from func(string, string, string, SplitConfigurationLogic) *SplitConfigurationRule to func(string, SplitConfigurationRuleFundingSource, string, SplitConfigurationRuleShopperInteraction, SplitConfigurationLogic) *SplitConfigurationRule
 - NewStarInfo: changed from func(string) *StarInfo to func() *StarInfo
+- NewTerminalAssignment: changed from func(string, string) *TerminalAssignment to func(string, TerminalAssignmentStatus) *TerminalAssignment
 - NewUpdateSplitConfigurationRuleRequest: changed from func(string, string, string) *UpdateSplitConfigurationRuleRequest to func(string, string, string, string) *UpdateSplitConfigurationRuleRequest
-- NyceInfo.ProcessingType: changed from string to *string
+- NewWebhook: changed from func(bool, string, string, string) *Webhook to func(bool, WebhookCommunicationFormat, string, string) *Webhook
+- Notification.Category: changed from *string to *NotificationCategory
+- NyceInfo.ProcessingType: changed from string to *AccelInfoProcessingType
 - OfflineProcessing.OfflineSwipeLimits: removed
+- PayAtTable.AuthenticationMethod: changed from *string to *PayAtTableAuthenticationMethod
+- PayAtTable.PaymentInstrument: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableString to NullablePayAtTablePaymentInstrument
 - PayByBankPlaidInfo.CountryCode: removed
 - PayByBankPlaidInfo.MerchantCity: removed
 - PayByBankPlaidInfo.MerchantLegalName: removed
@@ -255,15 +529,63 @@ Incompatible changes:
 - PaymentMethod.Swish: changed from *SwishInfo to *SwishResponseInfo
 - PaymentMethod.Ticket: changed from *TicketInfo to *TicketResponseInfo
 - PaymentMethod.Twint: changed from *TwintInfo to *TwintResponseInfo
+- PaymentMethod.VerificationStatus: changed from *string to *PaymentMethodVerificationStatus
 - PaymentMethod.Vipps: changed from *VippsInfo to *VippsResponseInfo
 - PaymentMethod.Visa: changed from *GenericPmWithTdiInfo to *VisaResponseInfo
 - PaymentMethod.Wechatpay: changed from *WeChatPayInfo to *WeChatPayResponseInfo
 - PaymentMethod.WechatpayPos: changed from *WeChatPayPosInfo to *WeChatPayPosResponseInfo
-- PulseInfo.ProcessingType: changed from string to *string
-- SplitConfigurationRule.FundingSource: changed from *string to string
-- StarInfo.ProcessingType: changed from string to *string
+- PaymentMethodResponse.TypesWithErrors: changed from []string to []PaymentMethodResponseTypesWithErrors
+- PaymentMethodSetupInfo.ShopperInteraction: changed from *string to *PaymentMethodSetupInfoShopperInteraction
+- PaymentMethodSetupInfo.Type: changed from string to PaymentMethodSetupInfoType
+- PaymentMethodsMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PayoutSettings.Priority: changed from *string to *PayoutSettingsPriority
+- PayoutSettings.VerificationStatus: changed from *string to *PayoutSettingsVerificationStatus
+- PayoutSettingsMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PulseInfo.ProcessingType: changed from string to *AccelInfoProcessingType
+- ReleaseUpdateDetails.Type: changed from *string to *ReleaseUpdateDetailsType
+- ScheduleTerminalActionsResponse.ActionDetails: changed from *ScheduleTerminalActionsRequestActionDetails to *ScheduleTerminalActionsResponseActionDetails
+- SplitConfigurationLogic.AcquiringFees: changed from *string to *SplitConfigurationLogicAcquiringFees
+- SplitConfigurationLogic.AdyenCommission: changed from *string to *SplitConfigurationLogicAdyenCommission
+- SplitConfigurationLogic.AdyenFees: changed from *string to *SplitConfigurationLogicAdyenFees
+- SplitConfigurationLogic.AdyenMarkup: changed from *string to *SplitConfigurationLogicAdyenMarkup
+- SplitConfigurationLogic.Chargeback: changed from *string to *SplitConfigurationLogicChargeback
+- SplitConfigurationLogic.ChargebackCostAllocation: changed from *string to *SplitConfigurationLogicChargebackCostAllocation
+- SplitConfigurationLogic.Interchange: changed from *string to *SplitConfigurationLogicInterchange
+- SplitConfigurationLogic.PaymentFee: changed from *string to *SplitConfigurationLogicPaymentFee
+- SplitConfigurationLogic.Refund: changed from *string to *SplitConfigurationLogicRefund
+- SplitConfigurationLogic.RefundCostAllocation: changed from *string to *SplitConfigurationLogicRefundCostAllocation
+- SplitConfigurationLogic.Remainder: changed from *string to *SplitConfigurationLogicRemainder
+- SplitConfigurationLogic.SchemeFee: changed from *string to *SplitConfigurationLogicSchemeFee
+- SplitConfigurationLogic.Surcharge: changed from *string to *SplitConfigurationLogicSurcharge
+- SplitConfigurationLogic.Tip: changed from *string to *SplitConfigurationLogicTip
+- SplitConfigurationMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- SplitConfigurationRule.FundingSource: changed from *string to SplitConfigurationRuleFundingSource
+- SplitConfigurationRule.ShopperInteraction: changed from string to SplitConfigurationRuleShopperInteraction
+- StarInfo.ProcessingType: changed from string to *AccelInfoProcessingType
+- Store.Status: changed from *string to *StoreStatus
 - Terminal: old is comparable, new is not
-- TerminalSettings.Gratuities: changed from []Gratuity to github.com/adyen/adyen-go-api-library/v21/src/common.NullableSlice[Gratuity]
+- TerminalActionsCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalActionsTerminalLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalAssignment.Status: changed from string to TerminalAssignmentStatus
+- TerminalConnectivityCellular.Status: changed from *string to *TerminalConnectivityCellularStatus
+- TerminalOrdersCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalOrdersMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalSettings.Gratuities: changed from []Gratuity to github.com/adyen/adyen-go-api-library/v21/common.NullableSlice[Gratuity]
+- TerminalSettingsCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalSettingsMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalSettingsStoreLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalSettingsTerminalLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TerminalsTerminalLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TransactionDescriptionInfo.Type: changed from *string to *TransactionDescriptionInfoType
+- UninstallAndroidAppDetails.Type: changed from *string to *UninstallAndroidAppDetailsType
+- UninstallAndroidCertificateDetails.Type: changed from *string to *UninstallAndroidCertificateDetailsType
+- UpdateCompanyWebhookRequest.CommunicationFormat: changed from *string to *UpdateCompanyWebhookRequestCommunicationFormat
+- UpdateCompanyWebhookRequest.EncryptionProtocol: changed from *string to *UpdateCompanyWebhookRequestEncryptionProtocol
+- UpdateCompanyWebhookRequest.FilterMerchantAccountType: changed from *string to *UpdateCompanyWebhookRequestFilterMerchantAccountType
+- UpdateCompanyWebhookRequest.NetworkType: changed from *string to *UpdateCompanyWebhookRequestNetworkType
+- UpdateMerchantWebhookRequest.CommunicationFormat: changed from *string to *UpdateMerchantWebhookRequestCommunicationFormat
+- UpdateMerchantWebhookRequest.EncryptionProtocol: changed from *string to *UpdateMerchantWebhookRequestEncryptionProtocol
+- UpdateMerchantWebhookRequest.NetworkType: changed from *string to *UpdateMerchantWebhookRequestNetworkType
 - UpdatePaymentMethodInfo.Accel: changed from *AccelInfo to *AccelUpdateInfo
 - UpdatePaymentMethodInfo.Bcmc: changed from *BcmcInfo to *BcmcUpdateInfo
 - UpdatePaymentMethodInfo.CartesBancaires: changed from *CartesBancairesInfo to *CartesBancairesUpdateInfo
@@ -283,7 +605,30 @@ Incompatible changes:
 - UpdatePaymentMethodInfo.Pulse: changed from *PulseInfo to *PulseUpdateInfo
 - UpdatePaymentMethodInfo.Star: changed from *StarInfo to *StarUpdateInfo
 - UpdatePaymentMethodInfo.Visa: changed from *GenericPmWithTdiInfo to *GenericPmWithTdiUpdateInfo
+- UpdateSplitConfigurationLogicRequest.AcquiringFees: changed from *string to *SplitConfigurationLogicAcquiringFees
+- UpdateSplitConfigurationLogicRequest.AdyenCommission: changed from *string to *SplitConfigurationLogicAdyenCommission
+- UpdateSplitConfigurationLogicRequest.AdyenFees: changed from *string to *SplitConfigurationLogicAdyenFees
+- UpdateSplitConfigurationLogicRequest.AdyenMarkup: changed from *string to *SplitConfigurationLogicAdyenMarkup
+- UpdateSplitConfigurationLogicRequest.Chargeback: changed from *string to *SplitConfigurationLogicChargeback
+- UpdateSplitConfigurationLogicRequest.ChargebackCostAllocation: changed from *string to *SplitConfigurationLogicChargebackCostAllocation
+- UpdateSplitConfigurationLogicRequest.Interchange: changed from *string to *SplitConfigurationLogicInterchange
+- UpdateSplitConfigurationLogicRequest.PaymentFee: changed from *string to *SplitConfigurationLogicPaymentFee
+- UpdateSplitConfigurationLogicRequest.Refund: changed from *string to *SplitConfigurationLogicRefund
+- UpdateSplitConfigurationLogicRequest.RefundCostAllocation: changed from *string to *SplitConfigurationLogicRefundCostAllocation
+- UpdateSplitConfigurationLogicRequest.Remainder: changed from *string to *SplitConfigurationLogicRemainder
+- UpdateSplitConfigurationLogicRequest.SchemeFee: changed from *string to *SplitConfigurationLogicSchemeFee
+- UpdateSplitConfigurationLogicRequest.Surcharge: changed from *string to *SplitConfigurationLogicSurcharge
+- UpdateSplitConfigurationLogicRequest.Tip: changed from *string to *SplitConfigurationLogicTip
 - UpdateSplitConfigurationRuleRequest.FundingSource: changed from *string to string
+- UpdateStoreRequest.Status: changed from *string to *UpdateStoreRequestStatus
+- UsersCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- UsersMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- Webhook.CommunicationFormat: changed from string to WebhookCommunicationFormat
+- Webhook.EncryptionProtocol: changed from *string to *WebhookEncryptionProtocol
+- Webhook.FilterMerchantAccountType: changed from *string to *WebhookFilterMerchantAccountType
+- Webhook.NetworkType: changed from *string to *WebhookNetworkType
+- WebhooksCompanyLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- WebhooksMerchantLevelApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
 Compatible changes:
 - (*AccelInfo).HasProcessingType: added
 - (*AffirmInfo).GetPricePlan: added
@@ -577,34 +922,137 @@ Compatible changes:
 - APIClient.TerminalThemesMerchantLevelApi: added
 - APIClient.TerminalThemesStoreLevelApi: added
 - APIClient.TerminalThemesTerminalLevelApi: added
+- AccelInfoProcessingType: added
 - AccelInfoProcessingTypeBillpay: added
 - AccelInfoProcessingTypeEcom: added
 - AccelInfoProcessingTypePos: added
 - AccelResponseInfo: added
+- AccelResponseInfoNetworkProcessingMode: added
 - AccelResponseInfoNetworkProcessingModeAuth: added
 - AccelResponseInfoNetworkProcessingModeSale: added
+- AccelResponseInfoProcessingType: added
 - AccelResponseInfoProcessingTypeBillpay: added
 - AccelResponseInfoProcessingTypeEcom: added
 - AccelResponseInfoProcessingTypePos: added
 - AccelUpdateInfo: added
+- AddTerminalThemeAssetForCompanyModelParameter: added
+- AddTerminalThemeAssetForCompanyModelParameterAMS1: added
+- AddTerminalThemeAssetForCompanyModelParameterAll: added
+- AddTerminalThemeAssetForCompanyModelParameterLDN1: added
+- AddTerminalThemeAssetForCompanyModelParameterM450: added
+- AddTerminalThemeAssetForCompanyModelParameterP630: added
+- AddTerminalThemeAssetForCompanyModelParameterS1E2L: added
+- AddTerminalThemeAssetForCompanyModelParameterS1E4Pro: added
+- AddTerminalThemeAssetForCompanyModelParameterS1F2: added
+- AddTerminalThemeAssetForCompanyModelParameterS1F2L: added
+- AddTerminalThemeAssetForCompanyModelParameterS1F4Pro: added
+- AddTerminalThemeAssetForCompanyModelParameterS1U2: added
+- AddTerminalThemeAssetForCompanyModelParameterS1U2M4: added
+- AddTerminalThemeAssetForCompanyModelParameterSFO1: added
+- AddTerminalThemeAssetForCompanyTypeParameter: added
+- AddTerminalThemeAssetForCompanyTypeParameterAfterPaymentScreen: added
+- AddTerminalThemeAssetForCompanyTypeParameterHomeScreen: added
+- AddTerminalThemeAssetForCompanyTypeParameterIdleScreen: added
+- AddTerminalThemeAssetForCompanyTypeParameterLogo: added
+- AddTerminalThemeAssetForCompanyTypeParameterShopperEngagementScreen: added
 - AffirmInfo.PricePlan: added
 - AffirmResponseInfo: added
 - AffirmUpdateInfo: added
 - AfterpayTouchResponseInfo: added
 - AlipayPlusInfo: added
 - AlipayPlusResponseInfo: added
+- AllowedAccelInfoProcessingTypeEnumValues: added
+- AllowedAccelResponseInfoNetworkProcessingModeEnumValues: added
+- AllowedAccelResponseInfoProcessingTypeEnumValues: added
+- AllowedAddTerminalThemeAssetForCompanyModelParameterEnumValues: added
+- AllowedAddTerminalThemeAssetForCompanyTypeParameterEnumValues: added
+- AllowedAmexInfoServiceLevelEnumValues: added
+- AllowedAndroidAppStatusEnumValues: added
 - AllowedCampaignStatusTransitionEnumValues: added
+- AllowedConnectivitySimcardStatusEnumValues: added
+- AllowedCreateCompanyWebhookRequestCommunicationFormatEnumValues: added
+- AllowedCreateCompanyWebhookRequestEncryptionProtocolEnumValues: added
+- AllowedCreateCompanyWebhookRequestFilterMerchantAccountTypeEnumValues: added
+- AllowedCreateCompanyWebhookRequestNetworkTypeEnumValues: added
+- AllowedCreateMerchantWebhookRequestCommunicationFormatEnumValues: added
+- AllowedCreateMerchantWebhookRequestEncryptionProtocolEnumValues: added
+- AllowedCreateMerchantWebhookRequestNetworkTypeEnumValues: added
+- AllowedDeleteTerminalThemeAssetForCompanyModelParameterEnumValues: added
+- AllowedDeleteTerminalThemeAssetForCompanyTypeParameterEnumValues: added
+- AllowedDeleteTerminalThemeAssetForMerchantTypeParameterEnumValues: added
+- AllowedDinersInfoServiceLevelEnumValues: added
 - AllowedDisplayTextFieldEnumValues: added
 - AllowedDonationCampaignStatusEnumValues: added
 - AllowedDonationFlowEnumValues: added
 - AllowedDonationTypeEnumValues: added
+- AllowedEditTerminalThemeAssetForMerchantTypeParameterEnumValues: added
+- AllowedForceRebootDetailsTypeEnumValues: added
+- AllowedGivexInfoPaymentFlowEnumValues: added
+- AllowedInstallAndroidAppDetailsTypeEnumValues: added
+- AllowedInstallAndroidCertificateDetailsTypeEnumValues: added
+- AllowedJCBInfoServiceLevelEnumValues: added
+- AllowedJapaneseLocalizedAddressScriptEnumValues: added
+- AllowedKlarnaInfoRegionEnumValues: added
+- AllowedKlarnaResponseInfoRegionEnumValues: added
+- AllowedNotificationCategoryEnumValues: added
+- AllowedPayAtTableAuthenticationMethodEnumValues: added
+- AllowedPayAtTablePaymentInstrumentEnumValues: added
+- AllowedPaymentMethodResponseTypesWithErrorsEnumValues: added
+- AllowedPaymentMethodSetupInfoShopperInteractionEnumValues: added
+- AllowedPaymentMethodSetupInfoTypeEnumValues: added
+- AllowedPaymentMethodVerificationStatusEnumValues: added
+- AllowedPayoutSettingsPriorityEnumValues: added
+- AllowedPayoutSettingsVerificationStatusEnumValues: added
+- AllowedReleaseUpdateDetailsTypeEnumValues: added
+- AllowedSplitConfigurationLogicAcquiringFeesEnumValues: added
+- AllowedSplitConfigurationLogicAdyenCommissionEnumValues: added
+- AllowedSplitConfigurationLogicAdyenFeesEnumValues: added
+- AllowedSplitConfigurationLogicAdyenMarkupEnumValues: added
+- AllowedSplitConfigurationLogicChargebackCostAllocationEnumValues: added
+- AllowedSplitConfigurationLogicChargebackEnumValues: added
+- AllowedSplitConfigurationLogicInterchangeEnumValues: added
+- AllowedSplitConfigurationLogicPaymentFeeEnumValues: added
+- AllowedSplitConfigurationLogicRefundCostAllocationEnumValues: added
+- AllowedSplitConfigurationLogicRefundEnumValues: added
+- AllowedSplitConfigurationLogicRemainderEnumValues: added
+- AllowedSplitConfigurationLogicSchemeFeeEnumValues: added
+- AllowedSplitConfigurationLogicSurchargeEnumValues: added
+- AllowedSplitConfigurationLogicTipEnumValues: added
+- AllowedSplitConfigurationRuleCardRegionEnumValues: added
+- AllowedSplitConfigurationRuleCardUsageTypeEnumValues: added
+- AllowedSplitConfigurationRuleFundingSourceEnumValues: added
+- AllowedSplitConfigurationRuleShopperInteractionEnumValues: added
+- AllowedStoreStatusEnumValues: added
+- AllowedTerminalAssignmentStatusEnumValues: added
+- AllowedTerminalConnectivityCellularStatusEnumValues: added
 - AllowedThemeModeEnumValues: added
+- AllowedThemeUpdateRequestModeEnumValues: added
+- AllowedTransactionDescriptionInfoTypeEnumValues: added
+- AllowedUninstallAndroidAppDetailsTypeEnumValues: added
+- AllowedUninstallAndroidCertificateDetailsTypeEnumValues: added
+- AllowedUpdateCompanyWebhookRequestCommunicationFormatEnumValues: added
+- AllowedUpdateCompanyWebhookRequestEncryptionProtocolEnumValues: added
+- AllowedUpdateCompanyWebhookRequestFilterMerchantAccountTypeEnumValues: added
+- AllowedUpdateCompanyWebhookRequestNetworkTypeEnumValues: added
+- AllowedUpdateMerchantWebhookRequestCommunicationFormatEnumValues: added
+- AllowedUpdateMerchantWebhookRequestEncryptionProtocolEnumValues: added
+- AllowedUpdateMerchantWebhookRequestNetworkTypeEnumValues: added
+- AllowedUpdateSplitConfigurationRuleRequestCardUsageTypeEnumValues: added
+- AllowedUpdateStoreRequestStatusEnumValues: added
+- AllowedValuelinkInfoPinSupportEnumValues: added
+- AllowedValuelinkResponseInfoPinSupportEnumValues: added
+- AllowedWebhookCommunicationFormatEnumValues: added
+- AllowedWebhookEncryptionProtocolEnumValues: added
+- AllowedWebhookFilterMerchantAccountTypeEnumValues: added
+- AllowedWebhookNetworkTypeEnumValues: added
+- AmexInfoServiceLevel: added
 - AmexInfoServiceLevelGatewayContract: added
 - AmexInfoServiceLevelNoContract: added
 - AmexInfoServiceLevelPaymentDesignatorContract: added
 - AmexResponseInfo: added
 - AncvInfo: added
 - AncvResponseInfo: added
+- AndroidAppStatus: added
 - AndroidAppStatusArchived: added
 - AndroidAppStatusError: added
 - AndroidAppStatusInvalid: added
@@ -618,9 +1066,9 @@ Compatible changes:
 - BoncardInfo: added
 - BoncardResponseInfo: added
 - BoncardUpdateInfo: added
-- CAMPAIGNSTATUSTRANSITION_ACTIVATE: added
-- CAMPAIGNSTATUSTRANSITION_END: added
 - CampaignStatusTransition: added
+- CampaignStatusTransitionActivate: added
+- CampaignStatusTransitionEnd: added
 - CarnetInfo: added
 - CarnetResponseInfo: added
 - CartesBancairesResponseInfo: added
@@ -634,55 +1082,85 @@ Compatible changes:
 - ClientCertificatesCompanyLevelApiGenerateClientCertificateInput: added
 - ClientCertificatesCompanyLevelApiListClientCertificatesInput: added
 - CompanyApiCredential.SubjectDN: added
+- ConnectivitySimcardStatus: added
 - ConnectivitySimcardStatusACTIVATED: added
 - ConnectivitySimcardStatusINVENTORY: added
 - CreateApiCredentialResponse.SubjectDN: added
 - CreateCompanyApiCredentialResponse.SubjectDN: added
+- CreateCompanyWebhookRequestCommunicationFormat: added
 - CreateCompanyWebhookRequestCommunicationFormatHttp: added
 - CreateCompanyWebhookRequestCommunicationFormatJson: added
 - CreateCompanyWebhookRequestCommunicationFormatSoap: added
+- CreateCompanyWebhookRequestEncryptionProtocol: added
 - CreateCompanyWebhookRequestEncryptionProtocolHTTP: added
 - CreateCompanyWebhookRequestEncryptionProtocolTLSv12: added
 - CreateCompanyWebhookRequestEncryptionProtocolTLSv13: added
+- CreateCompanyWebhookRequestFilterMerchantAccountType: added
 - CreateCompanyWebhookRequestFilterMerchantAccountTypeAllAccounts: added
 - CreateCompanyWebhookRequestFilterMerchantAccountTypeExcludeAccounts: added
 - CreateCompanyWebhookRequestFilterMerchantAccountTypeIncludeAccounts: added
+- CreateCompanyWebhookRequestNetworkType: added
 - CreateCompanyWebhookRequestNetworkTypeLocal: added
 - CreateCompanyWebhookRequestNetworkTypePublic: added
+- CreateMerchantWebhookRequestCommunicationFormat: added
 - CreateMerchantWebhookRequestCommunicationFormatHttp: added
 - CreateMerchantWebhookRequestCommunicationFormatJson: added
 - CreateMerchantWebhookRequestCommunicationFormatSoap: added
+- CreateMerchantWebhookRequestEncryptionProtocol: added
 - CreateMerchantWebhookRequestEncryptionProtocolHTTP: added
 - CreateMerchantWebhookRequestEncryptionProtocolTLSv12: added
 - CreateMerchantWebhookRequestEncryptionProtocolTLSv13: added
+- CreateMerchantWebhookRequestNetworkType: added
 - CreateMerchantWebhookRequestNetworkTypeLocal: added
 - CreateMerchantWebhookRequestNetworkTypePublic: added
 - CreateThemeRequest: added
 - CreateThemeResponse: added
 - CupResponseInfo: added
-- DISPLAYTEXTFIELD_CAUSE_NAME: added
-- DISPLAYTEXTFIELD_NONPROFIT_NAME: added
-- DONATIONCAMPAIGNSTATUS_ACTIVE: added
-- DONATIONCAMPAIGNSTATUS_ENDED: added
-- DONATIONCAMPAIGNSTATUS_INACTIVE: added
-- DONATIONFLOW_ONE_STEP: added
-- DONATIONFLOW_TWO_STEP: added
-- DONATIONTYPE_FIXED_AMOUNTS: added
-- DONATIONTYPE_FIXED_AMOUNTS_ROUNDUP: added
-- DONATIONTYPE_ROUNDUP: added
 - Dcc: added
 - DefaultErrorResponseEntity: added
+- DeleteTerminalThemeAssetForCompanyModelParameter: added
+- DeleteTerminalThemeAssetForCompanyModelParameterAMS1: added
+- DeleteTerminalThemeAssetForCompanyModelParameterAll: added
+- DeleteTerminalThemeAssetForCompanyModelParameterLDN1: added
+- DeleteTerminalThemeAssetForCompanyModelParameterM450: added
+- DeleteTerminalThemeAssetForCompanyModelParameterP630: added
+- DeleteTerminalThemeAssetForCompanyModelParameterS1E2L: added
+- DeleteTerminalThemeAssetForCompanyModelParameterS1E4Pro: added
+- DeleteTerminalThemeAssetForCompanyModelParameterS1F2: added
+- DeleteTerminalThemeAssetForCompanyModelParameterS1F2L: added
+- DeleteTerminalThemeAssetForCompanyModelParameterS1F4Pro: added
+- DeleteTerminalThemeAssetForCompanyModelParameterS1U2: added
+- DeleteTerminalThemeAssetForCompanyModelParameterS1U2M4: added
+- DeleteTerminalThemeAssetForCompanyModelParameterSFO1: added
+- DeleteTerminalThemeAssetForCompanyTypeParameter: added
+- DeleteTerminalThemeAssetForCompanyTypeParameterAfterPaymentScreen: added
+- DeleteTerminalThemeAssetForCompanyTypeParameterHomeScreen: added
+- DeleteTerminalThemeAssetForCompanyTypeParameterIdleScreen: added
+- DeleteTerminalThemeAssetForCompanyTypeParameterLogo: added
+- DeleteTerminalThemeAssetForCompanyTypeParameterShopperEngagementScreen: added
+- DeleteTerminalThemeAssetForMerchantTypeParameter: added
+- DeleteTerminalThemeAssetForMerchantTypeParameterAfterPaymentScreen: added
+- DeleteTerminalThemeAssetForMerchantTypeParameterHomeScreen: added
+- DeleteTerminalThemeAssetForMerchantTypeParameterIdleScreen: added
+- DeleteTerminalThemeAssetForMerchantTypeParameterLogo: added
+- DeleteTerminalThemeAssetForMerchantTypeParameterShopperEngagementScreen: added
+- DinersInfoServiceLevel: added
 - DinersInfoServiceLevelGatewayContract: added
 - DinersInfoServiceLevelNoContract: added
 - DinersResponseInfo: added
 - DiscoverResponseInfo: added
 - DisplayTextField: added
+- DisplayTextFieldCauseName: added
+- DisplayTextFieldNonprofitName: added
 - DonationAmount: added
 - DonationAmountUpdate: added
 - DonationCampaign: added
 - DonationCampaignNonprofitCause: added
 - DonationCampaignRequest: added
 - DonationCampaignStatus: added
+- DonationCampaignStatusActive: added
+- DonationCampaignStatusEnded: added
+- DonationCampaignStatusInactive: added
 - DonationCampaignUpdate: added
 - DonationCampaignsApi: added
 - DonationCampaignsApiCreateDonationCampaignInput: added
@@ -692,18 +1170,32 @@ Compatible changes:
 - DonationCampaignsApiUpdateDonationCampaignInput: added
 - DonationCampaignsApiUpdateDonationCampaignStatusInput: added
 - DonationFlow: added
+- DonationFlowOneStep: added
+- DonationFlowTwoStep: added
 - DonationType: added
+- DonationTypeFixedAmounts: added
+- DonationTypeFixedAmountsRoundup: added
+- DonationTypeRoundup: added
 - EFTDirectDebitCAResponseInfo: added
 - EbtInfo: added
 - EbtResponseInfo: added
 - EbtUpdateInfo: added
+- EditTerminalThemeAssetForMerchantTypeParameter: added
+- EditTerminalThemeAssetForMerchantTypeParameterAfterPaymentScreen: added
+- EditTerminalThemeAssetForMerchantTypeParameterHomeScreen: added
+- EditTerminalThemeAssetForMerchantTypeParameterIdleScreen: added
+- EditTerminalThemeAssetForMerchantTypeParameterLogo: added
+- EditTerminalThemeAssetForMerchantTypeParameterShopperEngagementScreen: added
 - EftPosAustraliaResponseInfo: added
 - ForceRebootDetails: added
 - ForceRebootDetailsAsScheduleTerminalActionsRequestActionDetails: added
+- ForceRebootDetailsAsScheduleTerminalActionsResponseActionDetails: added
+- ForceRebootDetailsType: added
 - ForceRebootDetailsTypeForceReboot: added
 - GenericPmWithTdiUpdateInfo: added
 - GirocardResponseInfo: added
 - GivexInfo: added
+- GivexInfoPaymentFlow: added
 - GivexInfoPaymentFlowEcommerce: added
 - GivexInfoPaymentFlowPOS: added
 - GivexResponseInfo: added
@@ -713,10 +1205,15 @@ Compatible changes:
 - InPersonDonationSettings: added
 - InPersonDonationSettingsResponse: added
 - InPersonDonationSettingsUpdate: added
+- InstallAndroidAppDetailsAsScheduleTerminalActionsResponseActionDetails: added
+- InstallAndroidAppDetailsType: added
 - InstallAndroidAppDetailsTypeInstallAndroidApp: added
+- InstallAndroidCertificateDetailsAsScheduleTerminalActionsResponseActionDetails: added
+- InstallAndroidCertificateDetailsType: added
 - InstallAndroidCertificateDetailsTypeInstallAndroidCertificate: added
 - InstalledAPKs: added
 - InteracCardResponseInfo: added
+- JCBInfoServiceLevel: added
 - JCBInfoServiceLevelGatewayContract: added
 - JCBInfoServiceLevelNoContract: added
 - JCBInfoServiceLevelPaymentDesignatorContract: added
@@ -724,14 +1221,17 @@ Compatible changes:
 - JapaneseLocalizedAddress: added
 - JapaneseLocalizedAddressAsLocalizedInformationLocalizedAddressInner: added
 - JapaneseLocalizedAddressFields: added
+- JapaneseLocalizedAddressScript: added
 - JapaneseLocalizedAddressScriptJaHani: added
 - JapaneseLocalizedAddressScriptJaKana: added
 - KioskModeSettings: added
+- KlarnaInfoRegion: added
 - KlarnaInfoRegionAU: added
 - KlarnaInfoRegionCH: added
 - KlarnaInfoRegionEU: added
 - KlarnaInfoRegionNA: added
 - KlarnaResponseInfo: added
+- KlarnaResponseInfoRegion: added
 - KlarnaResponseInfoRegionAU: added
 - KlarnaResponseInfoRegionCH: added
 - KlarnaResponseInfoRegionEU: added
@@ -750,10 +1250,15 @@ Compatible changes:
 - MeApiCredential.SubjectDN: added
 - MealVoucherFRResponseInfo: added
 - Moto: added
+- NewAccelInfoProcessingTypeFromValue: added
 - NewAccelResponseInfo: added
+- NewAccelResponseInfoNetworkProcessingModeFromValue: added
+- NewAccelResponseInfoProcessingTypeFromValue: added
 - NewAccelResponseInfoWithDefaults: added
 - NewAccelUpdateInfo: added
 - NewAccelUpdateInfoWithDefaults: added
+- NewAddTerminalThemeAssetForCompanyModelParameterFromValue: added
+- NewAddTerminalThemeAssetForCompanyTypeParameterFromValue: added
 - NewAffirmResponseInfo: added
 - NewAffirmResponseInfoWithDefaults: added
 - NewAffirmUpdateInfo: added
@@ -764,12 +1269,14 @@ Compatible changes:
 - NewAlipayPlusInfoWithDefaults: added
 - NewAlipayPlusResponseInfo: added
 - NewAlipayPlusResponseInfoWithDefaults: added
+- NewAmexInfoServiceLevelFromValue: added
 - NewAmexResponseInfo: added
 - NewAmexResponseInfoWithDefaults: added
 - NewAncvInfo: added
 - NewAncvInfoWithDefaults: added
 - NewAncvResponseInfo: added
 - NewAncvResponseInfoWithDefaults: added
+- NewAndroidAppStatusFromValue: added
 - NewApplePayResponseInfo: added
 - NewApplePayResponseInfoWithDefaults: added
 - NewAssociatedPaymentMethod: added
@@ -803,6 +1310,14 @@ Compatible changes:
 - NewClientCertificateRequestWithDefaults: added
 - NewClientCertificateWithChain: added
 - NewClientCertificateWithChainWithDefaults: added
+- NewConnectivitySimcardStatusFromValue: added
+- NewCreateCompanyWebhookRequestCommunicationFormatFromValue: added
+- NewCreateCompanyWebhookRequestEncryptionProtocolFromValue: added
+- NewCreateCompanyWebhookRequestFilterMerchantAccountTypeFromValue: added
+- NewCreateCompanyWebhookRequestNetworkTypeFromValue: added
+- NewCreateMerchantWebhookRequestCommunicationFormatFromValue: added
+- NewCreateMerchantWebhookRequestEncryptionProtocolFromValue: added
+- NewCreateMerchantWebhookRequestNetworkTypeFromValue: added
 - NewCreateThemeRequest: added
 - NewCreateThemeRequestWithDefaults: added
 - NewCreateThemeResponse: added
@@ -813,6 +1328,10 @@ Compatible changes:
 - NewDccWithDefaults: added
 - NewDefaultErrorResponseEntity: added
 - NewDefaultErrorResponseEntityWithDefaults: added
+- NewDeleteTerminalThemeAssetForCompanyModelParameterFromValue: added
+- NewDeleteTerminalThemeAssetForCompanyTypeParameterFromValue: added
+- NewDeleteTerminalThemeAssetForMerchantTypeParameterFromValue: added
+- NewDinersInfoServiceLevelFromValue: added
 - NewDinersResponseInfo: added
 - NewDinersResponseInfoWithDefaults: added
 - NewDiscoverResponseInfo: added
@@ -841,15 +1360,18 @@ Compatible changes:
 - NewEbtResponseInfoWithDefaults: added
 - NewEbtUpdateInfo: added
 - NewEbtUpdateInfoWithDefaults: added
+- NewEditTerminalThemeAssetForMerchantTypeParameterFromValue: added
 - NewEftPosAustraliaResponseInfo: added
 - NewEftPosAustraliaResponseInfoWithDefaults: added
 - NewForceRebootDetails: added
+- NewForceRebootDetailsTypeFromValue: added
 - NewForceRebootDetailsWithDefaults: added
 - NewGenericPmWithTdiUpdateInfo: added
 - NewGenericPmWithTdiUpdateInfoWithDefaults: added
 - NewGirocardResponseInfo: added
 - NewGirocardResponseInfoWithDefaults: added
 - NewGivexInfo: added
+- NewGivexInfoPaymentFlowFromValue: added
 - NewGivexInfoWithDefaults: added
 - NewGivexResponseInfo: added
 - NewGivexResponseInfoWithDefaults: added
@@ -865,19 +1387,25 @@ Compatible changes:
 - NewInPersonDonationSettingsUpdate: added
 - NewInPersonDonationSettingsUpdateWithDefaults: added
 - NewInPersonDonationSettingsWithDefaults: added
+- NewInstallAndroidAppDetailsTypeFromValue: added
+- NewInstallAndroidCertificateDetailsTypeFromValue: added
 - NewInstalledAPKs: added
 - NewInstalledAPKsWithDefaults: added
 - NewInteracCardResponseInfo: added
 - NewInteracCardResponseInfoWithDefaults: added
+- NewJCBInfoServiceLevelFromValue: added
 - NewJCBResponseInfo: added
 - NewJCBResponseInfoWithDefaults: added
 - NewJapaneseLocalizedAddress: added
 - NewJapaneseLocalizedAddressFields: added
 - NewJapaneseLocalizedAddressFieldsWithDefaults: added
+- NewJapaneseLocalizedAddressScriptFromValue: added
 - NewJapaneseLocalizedAddressWithDefaults: added
 - NewKioskModeSettings: added
 - NewKioskModeSettingsWithDefaults: added
+- NewKlarnaInfoRegionFromValue: added
 - NewKlarnaResponseInfo: added
+- NewKlarnaResponseInfoRegionFromValue: added
 - NewKlarnaResponseInfoWithDefaults: added
 - NewListDonationCampaignsResponse: added
 - NewListDonationCampaignsResponseWithDefaults: added
@@ -907,16 +1435,24 @@ Compatible changes:
 - NewNonprofitCause: added
 - NewNonprofitCauseWithDefaults: added
 - NewNonprofitWithDefaults: added
+- NewNotificationCategoryFromValue: added
+- NewNullableAccelInfoProcessingType: added
 - NewNullableAccelResponseInfo: added
+- NewNullableAccelResponseInfoNetworkProcessingMode: added
+- NewNullableAccelResponseInfoProcessingType: added
 - NewNullableAccelUpdateInfo: added
+- NewNullableAddTerminalThemeAssetForCompanyModelParameter: added
+- NewNullableAddTerminalThemeAssetForCompanyTypeParameter: added
 - NewNullableAffirmResponseInfo: added
 - NewNullableAffirmUpdateInfo: added
 - NewNullableAfterpayTouchResponseInfo: added
 - NewNullableAlipayPlusInfo: added
 - NewNullableAlipayPlusResponseInfo: added
+- NewNullableAmexInfoServiceLevel: added
 - NewNullableAmexResponseInfo: added
 - NewNullableAncvInfo: added
 - NewNullableAncvResponseInfo: added
+- NewNullableAndroidAppStatus: added
 - NewNullableApplePayResponseInfo: added
 - NewNullableAssociatedPaymentMethod: added
 - NewNullableBcmcResponseInfo: added
@@ -934,11 +1470,23 @@ Compatible changes:
 - NewNullableClearpayResponseInfo: added
 - NewNullableClientCertificateRequest: added
 - NewNullableClientCertificateWithChain: added
+- NewNullableConnectivitySimcardStatus: added
+- NewNullableCreateCompanyWebhookRequestCommunicationFormat: added
+- NewNullableCreateCompanyWebhookRequestEncryptionProtocol: added
+- NewNullableCreateCompanyWebhookRequestFilterMerchantAccountType: added
+- NewNullableCreateCompanyWebhookRequestNetworkType: added
+- NewNullableCreateMerchantWebhookRequestCommunicationFormat: added
+- NewNullableCreateMerchantWebhookRequestEncryptionProtocol: added
+- NewNullableCreateMerchantWebhookRequestNetworkType: added
 - NewNullableCreateThemeRequest: added
 - NewNullableCreateThemeResponse: added
 - NewNullableCupResponseInfo: added
 - NewNullableDcc: added
 - NewNullableDefaultErrorResponseEntity: added
+- NewNullableDeleteTerminalThemeAssetForCompanyModelParameter: added
+- NewNullableDeleteTerminalThemeAssetForCompanyTypeParameter: added
+- NewNullableDeleteTerminalThemeAssetForMerchantTypeParameter: added
+- NewNullableDinersInfoServiceLevel: added
 - NewNullableDinersResponseInfo: added
 - NewNullableDiscoverResponseInfo: added
 - NewNullableDisplayTextField: added
@@ -955,11 +1503,14 @@ Compatible changes:
 - NewNullableEbtInfo: added
 - NewNullableEbtResponseInfo: added
 - NewNullableEbtUpdateInfo: added
+- NewNullableEditTerminalThemeAssetForMerchantTypeParameter: added
 - NewNullableEftPosAustraliaResponseInfo: added
 - NewNullableForceRebootDetails: added
+- NewNullableForceRebootDetailsType: added
 - NewNullableGenericPmWithTdiUpdateInfo: added
 - NewNullableGirocardResponseInfo: added
 - NewNullableGivexInfo: added
+- NewNullableGivexInfoPaymentFlow: added
 - NewNullableGivexResponseInfo: added
 - NewNullableGooglePayResponseInfo: added
 - NewNullableHomeScreenSettings: added
@@ -967,13 +1518,19 @@ Compatible changes:
 - NewNullableInPersonDonationSettings: added
 - NewNullableInPersonDonationSettingsResponse: added
 - NewNullableInPersonDonationSettingsUpdate: added
+- NewNullableInstallAndroidAppDetailsType: added
+- NewNullableInstallAndroidCertificateDetailsType: added
 - NewNullableInstalledAPKs: added
 - NewNullableInteracCardResponseInfo: added
+- NewNullableJCBInfoServiceLevel: added
 - NewNullableJCBResponseInfo: added
 - NewNullableJapaneseLocalizedAddress: added
 - NewNullableJapaneseLocalizedAddressFields: added
+- NewNullableJapaneseLocalizedAddressScript: added
 - NewNullableKioskModeSettings: added
+- NewNullableKlarnaInfoRegion: added
 - NewNullableKlarnaResponseInfo: added
+- NewNullableKlarnaResponseInfoRegion: added
 - NewNullableListDonationCampaignsResponse: added
 - NewNullableListNonprofitsRequest: added
 - NewNullableListNonprofitsResponse: added
@@ -989,48 +1546,99 @@ Compatible changes:
 - NewNullableMoto: added
 - NewNullableNonprofit: added
 - NewNullableNonprofitCause: added
+- NewNullableNotificationCategory: added
 - NewNullableNyceResponseInfo: added
 - NewNullableNyceUpdateInfo: added
 - NewNullableOnlineDonationSettings: added
 - NewNullableOnlineDonationSettingsResponse: added
 - NewNullableOnlineDonationSettingsUpdate: added
+- NewNullablePayAtTableAuthenticationMethod: added
+- NewNullablePayAtTablePaymentInstrument: added
 - NewNullablePayByBankPlaidResponseInfo: added
 - NewNullablePayByBankPlaidUpdateInfo: added
 - NewNullablePayMeResponseInfo: added
 - NewNullablePayPalResponseInfo: added
 - NewNullablePayToResponseInfo: added
+- NewNullablePaymentMethodResponseTypesWithErrors: added
+- NewNullablePaymentMethodSetupInfoShopperInteraction: added
+- NewNullablePaymentMethodSetupInfoType: added
+- NewNullablePaymentMethodVerificationStatus: added
+- NewNullablePayoutSettingsPriority: added
+- NewNullablePayoutSettingsVerificationStatus: added
 - NewNullablePixInfo: added
 - NewNullablePixResponseInfo: added
 - NewNullablePulseResponseInfo: added
 - NewNullablePulseUpdateInfo: added
+- NewNullableReleaseUpdateDetailsType: added
+- NewNullableScheduleTerminalActionsResponseActionDetails: added
 - NewNullableSepaDirectDebitInfo: added
 - NewNullableSepaDirectDebitResponseInfo: added
 - NewNullableSepaDirectDebitUpdateInfo: added
 - NewNullableSodexoResponseInfo: added
 - NewNullableSofortResponseInfo: added
+- NewNullableSplitConfigurationLogicAcquiringFees: added
+- NewNullableSplitConfigurationLogicAdyenCommission: added
+- NewNullableSplitConfigurationLogicAdyenFees: added
+- NewNullableSplitConfigurationLogicAdyenMarkup: added
+- NewNullableSplitConfigurationLogicChargeback: added
+- NewNullableSplitConfigurationLogicChargebackCostAllocation: added
+- NewNullableSplitConfigurationLogicInterchange: added
+- NewNullableSplitConfigurationLogicPaymentFee: added
+- NewNullableSplitConfigurationLogicRefund: added
+- NewNullableSplitConfigurationLogicRefundCostAllocation: added
+- NewNullableSplitConfigurationLogicRemainder: added
+- NewNullableSplitConfigurationLogicSchemeFee: added
+- NewNullableSplitConfigurationLogicSurcharge: added
+- NewNullableSplitConfigurationLogicTip: added
+- NewNullableSplitConfigurationRuleCardRegion: added
+- NewNullableSplitConfigurationRuleCardUsageType: added
+- NewNullableSplitConfigurationRuleFundingSource: added
+- NewNullableSplitConfigurationRuleShopperInteraction: added
 - NewNullableSplitDcc: added
 - NewNullableStarResponseInfo: added
 - NewNullableStarUpdateInfo: added
+- NewNullableStoreStatus: added
 - NewNullableSubMerchantData: added
 - NewNullableSvsInfo: added
 - NewNullableSvsResponseInfo: added
 - NewNullableSwishResponseInfo: added
+- NewNullableTerminalAssignmentStatus: added
+- NewNullableTerminalConnectivityCellularStatus: added
 - NewNullableThemeAsset: added
 - NewNullableThemeMode: added
 - NewNullableThemeSummary: added
 - NewNullableThemeUpdateRequest: added
+- NewNullableThemeUpdateRequestMode: added
 - NewNullableThemeWithAssetDetails: added
 - NewNullableTicketResponseInfo: added
+- NewNullableTransactionDescriptionInfoType: added
 - NewNullableTransactionDescriptionResponseInfo: added
 - NewNullableTwintResponseInfo: added
+- NewNullableUninstallAndroidAppDetailsType: added
+- NewNullableUninstallAndroidCertificateDetailsType: added
 - NewNullableUnreferenced: added
+- NewNullableUpdateCompanyWebhookRequestCommunicationFormat: added
+- NewNullableUpdateCompanyWebhookRequestEncryptionProtocol: added
+- NewNullableUpdateCompanyWebhookRequestFilterMerchantAccountType: added
+- NewNullableUpdateCompanyWebhookRequestNetworkType: added
+- NewNullableUpdateMerchantWebhookRequestCommunicationFormat: added
+- NewNullableUpdateMerchantWebhookRequestEncryptionProtocol: added
+- NewNullableUpdateMerchantWebhookRequestNetworkType: added
+- NewNullableUpdateSplitConfigurationRuleRequestCardUsageType: added
+- NewNullableUpdateStoreRequestStatus: added
 - NewNullableUpdateThemeResponse: added
 - NewNullableValuelinkInfo: added
+- NewNullableValuelinkInfoPinSupport: added
 - NewNullableValuelinkResponseInfo: added
+- NewNullableValuelinkResponseInfoPinSupport: added
 - NewNullableVippsResponseInfo: added
 - NewNullableVisaResponseInfo: added
 - NewNullableWeChatPayPosResponseInfo: added
 - NewNullableWeChatPayResponseInfo: added
+- NewNullableWebhookCommunicationFormat: added
+- NewNullableWebhookEncryptionProtocol: added
+- NewNullableWebhookFilterMerchantAccountType: added
+- NewNullableWebhookNetworkType: added
 - NewNyceResponseInfo: added
 - NewNyceResponseInfoWithDefaults: added
 - NewNyceUpdateInfo: added
@@ -1041,6 +1649,8 @@ Compatible changes:
 - NewOnlineDonationSettingsUpdate: added
 - NewOnlineDonationSettingsUpdateWithDefaults: added
 - NewOnlineDonationSettingsWithDefaults: added
+- NewPayAtTableAuthenticationMethodFromValue: added
+- NewPayAtTablePaymentInstrumentFromValue: added
 - NewPayByBankPlaidResponseInfo: added
 - NewPayByBankPlaidResponseInfoWithDefaults: added
 - NewPayByBankPlaidUpdateInfo: added
@@ -1051,6 +1661,12 @@ Compatible changes:
 - NewPayPalResponseInfoWithDefaults: added
 - NewPayToResponseInfo: added
 - NewPayToResponseInfoWithDefaults: added
+- NewPaymentMethodResponseTypesWithErrorsFromValue: added
+- NewPaymentMethodSetupInfoShopperInteractionFromValue: added
+- NewPaymentMethodSetupInfoTypeFromValue: added
+- NewPaymentMethodVerificationStatusFromValue: added
+- NewPayoutSettingsPriorityFromValue: added
+- NewPayoutSettingsVerificationStatusFromValue: added
 - NewPixInfo: added
 - NewPixInfoWithDefaults: added
 - NewPixResponseInfo: added
@@ -1059,6 +1675,7 @@ Compatible changes:
 - NewPulseResponseInfoWithDefaults: added
 - NewPulseUpdateInfo: added
 - NewPulseUpdateInfoWithDefaults: added
+- NewReleaseUpdateDetailsTypeFromValue: added
 - NewSepaDirectDebitInfo: added
 - NewSepaDirectDebitInfoWithDefaults: added
 - NewSepaDirectDebitResponseInfo: added
@@ -1069,12 +1686,31 @@ Compatible changes:
 - NewSodexoResponseInfoWithDefaults: added
 - NewSofortResponseInfo: added
 - NewSofortResponseInfoWithDefaults: added
+- NewSplitConfigurationLogicAcquiringFeesFromValue: added
+- NewSplitConfigurationLogicAdyenCommissionFromValue: added
+- NewSplitConfigurationLogicAdyenFeesFromValue: added
+- NewSplitConfigurationLogicAdyenMarkupFromValue: added
+- NewSplitConfigurationLogicChargebackCostAllocationFromValue: added
+- NewSplitConfigurationLogicChargebackFromValue: added
+- NewSplitConfigurationLogicInterchangeFromValue: added
+- NewSplitConfigurationLogicPaymentFeeFromValue: added
+- NewSplitConfigurationLogicRefundCostAllocationFromValue: added
+- NewSplitConfigurationLogicRefundFromValue: added
+- NewSplitConfigurationLogicRemainderFromValue: added
+- NewSplitConfigurationLogicSchemeFeeFromValue: added
+- NewSplitConfigurationLogicSurchargeFromValue: added
+- NewSplitConfigurationLogicTipFromValue: added
+- NewSplitConfigurationRuleCardRegionFromValue: added
+- NewSplitConfigurationRuleCardUsageTypeFromValue: added
+- NewSplitConfigurationRuleFundingSourceFromValue: added
+- NewSplitConfigurationRuleShopperInteractionFromValue: added
 - NewSplitDcc: added
 - NewSplitDccWithDefaults: added
 - NewStarResponseInfo: added
 - NewStarResponseInfoWithDefaults: added
 - NewStarUpdateInfo: added
 - NewStarUpdateInfoWithDefaults: added
+- NewStoreStatusFromValue: added
 - NewSubMerchantData: added
 - NewSubMerchantDataWithDefaults: added
 - NewSvsInfo: added
@@ -1083,28 +1719,45 @@ Compatible changes:
 - NewSvsResponseInfoWithDefaults: added
 - NewSwishResponseInfo: added
 - NewSwishResponseInfoWithDefaults: added
+- NewTerminalAssignmentStatusFromValue: added
+- NewTerminalConnectivityCellularStatusFromValue: added
 - NewThemeAsset: added
 - NewThemeAssetWithDefaults: added
 - NewThemeModeFromValue: added
 - NewThemeSummary: added
 - NewThemeSummaryWithDefaults: added
 - NewThemeUpdateRequest: added
+- NewThemeUpdateRequestModeFromValue: added
 - NewThemeUpdateRequestWithDefaults: added
 - NewThemeWithAssetDetails: added
 - NewThemeWithAssetDetailsWithDefaults: added
 - NewTicketResponseInfo: added
 - NewTicketResponseInfoWithDefaults: added
+- NewTransactionDescriptionInfoTypeFromValue: added
 - NewTransactionDescriptionResponseInfo: added
 - NewTransactionDescriptionResponseInfoWithDefaults: added
 - NewTwintResponseInfo: added
 - NewTwintResponseInfoWithDefaults: added
+- NewUninstallAndroidAppDetailsTypeFromValue: added
+- NewUninstallAndroidCertificateDetailsTypeFromValue: added
 - NewUnreferenced: added
 - NewUnreferencedWithDefaults: added
+- NewUpdateCompanyWebhookRequestCommunicationFormatFromValue: added
+- NewUpdateCompanyWebhookRequestEncryptionProtocolFromValue: added
+- NewUpdateCompanyWebhookRequestFilterMerchantAccountTypeFromValue: added
+- NewUpdateCompanyWebhookRequestNetworkTypeFromValue: added
+- NewUpdateMerchantWebhookRequestCommunicationFormatFromValue: added
+- NewUpdateMerchantWebhookRequestEncryptionProtocolFromValue: added
+- NewUpdateMerchantWebhookRequestNetworkTypeFromValue: added
+- NewUpdateSplitConfigurationRuleRequestCardUsageTypeFromValue: added
+- NewUpdateStoreRequestStatusFromValue: added
 - NewUpdateThemeResponse: added
 - NewUpdateThemeResponseWithDefaults: added
 - NewValuelinkInfo: added
+- NewValuelinkInfoPinSupportFromValue: added
 - NewValuelinkInfoWithDefaults: added
 - NewValuelinkResponseInfo: added
+- NewValuelinkResponseInfoPinSupportFromValue: added
 - NewValuelinkResponseInfoWithDefaults: added
 - NewVippsResponseInfo: added
 - NewVippsResponseInfoWithDefaults: added
@@ -1114,21 +1767,33 @@ Compatible changes:
 - NewWeChatPayPosResponseInfoWithDefaults: added
 - NewWeChatPayResponseInfo: added
 - NewWeChatPayResponseInfoWithDefaults: added
+- NewWebhookCommunicationFormatFromValue: added
+- NewWebhookEncryptionProtocolFromValue: added
+- NewWebhookFilterMerchantAccountTypeFromValue: added
+- NewWebhookNetworkTypeFromValue: added
 - Nonprofit: added
 - NonprofitCause: added
 - NotificationCategory: added
+- NotificationCategoryEmpty: added
 - NotificationCategoryKeyPressed: added
 - NotificationCategorySaleWakeUp: added
+- NullableAccelInfoProcessingType: added
 - NullableAccelResponseInfo: added
+- NullableAccelResponseInfoNetworkProcessingMode: added
+- NullableAccelResponseInfoProcessingType: added
 - NullableAccelUpdateInfo: added
+- NullableAddTerminalThemeAssetForCompanyModelParameter: added
+- NullableAddTerminalThemeAssetForCompanyTypeParameter: added
 - NullableAffirmResponseInfo: added
 - NullableAffirmUpdateInfo: added
 - NullableAfterpayTouchResponseInfo: added
 - NullableAlipayPlusInfo: added
 - NullableAlipayPlusResponseInfo: added
+- NullableAmexInfoServiceLevel: added
 - NullableAmexResponseInfo: added
 - NullableAncvInfo: added
 - NullableAncvResponseInfo: added
+- NullableAndroidAppStatus: added
 - NullableApplePayResponseInfo: added
 - NullableAssociatedPaymentMethod: added
 - NullableBcmcResponseInfo: added
@@ -1146,11 +1811,23 @@ Compatible changes:
 - NullableClearpayResponseInfo: added
 - NullableClientCertificateRequest: added
 - NullableClientCertificateWithChain: added
+- NullableConnectivitySimcardStatus: added
+- NullableCreateCompanyWebhookRequestCommunicationFormat: added
+- NullableCreateCompanyWebhookRequestEncryptionProtocol: added
+- NullableCreateCompanyWebhookRequestFilterMerchantAccountType: added
+- NullableCreateCompanyWebhookRequestNetworkType: added
+- NullableCreateMerchantWebhookRequestCommunicationFormat: added
+- NullableCreateMerchantWebhookRequestEncryptionProtocol: added
+- NullableCreateMerchantWebhookRequestNetworkType: added
 - NullableCreateThemeRequest: added
 - NullableCreateThemeResponse: added
 - NullableCupResponseInfo: added
 - NullableDcc: added
 - NullableDefaultErrorResponseEntity: added
+- NullableDeleteTerminalThemeAssetForCompanyModelParameter: added
+- NullableDeleteTerminalThemeAssetForCompanyTypeParameter: added
+- NullableDeleteTerminalThemeAssetForMerchantTypeParameter: added
+- NullableDinersInfoServiceLevel: added
 - NullableDinersResponseInfo: added
 - NullableDiscoverResponseInfo: added
 - NullableDisplayTextField: added
@@ -1167,11 +1844,14 @@ Compatible changes:
 - NullableEbtInfo: added
 - NullableEbtResponseInfo: added
 - NullableEbtUpdateInfo: added
+- NullableEditTerminalThemeAssetForMerchantTypeParameter: added
 - NullableEftPosAustraliaResponseInfo: added
 - NullableForceRebootDetails: added
+- NullableForceRebootDetailsType: added
 - NullableGenericPmWithTdiUpdateInfo: added
 - NullableGirocardResponseInfo: added
 - NullableGivexInfo: added
+- NullableGivexInfoPaymentFlow: added
 - NullableGivexResponseInfo: added
 - NullableGooglePayResponseInfo: added
 - NullableHomeScreenSettings: added
@@ -1179,13 +1859,19 @@ Compatible changes:
 - NullableInPersonDonationSettings: added
 - NullableInPersonDonationSettingsResponse: added
 - NullableInPersonDonationSettingsUpdate: added
+- NullableInstallAndroidAppDetailsType: added
+- NullableInstallAndroidCertificateDetailsType: added
 - NullableInstalledAPKs: added
 - NullableInteracCardResponseInfo: added
+- NullableJCBInfoServiceLevel: added
 - NullableJCBResponseInfo: added
 - NullableJapaneseLocalizedAddress: added
 - NullableJapaneseLocalizedAddressFields: added
+- NullableJapaneseLocalizedAddressScript: added
 - NullableKioskModeSettings: added
+- NullableKlarnaInfoRegion: added
 - NullableKlarnaResponseInfo: added
+- NullableKlarnaResponseInfoRegion: added
 - NullableListDonationCampaignsResponse: added
 - NullableListNonprofitsRequest: added
 - NullableListNonprofitsResponse: added
@@ -1201,63 +1887,108 @@ Compatible changes:
 - NullableMoto: added
 - NullableNonprofit: added
 - NullableNonprofitCause: added
+- NullableNotificationCategory: added
 - NullableNyceResponseInfo: added
 - NullableNyceUpdateInfo: added
 - NullableOnlineDonationSettings: added
 - NullableOnlineDonationSettingsResponse: added
 - NullableOnlineDonationSettingsUpdate: added
+- NullablePayAtTableAuthenticationMethod: added
+- NullablePayAtTablePaymentInstrument: added
 - NullablePayByBankPlaidResponseInfo: added
 - NullablePayByBankPlaidUpdateInfo: added
 - NullablePayMeResponseInfo: added
 - NullablePayPalResponseInfo: added
 - NullablePayToResponseInfo: added
+- NullablePaymentMethodResponseTypesWithErrors: added
+- NullablePaymentMethodSetupInfoShopperInteraction: added
+- NullablePaymentMethodSetupInfoType: added
+- NullablePaymentMethodVerificationStatus: added
+- NullablePayoutSettingsPriority: added
+- NullablePayoutSettingsVerificationStatus: added
 - NullablePixInfo: added
 - NullablePixResponseInfo: added
 - NullablePulseResponseInfo: added
 - NullablePulseUpdateInfo: added
+- NullableReleaseUpdateDetailsType: added
+- NullableScheduleTerminalActionsResponseActionDetails: added
 - NullableSepaDirectDebitInfo: added
 - NullableSepaDirectDebitResponseInfo: added
 - NullableSepaDirectDebitUpdateInfo: added
 - NullableSodexoResponseInfo: added
 - NullableSofortResponseInfo: added
+- NullableSplitConfigurationLogicAcquiringFees: added
+- NullableSplitConfigurationLogicAdyenCommission: added
+- NullableSplitConfigurationLogicAdyenFees: added
+- NullableSplitConfigurationLogicAdyenMarkup: added
+- NullableSplitConfigurationLogicChargeback: added
+- NullableSplitConfigurationLogicChargebackCostAllocation: added
+- NullableSplitConfigurationLogicInterchange: added
+- NullableSplitConfigurationLogicPaymentFee: added
+- NullableSplitConfigurationLogicRefund: added
+- NullableSplitConfigurationLogicRefundCostAllocation: added
+- NullableSplitConfigurationLogicRemainder: added
+- NullableSplitConfigurationLogicSchemeFee: added
+- NullableSplitConfigurationLogicSurcharge: added
+- NullableSplitConfigurationLogicTip: added
+- NullableSplitConfigurationRuleCardRegion: added
+- NullableSplitConfigurationRuleCardUsageType: added
+- NullableSplitConfigurationRuleFundingSource: added
+- NullableSplitConfigurationRuleShopperInteraction: added
 - NullableSplitDcc: added
 - NullableStarResponseInfo: added
 - NullableStarUpdateInfo: added
+- NullableStoreStatus: added
 - NullableSubMerchantData: added
 - NullableSvsInfo: added
 - NullableSvsResponseInfo: added
 - NullableSwishResponseInfo: added
+- NullableTerminalAssignmentStatus: added
+- NullableTerminalConnectivityCellularStatus: added
 - NullableThemeAsset: added
 - NullableThemeMode: added
 - NullableThemeSummary: added
 - NullableThemeUpdateRequest: added
+- NullableThemeUpdateRequestMode: added
 - NullableThemeWithAssetDetails: added
 - NullableTicketResponseInfo: added
+- NullableTransactionDescriptionInfoType: added
 - NullableTransactionDescriptionResponseInfo: added
 - NullableTwintResponseInfo: added
+- NullableUninstallAndroidAppDetailsType: added
+- NullableUninstallAndroidCertificateDetailsType: added
 - NullableUnreferenced: added
+- NullableUpdateCompanyWebhookRequestCommunicationFormat: added
+- NullableUpdateCompanyWebhookRequestEncryptionProtocol: added
+- NullableUpdateCompanyWebhookRequestFilterMerchantAccountType: added
+- NullableUpdateCompanyWebhookRequestNetworkType: added
+- NullableUpdateMerchantWebhookRequestCommunicationFormat: added
+- NullableUpdateMerchantWebhookRequestEncryptionProtocol: added
+- NullableUpdateMerchantWebhookRequestNetworkType: added
+- NullableUpdateSplitConfigurationRuleRequestCardUsageType: added
+- NullableUpdateStoreRequestStatus: added
 - NullableUpdateThemeResponse: added
 - NullableValuelinkInfo: added
+- NullableValuelinkInfoPinSupport: added
 - NullableValuelinkResponseInfo: added
+- NullableValuelinkResponseInfoPinSupport: added
 - NullableVippsResponseInfo: added
 - NullableVisaResponseInfo: added
 - NullableWeChatPayPosResponseInfo: added
 - NullableWeChatPayResponseInfo: added
-- NyceInfoProcessingTypeBillpay: added
-- NyceInfoProcessingTypeEcom: added
-- NyceInfoProcessingTypePos: added
+- NullableWebhookCommunicationFormat: added
+- NullableWebhookEncryptionProtocol: added
+- NullableWebhookFilterMerchantAccountType: added
+- NullableWebhookNetworkType: added
 - NyceResponseInfo: added
-- NyceResponseInfoNetworkProcessingModeAuth: added
-- NyceResponseInfoNetworkProcessingModeSale: added
-- NyceResponseInfoProcessingTypeBillpay: added
-- NyceResponseInfoProcessingTypeEcom: added
-- NyceResponseInfoProcessingTypePos: added
 - NyceUpdateInfo: added
 - OnlineDonationSettings: added
 - OnlineDonationSettingsResponse: added
 - OnlineDonationSettingsUpdate: added
+- PayAtTableAuthenticationMethod: added
 - PayAtTableAuthenticationMethodMAGSWIPE: added
 - PayAtTableAuthenticationMethodMKE: added
+- PayAtTablePaymentInstrument: added
 - PayAtTablePaymentInstrumentCard: added
 - PayAtTablePaymentInstrumentCash: added
 - PayByBankPlaidResponseInfo: added
@@ -1280,6 +2011,7 @@ Compatible changes:
 - PaymentMethod.Sepadirectdebit: added
 - PaymentMethod.Svs: added
 - PaymentMethod.Valuelink: added
+- PaymentMethodResponseTypesWithErrors: added
 - PaymentMethodResponseTypesWithErrorsAbrapetite: added
 - PaymentMethodResponseTypesWithErrorsAbrapetiteCredit: added
 - PaymentMethodResponseTypesWithErrorsAbrapetiteDebit: added
@@ -1446,10 +2178,12 @@ Compatible changes:
 - PaymentMethodSetupInfo.Sepadirectdebit: added
 - PaymentMethodSetupInfo.Svs: added
 - PaymentMethodSetupInfo.Valuelink: added
+- PaymentMethodSetupInfoShopperInteraction: added
 - PaymentMethodSetupInfoShopperInteractionContAuth: added
 - PaymentMethodSetupInfoShopperInteractionECommerce: added
 - PaymentMethodSetupInfoShopperInteractionMoto: added
 - PaymentMethodSetupInfoShopperInteractionPos: added
+- PaymentMethodSetupInfoType: added
 - PaymentMethodSetupInfoTypeAbrapetite: added
 - PaymentMethodSetupInfoTypeAbrapetiteCredit: added
 - PaymentMethodSetupInfoTypeAbrapetiteDebit: added
@@ -1604,87 +2338,103 @@ Compatible changes:
 - PaymentMethodSetupInfoTypeWechatpay: added
 - PaymentMethodSetupInfoTypeWechatpayPos: added
 - PaymentMethodSetupInfoTypeWero: added
+- PaymentMethodVerificationStatus: added
 - PaymentMethodVerificationStatusInvalid: added
 - PaymentMethodVerificationStatusPending: added
 - PaymentMethodVerificationStatusRejected: added
 - PaymentMethodVerificationStatusValid: added
+- PayoutSettingsPriority: added
 - PayoutSettingsPriorityFirst: added
 - PayoutSettingsPriorityNormal: added
 - PayoutSettingsPriorityUrgent: added
+- PayoutSettingsVerificationStatus: added
 - PayoutSettingsVerificationStatusInvalid: added
 - PayoutSettingsVerificationStatusPending: added
 - PayoutSettingsVerificationStatusRejected: added
 - PayoutSettingsVerificationStatusValid: added
 - PixInfo: added
 - PixResponseInfo: added
-- PulseInfoProcessingTypeBillpay: added
-- PulseInfoProcessingTypeEcom: added
-- PulseInfoProcessingTypePos: added
 - PulseResponseInfo: added
-- PulseResponseInfoNetworkProcessingModeAuth: added
-- PulseResponseInfoNetworkProcessingModeSale: added
-- PulseResponseInfoProcessingTypeBillpay: added
-- PulseResponseInfoProcessingTypeEcom: added
-- PulseResponseInfoProcessingTypePos: added
 - PulseUpdateInfo: added
 - ReceiptOptions.HeaderLine1: added
 - ReceiptOptions.HeaderLine2: added
 - Refunds.Unreferenced: added
+- ReleaseUpdateDetailsAsScheduleTerminalActionsResponseActionDetails: added
+- ReleaseUpdateDetailsType: added
 - ReleaseUpdateDetailsTypeReleaseUpdate: added
 - ScheduleTerminalActionsRequestActionDetails.ForceRebootDetails: added
+- ScheduleTerminalActionsResponseActionDetails: added
 - SepaDirectDebitInfo: added
 - SepaDirectDebitResponseInfo: added
 - SepaDirectDebitUpdateInfo: added
 - SodexoResponseInfo: added
 - SofortResponseInfo: added
 - SplitConfigurationLogic.Dcc: added
+- SplitConfigurationLogicAcquiringFees: added
 - SplitConfigurationLogicAcquiringFeesDeductFromLiableAccount: added
 - SplitConfigurationLogicAcquiringFeesDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicAdyenCommission: added
 - SplitConfigurationLogicAdyenCommissionDeductFromLiableAccount: added
 - SplitConfigurationLogicAdyenCommissionDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicAdyenFees: added
 - SplitConfigurationLogicAdyenFeesDeductFromLiableAccount: added
 - SplitConfigurationLogicAdyenFeesDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicAdyenMarkup: added
 - SplitConfigurationLogicAdyenMarkupDeductFromLiableAccount: added
 - SplitConfigurationLogicAdyenMarkupDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicChargeback: added
+- SplitConfigurationLogicChargebackCostAllocation: added
 - SplitConfigurationLogicChargebackCostAllocationDeductFromLiableAccount: added
 - SplitConfigurationLogicChargebackCostAllocationDeductFromOneBalanceAccount: added
 - SplitConfigurationLogicChargebackDeductAccordingToSplitRatio: added
 - SplitConfigurationLogicChargebackDeductFromLiableAccount: added
 - SplitConfigurationLogicChargebackDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicInterchange: added
 - SplitConfigurationLogicInterchangeDeductFromLiableAccount: added
 - SplitConfigurationLogicInterchangeDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicPaymentFee: added
 - SplitConfigurationLogicPaymentFeeDeductFromLiableAccount: added
 - SplitConfigurationLogicPaymentFeeDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicRefund: added
+- SplitConfigurationLogicRefundCostAllocation: added
 - SplitConfigurationLogicRefundCostAllocationDeductFromLiableAccount: added
 - SplitConfigurationLogicRefundCostAllocationDeductFromOneBalanceAccount: added
 - SplitConfigurationLogicRefundDeductAccordingToSplitRatio: added
 - SplitConfigurationLogicRefundDeductFromLiableAccount: added
 - SplitConfigurationLogicRefundDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicRemainder: added
 - SplitConfigurationLogicRemainderAddToLiableAccount: added
 - SplitConfigurationLogicRemainderAddToOneBalanceAccount: added
+- SplitConfigurationLogicSchemeFee: added
 - SplitConfigurationLogicSchemeFeeDeductFromLiableAccount: added
 - SplitConfigurationLogicSchemeFeeDeductFromOneBalanceAccount: added
+- SplitConfigurationLogicSurcharge: added
 - SplitConfigurationLogicSurchargeAddToLiableAccount: added
 - SplitConfigurationLogicSurchargeAddToOneBalanceAccount: added
+- SplitConfigurationLogicTip: added
 - SplitConfigurationLogicTipAddToLiableAccount: added
 - SplitConfigurationLogicTipAddToOneBalanceAccount: added
 - SplitConfigurationRule.CardRegion: added
 - SplitConfigurationRule.CardUsageType: added
+- SplitConfigurationRuleCardRegion: added
 - SplitConfigurationRuleCardRegionANY: added
 - SplitConfigurationRuleCardRegionDomestic: added
 - SplitConfigurationRuleCardRegionInterRegional: added
 - SplitConfigurationRuleCardRegionInternational: added
 - SplitConfigurationRuleCardRegionIntraEEA: added
 - SplitConfigurationRuleCardRegionIntraRegional: added
+- SplitConfigurationRuleCardUsageType: added
 - SplitConfigurationRuleCardUsageTypeANY: added
 - SplitConfigurationRuleCardUsageTypeCommercial: added
 - SplitConfigurationRuleCardUsageTypeConsumer: added
+- SplitConfigurationRuleFundingSource: added
 - SplitConfigurationRuleFundingSourceANY: added
 - SplitConfigurationRuleFundingSourceCharged: added
 - SplitConfigurationRuleFundingSourceCredit: added
 - SplitConfigurationRuleFundingSourceDebit: added
 - SplitConfigurationRuleFundingSourceDeferredDebit: added
 - SplitConfigurationRuleFundingSourcePrepaid: added
+- SplitConfigurationRuleShopperInteraction: added
 - SplitConfigurationRuleShopperInteractionANY: added
 - SplitConfigurationRuleShopperInteractionContAuth: added
 - SplitConfigurationRuleShopperInteractionEcommerce: added
@@ -1692,15 +2442,7 @@ Compatible changes:
 - SplitConfigurationRuleShopperInteractionPOS: added
 - SplitDcc: added
 - Standalone.MerchantReference: added
-- StarInfoProcessingTypeBillpay: added
-- StarInfoProcessingTypeEcom: added
-- StarInfoProcessingTypePos: added
 - StarResponseInfo: added
-- StarResponseInfoNetworkProcessingModeAuth: added
-- StarResponseInfoNetworkProcessingModeSale: added
-- StarResponseInfoProcessingTypeBillpay: added
-- StarResponseInfoProcessingTypeEcom: added
-- StarResponseInfoProcessingTypePos: added
 - StarUpdateInfo: added
 - Store.LocalizedInformation: added
 - Store.SubMerchantData: added
@@ -1708,6 +2450,7 @@ Compatible changes:
 - StoreCreationRequest.SubMerchantData: added
 - StoreCreationWithMerchantCodeRequest.LocalizedInformation: added
 - StoreCreationWithMerchantCodeRequest.SubMerchantData: added
+- StoreStatus: added
 - StoreStatusActive: added
 - StoreStatusClosed: added
 - StoreStatusInactive: added
@@ -1716,15 +2459,15 @@ Compatible changes:
 - SvsInfo: added
 - SvsResponseInfo: added
 - SwishResponseInfo: added
-- THEMEMODE_DARK: added
-- THEMEMODE_LIGHT: added
 - Terminal.CloudDeviceApiEndpoint: added
 - Terminal.CountryCode: added
 - Terminal.InstalledAPKs: added
+- TerminalAssignmentStatus: added
 - TerminalAssignmentStatusBoarded: added
 - TerminalAssignmentStatusDeployed: added
 - TerminalAssignmentStatusInventory: added
 - TerminalAssignmentStatusReassignmentInProgress: added
+- TerminalConnectivityCellularStatus: added
 - TerminalConnectivityCellularStatusActivated: added
 - TerminalConnectivityCellularStatusDeactivated: added
 - TerminalConnectivityCellularStatusDeprecated: added
@@ -1766,42 +2509,54 @@ Compatible changes:
 - TerminalThemesTerminalLevelApiUnapplyTerminalThemeForTerminalInput: added
 - ThemeAsset: added
 - ThemeMode: added
+- ThemeModeDark: added
+- ThemeModeLight: added
 - ThemeSummary: added
 - ThemeUpdateRequest: added
+- ThemeUpdateRequestMode: added
 - ThemeUpdateRequestModeDark: added
 - ThemeUpdateRequestModeLight: added
 - ThemeWithAssetDetails: added
 - TicketResponseInfo: added
+- TransactionDescriptionInfoType: added
 - TransactionDescriptionInfoTypeAppend: added
 - TransactionDescriptionInfoTypeDynamic: added
 - TransactionDescriptionInfoTypeFixed: added
 - TransactionDescriptionResponseInfo: added
-- TransactionDescriptionResponseInfoTypeAppend: added
-- TransactionDescriptionResponseInfoTypeDynamic: added
-- TransactionDescriptionResponseInfoTypeFixed: added
 - TwintResponseInfo: added
+- UninstallAndroidAppDetailsAsScheduleTerminalActionsResponseActionDetails: added
+- UninstallAndroidAppDetailsType: added
 - UninstallAndroidAppDetailsTypeUninstallAndroidApp: added
+- UninstallAndroidCertificateDetailsAsScheduleTerminalActionsResponseActionDetails: added
+- UninstallAndroidCertificateDetailsType: added
 - UninstallAndroidCertificateDetailsTypeUninstallAndroidCertificate: added
 - Unreferenced: added
 - UpdateCompanyApiCredentialRequest.SubjectDN: added
+- UpdateCompanyWebhookRequestCommunicationFormat: added
 - UpdateCompanyWebhookRequestCommunicationFormatHttp: added
 - UpdateCompanyWebhookRequestCommunicationFormatJson: added
 - UpdateCompanyWebhookRequestCommunicationFormatSoap: added
+- UpdateCompanyWebhookRequestEncryptionProtocol: added
 - UpdateCompanyWebhookRequestEncryptionProtocolHTTP: added
 - UpdateCompanyWebhookRequestEncryptionProtocolTLSv12: added
 - UpdateCompanyWebhookRequestEncryptionProtocolTLSv13: added
+- UpdateCompanyWebhookRequestFilterMerchantAccountType: added
 - UpdateCompanyWebhookRequestFilterMerchantAccountTypeAllAccounts: added
 - UpdateCompanyWebhookRequestFilterMerchantAccountTypeExcludeAccounts: added
 - UpdateCompanyWebhookRequestFilterMerchantAccountTypeIncludeAccounts: added
+- UpdateCompanyWebhookRequestNetworkType: added
 - UpdateCompanyWebhookRequestNetworkTypeLocal: added
 - UpdateCompanyWebhookRequestNetworkTypePublic: added
 - UpdateMerchantApiCredentialRequest.SubjectDN: added
+- UpdateMerchantWebhookRequestCommunicationFormat: added
 - UpdateMerchantWebhookRequestCommunicationFormatHttp: added
 - UpdateMerchantWebhookRequestCommunicationFormatJson: added
 - UpdateMerchantWebhookRequestCommunicationFormatSoap: added
+- UpdateMerchantWebhookRequestEncryptionProtocol: added
 - UpdateMerchantWebhookRequestEncryptionProtocolHTTP: added
 - UpdateMerchantWebhookRequestEncryptionProtocolTLSv12: added
 - UpdateMerchantWebhookRequestEncryptionProtocolTLSv13: added
+- UpdateMerchantWebhookRequestNetworkType: added
 - UpdateMerchantWebhookRequestNetworkTypeLocal: added
 - UpdateMerchantWebhookRequestNetworkTypePublic: added
 - UpdatePaymentMethodInfo.Affirm: added
@@ -1813,63 +2568,41 @@ Compatible changes:
 - UpdatePaymentMethodInfo.PaybybankPlaidCa: added
 - UpdatePaymentMethodInfo.Sepadirectdebit: added
 - UpdateSplitConfigurationLogicRequest.Dcc: added
-- UpdateSplitConfigurationLogicRequestAcquiringFeesDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestAcquiringFeesDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestAdyenCommissionDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestAdyenCommissionDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestAdyenFeesDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestAdyenFeesDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestAdyenMarkupDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestAdyenMarkupDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestChargebackCostAllocationDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestChargebackCostAllocationDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestChargebackDeductAccordingToSplitRatio: added
-- UpdateSplitConfigurationLogicRequestChargebackDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestChargebackDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestInterchangeDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestInterchangeDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestPaymentFeeDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestPaymentFeeDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestRefundCostAllocationDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestRefundCostAllocationDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestRefundDeductAccordingToSplitRatio: added
-- UpdateSplitConfigurationLogicRequestRefundDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestRefundDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestRemainderAddToLiableAccount: added
-- UpdateSplitConfigurationLogicRequestRemainderAddToOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestSchemeFeeDeductFromLiableAccount: added
-- UpdateSplitConfigurationLogicRequestSchemeFeeDeductFromOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestSurchargeAddToLiableAccount: added
-- UpdateSplitConfigurationLogicRequestSurchargeAddToOneBalanceAccount: added
-- UpdateSplitConfigurationLogicRequestTipAddToLiableAccount: added
-- UpdateSplitConfigurationLogicRequestTipAddToOneBalanceAccount: added
 - UpdateSplitConfigurationRuleRequest.CardUsageType: added
+- UpdateSplitConfigurationRuleRequestCardUsageType: added
 - UpdateSplitConfigurationRuleRequestCardUsageTypeANY: added
 - UpdateSplitConfigurationRuleRequestCardUsageTypeCommercial: added
 - UpdateSplitConfigurationRuleRequestCardUsageTypeConsumer: added
 - UpdateStoreRequest.SubMerchantData: added
+- UpdateStoreRequestStatus: added
 - UpdateStoreRequestStatusActive: added
 - UpdateStoreRequestStatusClosed: added
 - UpdateStoreRequestStatusInactive: added
 - UpdateThemeResponse: added
 - ValuelinkInfo: added
+- ValuelinkInfoPinSupport: added
 - ValuelinkInfoPinSupportNOPIN: added
 - ValuelinkInfoPinSupportPIN: added
 - ValuelinkResponseInfo: added
+- ValuelinkResponseInfoPinSupport: added
 - ValuelinkResponseInfoPinSupportNOPIN: added
 - ValuelinkResponseInfoPinSupportPIN: added
 - VippsResponseInfo: added
 - VisaResponseInfo: added
 - WeChatPayPosResponseInfo: added
 - WeChatPayResponseInfo: added
+- WebhookCommunicationFormat: added
 - WebhookCommunicationFormatHttp: added
 - WebhookCommunicationFormatJson: added
 - WebhookCommunicationFormatSoap: added
+- WebhookEncryptionProtocol: added
 - WebhookEncryptionProtocolHTTP: added
 - WebhookEncryptionProtocolTLSv12: added
 - WebhookEncryptionProtocolTLSv13: added
+- WebhookFilterMerchantAccountType: added
 - WebhookFilterMerchantAccountTypeAllAccounts: added
 - WebhookFilterMerchantAccountTypeExcludeAccounts: added
 - WebhookFilterMerchantAccountTypeIncludeAccounts: added
+- WebhookNetworkType: added
 - WebhookNetworkTypeLocal: added
 - WebhookNetworkTypePublic: added

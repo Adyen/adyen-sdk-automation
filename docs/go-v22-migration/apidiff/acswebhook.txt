@@ -1,5 +1,58 @@
 Incompatible changes:
-- NewRelayedAuthenticationRequest: changed from func(string, string, Purchase) *RelayedAuthenticationRequest to func(string, string, string, Purchase, string) *RelayedAuthenticationRequest
+- (*AuthenticationDecision).GetStatus: changed from func() string to func() AuthenticationDecisionStatus
+- (*AuthenticationDecision).GetStatusOk: changed from func() (*string, bool) to func() (*AuthenticationDecisionStatus, bool)
+- (*AuthenticationDecision).SetStatus: changed from func(string) to func(AuthenticationDecisionStatus)
+- (*AuthenticationInfo).GetChallengeIndicator: changed from func() string to func() AuthenticationInfoChallengeIndicator
+- (*AuthenticationInfo).GetChallengeIndicatorOk: changed from func() (*string, bool) to func() (*AuthenticationInfoChallengeIndicator, bool)
+- (*AuthenticationInfo).GetDeviceChannel: changed from func() string to func() AuthenticationInfoDeviceChannel
+- (*AuthenticationInfo).GetDeviceChannelOk: changed from func() (*string, bool) to func() (*AuthenticationInfoDeviceChannel, bool)
+- (*AuthenticationInfo).GetExemptionIndicator: changed from func() string to func() AuthenticationInfoExemptionIndicator
+- (*AuthenticationInfo).GetExemptionIndicatorOk: changed from func() (*string, bool) to func() (*AuthenticationInfoExemptionIndicator, bool)
+- (*AuthenticationInfo).GetMessageCategory: changed from func() string to func() AuthenticationInfoMessageCategory
+- (*AuthenticationInfo).GetMessageCategoryOk: changed from func() (*string, bool) to func() (*AuthenticationInfoMessageCategory, bool)
+- (*AuthenticationInfo).GetTransStatus: changed from func() string to func() AuthenticationInfoTransStatus
+- (*AuthenticationInfo).GetTransStatusOk: changed from func() (*string, bool) to func() (*AuthenticationInfoTransStatus, bool)
+- (*AuthenticationInfo).GetTransStatusReason: changed from func() string to func() AuthenticationInfoTransStatusReason
+- (*AuthenticationInfo).GetTransStatusReasonOk: changed from func() (*string, bool) to func() (*AuthenticationInfoTransStatusReason, bool)
+- (*AuthenticationInfo).GetType: changed from func() string to func() AuthenticationInfoType
+- (*AuthenticationInfo).GetTypeOk: changed from func() (*string, bool) to func() (*AuthenticationInfoType, bool)
+- (*AuthenticationInfo).SetChallengeIndicator: changed from func(string) to func(AuthenticationInfoChallengeIndicator)
+- (*AuthenticationInfo).SetDeviceChannel: changed from func(string) to func(AuthenticationInfoDeviceChannel)
+- (*AuthenticationInfo).SetExemptionIndicator: changed from func(string) to func(AuthenticationInfoExemptionIndicator)
+- (*AuthenticationInfo).SetMessageCategory: changed from func(string) to func(AuthenticationInfoMessageCategory)
+- (*AuthenticationInfo).SetTransStatus: changed from func(string) to func(AuthenticationInfoTransStatus)
+- (*AuthenticationInfo).SetTransStatusReason: changed from func(string) to func(AuthenticationInfoTransStatusReason)
+- (*AuthenticationInfo).SetType: changed from func(string) to func(AuthenticationInfoType)
+- (*AuthenticationNotificationData).GetStatus: changed from func() string to func() AuthenticationNotificationDataStatus
+- (*AuthenticationNotificationData).GetStatusOk: changed from func() (*string, bool) to func() (*AuthenticationNotificationDataStatus, bool)
+- (*AuthenticationNotificationData).SetStatus: changed from func(string) to func(AuthenticationNotificationDataStatus)
+- (*AuthenticationNotificationRequest).GetType: changed from func() string to func() AuthenticationNotificationRequestType
+- (*AuthenticationNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*AuthenticationNotificationRequestType, bool)
+- (*AuthenticationNotificationRequest).SetType: changed from func(string) to func(AuthenticationNotificationRequestType)
+- (*ChallengeInfo).GetChallengeCancel: changed from func() string to func() ChallengeInfoChallengeCancel
+- (*ChallengeInfo).GetChallengeCancelOk: changed from func() (*string, bool) to func() (*ChallengeInfoChallengeCancel, bool)
+- (*ChallengeInfo).GetFlow: changed from func() string to func() ChallengeInfoFlow
+- (*ChallengeInfo).GetFlowOk: changed from func() (*string, bool) to func() (*ChallengeInfoFlow, bool)
+- (*ChallengeInfo).SetChallengeCancel: changed from func(string) to func(ChallengeInfoChallengeCancel)
+- (*ChallengeInfo).SetFlow: changed from func(string) to func(ChallengeInfoFlow)
+- AuthenticationDecision.Status: changed from string to AuthenticationDecisionStatus
+- AuthenticationInfo.ChallengeIndicator: changed from string to AuthenticationInfoChallengeIndicator
+- AuthenticationInfo.DeviceChannel: changed from string to AuthenticationInfoDeviceChannel
+- AuthenticationInfo.ExemptionIndicator: changed from *string to *AuthenticationInfoExemptionIndicator
+- AuthenticationInfo.MessageCategory: changed from string to AuthenticationInfoMessageCategory
+- AuthenticationInfo.TransStatus: changed from string to AuthenticationInfoTransStatus
+- AuthenticationInfo.TransStatusReason: changed from *string to *AuthenticationInfoTransStatusReason
+- AuthenticationInfo.Type: changed from string to AuthenticationInfoType
+- AuthenticationNotificationData.Status: changed from string to AuthenticationNotificationDataStatus
+- AuthenticationNotificationRequest.Type: changed from string to AuthenticationNotificationRequestType
+- ChallengeInfo.ChallengeCancel: changed from *string to *ChallengeInfoChallengeCancel
+- ChallengeInfo.Flow: changed from string to ChallengeInfoFlow
+- NewAuthenticationDecision: changed from func(string) *AuthenticationDecision to func(AuthenticationDecisionStatus) *AuthenticationDecision
+- NewAuthenticationInfo: changed from func(string, string, time.Time, string, string, bool, string, string, string, string, string) *AuthenticationInfo to func(string, AuthenticationInfoChallengeIndicator, time.Time, AuthenticationInfoDeviceChannel, string, bool, AuthenticationInfoMessageCategory, string, string, AuthenticationInfoTransStatus, AuthenticationInfoType) *AuthenticationInfo
+- NewAuthenticationNotificationData: changed from func(AuthenticationInfo, string, string, PurchaseInfo, string) *AuthenticationNotificationData to func(AuthenticationInfo, string, string, PurchaseInfo, AuthenticationNotificationDataStatus) *AuthenticationNotificationData
+- NewAuthenticationNotificationRequest: changed from func(AuthenticationNotificationData, string, string) *AuthenticationNotificationRequest to func(AuthenticationNotificationData, string, AuthenticationNotificationRequestType) *AuthenticationNotificationRequest
+- NewChallengeInfo: changed from func(string, time.Time) *ChallengeInfo to func(ChallengeInfoFlow, time.Time) *ChallengeInfo
+- NewRelayedAuthenticationRequest: changed from func(string, string, Purchase) *RelayedAuthenticationRequest to func(string, string, string, Purchase, RelayedAuthenticationRequestType) *RelayedAuthenticationRequest
 Compatible changes:
 - (*RelayedAuthenticationRequest).GetEnvironment: added
 - (*RelayedAuthenticationRequest).GetEnvironmentOk: added
@@ -15,6 +68,20 @@ Compatible changes:
 - (*RelayedAuthenticationRequest).SetThreeDSRequestorAppURL: added
 - (*RelayedAuthenticationRequest).SetTimestamp: added
 - (*RelayedAuthenticationRequest).SetType: added
+- AllowedAuthenticationDecisionStatusEnumValues: added
+- AllowedAuthenticationInfoChallengeIndicatorEnumValues: added
+- AllowedAuthenticationInfoDeviceChannelEnumValues: added
+- AllowedAuthenticationInfoExemptionIndicatorEnumValues: added
+- AllowedAuthenticationInfoMessageCategoryEnumValues: added
+- AllowedAuthenticationInfoTransStatusEnumValues: added
+- AllowedAuthenticationInfoTransStatusReasonEnumValues: added
+- AllowedAuthenticationInfoTypeEnumValues: added
+- AllowedAuthenticationNotificationDataStatusEnumValues: added
+- AllowedAuthenticationNotificationRequestTypeEnumValues: added
+- AllowedChallengeInfoChallengeCancelEnumValues: added
+- AllowedChallengeInfoFlowEnumValues: added
+- AllowedRelayedAuthenticationRequestTypeEnumValues: added
+- AuthenticationDecisionStatus: added
 - AuthenticationDecisionStatusProceed: added
 - AuthenticationDecisionStatusRefused: added
 - AuthenticationInfoChallengeIndicator01: added
@@ -27,9 +94,12 @@ Compatible changes:
 - AuthenticationInfoChallengeIndicator09: added
 - AuthenticationInfoChallengeIndicator80: added
 - AuthenticationInfoChallengeIndicator82: added
+- AuthenticationInfoChallengeIndicator: added
+- AuthenticationInfoDeviceChannel: added
 - AuthenticationInfoDeviceChannelApp: added
 - AuthenticationInfoDeviceChannelBrowser: added
 - AuthenticationInfoDeviceChannelThreeDSRequestorInitiated: added
+- AuthenticationInfoExemptionIndicator: added
 - AuthenticationInfoExemptionIndicatorAcquirerExemption: added
 - AuthenticationInfoExemptionIndicatorLowValue: added
 - AuthenticationInfoExemptionIndicatorNoExemptionApplied: added
@@ -37,8 +107,10 @@ Compatible changes:
 - AuthenticationInfoExemptionIndicatorTransactionRiskAnalysis: added
 - AuthenticationInfoExemptionIndicatorTrustedBeneficiary: added
 - AuthenticationInfoExemptionIndicatorVisaDAFExemption: added
+- AuthenticationInfoMessageCategory: added
 - AuthenticationInfoMessageCategoryNonPayment: added
 - AuthenticationInfoMessageCategoryPayment: added
+- AuthenticationInfoTransStatus: added
 - AuthenticationInfoTransStatusI: added
 - AuthenticationInfoTransStatusN: added
 - AuthenticationInfoTransStatusR: added
@@ -77,13 +149,17 @@ Compatible changes:
 - AuthenticationInfoTransStatusReason86: added
 - AuthenticationInfoTransStatusReason87: added
 - AuthenticationInfoTransStatusReason88: added
+- AuthenticationInfoTransStatusReason: added
 - AuthenticationInfoTransStatusU: added
 - AuthenticationInfoTransStatusY: added
+- AuthenticationInfoType: added
 - AuthenticationInfoTypeChallenge: added
 - AuthenticationInfoTypeFrictionless: added
+- AuthenticationNotificationDataStatus: added
 - AuthenticationNotificationDataStatusAuthenticated: added
 - AuthenticationNotificationDataStatusError: added
 - AuthenticationNotificationDataStatusRejected: added
+- AuthenticationNotificationRequestType: added
 - AuthenticationNotificationRequestTypeBalancePlatformAuthenticationCreated: added
 - ChallengeInfoChallengeCancel00: added
 - ChallengeInfoChallengeCancel01: added
@@ -94,14 +170,56 @@ Compatible changes:
 - ChallengeInfoChallengeCancel06: added
 - ChallengeInfoChallengeCancel07: added
 - ChallengeInfoChallengeCancel08: added
+- ChallengeInfoChallengeCancel: added
+- ChallengeInfoFlow: added
 - ChallengeInfoFlowOOBTRIGGERFL: added
 - ChallengeInfoFlowOTPPHONEFL: added
 - ChallengeInfoFlowPASSKEYTRIGGERFL: added
 - ChallengeInfoFlowPWDOTPEMAILFL: added
 - ChallengeInfoFlowPWDOTPPHONEFL: added
 - HandleRelayedAuthenticationRequest: added
+- NewAuthenticationDecisionStatusFromValue: added
+- NewAuthenticationInfoChallengeIndicatorFromValue: added
+- NewAuthenticationInfoDeviceChannelFromValue: added
+- NewAuthenticationInfoExemptionIndicatorFromValue: added
+- NewAuthenticationInfoMessageCategoryFromValue: added
+- NewAuthenticationInfoTransStatusFromValue: added
+- NewAuthenticationInfoTransStatusReasonFromValue: added
+- NewAuthenticationInfoTypeFromValue: added
+- NewAuthenticationNotificationDataStatusFromValue: added
+- NewAuthenticationNotificationRequestTypeFromValue: added
+- NewChallengeInfoChallengeCancelFromValue: added
+- NewChallengeInfoFlowFromValue: added
+- NewNullableAuthenticationDecisionStatus: added
+- NewNullableAuthenticationInfoChallengeIndicator: added
+- NewNullableAuthenticationInfoDeviceChannel: added
+- NewNullableAuthenticationInfoExemptionIndicator: added
+- NewNullableAuthenticationInfoMessageCategory: added
+- NewNullableAuthenticationInfoTransStatus: added
+- NewNullableAuthenticationInfoTransStatusReason: added
+- NewNullableAuthenticationInfoType: added
+- NewNullableAuthenticationNotificationDataStatus: added
+- NewNullableAuthenticationNotificationRequestType: added
+- NewNullableChallengeInfoChallengeCancel: added
+- NewNullableChallengeInfoFlow: added
+- NewNullableRelayedAuthenticationRequestType: added
+- NewRelayedAuthenticationRequestTypeFromValue: added
+- NullableAuthenticationDecisionStatus: added
+- NullableAuthenticationInfoChallengeIndicator: added
+- NullableAuthenticationInfoDeviceChannel: added
+- NullableAuthenticationInfoExemptionIndicator: added
+- NullableAuthenticationInfoMessageCategory: added
+- NullableAuthenticationInfoTransStatus: added
+- NullableAuthenticationInfoTransStatusReason: added
+- NullableAuthenticationInfoType: added
+- NullableAuthenticationNotificationDataStatus: added
+- NullableAuthenticationNotificationRequestType: added
+- NullableChallengeInfoChallengeCancel: added
+- NullableChallengeInfoFlow: added
+- NullableRelayedAuthenticationRequestType: added
 - RelayedAuthenticationRequest.Environment: added
 - RelayedAuthenticationRequest.ThreeDSRequestorAppURL: added
 - RelayedAuthenticationRequest.Timestamp: added
 - RelayedAuthenticationRequest.Type: added
+- RelayedAuthenticationRequestType: added
 - RelayedAuthenticationRequestTypeBalancePlatformAuthenticationRelayed: added

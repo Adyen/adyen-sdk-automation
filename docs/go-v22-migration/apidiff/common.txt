@@ -1,4 +1,31 @@
+Incompatible changes:
+- (*Client).MakeHTTPDeleteRequest: removed
+- (*Client).MakeHTTPGetRequest: removed
+- (*Client).MakeHTTPPatchRequest: removed
+- (*Client).MakeHTTPPostRequest: removed
+- APIError.Code: removed
+- APIError.Err: changed from string to error
+- APIError.Error: removed
+- APIError.Status: removed
+- Config.PosTerminalManagementEndpoint: removed
+- CreateHTTPRequest: removed
+- NewAPIError: removed
+- NewNullableRestServiceError: removed
+- NewRestServiceError: removed
+- NewRestServiceErrorWithDefaults: removed
+- NullableRestServiceError: removed
+- RestServiceError: removed
 Compatible changes:
+- (*APIError).Unwrap: added
+- APIError.Detail: added
+- APIError.ErrorCode: added
+- APIError.ErrorType: added
+- APIError.Instance: added
+- APIError.InvalidFields: added
+- APIError.PspReference: added
+- APIError.RequestID: added
+- APIError.StatusCode: added
+- APIError.Title: added
 - Config.CapitalEndpoint: added
 - Config.DocumentCollectorEndpoint: added
 - Config.ForeignExchangeEndpoint: added

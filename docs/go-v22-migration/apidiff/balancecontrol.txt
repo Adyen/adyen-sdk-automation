@@ -1,17 +1,48 @@
+Incompatible changes:
+- (*BalanceTransferRequest).GetType: changed from func() string to func() BalanceTransferRequestType
+- (*BalanceTransferRequest).GetTypeOk: changed from func() (*string, bool) to func() (*BalanceTransferRequestType, bool)
+- (*BalanceTransferRequest).SetType: changed from func(string) to func(BalanceTransferRequestType)
+- (*BalanceTransferResponse).GetStatus: changed from func() string to func() BalanceTransferResponseStatus
+- (*BalanceTransferResponse).GetStatusOk: changed from func() (*string, bool) to func() (*BalanceTransferResponseStatus, bool)
+- (*BalanceTransferResponse).GetType: changed from func() string to func() BalanceTransferResponseType
+- (*BalanceTransferResponse).GetTypeOk: changed from func() (*string, bool) to func() (*BalanceTransferResponseType, bool)
+- (*BalanceTransferResponse).SetStatus: changed from func(string) to func(BalanceTransferResponseStatus)
+- (*BalanceTransferResponse).SetType: changed from func(string) to func(BalanceTransferResponseType)
+- BalanceTransferRequest.Type: changed from string to BalanceTransferRequestType
+- BalanceTransferResponse.Status: changed from string to BalanceTransferResponseStatus
+- BalanceTransferResponse.Type: changed from string to BalanceTransferResponseType
+- GeneralApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- NewBalanceTransferRequest: changed from func(Amount, string, string, string) *BalanceTransferRequest to func(Amount, string, string, BalanceTransferRequestType) *BalanceTransferRequest
+- NewBalanceTransferResponse: changed from func(Amount, time.Time, string, string, string, string, string) *BalanceTransferResponse to func(Amount, time.Time, string, string, BalanceTransferResponseStatus, string, BalanceTransferResponseType) *BalanceTransferResponse
 Compatible changes:
+- AllowedBalanceTransferRequestTypeEnumValues: added
+- AllowedBalanceTransferResponseStatusEnumValues: added
+- AllowedBalanceTransferResponseTypeEnumValues: added
+- BalanceTransferRequestType: added
 - BalanceTransferRequestTypeAdjustment: added
 - BalanceTransferRequestTypeCredit: added
 - BalanceTransferRequestTypeDebit: added
 - BalanceTransferRequestTypeFee: added
 - BalanceTransferRequestTypeTax: added
 - BalanceTransferRequestTypeTerminalSale: added
+- BalanceTransferResponseStatus: added
 - BalanceTransferResponseStatusError: added
 - BalanceTransferResponseStatusFailed: added
 - BalanceTransferResponseStatusNotEnoughBalance: added
 - BalanceTransferResponseStatusTransferred: added
+- BalanceTransferResponseType: added
 - BalanceTransferResponseTypeAdjustment: added
 - BalanceTransferResponseTypeCredit: added
 - BalanceTransferResponseTypeDebit: added
 - BalanceTransferResponseTypeFee: added
 - BalanceTransferResponseTypeTax: added
 - BalanceTransferResponseTypeTerminalSale: added
+- NewBalanceTransferRequestTypeFromValue: added
+- NewBalanceTransferResponseStatusFromValue: added
+- NewBalanceTransferResponseTypeFromValue: added
+- NewNullableBalanceTransferRequestType: added
+- NewNullableBalanceTransferResponseStatus: added
+- NewNullableBalanceTransferResponseType: added
+- NullableBalanceTransferRequestType: added
+- NullableBalanceTransferResponseStatus: added
+- NullableBalanceTransferResponseType: added

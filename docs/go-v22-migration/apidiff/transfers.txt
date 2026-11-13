@@ -1,17 +1,305 @@
 Incompatible changes:
+- (*AULocalAccountIdentification).GetType: changed from func() string to func() AULocalAccountIdentificationType
+- (*AULocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*AULocalAccountIdentificationType, bool)
+- (*AULocalAccountIdentification).SetType: changed from func(string) to func(AULocalAccountIdentificationType)
+- (*AdditionalBankIdentification).GetType: changed from func() string to func() AdditionalBankIdentificationType
+- (*AdditionalBankIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*AdditionalBankIdentificationType, bool)
+- (*AdditionalBankIdentification).SetType: changed from func(string) to func(AdditionalBankIdentificationType)
+- (*AmountAdjustment).GetAmountAdjustmentType: changed from func() string to func() AmountAdjustmentAmountAdjustmentType
+- (*AmountAdjustment).GetAmountAdjustmentTypeOk: changed from func() (*string, bool) to func() (*AmountAdjustmentAmountAdjustmentType, bool)
+- (*AmountAdjustment).SetAmountAdjustmentType: changed from func(string) to func(AmountAdjustmentAmountAdjustmentType)
+- (*BRLocalAccountIdentification).GetType: changed from func() string to func() BRLocalAccountIdentificationType
+- (*BRLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*BRLocalAccountIdentificationType, bool)
+- (*BRLocalAccountIdentification).SetType: changed from func(string) to func(BRLocalAccountIdentificationType)
+- (*BankCategoryData).GetPriority: changed from func() string to func() BankCategoryDataPriority
+- (*BankCategoryData).GetPriorityOk: changed from func() (*string, bool) to func() (*BankCategoryDataPriority, bool)
+- (*BankCategoryData).GetType: changed from func() string to func() BankCategoryDataType
+- (*BankCategoryData).GetTypeOk: changed from func() (*string, bool) to func() (*BankCategoryDataType, bool)
+- (*BankCategoryData).SetPriority: changed from func(string) to func(BankCategoryDataPriority)
+- (*BankCategoryData).SetType: changed from func(string) to func(BankCategoryDataType)
+- (*CALocalAccountIdentification).GetAccountType: changed from func() string to func() CALocalAccountIdentificationAccountType
+- (*CALocalAccountIdentification).GetAccountTypeOk: changed from func() (*string, bool) to func() (*CALocalAccountIdentificationAccountType, bool)
+- (*CALocalAccountIdentification).GetType: changed from func() string to func() CALocalAccountIdentificationType
+- (*CALocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*CALocalAccountIdentificationType, bool)
+- (*CALocalAccountIdentification).SetAccountType: changed from func(string) to func(CALocalAccountIdentificationAccountType)
+- (*CALocalAccountIdentification).SetType: changed from func(string) to func(CALocalAccountIdentificationType)
+- (*CZLocalAccountIdentification).GetType: changed from func() string to func() CZLocalAccountIdentificationType
+- (*CZLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*CZLocalAccountIdentificationType, bool)
+- (*CZLocalAccountIdentification).SetType: changed from func(string) to func(CZLocalAccountIdentificationType)
 - (*CapitalGrant).GetCounterparty: changed from func() Counterparty to func() GrantCounterparty
 - (*CapitalGrant).GetCounterpartyOk: changed from func() (*Counterparty, bool) to func() (*GrantCounterparty, bool)
+- (*CapitalGrant).GetStatus: changed from func() string to func() CapitalGrantStatus
+- (*CapitalGrant).GetStatusOk: changed from func() (*string, bool) to func() (*CapitalGrantStatus, bool)
 - (*CapitalGrant).SetCounterparty: changed from func(Counterparty) to func(GrantCounterparty)
+- (*CapitalGrant).SetStatus: changed from func(string) to func(CapitalGrantStatus)
 - (*CapitalGrantInfo).GetCounterparty: changed from func() Counterparty to func() GrantInfoCounterparty
 - (*CapitalGrantInfo).GetCounterpartyOk: changed from func() (*Counterparty, bool) to func() (*GrantInfoCounterparty, bool)
 - (*CapitalGrantInfo).SetCounterparty: changed from func(Counterparty) to func(GrantInfoCounterparty)
+- (*ConfirmationTrackingData).GetStatus: changed from func() string to func() ConfirmationTrackingDataStatus
+- (*ConfirmationTrackingData).GetStatusOk: changed from func() (*string, bool) to func() (*ConfirmationTrackingDataStatus, bool)
+- (*ConfirmationTrackingData).GetType: changed from func() string to func() ConfirmationTrackingDataType
+- (*ConfirmationTrackingData).GetTypeOk: changed from func() (*string, bool) to func() (*ConfirmationTrackingDataType, bool)
+- (*ConfirmationTrackingData).SetStatus: changed from func(string) to func(ConfirmationTrackingDataStatus)
+- (*ConfirmationTrackingData).SetType: changed from func(string) to func(ConfirmationTrackingDataType)
+- (*DKLocalAccountIdentification).GetType: changed from func() string to func() DKLocalAccountIdentificationType
+- (*DKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*DKLocalAccountIdentificationType, bool)
+- (*DKLocalAccountIdentification).SetType: changed from func(string) to func(DKLocalAccountIdentificationType)
+- (*EstimationTrackingData).GetType: changed from func() string to func() EstimationTrackingDataType
+- (*EstimationTrackingData).GetTypeOk: changed from func() (*string, bool) to func() (*EstimationTrackingDataType, bool)
+- (*EstimationTrackingData).SetType: changed from func(string) to func(EstimationTrackingDataType)
+- (*FundingInstrument).GetSourceOfFunds: changed from func() string to func() FundingInstrumentSourceOfFunds
+- (*FundingInstrument).GetSourceOfFundsOk: changed from func() (*string, bool) to func() (*FundingInstrumentSourceOfFunds, bool)
+- (*FundingInstrument).SetSourceOfFunds: changed from func(string) to func(FundingInstrumentSourceOfFunds)
+- (*HKLocalAccountIdentification).GetType: changed from func() string to func() HKLocalAccountIdentificationType
+- (*HKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*HKLocalAccountIdentificationType, bool)
+- (*HKLocalAccountIdentification).SetType: changed from func(string) to func(HKLocalAccountIdentificationType)
+- (*HULocalAccountIdentification).GetType: changed from func() string to func() HULocalAccountIdentificationType
+- (*HULocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*HULocalAccountIdentificationType, bool)
+- (*HULocalAccountIdentification).SetType: changed from func(string) to func(HULocalAccountIdentificationType)
+- (*IbanAccountIdentification).GetType: changed from func() string to func() IbanAccountIdentificationType
+- (*IbanAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*IbanAccountIdentificationType, bool)
+- (*IbanAccountIdentification).SetType: changed from func(string) to func(IbanAccountIdentificationType)
+- (*InternalCategoryData).GetType: changed from func() string to func() InternalCategoryDataType
+- (*InternalCategoryData).GetTypeOk: changed from func() (*string, bool) to func() (*InternalCategoryDataType, bool)
+- (*InternalCategoryData).SetType: changed from func(string) to func(InternalCategoryDataType)
+- (*InternalReviewTrackingData).GetReason: changed from func() string to func() InternalReviewTrackingDataReason
+- (*InternalReviewTrackingData).GetReasonOk: changed from func() (*string, bool) to func() (*InternalReviewTrackingDataReason, bool)
+- (*InternalReviewTrackingData).GetStatus: changed from func() string to func() InternalReviewTrackingDataStatus
+- (*InternalReviewTrackingData).GetStatusOk: changed from func() (*string, bool) to func() (*InternalReviewTrackingDataStatus, bool)
+- (*InternalReviewTrackingData).GetType: changed from func() string to func() InternalReviewTrackingDataType
+- (*InternalReviewTrackingData).GetTypeOk: changed from func() (*string, bool) to func() (*InternalReviewTrackingDataType, bool)
+- (*InternalReviewTrackingData).SetReason: changed from func(string) to func(InternalReviewTrackingDataReason)
+- (*InternalReviewTrackingData).SetStatus: changed from func(string) to func(InternalReviewTrackingDataStatus)
+- (*InternalReviewTrackingData).SetType: changed from func(string) to func(InternalReviewTrackingDataType)
+- (*IssuedCard).GetPanEntryMode: changed from func() string to func() IssuedCardPanEntryMode
+- (*IssuedCard).GetPanEntryModeOk: changed from func() (*string, bool) to func() (*IssuedCardPanEntryMode, bool)
+- (*IssuedCard).GetProcessingType: changed from func() string to func() IssuedCardProcessingType
+- (*IssuedCard).GetProcessingTypeOk: changed from func() (*string, bool) to func() (*IssuedCardProcessingType, bool)
+- (*IssuedCard).GetType: changed from func() string to func() IssuedCardType
+- (*IssuedCard).GetTypeOk: changed from func() (*string, bool) to func() (*IssuedCardType, bool)
+- (*IssuedCard).SetPanEntryMode: changed from func(string) to func(IssuedCardPanEntryMode)
+- (*IssuedCard).SetProcessingType: changed from func(string) to func(IssuedCardProcessingType)
+- (*IssuedCard).SetType: changed from func(string) to func(IssuedCardType)
+- (*IssuingTransactionData).GetType: changed from func() string to func() IssuingTransactionDataType
+- (*IssuingTransactionData).GetTypeOk: changed from func() (*string, bool) to func() (*IssuingTransactionDataType, bool)
+- (*IssuingTransactionData).SetType: changed from func(string) to func(IssuingTransactionDataType)
+- (*MerchantPurchaseData).GetType: changed from func() string to func() MerchantPurchaseDataType
+- (*MerchantPurchaseData).GetTypeOk: changed from func() (*string, bool) to func() (*MerchantPurchaseDataType, bool)
+- (*MerchantPurchaseData).SetType: changed from func(string) to func(MerchantPurchaseDataType)
+- (*Modification).GetStatus: changed from func() string to func() ModificationStatus
+- (*Modification).GetStatusOk: changed from func() (*string, bool) to func() (*ModificationStatus, bool)
+- (*Modification).SetStatus: changed from func(string) to func(ModificationStatus)
+- (*NOLocalAccountIdentification).GetType: changed from func() string to func() NOLocalAccountIdentificationType
+- (*NOLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NOLocalAccountIdentificationType, bool)
+- (*NOLocalAccountIdentification).SetType: changed from func(string) to func(NOLocalAccountIdentificationType)
+- (*NZLocalAccountIdentification).GetType: changed from func() string to func() NZLocalAccountIdentificationType
+- (*NZLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NZLocalAccountIdentificationType, bool)
+- (*NZLocalAccountIdentification).SetType: changed from func(string) to func(NZLocalAccountIdentificationType)
+- (*NumberAndBicAccountIdentification).GetType: changed from func() string to func() NumberAndBicAccountIdentificationType
+- (*NumberAndBicAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NumberAndBicAccountIdentificationType, bool)
+- (*NumberAndBicAccountIdentification).SetType: changed from func(string) to func(NumberAndBicAccountIdentificationType)
+- (*PLLocalAccountIdentification).GetType: changed from func() string to func() PLLocalAccountIdentificationType
+- (*PLLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*PLLocalAccountIdentificationType, bool)
+- (*PLLocalAccountIdentification).SetType: changed from func(string) to func(PLLocalAccountIdentificationType)
+- (*PartyIdentification).GetType: changed from func() string to func() PartyIdentificationType
+- (*PartyIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*PartyIdentificationType, bool)
+- (*PartyIdentification).SetType: changed from func(string) to func(PartyIdentificationType)
+- (*PlatformPayment).GetPlatformPaymentType: changed from func() string to func() PlatformPaymentPlatformPaymentType
+- (*PlatformPayment).GetPlatformPaymentTypeOk: changed from func() (*string, bool) to func() (*PlatformPaymentPlatformPaymentType, bool)
+- (*PlatformPayment).GetType: changed from func() string to func() PlatformPaymentType
+- (*PlatformPayment).GetTypeOk: changed from func() (*string, bool) to func() (*PlatformPaymentType, bool)
+- (*PlatformPayment).SetPlatformPaymentType: changed from func(string) to func(PlatformPaymentPlatformPaymentType)
+- (*PlatformPayment).SetType: changed from func(string) to func(PlatformPaymentType)
+- (*ReturnTransferResponse).GetStatus: changed from func() string to func() ReturnTransferResponseStatus
+- (*ReturnTransferResponse).GetStatusOk: changed from func() (*string, bool) to func() (*ReturnTransferResponseStatus, bool)
+- (*ReturnTransferResponse).SetStatus: changed from func(string) to func(ReturnTransferResponseStatus)
+- (*RoutingDetails).GetPriority: changed from func() string to func() RoutingDetailsPriority
+- (*RoutingDetails).GetPriorityOk: changed from func() (*string, bool) to func() (*RoutingDetailsPriority, bool)
+- (*RoutingDetails).SetPriority: changed from func(string) to func(RoutingDetailsPriority)
+- (*SELocalAccountIdentification).GetType: changed from func() string to func() SELocalAccountIdentificationType
+- (*SELocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*SELocalAccountIdentificationType, bool)
+- (*SELocalAccountIdentification).SetType: changed from func(string) to func(SELocalAccountIdentificationType)
+- (*SGLocalAccountIdentification).GetType: changed from func() string to func() SGLocalAccountIdentificationType
+- (*SGLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*SGLocalAccountIdentificationType, bool)
+- (*SGLocalAccountIdentification).SetType: changed from func(string) to func(SGLocalAccountIdentificationType)
+- (*Transaction).GetStatus: changed from func() string to func() TransactionStatus
+- (*Transaction).GetStatusOk: changed from func() (*string, bool) to func() (*TransactionStatus, bool)
+- (*Transaction).SetStatus: changed from func(string) to func(TransactionStatus)
+- (*Transfer).GetCategory: changed from func() string to func() TransferCategory
+- (*Transfer).GetCategoryOk: changed from func() (*string, bool) to func() (*TransferCategory, bool)
+- (*Transfer).GetDirection: changed from func() string to func() TransferDirection
+- (*Transfer).GetDirectionOk: changed from func() (*string, bool) to func() (*TransferDirection, bool)
+- (*Transfer).GetReason: changed from func() string to func() TransferReason
+- (*Transfer).GetReasonOk: changed from func() (*string, bool) to func() (*TransferReason, bool)
+- (*Transfer).GetStatus: changed from func() string to func() TransferStatus
+- (*Transfer).GetStatusOk: changed from func() (*string, bool) to func() (*TransferStatus, bool)
+- (*Transfer).GetType: changed from func() string to func() TransferType
+- (*Transfer).GetTypeOk: changed from func() (*string, bool) to func() (*TransferType, bool)
+- (*Transfer).SetCategory: changed from func(string) to func(TransferCategory)
+- (*Transfer).SetDirection: changed from func(string) to func(TransferDirection)
+- (*Transfer).SetReason: changed from func(string) to func(TransferReason)
+- (*Transfer).SetStatus: changed from func(string) to func(TransferStatus)
+- (*Transfer).SetType: changed from func(string) to func(TransferType)
+- (*TransferData).GetCategory: changed from func() string to func() TransferDataCategory
+- (*TransferData).GetCategoryData: changed from func() TransferCategoryData to func() TransferDataCategoryData
+- (*TransferData).GetCategoryDataOk: changed from func() (*TransferCategoryData, bool) to func() (*TransferDataCategoryData, bool)
+- (*TransferData).GetCategoryOk: changed from func() (*string, bool) to func() (*TransferDataCategory, bool)
+- (*TransferData).GetDirection: changed from func() string to func() TransferDataDirection
+- (*TransferData).GetDirectionOk: changed from func() (*string, bool) to func() (*TransferDataDirection, bool)
+- (*TransferData).GetReason: changed from func() string to func() TransferDataReason
+- (*TransferData).GetReasonOk: changed from func() (*string, bool) to func() (*TransferDataReason, bool)
+- (*TransferData).GetStatus: changed from func() string to func() TransferDataStatus
+- (*TransferData).GetStatusOk: changed from func() (*string, bool) to func() (*TransferDataStatus, bool)
+- (*TransferData).GetType: changed from func() string to func() TransferDataType
+- (*TransferData).GetTypeOk: changed from func() (*string, bool) to func() (*TransferDataType, bool)
+- (*TransferData).SetCategory: changed from func(string) to func(TransferDataCategory)
+- (*TransferData).SetCategoryData: changed from func(TransferCategoryData) to func(TransferDataCategoryData)
+- (*TransferData).SetDirection: changed from func(string) to func(TransferDataDirection)
+- (*TransferData).SetReason: changed from func(string) to func(TransferDataReason)
+- (*TransferData).SetStatus: changed from func(string) to func(TransferDataStatus)
+- (*TransferData).SetType: changed from func(string) to func(TransferDataType)
+- (*TransferEvent).GetReason: changed from func() string to func() TransferEventReason
+- (*TransferEvent).GetReasonOk: changed from func() (*string, bool) to func() (*TransferEventReason, bool)
+- (*TransferEvent).GetStatus: changed from func() string to func() TransferEventStatus
+- (*TransferEvent).GetStatusOk: changed from func() (*string, bool) to func() (*TransferEventStatus, bool)
+- (*TransferEvent).GetType: changed from func() string to func() TransferEventType
+- (*TransferEvent).GetTypeOk: changed from func() (*string, bool) to func() (*TransferEventType, bool)
+- (*TransferEvent).SetReason: changed from func(string) to func(TransferEventReason)
+- (*TransferEvent).SetStatus: changed from func(string) to func(TransferEventStatus)
+- (*TransferEvent).SetType: changed from func(string) to func(TransferEventType)
+- (*TransferInfo).GetCategory: changed from func() string to func() TransferInfoCategory
+- (*TransferInfo).GetCategoryOk: changed from func() (*string, bool) to func() (*TransferInfoCategory, bool)
+- (*TransferInfo).GetPriorities: changed from func() []string to func() []TransferInfoPriorities
+- (*TransferInfo).GetPrioritiesOk: changed from func() ([]string, bool) to func() ([]TransferInfoPriorities, bool)
+- (*TransferInfo).GetPriority: changed from func() string to func() TransferInfoPriority
+- (*TransferInfo).GetPriorityOk: changed from func() (*string, bool) to func() (*TransferInfoPriority, bool)
+- (*TransferInfo).GetType: changed from func() string to func() TransferInfoType
+- (*TransferInfo).GetTypeOk: changed from func() (*string, bool) to func() (*TransferInfoType, bool)
+- (*TransferInfo).SetCategory: changed from func(string) to func(TransferInfoCategory)
+- (*TransferInfo).SetPriorities: changed from func([]string) to func([]TransferInfoPriorities)
+- (*TransferInfo).SetPriority: changed from func(string) to func(TransferInfoPriority)
+- (*TransferInfo).SetType: changed from func(string) to func(TransferInfoType)
+- (*TransferReview).GetScaOnApproval: changed from func() string to func() TransferReviewScaOnApproval
+- (*TransferReview).GetScaOnApprovalOk: changed from func() (*string, bool) to func() (*TransferReviewScaOnApproval, bool)
+- (*TransferReview).SetScaOnApproval: changed from func(string) to func(TransferReviewScaOnApproval)
+- (*TransferView).GetCategoryData: changed from func() TransferCategoryData to func() TransferViewCategoryData
+- (*TransferView).GetCategoryDataOk: changed from func() (*TransferCategoryData, bool) to func() (*TransferViewCategoryData, bool)
+- (*TransferView).SetCategoryData: changed from func(TransferCategoryData) to func(TransferViewCategoryData)
+- (*UKLocalAccountIdentification).GetType: changed from func() string to func() UKLocalAccountIdentificationType
+- (*UKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*UKLocalAccountIdentificationType, bool)
+- (*UKLocalAccountIdentification).SetType: changed from func(string) to func(UKLocalAccountIdentificationType)
+- (*USLocalAccountIdentification).GetAccountType: changed from func() string to func() USLocalAccountIdentificationAccountType
+- (*USLocalAccountIdentification).GetAccountTypeOk: changed from func() (*string, bool) to func() (*USLocalAccountIdentificationAccountType, bool)
+- (*USLocalAccountIdentification).GetType: changed from func() string to func() USLocalAccountIdentificationType
+- (*USLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*USLocalAccountIdentificationType, bool)
+- (*USLocalAccountIdentification).SetAccountType: changed from func(string) to func(USLocalAccountIdentificationAccountType)
+- (*USLocalAccountIdentification).SetType: changed from func(string) to func(USLocalAccountIdentificationType)
+- (*UltimatePartyIdentification).GetType: changed from func() string to func() UltimatePartyIdentificationType
+- (*UltimatePartyIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*UltimatePartyIdentificationType, bool)
+- (*UltimatePartyIdentification).SetType: changed from func(string) to func(UltimatePartyIdentificationType)
+- AULocalAccountIdentification.Type: changed from string to AULocalAccountIdentificationType
+- AdditionalBankIdentification.Type: changed from *string to *AdditionalBankIdentificationType
+- AmountAdjustment.AmountAdjustmentType: changed from *string to *AmountAdjustmentAmountAdjustmentType
+- BRLocalAccountIdentification.Type: changed from string to BRLocalAccountIdentificationType
+- BankCategoryData.Priority: changed from *string to *BankCategoryDataPriority
+- BankCategoryData.Type: changed from *string to *BankCategoryDataType
+- CALocalAccountIdentification.AccountType: changed from *string to *CALocalAccountIdentificationAccountType
+- CALocalAccountIdentification.Type: changed from string to CALocalAccountIdentificationType
+- CZLocalAccountIdentification.Type: changed from string to CZLocalAccountIdentificationType
+- CapitalApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
 - CapitalGrant.Counterparty: changed from *Counterparty to *GrantCounterparty
+- CapitalGrant.Status: changed from string to CapitalGrantStatus
 - CapitalGrantInfo.Counterparty: changed from *Counterparty to *GrantInfoCounterparty
+- ConfirmationTrackingData.Status: changed from string to ConfirmationTrackingDataStatus
+- ConfirmationTrackingData.Type: changed from string to ConfirmationTrackingDataType
 - Counterparty: removed
+- DKLocalAccountIdentification.Type: changed from string to DKLocalAccountIdentificationType
+- EstimationTrackingData.Type: changed from string to EstimationTrackingDataType
+- FundingInstrument.SourceOfFunds: changed from *string to *FundingInstrumentSourceOfFunds
+- HKLocalAccountIdentification.Type: changed from string to HKLocalAccountIdentificationType
+- HULocalAccountIdentification.Type: changed from string to HULocalAccountIdentificationType
+- IbanAccountIdentification.Type: changed from string to IbanAccountIdentificationType
+- InternalCategoryData.Type: changed from *string to *InternalCategoryDataType
+- InternalReviewTrackingData.Reason: changed from *string to *InternalReviewTrackingDataReason
+- InternalReviewTrackingData.Status: changed from string to InternalReviewTrackingDataStatus
+- InternalReviewTrackingData.Type: changed from string to InternalReviewTrackingDataType
+- IssuedCard.PanEntryMode: changed from *string to *IssuedCardPanEntryMode
+- IssuedCard.ProcessingType: changed from *string to *IssuedCardProcessingType
+- IssuedCard.Type: changed from *string to *IssuedCardType
+- IssuingTransactionData.Type: changed from string to IssuingTransactionDataType
+- MerchantPurchaseData.Type: changed from string to MerchantPurchaseDataType
+- Modification.Status: changed from *string to *ModificationStatus
+- NOLocalAccountIdentification.Type: changed from string to NOLocalAccountIdentificationType
+- NZLocalAccountIdentification.Type: changed from string to NZLocalAccountIdentificationType
+- NewAPIClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Client) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Client) *APIClient
+- NewAULocalAccountIdentification: changed from func(string, string, string) *AULocalAccountIdentification to func(string, string, AULocalAccountIdentificationType) *AULocalAccountIdentification
+- NewBRLocalAccountIdentification: changed from func(string, string, string, string) *BRLocalAccountIdentification to func(string, string, string, BRLocalAccountIdentificationType) *BRLocalAccountIdentification
+- NewCALocalAccountIdentification: changed from func(string, string, string, string) *CALocalAccountIdentification to func(string, string, string, CALocalAccountIdentificationType) *CALocalAccountIdentification
+- NewCZLocalAccountIdentification: changed from func(string, string, string) *CZLocalAccountIdentification to func(string, string, CZLocalAccountIdentificationType) *CZLocalAccountIdentification
+- NewCapitalGrant: changed from func(CapitalBalance, string, string, string, string) *CapitalGrant to func(CapitalBalance, string, string, string, CapitalGrantStatus) *CapitalGrant
+- NewConfirmationTrackingData: changed from func(string, string) *ConfirmationTrackingData to func(ConfirmationTrackingDataStatus, ConfirmationTrackingDataType) *ConfirmationTrackingData
 - NewCounterparty: removed
 - NewCounterpartyWithDefaults: removed
+- NewDKLocalAccountIdentification: changed from func(string, string, string) *DKLocalAccountIdentification to func(string, string, DKLocalAccountIdentificationType) *DKLocalAccountIdentification
+- NewEstimationTrackingData: changed from func(time.Time, string) *EstimationTrackingData to func(time.Time, EstimationTrackingDataType) *EstimationTrackingData
+- NewHKLocalAccountIdentification: changed from func(string, string, string) *HKLocalAccountIdentification to func(string, string, HKLocalAccountIdentificationType) *HKLocalAccountIdentification
+- NewHULocalAccountIdentification: changed from func(string, string) *HULocalAccountIdentification to func(string, HULocalAccountIdentificationType) *HULocalAccountIdentification
+- NewIbanAccountIdentification: changed from func(string, string) *IbanAccountIdentification to func(string, IbanAccountIdentificationType) *IbanAccountIdentification
+- NewInternalReviewTrackingData: changed from func(string, string) *InternalReviewTrackingData to func(InternalReviewTrackingDataStatus, InternalReviewTrackingDataType) *InternalReviewTrackingData
+- NewIssuingTransactionData: changed from func(string) *IssuingTransactionData to func(IssuingTransactionDataType) *IssuingTransactionData
+- NewMerchantPurchaseData: changed from func(string) *MerchantPurchaseData to func(MerchantPurchaseDataType) *MerchantPurchaseData
+- NewNOLocalAccountIdentification: changed from func(string, string) *NOLocalAccountIdentification to func(string, NOLocalAccountIdentificationType) *NOLocalAccountIdentification
+- NewNZLocalAccountIdentification: changed from func(string, string) *NZLocalAccountIdentification to func(string, NZLocalAccountIdentificationType) *NZLocalAccountIdentification
 - NewNullableCounterparty: removed
+- NewNumberAndBicAccountIdentification: changed from func(string, string, string) *NumberAndBicAccountIdentification to func(string, string, NumberAndBicAccountIdentificationType) *NumberAndBicAccountIdentification
+- NewPLLocalAccountIdentification: changed from func(string, string) *PLLocalAccountIdentification to func(string, PLLocalAccountIdentificationType) *PLLocalAccountIdentification
+- NewSELocalAccountIdentification: changed from func(string, string, string) *SELocalAccountIdentification to func(string, string, SELocalAccountIdentificationType) *SELocalAccountIdentification
+- NewTransaction: changed from func(ResourceReference, Amount, ResourceReference, string, time.Time, string, string, time.Time) *Transaction to func(ResourceReference, Amount, ResourceReference, string, time.Time, string, TransactionStatus, time.Time) *Transaction
+- NewTransfer: changed from func(Amount, string, CounterpartyV3, string) *Transfer to func(Amount, TransferCategory, CounterpartyV3, TransferStatus) *Transfer
+- NewTransferData: changed from func(Amount, string, string) *TransferData to func(Amount, TransferDataCategory, TransferDataStatus) *TransferData
+- NewTransferInfo: changed from func(Amount, string, CounterpartyInfoV3) *TransferInfo to func(Amount, TransferInfoCategory, CounterpartyInfoV3) *TransferInfo
+- NewUKLocalAccountIdentification: changed from func(string, string, string) *UKLocalAccountIdentification to func(string, string, UKLocalAccountIdentificationType) *UKLocalAccountIdentification
+- NewUSLocalAccountIdentification: changed from func(string, string, string) *USLocalAccountIdentification to func(string, string, USLocalAccountIdentificationType) *USLocalAccountIdentification
 - NullableCounterparty: removed
+- NumberAndBicAccountIdentification.Type: changed from string to NumberAndBicAccountIdentificationType
+- PLLocalAccountIdentification.Type: changed from string to PLLocalAccountIdentificationType
+- PartyIdentification.Type: changed from *string to *PartyIdentificationType
+- PlatformPayment.PlatformPaymentType: changed from *string to *PlatformPaymentPlatformPaymentType
+- PlatformPayment.Type: changed from *string to *PlatformPaymentType
+- ReturnTransferResponse.Status: changed from *string to *ReturnTransferResponseStatus
+- RoutingDetails.Priority: changed from *string to *RoutingDetailsPriority
+- SELocalAccountIdentification.Type: changed from string to SELocalAccountIdentificationType
+- SGLocalAccountIdentification.Type: changed from *string to *SGLocalAccountIdentificationType
+- Transaction.Status: changed from string to TransactionStatus
+- TransactionsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TransactionsApiGetAllTransactionsInput.SortOrder: changed from func(string) TransactionsApiGetAllTransactionsInput to func(GetAllTransactionsSortOrderParameter) TransactionsApiGetAllTransactionsInput
+- Transfer.Category: changed from string to TransferCategory
+- Transfer.Direction: changed from *string to *TransferDirection
+- Transfer.Reason: changed from *string to *TransferReason
+- Transfer.Status: changed from string to TransferStatus
+- Transfer.Type: changed from *string to *TransferType
+- TransferData.Category: changed from string to TransferDataCategory
+- TransferData.CategoryData: changed from *TransferCategoryData to *TransferDataCategoryData
+- TransferData.Direction: changed from *string to *TransferDataDirection
+- TransferData.Reason: changed from *string to *TransferDataReason
+- TransferData.Status: changed from string to TransferDataStatus
+- TransferData.Type: changed from *string to *TransferDataType
+- TransferEvent.Reason: changed from *string to *TransferEventReason
+- TransferEvent.Status: changed from *string to *TransferEventStatus
+- TransferEvent.Type: changed from *string to *TransferEventType
+- TransferInfo.Category: changed from string to TransferInfoCategory
+- TransferInfo.Priorities: changed from []string to []TransferInfoPriorities
+- TransferInfo.Priority: changed from *string to *TransferInfoPriority
+- TransferInfo.Type: changed from *string to *TransferInfoType
+- TransferReview.ScaOnApproval: changed from *string to *TransferReviewScaOnApproval
+- TransferView.CategoryData: changed from *TransferCategoryData to *TransferViewCategoryData
+- TransfersApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TransfersApiGetAllTransfersInput.Category: changed from func(string) TransfersApiGetAllTransfersInput to func(GetAllTransfersCategoryParameter) TransfersApiGetAllTransfersInput
+- TransfersApiGetAllTransfersInput.SortOrder: changed from func(string) TransfersApiGetAllTransfersInput to func(GetAllTransfersSortOrderParameter) TransfersApiGetAllTransfersInput
+- UKLocalAccountIdentification.Type: changed from string to UKLocalAccountIdentificationType
+- USLocalAccountIdentification.AccountType: changed from *string to *USLocalAccountIdentificationAccountType
+- USLocalAccountIdentification.Type: changed from string to USLocalAccountIdentificationType
+- UltimatePartyIdentification.Type: changed from *string to *UltimatePartyIdentificationType
 Compatible changes:
 - (*IbanAccountIdentification).GetBic: added
 - (*IbanAccountIdentification).GetBicOk: added
@@ -46,27 +334,110 @@ Compatible changes:
 - (*TransferNotificationMerchantData).HasCountryCode: added
 - (*TransferNotificationMerchantData).SetCountryCode: added
 - APIClient.CashOutApi: added
+- AULocalAccountIdentificationType: added
 - AULocalAccountIdentificationTypeAuLocal: added
+- AdditionalBankIdentificationType: added
 - AdditionalBankIdentificationTypeAuBsbCode: added
 - AdditionalBankIdentificationTypeCaRoutingNumber: added
 - AdditionalBankIdentificationTypeGbSortCode: added
 - AdditionalBankIdentificationTypeUsRoutingNumber: added
+- AllowedAULocalAccountIdentificationTypeEnumValues: added
+- AllowedAdditionalBankIdentificationTypeEnumValues: added
+- AllowedAmountAdjustmentAmountAdjustmentTypeEnumValues: added
+- AllowedBRLocalAccountIdentificationTypeEnumValues: added
+- AllowedBankCategoryDataPriorityEnumValues: added
+- AllowedBankCategoryDataTypeEnumValues: added
+- AllowedCALocalAccountIdentificationAccountTypeEnumValues: added
+- AllowedCALocalAccountIdentificationTypeEnumValues: added
+- AllowedCZLocalAccountIdentificationTypeEnumValues: added
+- AllowedCapitalGrantStatusEnumValues: added
+- AllowedCashOutTransferTypeEnumValues: added
+- AllowedConfirmationTrackingDataStatusEnumValues: added
+- AllowedConfirmationTrackingDataTypeEnumValues: added
+- AllowedDKLocalAccountIdentificationTypeEnumValues: added
+- AllowedEstimationTrackingDataTypeEnumValues: added
+- AllowedFundingInstrumentSourceOfFundsEnumValues: added
+- AllowedGetAllTransactionsSortOrderParameterEnumValues: added
+- AllowedGetAllTransfersCategoryParameterEnumValues: added
+- AllowedGetAllTransfersSortOrderParameterEnumValues: added
+- AllowedHKLocalAccountIdentificationTypeEnumValues: added
+- AllowedHULocalAccountIdentificationTypeEnumValues: added
+- AllowedIbanAccountIdentificationTypeEnumValues: added
+- AllowedInterchangeDataTypeEnumValues: added
+- AllowedInternalCategoryDataTypeEnumValues: added
+- AllowedInternalReviewTrackingDataReasonEnumValues: added
+- AllowedInternalReviewTrackingDataStatusEnumValues: added
+- AllowedInternalReviewTrackingDataTypeEnumValues: added
+- AllowedIssuedCardNetworkVariantEnumValues: added
+- AllowedIssuedCardPanEntryModeEnumValues: added
+- AllowedIssuedCardProcessingTypeEnumValues: added
+- AllowedIssuedCardTypeEnumValues: added
+- AllowedIssuingTransactionDataTypeEnumValues: added
+- AllowedMerchantPurchaseDataTypeEnumValues: added
+- AllowedModificationStatusEnumValues: added
+- AllowedNOLocalAccountIdentificationTypeEnumValues: added
+- AllowedNZLocalAccountIdentificationTypeEnumValues: added
+- AllowedNetworkReasonNamespaceEnumValues: added
+- AllowedNumberAndBicAccountIdentificationTypeEnumValues: added
+- AllowedPLLocalAccountIdentificationTypeEnumValues: added
+- AllowedPartyIdentificationTypeEnumValues: added
+- AllowedPlatformPaymentPlatformPaymentTypeEnumValues: added
+- AllowedPlatformPaymentTypeEnumValues: added
+- AllowedReturnTransferResponseStatusEnumValues: added
+- AllowedRoutingDetailsPriorityEnumValues: added
+- AllowedSELocalAccountIdentificationTypeEnumValues: added
+- AllowedSGLocalAccountIdentificationTypeEnumValues: added
+- AllowedTransactionStatusEnumValues: added
+- AllowedTransferCategoryEnumValues: added
+- AllowedTransferDataCategoryEnumValues: added
+- AllowedTransferDataDirectionEnumValues: added
+- AllowedTransferDataReasonEnumValues: added
+- AllowedTransferDataStatusEnumValues: added
+- AllowedTransferDataTypeEnumValues: added
+- AllowedTransferDirectionEnumValues: added
+- AllowedTransferEventReasonEnumValues: added
+- AllowedTransferEventStatusEnumValues: added
+- AllowedTransferEventTypeEnumValues: added
+- AllowedTransferInfoCategoryEnumValues: added
+- AllowedTransferInfoPrioritiesEnumValues: added
+- AllowedTransferInfoPriorityEnumValues: added
+- AllowedTransferInfoTypeEnumValues: added
+- AllowedTransferReasonEnumValues: added
+- AllowedTransferReviewScaOnApprovalEnumValues: added
+- AllowedTransferStatusEnumValues: added
+- AllowedTransferTypeEnumValues: added
+- AllowedUKFpsTracingDataTypeEnumValues: added
+- AllowedUKLocalAccountIdentificationTypeEnumValues: added
+- AllowedUSAchTracingDataTypeEnumValues: added
+- AllowedUSLocalAccountIdentificationAccountTypeEnumValues: added
+- AllowedUSLocalAccountIdentificationTypeEnumValues: added
+- AllowedUltimatePartyIdentificationTypeEnumValues: added
+- AmountAdjustmentAmountAdjustmentType: added
 - AmountAdjustmentAmountAdjustmentTypeAtmMarkup: added
 - AmountAdjustmentAmountAdjustmentTypeAuthHoldReserve: added
 - AmountAdjustmentAmountAdjustmentTypeExchange: added
 - AmountAdjustmentAmountAdjustmentTypeForexMarkup: added
+- BRLocalAccountIdentificationType: added
 - BRLocalAccountIdentificationTypeBrLocal: added
+- BankCategoryDataAsTransferDataCategoryData: added
+- BankCategoryDataAsTransferViewCategoryData: added
+- BankCategoryDataPriority: added
 - BankCategoryDataPriorityCrossBorder: added
 - BankCategoryDataPriorityFast: added
 - BankCategoryDataPriorityInstant: added
 - BankCategoryDataPriorityInternal: added
 - BankCategoryDataPriorityRegular: added
 - BankCategoryDataPriorityWire: added
+- BankCategoryDataType: added
 - BankCategoryDataTypeBank: added
+- CALocalAccountIdentificationAccountType: added
 - CALocalAccountIdentificationAccountTypeChecking: added
 - CALocalAccountIdentificationAccountTypeSavings: added
+- CALocalAccountIdentificationType: added
 - CALocalAccountIdentificationTypeCaLocal: added
+- CZLocalAccountIdentificationType: added
 - CZLocalAccountIdentificationTypeCzLocal: added
+- CapitalGrantStatus: added
 - CapitalGrantStatusActive: added
 - CapitalGrantStatusFailed: added
 - CapitalGrantStatusPending: added
@@ -79,34 +450,71 @@ Compatible changes:
 - CashOutInfo: added
 - CashOutInfoCounterparty: added
 - CashOutTransfer: added
+- CashOutTransferType: added
 - CashOutTransferTypeCashoutFee: added
 - CashOutTransferTypeCashoutRepayment: added
+- ConfirmationTrackingDataStatus: added
 - ConfirmationTrackingDataStatusAccepted: added
 - ConfirmationTrackingDataStatusCredited: added
+- ConfirmationTrackingDataType: added
 - ConfirmationTrackingDataTypeConfirmation: added
+- DKLocalAccountIdentificationType: added
 - DKLocalAccountIdentificationTypeDkLocal: added
 - DefaultErrorResponseEntity: added
+- EstimationTrackingDataType: added
 - EstimationTrackingDataTypeEstimation: added
+- FundingInstrumentSourceOfFunds: added
 - FundingInstrumentSourceOfFundsDEBIT: added
 - FundingInstrumentSourceOfFundsDEPOSITACCOUNT: added
+- GetAllTransactionsSortOrderParameter: added
+- GetAllTransactionsSortOrderParameterAsc: added
+- GetAllTransactionsSortOrderParameterDesc: added
+- GetAllTransfersCategoryParameter: added
+- GetAllTransfersCategoryParameterBank: added
+- GetAllTransfersCategoryParameterCard: added
+- GetAllTransfersCategoryParameterGrants: added
+- GetAllTransfersCategoryParameterInterest: added
+- GetAllTransfersCategoryParameterInternal: added
+- GetAllTransfersCategoryParameterIssuedCard: added
+- GetAllTransfersCategoryParameterMigration: added
+- GetAllTransfersCategoryParameterPlatformPayment: added
+- GetAllTransfersCategoryParameterTopUp: added
+- GetAllTransfersCategoryParameterUpgrade: added
+- GetAllTransfersSortOrderParameter: added
+- GetAllTransfersSortOrderParameterAsc: added
+- GetAllTransfersSortOrderParameterDesc: added
 - GrantCounterparty: added
 - GrantInfoCounterparty: added
+- HKLocalAccountIdentificationType: added
 - HKLocalAccountIdentificationTypeHkLocal: added
+- HULocalAccountIdentificationType: added
 - HULocalAccountIdentificationTypeHuLocal: added
 - IbanAccountIdentification.Bic: added
+- IbanAccountIdentificationType: added
 - IbanAccountIdentificationTypeIban: added
 - InterchangeData: added
 - InterchangeDataAsTransferEventEventsDataInner: added
+- InterchangeDataType: added
 - InterchangeDataTypeInterchangeData: added
+- InternalCategoryDataAsTransferDataCategoryData: added
+- InternalCategoryDataAsTransferViewCategoryData: added
+- InternalCategoryDataType: added
 - InternalCategoryDataTypeInternal: added
+- InternalReviewTrackingDataReason: added
 - InternalReviewTrackingDataReasonRefusedForRegulatoryReasons: added
+- InternalReviewTrackingDataStatus: added
 - InternalReviewTrackingDataStatusFailed: added
 - InternalReviewTrackingDataStatusPending: added
+- InternalReviewTrackingDataType: added
 - InternalReviewTrackingDataTypeInternalReview: added
 - IssuedCard.NetworkVariant: added
+- IssuedCardAsTransferDataCategoryData: added
+- IssuedCardAsTransferViewCategoryData: added
+- IssuedCardNetworkVariant: added
 - IssuedCardNetworkVariantMaestroUs: added
 - IssuedCardNetworkVariantMastercard: added
 - IssuedCardNetworkVariantVisa: added
+- IssuedCardPanEntryMode: added
 - IssuedCardPanEntryModeChip: added
 - IssuedCardPanEntryModeCof: added
 - IssuedCardPanEntryModeContactless: added
@@ -114,6 +522,7 @@ Compatible changes:
 - IssuedCardPanEntryModeMagstripe: added
 - IssuedCardPanEntryModeManual: added
 - IssuedCardPanEntryModeToken: added
+- IssuedCardProcessingType: added
 - IssuedCardProcessingTypeAtmWithdraw: added
 - IssuedCardProcessingTypeBalanceInquiry: added
 - IssuedCardProcessingTypeEcommerce: added
@@ -122,9 +531,13 @@ Compatible changes:
 - IssuedCardProcessingTypePurchaseWithCashback: added
 - IssuedCardProcessingTypeRecurring: added
 - IssuedCardProcessingTypeToken: added
+- IssuedCardType: added
 - IssuedCardTypeIssuedCard: added
+- IssuingTransactionDataType: added
 - IssuingTransactionDataTypeIssuingTransactionData: added
+- MerchantPurchaseDataType: added
 - MerchantPurchaseDataTypeMerchantPurchaseData: added
+- ModificationStatus: added
 - ModificationStatusApprovalPending: added
 - ModificationStatusAtmWithdrawal: added
 - ModificationStatusAtmWithdrawalReversalPending: added
@@ -196,67 +609,293 @@ Compatible changes:
 - ModificationStatusSecondChargeback: added
 - ModificationStatusSecondChargebackPending: added
 - ModificationStatusUndefined: added
+- NOLocalAccountIdentificationType: added
 - NOLocalAccountIdentificationTypeNoLocal: added
+- NZLocalAccountIdentificationType: added
 - NZLocalAccountIdentificationTypeNzLocal: added
 - NetworkReason: added
+- NetworkReasonNamespace: added
 - NetworkReasonNamespaceIso8583ResponseCode: added
 - NetworkReasonNamespaceUkFpsRejectionCode: added
 - NetworkReasonNamespaceUkFpsReturnReasonCode: added
 - NetworkReasonNamespaceUsAchCorrectionReasonCode: added
 - NetworkReasonNamespaceUsAchReturnReasonCode: added
+- NewAULocalAccountIdentificationTypeFromValue: added
+- NewAdditionalBankIdentificationTypeFromValue: added
+- NewAmountAdjustmentAmountAdjustmentTypeFromValue: added
+- NewBRLocalAccountIdentificationTypeFromValue: added
+- NewBankCategoryDataPriorityFromValue: added
+- NewBankCategoryDataTypeFromValue: added
+- NewCALocalAccountIdentificationAccountTypeFromValue: added
+- NewCALocalAccountIdentificationTypeFromValue: added
+- NewCZLocalAccountIdentificationTypeFromValue: added
+- NewCapitalGrantStatusFromValue: added
 - NewCashOut: added
 - NewCashOutInfo: added
 - NewCashOutInfoCounterparty: added
 - NewCashOutInfoCounterpartyWithDefaults: added
 - NewCashOutInfoWithDefaults: added
 - NewCashOutTransfer: added
+- NewCashOutTransferTypeFromValue: added
 - NewCashOutTransferWithDefaults: added
 - NewCashOutWithDefaults: added
+- NewConfirmationTrackingDataStatusFromValue: added
+- NewConfirmationTrackingDataTypeFromValue: added
+- NewDKLocalAccountIdentificationTypeFromValue: added
 - NewDefaultErrorResponseEntity: added
 - NewDefaultErrorResponseEntityWithDefaults: added
+- NewEstimationTrackingDataTypeFromValue: added
+- NewFundingInstrumentSourceOfFundsFromValue: added
+- NewGetAllTransactionsSortOrderParameterFromValue: added
+- NewGetAllTransfersCategoryParameterFromValue: added
+- NewGetAllTransfersSortOrderParameterFromValue: added
 - NewGrantCounterparty: added
 - NewGrantCounterpartyWithDefaults: added
 - NewGrantInfoCounterparty: added
 - NewGrantInfoCounterpartyWithDefaults: added
+- NewHKLocalAccountIdentificationTypeFromValue: added
+- NewHULocalAccountIdentificationTypeFromValue: added
+- NewIbanAccountIdentificationTypeFromValue: added
 - NewInterchangeData: added
+- NewInterchangeDataTypeFromValue: added
 - NewInterchangeDataWithDefaults: added
+- NewInternalCategoryDataTypeFromValue: added
+- NewInternalReviewTrackingDataReasonFromValue: added
+- NewInternalReviewTrackingDataStatusFromValue: added
+- NewInternalReviewTrackingDataTypeFromValue: added
+- NewIssuedCardNetworkVariantFromValue: added
+- NewIssuedCardPanEntryModeFromValue: added
+- NewIssuedCardProcessingTypeFromValue: added
+- NewIssuedCardTypeFromValue: added
+- NewIssuingTransactionDataTypeFromValue: added
+- NewMerchantPurchaseDataTypeFromValue: added
+- NewModificationStatusFromValue: added
+- NewNOLocalAccountIdentificationTypeFromValue: added
+- NewNZLocalAccountIdentificationTypeFromValue: added
 - NewNetworkReason: added
+- NewNetworkReasonNamespaceFromValue: added
 - NewNetworkReasonWithDefaults: added
+- NewNullableAULocalAccountIdentificationType: added
+- NewNullableAdditionalBankIdentificationType: added
+- NewNullableAmountAdjustmentAmountAdjustmentType: added
+- NewNullableBRLocalAccountIdentificationType: added
+- NewNullableBankCategoryDataPriority: added
+- NewNullableBankCategoryDataType: added
+- NewNullableCALocalAccountIdentificationAccountType: added
+- NewNullableCALocalAccountIdentificationType: added
+- NewNullableCZLocalAccountIdentificationType: added
+- NewNullableCapitalGrantStatus: added
 - NewNullableCashOut: added
 - NewNullableCashOutInfo: added
 - NewNullableCashOutInfoCounterparty: added
 - NewNullableCashOutTransfer: added
+- NewNullableCashOutTransferType: added
+- NewNullableConfirmationTrackingDataStatus: added
+- NewNullableConfirmationTrackingDataType: added
+- NewNullableDKLocalAccountIdentificationType: added
 - NewNullableDefaultErrorResponseEntity: added
+- NewNullableEstimationTrackingDataType: added
+- NewNullableFundingInstrumentSourceOfFunds: added
+- NewNullableGetAllTransactionsSortOrderParameter: added
+- NewNullableGetAllTransfersCategoryParameter: added
+- NewNullableGetAllTransfersSortOrderParameter: added
 - NewNullableGrantCounterparty: added
 - NewNullableGrantInfoCounterparty: added
+- NewNullableHKLocalAccountIdentificationType: added
+- NewNullableHULocalAccountIdentificationType: added
+- NewNullableIbanAccountIdentificationType: added
 - NewNullableInterchangeData: added
+- NewNullableInterchangeDataType: added
+- NewNullableInternalCategoryDataType: added
+- NewNullableInternalReviewTrackingDataReason: added
+- NewNullableInternalReviewTrackingDataStatus: added
+- NewNullableInternalReviewTrackingDataType: added
+- NewNullableIssuedCardNetworkVariant: added
+- NewNullableIssuedCardPanEntryMode: added
+- NewNullableIssuedCardProcessingType: added
+- NewNullableIssuedCardType: added
+- NewNullableIssuingTransactionDataType: added
+- NewNullableMerchantPurchaseDataType: added
+- NewNullableModificationStatus: added
+- NewNullableNOLocalAccountIdentificationType: added
+- NewNullableNZLocalAccountIdentificationType: added
 - NewNullableNetworkReason: added
+- NewNullableNetworkReasonNamespace: added
+- NewNullableNumberAndBicAccountIdentificationType: added
+- NewNullablePLLocalAccountIdentificationType: added
+- NewNullablePartyIdentificationType: added
+- NewNullablePlatformPaymentPlatformPaymentType: added
+- NewNullablePlatformPaymentType: added
+- NewNullableReturnTransferResponseStatus: added
+- NewNullableRoutingDetailsPriority: added
+- NewNullableSELocalAccountIdentificationType: added
+- NewNullableSGLocalAccountIdentificationType: added
+- NewNullableTransactionStatus: added
+- NewNullableTransferCategory: added
+- NewNullableTransferDataCategory: added
+- NewNullableTransferDataCategoryData: added
+- NewNullableTransferDataDirection: added
+- NewNullableTransferDataReason: added
+- NewNullableTransferDataStatus: added
 - NewNullableTransferDataTracing: added
+- NewNullableTransferDataType: added
+- NewNullableTransferDirection: added
+- NewNullableTransferEventReason: added
+- NewNullableTransferEventStatus: added
 - NewNullableTransferEventTracingData: added
+- NewNullableTransferEventType: added
+- NewNullableTransferInfoCategory: added
+- NewNullableTransferInfoPriorities: added
+- NewNullableTransferInfoPriority: added
+- NewNullableTransferInfoType: added
+- NewNullableTransferReason: added
+- NewNullableTransferReviewScaOnApproval: added
+- NewNullableTransferStatus: added
+- NewNullableTransferType: added
+- NewNullableTransferViewCategoryData: added
 - NewNullableUKFpsTracingData: added
+- NewNullableUKFpsTracingDataType: added
+- NewNullableUKLocalAccountIdentificationType: added
 - NewNullableUSAchTracingData: added
+- NewNullableUSAchTracingDataType: added
+- NewNullableUSLocalAccountIdentificationAccountType: added
+- NewNullableUSLocalAccountIdentificationType: added
+- NewNullableUltimatePartyIdentificationType: added
+- NewNumberAndBicAccountIdentificationTypeFromValue: added
+- NewPLLocalAccountIdentificationTypeFromValue: added
+- NewPartyIdentificationTypeFromValue: added
+- NewPlatformPaymentPlatformPaymentTypeFromValue: added
+- NewPlatformPaymentTypeFromValue: added
+- NewReturnTransferResponseStatusFromValue: added
+- NewRoutingDetailsPriorityFromValue: added
+- NewSELocalAccountIdentificationTypeFromValue: added
+- NewSGLocalAccountIdentificationTypeFromValue: added
+- NewTransactionStatusFromValue: added
+- NewTransferCategoryFromValue: added
+- NewTransferDataCategoryFromValue: added
+- NewTransferDataDirectionFromValue: added
+- NewTransferDataReasonFromValue: added
+- NewTransferDataStatusFromValue: added
+- NewTransferDataTypeFromValue: added
+- NewTransferDirectionFromValue: added
+- NewTransferEventReasonFromValue: added
+- NewTransferEventStatusFromValue: added
+- NewTransferEventTypeFromValue: added
+- NewTransferInfoCategoryFromValue: added
+- NewTransferInfoPrioritiesFromValue: added
+- NewTransferInfoPriorityFromValue: added
+- NewTransferInfoTypeFromValue: added
+- NewTransferReasonFromValue: added
+- NewTransferReviewScaOnApprovalFromValue: added
+- NewTransferStatusFromValue: added
+- NewTransferTypeFromValue: added
 - NewUKFpsTracingData: added
+- NewUKFpsTracingDataTypeFromValue: added
 - NewUKFpsTracingDataWithDefaults: added
+- NewUKLocalAccountIdentificationTypeFromValue: added
 - NewUSAchTracingData: added
+- NewUSAchTracingDataTypeFromValue: added
 - NewUSAchTracingDataWithDefaults: added
+- NewUSLocalAccountIdentificationAccountTypeFromValue: added
+- NewUSLocalAccountIdentificationTypeFromValue: added
+- NewUltimatePartyIdentificationTypeFromValue: added
+- NullableAULocalAccountIdentificationType: added
+- NullableAdditionalBankIdentificationType: added
+- NullableAmountAdjustmentAmountAdjustmentType: added
+- NullableBRLocalAccountIdentificationType: added
+- NullableBankCategoryDataPriority: added
+- NullableBankCategoryDataType: added
+- NullableCALocalAccountIdentificationAccountType: added
+- NullableCALocalAccountIdentificationType: added
+- NullableCZLocalAccountIdentificationType: added
+- NullableCapitalGrantStatus: added
 - NullableCashOut: added
 - NullableCashOutInfo: added
 - NullableCashOutInfoCounterparty: added
 - NullableCashOutTransfer: added
+- NullableCashOutTransferType: added
+- NullableConfirmationTrackingDataStatus: added
+- NullableConfirmationTrackingDataType: added
+- NullableDKLocalAccountIdentificationType: added
 - NullableDefaultErrorResponseEntity: added
+- NullableEstimationTrackingDataType: added
+- NullableFundingInstrumentSourceOfFunds: added
+- NullableGetAllTransactionsSortOrderParameter: added
+- NullableGetAllTransfersCategoryParameter: added
+- NullableGetAllTransfersSortOrderParameter: added
 - NullableGrantCounterparty: added
 - NullableGrantInfoCounterparty: added
+- NullableHKLocalAccountIdentificationType: added
+- NullableHULocalAccountIdentificationType: added
+- NullableIbanAccountIdentificationType: added
 - NullableInterchangeData: added
+- NullableInterchangeDataType: added
+- NullableInternalCategoryDataType: added
+- NullableInternalReviewTrackingDataReason: added
+- NullableInternalReviewTrackingDataStatus: added
+- NullableInternalReviewTrackingDataType: added
+- NullableIssuedCardNetworkVariant: added
+- NullableIssuedCardPanEntryMode: added
+- NullableIssuedCardProcessingType: added
+- NullableIssuedCardType: added
+- NullableIssuingTransactionDataType: added
+- NullableMerchantPurchaseDataType: added
+- NullableModificationStatus: added
+- NullableNOLocalAccountIdentificationType: added
+- NullableNZLocalAccountIdentificationType: added
 - NullableNetworkReason: added
+- NullableNetworkReasonNamespace: added
+- NullableNumberAndBicAccountIdentificationType: added
+- NullablePLLocalAccountIdentificationType: added
+- NullablePartyIdentificationType: added
+- NullablePlatformPaymentPlatformPaymentType: added
+- NullablePlatformPaymentType: added
+- NullableReturnTransferResponseStatus: added
+- NullableRoutingDetailsPriority: added
+- NullableSELocalAccountIdentificationType: added
+- NullableSGLocalAccountIdentificationType: added
+- NullableTransactionStatus: added
+- NullableTransferCategory: added
+- NullableTransferDataCategory: added
+- NullableTransferDataCategoryData: added
+- NullableTransferDataDirection: added
+- NullableTransferDataReason: added
+- NullableTransferDataStatus: added
 - NullableTransferDataTracing: added
+- NullableTransferDataType: added
+- NullableTransferDirection: added
+- NullableTransferEventReason: added
+- NullableTransferEventStatus: added
 - NullableTransferEventTracingData: added
+- NullableTransferEventType: added
+- NullableTransferInfoCategory: added
+- NullableTransferInfoPriorities: added
+- NullableTransferInfoPriority: added
+- NullableTransferInfoType: added
+- NullableTransferReason: added
+- NullableTransferReviewScaOnApproval: added
+- NullableTransferStatus: added
+- NullableTransferType: added
+- NullableTransferViewCategoryData: added
 - NullableUKFpsTracingData: added
+- NullableUKFpsTracingDataType: added
+- NullableUKLocalAccountIdentificationType: added
 - NullableUSAchTracingData: added
+- NullableUSAchTracingDataType: added
+- NullableUSLocalAccountIdentificationAccountType: added
+- NullableUSLocalAccountIdentificationType: added
+- NullableUltimatePartyIdentificationType: added
+- NumberAndBicAccountIdentificationType: added
 - NumberAndBicAccountIdentificationTypeNumberAndBic: added
+- PLLocalAccountIdentificationType: added
 - PLLocalAccountIdentificationTypePlLocal: added
+- PartyIdentificationType: added
 - PartyIdentificationTypeIndividual: added
 - PartyIdentificationTypeOrganization: added
 - PartyIdentificationTypeUnknown: added
+- PlatformPaymentAsTransferDataCategoryData: added
+- PlatformPaymentAsTransferViewCategoryData: added
+- PlatformPaymentPlatformPaymentType: added
 - PlatformPaymentPlatformPaymentTypeAcquiringFees: added
 - PlatformPaymentPlatformPaymentTypeAdyenCommission: added
 - PlatformPaymentPlatformPaymentTypeAdyenFees: added
@@ -275,20 +914,27 @@ Compatible changes:
 - PlatformPaymentPlatformPaymentTypeTip: added
 - PlatformPaymentPlatformPaymentTypeTopUp: added
 - PlatformPaymentPlatformPaymentTypeVAT: added
+- PlatformPaymentType: added
 - PlatformPaymentTypePlatformPayment: added
+- ReturnTransferResponseStatus: added
 - ReturnTransferResponseStatusAuthorised: added
 - ReturnTransferResponseStatusDeclined: added
+- RoutingDetailsPriority: added
 - RoutingDetailsPriorityCrossBorder: added
 - RoutingDetailsPriorityFast: added
 - RoutingDetailsPriorityInstant: added
 - RoutingDetailsPriorityInternal: added
 - RoutingDetailsPriorityRegular: added
 - RoutingDetailsPriorityWire: added
+- SELocalAccountIdentificationType: added
 - SELocalAccountIdentificationTypeSeLocal: added
+- SGLocalAccountIdentificationType: added
 - SGLocalAccountIdentificationTypeSgLocal: added
+- TransactionStatus: added
 - TransactionStatusBooked: added
 - TransactionStatusPending: added
 - Transfer.UltimateParty: added
+- TransferCategory: added
 - TransferCategoryBank: added
 - TransferCategoryCard: added
 - TransferCategoryGrants: added
@@ -300,16 +946,20 @@ Compatible changes:
 - TransferData.NetworkReason: added
 - TransferData.Tracing: added
 - TransferData.UltimateParty: added
+- TransferDataCategory: added
 - TransferDataCategoryBank: added
 - TransferDataCategoryCard: added
+- TransferDataCategoryData: added
 - TransferDataCategoryGrants: added
 - TransferDataCategoryInterest: added
 - TransferDataCategoryInternal: added
 - TransferDataCategoryIssuedCard: added
 - TransferDataCategoryPlatformPayment: added
 - TransferDataCategoryTopUp: added
+- TransferDataDirection: added
 - TransferDataDirectionIncoming: added
 - TransferDataDirectionOutgoing: added
+- TransferDataReason: added
 - TransferDataReasonAccountHierarchyNotActive: added
 - TransferDataReasonAmountLimitExceeded: added
 - TransferDataReasonApprovalExpired: added
@@ -395,6 +1045,7 @@ Compatible changes:
 - TransferDataReasonUnknown: added
 - TransferDataReasonWithdrawalAmountExceeded: added
 - TransferDataReasonWithdrawalCountExceeded: added
+- TransferDataStatus: added
 - TransferDataStatusApprovalPending: added
 - TransferDataStatusAtmWithdrawal: added
 - TransferDataStatusAtmWithdrawalReversalPending: added
@@ -467,6 +1118,7 @@ Compatible changes:
 - TransferDataStatusSecondChargebackPending: added
 - TransferDataStatusUndefined: added
 - TransferDataTracing: added
+- TransferDataType: added
 - TransferDataTypeAtmWithdrawal: added
 - TransferDataTypeAtmWithdrawalReversal: added
 - TransferDataTypeBalanceAdjustment: added
@@ -508,10 +1160,12 @@ Compatible changes:
 - TransferDataTypeReserveAdjustment: added
 - TransferDataTypeSecondChargeback: added
 - TransferDataTypeSecondChargebackCorrection: added
+- TransferDirection: added
 - TransferDirectionIncoming: added
 - TransferDirectionOutgoing: added
 - TransferEvent.TracingData: added
 - TransferEventEventsDataInner.InterchangeData: added
+- TransferEventReason: added
 - TransferEventReasonAccountHierarchyNotActive: added
 - TransferEventReasonAmountLimitExceeded: added
 - TransferEventReasonApprovalExpired: added
@@ -597,6 +1251,7 @@ Compatible changes:
 - TransferEventReasonUnknown: added
 - TransferEventReasonWithdrawalAmountExceeded: added
 - TransferEventReasonWithdrawalCountExceeded: added
+- TransferEventStatus: added
 - TransferEventStatusApprovalPending: added
 - TransferEventStatusAtmWithdrawal: added
 - TransferEventStatusAtmWithdrawalReversalPending: added
@@ -669,31 +1324,37 @@ Compatible changes:
 - TransferEventStatusSecondChargebackPending: added
 - TransferEventStatusUndefined: added
 - TransferEventTracingData: added
+- TransferEventType: added
 - TransferEventTypeAccounting: added
 - TransferEventTypeTracing: added
 - TransferEventTypeTracking: added
+- TransferInfoCategory: added
 - TransferInfoCategoryBank: added
 - TransferInfoCategoryCard: added
 - TransferInfoCategoryInternal: added
 - TransferInfoCategoryIssuedCard: added
 - TransferInfoCategoryPlatformPayment: added
 - TransferInfoCategoryTopUp: added
+- TransferInfoPriorities: added
 - TransferInfoPrioritiesCrossBorder: added
 - TransferInfoPrioritiesFast: added
 - TransferInfoPrioritiesInstant: added
 - TransferInfoPrioritiesInternal: added
 - TransferInfoPrioritiesRegular: added
 - TransferInfoPrioritiesWire: added
+- TransferInfoPriority: added
 - TransferInfoPriorityCrossBorder: added
 - TransferInfoPriorityFast: added
 - TransferInfoPriorityInstant: added
 - TransferInfoPriorityInternal: added
 - TransferInfoPriorityRegular: added
 - TransferInfoPriorityWire: added
+- TransferInfoType: added
 - TransferInfoTypeBankTransfer: added
 - TransferInfoTypeInternalDirectDebit: added
 - TransferInfoTypeInternalTransfer: added
 - TransferNotificationMerchantData.CountryCode: added
+- TransferReason: added
 - TransferReasonAccountHierarchyNotActive: added
 - TransferReasonAmountLimitExceeded: added
 - TransferReasonApprovalExpired: added
@@ -779,9 +1440,11 @@ Compatible changes:
 - TransferReasonUnknown: added
 - TransferReasonWithdrawalAmountExceeded: added
 - TransferReasonWithdrawalCountExceeded: added
+- TransferReviewScaOnApproval: added
 - TransferReviewScaOnApprovalCompleted: added
 - TransferReviewScaOnApprovalNotApplicable: added
 - TransferReviewScaOnApprovalRequired: added
+- TransferStatus: added
 - TransferStatusApprovalPending: added
 - TransferStatusAtmWithdrawal: added
 - TransferStatusAtmWithdrawalReversalPending: added
@@ -853,6 +1516,7 @@ Compatible changes:
 - TransferStatusSecondChargeback: added
 - TransferStatusSecondChargebackPending: added
 - TransferStatusUndefined: added
+- TransferType: added
 - TransferTypeAtmWithdrawal: added
 - TransferTypeAtmWithdrawalReversal: added
 - TransferTypeBalanceAdjustment: added
@@ -894,18 +1558,25 @@ Compatible changes:
 - TransferTypeReserveAdjustment: added
 - TransferTypeSecondChargeback: added
 - TransferTypeSecondChargebackCorrection: added
+- TransferViewCategoryData: added
 - UKFpsTracingData: added
 - UKFpsTracingDataAsTransferDataTracing: added
 - UKFpsTracingDataAsTransferEventTracingData: added
+- UKFpsTracingDataType: added
 - UKFpsTracingDataTypeUkFps: added
+- UKLocalAccountIdentificationType: added
 - UKLocalAccountIdentificationTypeUkLocal: added
 - USAchTracingData: added
 - USAchTracingDataAsTransferDataTracing: added
 - USAchTracingDataAsTransferEventTracingData: added
+- USAchTracingDataType: added
 - USAchTracingDataTypeUsAch: added
+- USLocalAccountIdentificationAccountType: added
 - USLocalAccountIdentificationAccountTypeChecking: added
 - USLocalAccountIdentificationAccountTypeSavings: added
+- USLocalAccountIdentificationType: added
 - USLocalAccountIdentificationTypeUsLocal: added
+- UltimatePartyIdentificationType: added
 - UltimatePartyIdentificationTypeIndividual: added
 - UltimatePartyIdentificationTypeOrganization: added
 - UltimatePartyIdentificationTypeUnknown: added

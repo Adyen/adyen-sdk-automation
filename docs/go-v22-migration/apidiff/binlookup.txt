@@ -1,13 +1,42 @@
+Incompatible changes:
+- (*CostEstimateRequest).GetShopperInteraction: changed from func() string to func() CostEstimateRequestShopperInteraction
+- (*CostEstimateRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*CostEstimateRequestShopperInteraction, bool)
+- (*CostEstimateRequest).SetShopperInteraction: changed from func(string) to func(CostEstimateRequestShopperInteraction)
+- (*Recurring).GetContract: changed from func() string to func() RecurringContract
+- (*Recurring).GetContractOk: changed from func() (*string, bool) to func() (*RecurringContract, bool)
+- (*Recurring).GetTokenService: changed from func() string to func() RecurringTokenService
+- (*Recurring).GetTokenServiceOk: changed from func() (*string, bool) to func() (*RecurringTokenService, bool)
+- (*Recurring).SetContract: changed from func(string) to func(RecurringContract)
+- (*Recurring).SetTokenService: changed from func(string) to func(RecurringTokenService)
+- CostEstimateRequest.ShopperInteraction: changed from *string to *CostEstimateRequestShopperInteraction
+- GeneralApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- Recurring.Contract: changed from *string to *RecurringContract
+- Recurring.TokenService: changed from *string to *RecurringTokenService
 Compatible changes:
+- AllowedCostEstimateRequestShopperInteractionEnumValues: added
+- AllowedRecurringContractEnumValues: added
+- AllowedRecurringTokenServiceEnumValues: added
+- CostEstimateRequestShopperInteraction: added
 - CostEstimateRequestShopperInteractionContAuth: added
 - CostEstimateRequestShopperInteractionEcommerce: added
 - CostEstimateRequestShopperInteractionMoto: added
 - CostEstimateRequestShopperInteractionPOS: added
+- NewCostEstimateRequestShopperInteractionFromValue: added
+- NewNullableCostEstimateRequestShopperInteraction: added
+- NewNullableRecurringContract: added
+- NewNullableRecurringTokenService: added
+- NewRecurringContractFromValue: added
+- NewRecurringTokenServiceFromValue: added
+- NullableCostEstimateRequestShopperInteraction: added
+- NullableRecurringContract: added
+- NullableRecurringTokenService: added
+- RecurringContract: added
 - RecurringContractEXTERNAL: added
 - RecurringContractONECLICK: added
 - RecurringContractONECLICKRECURRING: added
 - RecurringContractPAYOUT: added
 - RecurringContractRECURRING: added
+- RecurringTokenService: added
 - RecurringTokenServiceAMEXTOKENSERVICE: added
 - RecurringTokenServiceMCTOKENSERVICE: added
 - RecurringTokenServiceTOKENSHARING: added

@@ -1,9 +1,29 @@
+Incompatible changes:
+- (*Recurring).GetContract: changed from func() string to func() RecurringContract
+- (*Recurring).GetContractOk: changed from func() (*string, bool) to func() (*RecurringContract, bool)
+- (*Recurring).GetTokenService: changed from func() string to func() RecurringTokenService
+- (*Recurring).GetTokenServiceOk: changed from func() (*string, bool) to func() (*RecurringTokenService, bool)
+- (*Recurring).SetContract: changed from func(string) to func(RecurringContract)
+- (*Recurring).SetTokenService: changed from func(string) to func(RecurringTokenService)
+- GeneralApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- Recurring.Contract: changed from *string to *RecurringContract
+- Recurring.TokenService: changed from *string to *RecurringTokenService
 Compatible changes:
+- AllowedRecurringContractEnumValues: added
+- AllowedRecurringTokenServiceEnumValues: added
+- NewNullableRecurringContract: added
+- NewNullableRecurringTokenService: added
+- NewRecurringContractFromValue: added
+- NewRecurringTokenServiceFromValue: added
+- NullableRecurringContract: added
+- NullableRecurringTokenService: added
+- RecurringContract: added
 - RecurringContractEXTERNAL: added
 - RecurringContractONECLICK: added
 - RecurringContractONECLICKRECURRING: added
 - RecurringContractPAYOUT: added
 - RecurringContractRECURRING: added
+- RecurringTokenService: added
 - RecurringTokenServiceAMEXTOKENSERVICE: added
 - RecurringTokenServiceMCTOKENSERVICE: added
 - RecurringTokenServiceTOKENSHARING: added

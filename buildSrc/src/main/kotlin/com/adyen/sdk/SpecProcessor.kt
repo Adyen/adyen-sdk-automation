@@ -22,6 +22,10 @@ object SpecProcessor {
         val markWebhookRoots: Boolean = false,
         /** Rewrite 3.0-only constructs (`nullable`, `additionalProperties: false`) for native 3.1 generation. */
         val normalizeForOpenApi31: Boolean = false,
+        /** Name inline enums of array items after their model and property, like scalar inline enums. */
+        val nameArrayItemEnums: Boolean = false,
+        /** Set `x-enum-varnames` to the enum values, so templates name constants after the values. */
+        val enumValuesAsVarNames: Boolean = false,
     )
 
     fun process(content: String): String = process(content, Options())
@@ -42,36 +46,14 @@ object SpecProcessor {
         if (options.normalizeForOpenApi31) {
             normalizeForOpenApi31(json)
         }
+        if (options.nameArrayItemEnums) {
+            nameArrayItemEnums(json)
+        }
+        if (options.enumValuesAsVarNames) {
+            enumValuesAsVarNames(json)
+        }
 
         return JsonOutput.prettyPrint(JsonOutput.toJson(json))
-    }
-
-    /**
-     * Whether any operation response body references the component schema [schemaName], directly
-     * or through a `#/components/responses` reference.
-     */
-    @Suppress("UNCHECKED_CAST")
-    fun respondsWithSchema(content: String, schemaName: String): Boolean {
-        val json = JsonSlurper().parseText(content) as? Map<String, Any> ?: return false
-        val schemaRef = "#/components/schemas/$schemaName"
-        val sharedResponses = ((json["components"] as? Map<String, Any>)?.get("responses") as? Map<String, Any>).orEmpty()
-        return operations(json)
-            .flatMap { (it["responses"] as? Map<String, Any>)?.values.orEmpty() }
-            .map { response ->
-                val ref = (response as? Map<*, *>)?.get("\$ref") as? String
-                if (ref != null && ref.startsWith("#/components/responses/")) {
-                    sharedResponses[ref.removePrefix("#/components/responses/")]
-                } else {
-                    response
-                }
-            }
-            .any { referencesExactly(it, schemaRef) }
-    }
-
-    private fun referencesExactly(node: Any?, ref: String): Boolean = when (node) {
-        is Map<*, *> -> node["\$ref"] == ref || node.values.any { referencesExactly(it, ref) }
-        is List<*> -> node.any { referencesExactly(it, ref) }
-        else -> false
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -152,6 +134,42 @@ object SpecProcessor {
             else -> return
         }
         schema.remove("nullable")
+    }
+
+    // The generator's RESOLVE_INLINE_ENUMS names an inline enum <Model>_<property>, but the enum of
+    // array items <Model>_<property>_inner. A title names the items enum like a scalar property, so
+    // that PaymentRequest.channels and PaymentRequest.channel follow the same convention.
+    @Suppress("UNCHECKED_CAST")
+    private fun nameArrayItemEnums(json: Map<String, Any>) {
+        val schemas = (json["components"] as? Map<String, Any>)?.get("schemas") as? Map<String, Any> ?: return
+        schemas.forEach { (modelName, model) ->
+            val properties = (model as? Map<String, Any>)?.get("properties") as? Map<String, Any> ?: return@forEach
+            properties.forEach { (propertyName, property) ->
+                val items = (property as? Map<String, Any>)?.get("items") as? MutableMap<String, Any> ?: return@forEach
+                if (items.containsKey("enum") && !items.containsKey("\$ref") && !items.containsKey("title")) {
+                    items["title"] = "${modelName}_$propertyName"
+                }
+            }
+        }
+    }
+
+    // Generators derive enum variable names (CARD_ON_FILE) from the values and reference them in
+    // defaults. With the values as names, templates can build the same constant name for both the
+    // declaration and a default (PaymentRequestRecurringProcessingModelCardOnFile).
+    @Suppress("UNCHECKED_CAST")
+    private fun enumValuesAsVarNames(node: Any?) {
+        when (node) {
+            is MutableMap<*, *> -> {
+                val schema = node as MutableMap<String, Any?>
+                val values = schema["enum"] as? List<*>
+                if (values != null && !schema.containsKey("x-enum-varnames") && values.none { it == null || it is Map<*, *> || it is List<*> }) {
+                    // An empty name would make the constant collide with its type.
+                    schema["x-enum-varnames"] = values.map { it.toString().ifEmpty { "Empty" } }
+                }
+                schema.filterKeys { it != "example" && it != "examples" }.values.forEach { enumValuesAsVarNames(it) }
+            }
+            is List<*> -> node.forEach { enumValuesAsVarNames(it) }
+        }
     }
 
     // 'x-webhook-root' marks the model that represents a webhook payload so that templates can

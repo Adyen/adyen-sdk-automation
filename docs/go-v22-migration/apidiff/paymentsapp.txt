@@ -1,3 +1,5 @@
+Incompatible changes:
+- PaymentsAppApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
 Compatible changes:
 - (*BoardingTokenRequest).GetSubMerchantData: added
 - (*BoardingTokenRequest).GetSubMerchantDataOk: added

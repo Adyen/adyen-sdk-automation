@@ -1,4 +1,25 @@
+Incompatible changes:
+- (*BalanceAccountBalanceNotificationRequest).GetType: changed from func() string to func() BalanceAccountBalanceNotificationRequestType
+- (*BalanceAccountBalanceNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*BalanceAccountBalanceNotificationRequestType, bool)
+- (*BalanceAccountBalanceNotificationRequest).SetType: changed from func(string) to func(BalanceAccountBalanceNotificationRequestType)
+- (*ReleasedBlockedBalanceNotificationRequest).GetType: changed from func() string to func() ReleasedBlockedBalanceNotificationRequestType
+- (*ReleasedBlockedBalanceNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*ReleasedBlockedBalanceNotificationRequestType, bool)
+- (*ReleasedBlockedBalanceNotificationRequest).SetType: changed from func(string) to func(ReleasedBlockedBalanceNotificationRequestType)
+- BalanceAccountBalanceNotificationRequest.Type: changed from string to BalanceAccountBalanceNotificationRequestType
+- NewBalanceAccountBalanceNotificationRequest: changed from func(BalanceNotificationData, string, string) *BalanceAccountBalanceNotificationRequest to func(BalanceNotificationData, string, BalanceAccountBalanceNotificationRequestType) *BalanceAccountBalanceNotificationRequest
+- NewReleasedBlockedBalanceNotificationRequest: changed from func(ReleaseBlockedBalanceNotificationData, string, string) *ReleasedBlockedBalanceNotificationRequest to func(ReleaseBlockedBalanceNotificationData, string, ReleasedBlockedBalanceNotificationRequestType) *ReleasedBlockedBalanceNotificationRequest
+- ReleasedBlockedBalanceNotificationRequest.Type: changed from string to ReleasedBlockedBalanceNotificationRequestType
 Compatible changes:
+- AllowedBalanceAccountBalanceNotificationRequestTypeEnumValues: added
+- AllowedReleasedBlockedBalanceNotificationRequestTypeEnumValues: added
+- BalanceAccountBalanceNotificationRequestType: added
 - BalanceAccountBalanceNotificationRequestTypeBalancePlatformBalanceAccountBalanceUpdated: added
 - HandleReleasedBlockedBalanceNotificationRequest: added
+- NewBalanceAccountBalanceNotificationRequestTypeFromValue: added
+- NewNullableBalanceAccountBalanceNotificationRequestType: added
+- NewNullableReleasedBlockedBalanceNotificationRequestType: added
+- NewReleasedBlockedBalanceNotificationRequestTypeFromValue: added
+- NullableBalanceAccountBalanceNotificationRequestType: added
+- NullableReleasedBlockedBalanceNotificationRequestType: added
+- ReleasedBlockedBalanceNotificationRequestType: added
 - ReleasedBlockedBalanceNotificationRequestTypeBalancePlatformBalanceAccountBalanceBlockReleased: added

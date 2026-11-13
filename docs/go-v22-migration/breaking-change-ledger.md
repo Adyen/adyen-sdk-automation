@@ -15,7 +15,7 @@ Evidence: `apidiff` against a 6.5.0 regeneration of the same specs isolates gene
 | All discriminated `oneOf` types | Decoding into a value that already holds a variant clears it first; an unknown discriminator value returns an error and leaves no variant set | generator (template) | Same observable behavior as v21.2.3 (`tests/compat`) |
 | Nullable map fields | `Has<Field>()` returns `true` only when the field is set (v21 returned `true` when it was `nil`); for nullable arrays see "Nullable arrays" | generator (template, upstream 7.x fix) | Behavior change |
 | `checkout.PayToPaymentMethod`, `checkout.UPIPaymentMethod` | Gain the inherited `Type` field and accessors (G1) | generator | Additive; types are new since v21.2.3 |
-| New top-level enum types (Checkout `CalculationType`, `RemittancePurpose`, `Result`, `SublimitStatus`, `TaxIdentificationType`; Capital; Balance Platform) | Constants are prefixed with the type name (`CALCULATIONTYPE_LRS_TCS`) | generator (`enumClassPrefix`) | No v21.2.3 constant changes; these types are new |
+| New top-level enum types (Checkout `CalculationType`, `RemittancePurpose`, `Result`, `SublimitStatus`, `TaxIdentificationType`; Capital; Balance Platform) | Constants are prefixed with the type name (`CALCULATIONTYPE_LRS_TCS`); renamed to Go style in "v22 API cleanup" | generator (`enumClassPrefix`) | No v21.2.3 constant changes; these types are new |
 | Generated doc comments | Descriptions next to `$ref` properties and `x-deprecatedInVersion` messages now appear | generator | Documentation only |
 
 No exported identifier changed between the 6.5.0 and 7.11.0 regenerations of the same specs
@@ -152,7 +152,7 @@ compatible addition.
 |------|--------|-------|---------------|
 | Fields with a fixed set of values (4,840 values in all packages) | A constant per value, named after the model, the field, and the value in Go case: `checkout.PaymentRequestShopperInteractionEcommerce`, `checkout.PaymentRequestChannelIOS`, `recurring.RecurringContractONECLICKRECURRING`. Array items get constants too. Field types stay `string` / `*string` | generator (template) | Additive. The 8 values of `payments.ModificationResult.Response` start with `[` and keep an underscore (`ModificationResultResponse_CaptureReceived`) |
 | Generated doc comments | Parameter descriptions are no longer HTML-escaped (`` `sessionResult` `` instead of `&#x60;sessionResult&#x60;`) | generator (template) | Documentation only |
-| Generated and handwritten code | `any` instead of `interface{}` (identical types); `io` instead of the deprecated `io/ioutil` | generator (template, `typeMappings`), handwritten | No API change. The frozen `posterminalmanagement` package and the `webhook` package are unchanged |
+| Generated and handwritten code | `any` instead of `interface{}` (identical types); `io` instead of the deprecated `io/ioutil` | generator (template, `typeMappings`), handwritten | No API change. The `webhook` package is unchanged |
 | `common.Ptr[T]` | Generic pointer helper next to `PtrString`, `PtrInt64`, and the others, which stay | handwritten | Additive |
 | `common.Config.Logger` | Optional `*slog.Logger` for the `Debug` request and response dumps (debug level, API key and `Authorization` masked) and the `Log3XXError`/`Log4XXError`/`Log5XXError` error bodies (warn level, error level for 5XX) | handwritten | Additive; `json:"-"` |
 | `Log3XXError`, `Log4XXError`, `Log5XXError` without `Logger` | Print the error response body to stdout. Before, they printed the address of the body reader (`&{0xc000...}`), not its content | handwritten | Fix |
@@ -164,4 +164,29 @@ compatible addition.
 - The `isValid<Field>()` helpers stay. Discriminator-less `oneOf` decoding calls `isValidType()`
   through an interface assertion, and a template cannot keep only that one.
 - Constants use plain string constants, not typed enums, so existing `Set<Field>(string)` calls and
-  struct literals keep compiling.
+  struct literals keep compiling. Superseded by "v22 API cleanup" below.
+
+## v22 API cleanup
+
+Breaking changes made deliberately for the major version. Full `apidiff` reports against v21.2.3
+are refreshed in [`apidiff/`](apidiff/).
+
+| Area | Change | Cause | Compatibility |
+|------|--------|-------|---------------|
+| Import paths | Packages move from the `src/` directory to the module root: `github.com/adyen/adyen-go-api-library/v21/src/checkout` becomes `.../checkout`. Every exported identifier that mentions a package type changes path (all `apidiff` incompatible entries of `disputes`, `hmacvalidator`, `posmobile`, `paymentsapp`, and most of `adyen`) | generator (deployment), handwritten | Breaking: rewrite imports (`/src/` removed); no other change for these packages |
+| `posterminalmanagement` | Package removed, with `APIClient.PosTerminalManagement()`, `PosTerminalManagementAPIVersion`, `PosTerminalManagementEndpointTest`/`Live`, and `Config.PosTerminalManagementEndpoint`. The API was frozen and is replaced by Management | handwritten | Breaking: use `client.Management()` terminal operations |
+| `common.CreateHTTPRequest`, `Client.MakeHTTP{Post,Get,Delete,Patch}Request` | Removed; generated operations use `SendAPIRequest` | handwritten | Breaking for code that built raw requests; `WithIdempotencyKey` stays (deprecated, PF-3045) |
+| Errors | Every failed call returns `*common.APIError` (pointer): `StatusCode int` (HTTP status), `Message`, `ErrorCode`, `ErrorType`, `PspReference` (classic APIs), `Type`, `Title`, `Detail`, `Instance`, `RequestID`, `InvalidFields` (problem details), `RawBody`, and `Err error` with `Unwrap()` for a 2xx body that failed to decode. Removed: `APIError.Status` (float64 from the body), `APIError.Code` (now `ErrorCode`), the old meaning of `APIError.Type` (now `ErrorType`; `Type` is the problem type URI), `NewAPIError`, and `common.RestServiceError` with its `Nullable*` and constructors. Transfers, Management, and Balance Platform no longer return a `RestServiceError` value for 401/403/422/500, nor a JSON decoding error when the error body is not JSON | handwritten, generator (template) | Breaking. `err.(common.APIError)` no longer compiles; `errors.As(err, &v)` with `var v common.APIError` panics at run time (`go vet` reports it). Use `var apiErr *common.APIError; errors.As(err, &apiErr)` |
+| Fields with a fixed set of values | Typed: each inline enum is a named string type (`checkout.PaymentRequestShopperInteraction`), and so are array items (`[]<Model><Field>`). 759 fields change from `string`/`*string`/`[]string` to the named type, with their getters, setters, and constructors (most of the incompatible entries in `checkout`, `management`, `balanceplatform`, `transfers`, `legalentity`, and the webhook packages) | generator (`RESOLVE_INLINE_ENUMS`, `SKIP_SCHEMA_REUSE`, spec staging titles, `model_enum` template) | Breaking for code that passes `string` variables; untyped constants (`SetShopperInteraction("Ecommerce")`) and the value constants keep compiling. Constant names from the idiomatic additions are unchanged |
+| Enum decoding | Unknown values decode into the enum type instead of failing (v21.2.3 had no enum types, so unknown values were accepted as `string`; the top-level enums of Balance Platform and Management on this branch were strict); `IsValid()` reports known values; `New<Enum>FromValue` still rejects unknown values | generator (`model_enum` template) | Wire behavior as v21 |
+| Top-level enum constants | Go-style names without the generator prefix: `checkout.CalculationTypeLRSTCS` (was `CALCULATIONTYPE_LRS_TCS`), `capital.USLocalBankAccountTypeSavings` | generator (`enumClassPrefix: false`, `x-enum-varnames` set to the values in spec staging) | No v21.2.3 constant renamed; the prefixed names only existed on this branch |
+
+### Decisions
+
+- Array item enums get a `title` during Go spec staging, so they are named like scalar enums
+  (`PaymentRequestChannels`) instead of `PaymentRequestChannelsInner`.
+- `SKIP_SCHEMA_REUSE` keeps each inline enum separate even when two fields allow the same values,
+  so a field's type always follows from its model and name.
+- The value constants are built from `x-enum-varnames`, which spec staging sets to the values;
+  defaults reference the same constants (`PaymentRequestRecurringProcessingModelCardOnFile`).
+- `webhook.NotificationRequestItem.AdditionalData` is unchanged.

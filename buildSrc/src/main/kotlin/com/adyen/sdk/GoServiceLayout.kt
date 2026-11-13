@@ -7,7 +7,7 @@ package com.adyen.sdk
  * into another one.
  */
 data class GoServiceLayout(
-    /** Go package name; also the directory under `src/`. */
+    /** Go package name; also its directory at the root of the library. */
     val packageName: String,
     /** `serviceName` template value; selects the `<serviceName>Endpoint` config field. */
     val serviceName: String,
@@ -16,7 +16,12 @@ data class GoServiceLayout(
     /** Catalog `small` flag: the service is expected to have a single `General` tag. */
     val small: Boolean,
 ) {
-    val directory: String get() = "src/$packageName"
+    init {
+        // Deployment empties the package directory, so it must never be one the library maintains by hand.
+        require(packageName !in HANDWRITTEN) { "Go package '$packageName' is a handwritten directory of the library" }
+    }
+
+    val directory: String get() = packageName
 
     /**
      * Supporting file the generator renders: webhook packages get typed handlers for their
@@ -40,6 +45,9 @@ data class GoServiceLayout(
             "Payout" to Override(serviceName = ""),
             "LegalEntityManagement" to Override(packageName = "legalentity", serviceName = "LegalEntity"),
         )
+
+        /** Root directories of the library that generation must not replace. */
+        val HANDWRITTEN = setOf("adyen", "common", "webhook", "hmacvalidator", "templates", "tests", "bin", "build")
 
         const val WEBHOOK_HANDLER = "webhook_handler.go"
         const val CLIENT = "client.go"

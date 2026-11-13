@@ -1,34 +1,170 @@
+Incompatible changes:
+- (*CapabilityProblemEntity).GetType: changed from func() string to func() CapabilityProblemEntityType
+- (*CapabilityProblemEntity).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityType, bool)
+- (*CapabilityProblemEntity).SetType: changed from func(string) to func(CapabilityProblemEntityType)
+- (*CapabilityProblemEntityRecursive).GetType: changed from func() string to func() CapabilityProblemEntityRecursiveType
+- (*CapabilityProblemEntityRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityRecursiveType, bool)
+- (*CapabilityProblemEntityRecursive).SetType: changed from func(string) to func(CapabilityProblemEntityRecursiveType)
+- (*MerchantCreatedNotificationRequest).GetType: changed from func() string to func() MerchantCreatedNotificationRequestType
+- (*MerchantCreatedNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*MerchantCreatedNotificationRequestType, bool)
+- (*MerchantCreatedNotificationRequest).SetType: changed from func(string) to func(MerchantCreatedNotificationRequestType)
+- (*MerchantUpdatedNotificationRequest).GetType: changed from func() string to func() MerchantUpdatedNotificationRequestType
+- (*MerchantUpdatedNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*MerchantUpdatedNotificationRequestType, bool)
+- (*MerchantUpdatedNotificationRequest).SetType: changed from func(string) to func(MerchantUpdatedNotificationRequestType)
+- (*MidServiceNotificationData).GetStatus: changed from func() string to func() MidServiceNotificationDataStatus
+- (*MidServiceNotificationData).GetStatusOk: changed from func() (*string, bool) to func() (*MidServiceNotificationDataStatus, bool)
+- (*MidServiceNotificationData).GetVerificationStatus: changed from func() string to func() MidServiceNotificationDataVerificationStatus
+- (*MidServiceNotificationData).GetVerificationStatusOk: changed from func() (*string, bool) to func() (*MidServiceNotificationDataVerificationStatus, bool)
+- (*MidServiceNotificationData).SetStatus: changed from func(string) to func(MidServiceNotificationDataStatus)
+- (*MidServiceNotificationData).SetVerificationStatus: changed from func(string) to func(MidServiceNotificationDataVerificationStatus)
+- (*PaymentMethodCreatedNotificationRequest).GetType: changed from func() string to func() PaymentMethodCreatedNotificationRequestType
+- (*PaymentMethodCreatedNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentMethodCreatedNotificationRequestType, bool)
+- (*PaymentMethodCreatedNotificationRequest).SetType: changed from func(string) to func(PaymentMethodCreatedNotificationRequestType)
+- (*PaymentMethodRequestRemovedNotificationRequest).GetType: changed from func() string to func() PaymentMethodRequestRemovedNotificationRequestType
+- (*PaymentMethodRequestRemovedNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentMethodRequestRemovedNotificationRequestType, bool)
+- (*PaymentMethodRequestRemovedNotificationRequest).SetType: changed from func(string) to func(PaymentMethodRequestRemovedNotificationRequestType)
+- (*PaymentMethodScheduledForRemovalNotificationRequest).GetType: changed from func() string to func() PaymentMethodScheduledForRemovalNotificationRequestType
+- (*PaymentMethodScheduledForRemovalNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentMethodScheduledForRemovalNotificationRequestType, bool)
+- (*PaymentMethodScheduledForRemovalNotificationRequest).SetType: changed from func(string) to func(PaymentMethodScheduledForRemovalNotificationRequestType)
+- (*TerminalBoardingNotificationRequest).GetType: changed from func() string to func() TerminalBoardingNotificationRequestType
+- (*TerminalBoardingNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*TerminalBoardingNotificationRequestType, bool)
+- (*TerminalBoardingNotificationRequest).SetType: changed from func(string) to func(TerminalBoardingNotificationRequestType)
+- (*TerminalSettingsData).GetUpdateSource: changed from func() string to func() TerminalSettingsDataUpdateSource
+- (*TerminalSettingsData).GetUpdateSourceOk: changed from func() (*string, bool) to func() (*TerminalSettingsDataUpdateSource, bool)
+- (*TerminalSettingsData).SetUpdateSource: changed from func(string) to func(TerminalSettingsDataUpdateSource)
+- (*TerminalSettingsNotificationRequest).GetType: changed from func() string to func() TerminalSettingsNotificationRequestType
+- (*TerminalSettingsNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*TerminalSettingsNotificationRequestType, bool)
+- (*TerminalSettingsNotificationRequest).SetType: changed from func(string) to func(TerminalSettingsNotificationRequestType)
+- (*VerificationError).GetType: changed from func() string to func() VerificationErrorType
+- (*VerificationError).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorType, bool)
+- (*VerificationError).SetType: changed from func(string) to func(VerificationErrorType)
+- (*VerificationErrorRecursive).GetType: changed from func() string to func() VerificationErrorRecursiveType
+- (*VerificationErrorRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorRecursiveType, bool)
+- (*VerificationErrorRecursive).SetType: changed from func(string) to func(VerificationErrorRecursiveType)
+- CapabilityProblemEntity.Type: changed from *string to *CapabilityProblemEntityType
+- CapabilityProblemEntityRecursive.Type: changed from *string to *CapabilityProblemEntityRecursiveType
+- MerchantCreatedNotificationRequest.Type: changed from string to MerchantCreatedNotificationRequestType
+- MerchantUpdatedNotificationRequest.Type: changed from string to MerchantUpdatedNotificationRequestType
+- MidServiceNotificationData.Status: changed from string to MidServiceNotificationDataStatus
+- MidServiceNotificationData.VerificationStatus: changed from *string to *MidServiceNotificationDataVerificationStatus
+- NewMerchantCreatedNotificationRequest: changed from func(time.Time, AccountCreateNotificationData, string, string) *MerchantCreatedNotificationRequest to func(time.Time, AccountCreateNotificationData, string, MerchantCreatedNotificationRequestType) *MerchantCreatedNotificationRequest
+- NewMerchantUpdatedNotificationRequest: changed from func(time.Time, AccountUpdateNotificationData, string, string) *MerchantUpdatedNotificationRequest to func(time.Time, AccountUpdateNotificationData, string, MerchantUpdatedNotificationRequestType) *MerchantUpdatedNotificationRequest
+- NewMidServiceNotificationData: changed from func(string, string, string, string) *MidServiceNotificationData to func(string, string, MidServiceNotificationDataStatus, string) *MidServiceNotificationData
+- NewPaymentMethodCreatedNotificationRequest: changed from func(time.Time, MidServiceNotificationData, string, string) *PaymentMethodCreatedNotificationRequest to func(time.Time, MidServiceNotificationData, string, PaymentMethodCreatedNotificationRequestType) *PaymentMethodCreatedNotificationRequest
+- NewPaymentMethodRequestRemovedNotificationRequest: changed from func(time.Time, MidServiceNotificationData, string, string) *PaymentMethodRequestRemovedNotificationRequest to func(time.Time, MidServiceNotificationData, string, PaymentMethodRequestRemovedNotificationRequestType) *PaymentMethodRequestRemovedNotificationRequest
+- NewPaymentMethodScheduledForRemovalNotificationRequest: changed from func(time.Time, MidServiceNotificationData, string, string) *PaymentMethodScheduledForRemovalNotificationRequest to func(time.Time, MidServiceNotificationData, string, PaymentMethodScheduledForRemovalNotificationRequestType) *PaymentMethodScheduledForRemovalNotificationRequest
+- NewTerminalBoardingNotificationRequest: changed from func(time.Time, TerminalBoardingData, string, string) *TerminalBoardingNotificationRequest to func(time.Time, TerminalBoardingData, string, TerminalBoardingNotificationRequestType) *TerminalBoardingNotificationRequest
+- NewTerminalSettingsData: changed from func(string, string) *TerminalSettingsData to func(TerminalSettingsDataUpdateSource, string) *TerminalSettingsData
+- NewTerminalSettingsNotificationRequest: changed from func(time.Time, TerminalSettingsData, string, string) *TerminalSettingsNotificationRequest to func(time.Time, TerminalSettingsData, string, TerminalSettingsNotificationRequestType) *TerminalSettingsNotificationRequest
+- PaymentMethodCreatedNotificationRequest.Type: changed from string to PaymentMethodCreatedNotificationRequestType
+- PaymentMethodRequestRemovedNotificationRequest.Type: changed from string to PaymentMethodRequestRemovedNotificationRequestType
+- PaymentMethodScheduledForRemovalNotificationRequest.Type: changed from string to PaymentMethodScheduledForRemovalNotificationRequestType
+- TerminalBoardingNotificationRequest.Type: changed from string to TerminalBoardingNotificationRequestType
+- TerminalSettingsData.UpdateSource: changed from string to TerminalSettingsDataUpdateSource
+- TerminalSettingsNotificationRequest.Type: changed from string to TerminalSettingsNotificationRequestType
+- VerificationError.Type: changed from *string to *VerificationErrorType
+- VerificationErrorRecursive.Type: changed from *string to *VerificationErrorRecursiveType
 Compatible changes:
+- AllowedCapabilityProblemEntityRecursiveTypeEnumValues: added
+- AllowedCapabilityProblemEntityTypeEnumValues: added
+- AllowedMerchantCreatedNotificationRequestTypeEnumValues: added
+- AllowedMerchantUpdatedNotificationRequestTypeEnumValues: added
+- AllowedMidServiceNotificationDataStatusEnumValues: added
+- AllowedMidServiceNotificationDataVerificationStatusEnumValues: added
+- AllowedPaymentMethodCreatedNotificationRequestTypeEnumValues: added
+- AllowedPaymentMethodRequestRemovedNotificationRequestTypeEnumValues: added
+- AllowedPaymentMethodScheduledForRemovalNotificationRequestTypeEnumValues: added
+- AllowedTerminalBoardingNotificationRequestTypeEnumValues: added
+- AllowedTerminalSettingsDataUpdateSourceEnumValues: added
+- AllowedTerminalSettingsNotificationRequestTypeEnumValues: added
+- AllowedVerificationErrorRecursiveTypeEnumValues: added
+- AllowedVerificationErrorTypeEnumValues: added
+- CapabilityProblemEntityRecursiveType: added
 - CapabilityProblemEntityRecursiveTypeBankAccount: added
 - CapabilityProblemEntityRecursiveTypeDocument: added
 - CapabilityProblemEntityRecursiveTypeLegalEntity: added
+- CapabilityProblemEntityType: added
 - CapabilityProblemEntityTypeBankAccount: added
 - CapabilityProblemEntityTypeDocument: added
 - CapabilityProblemEntityTypeLegalEntity: added
 - HandleTerminalBoardingNotificationRequest: added
 - HandleTerminalSettingsNotificationRequest: added
+- MerchantCreatedNotificationRequestType: added
 - MerchantCreatedNotificationRequestTypeMerchantCreated: added
+- MerchantUpdatedNotificationRequestType: added
 - MerchantUpdatedNotificationRequestTypeMerchantUpdated: added
+- MidServiceNotificationDataStatus: added
 - MidServiceNotificationDataStatusCapabilityPending: added
 - MidServiceNotificationDataStatusDataRequired: added
 - MidServiceNotificationDataStatusFailure: added
 - MidServiceNotificationDataStatusSuccess: added
 - MidServiceNotificationDataStatusUpdatesExpected: added
+- MidServiceNotificationDataVerificationStatus: added
 - MidServiceNotificationDataVerificationStatusInvalid: added
 - MidServiceNotificationDataVerificationStatusPending: added
 - MidServiceNotificationDataVerificationStatusRejected: added
 - MidServiceNotificationDataVerificationStatusValid: added
+- NewCapabilityProblemEntityRecursiveTypeFromValue: added
+- NewCapabilityProblemEntityTypeFromValue: added
+- NewMerchantCreatedNotificationRequestTypeFromValue: added
+- NewMerchantUpdatedNotificationRequestTypeFromValue: added
+- NewMidServiceNotificationDataStatusFromValue: added
+- NewMidServiceNotificationDataVerificationStatusFromValue: added
+- NewNullableCapabilityProblemEntityRecursiveType: added
+- NewNullableCapabilityProblemEntityType: added
+- NewNullableMerchantCreatedNotificationRequestType: added
+- NewNullableMerchantUpdatedNotificationRequestType: added
+- NewNullableMidServiceNotificationDataStatus: added
+- NewNullableMidServiceNotificationDataVerificationStatus: added
+- NewNullablePaymentMethodCreatedNotificationRequestType: added
+- NewNullablePaymentMethodRequestRemovedNotificationRequestType: added
+- NewNullablePaymentMethodScheduledForRemovalNotificationRequestType: added
+- NewNullableTerminalBoardingNotificationRequestType: added
+- NewNullableTerminalSettingsDataUpdateSource: added
+- NewNullableTerminalSettingsNotificationRequestType: added
+- NewNullableVerificationErrorRecursiveType: added
+- NewNullableVerificationErrorType: added
+- NewPaymentMethodCreatedNotificationRequestTypeFromValue: added
+- NewPaymentMethodRequestRemovedNotificationRequestTypeFromValue: added
+- NewPaymentMethodScheduledForRemovalNotificationRequestTypeFromValue: added
+- NewTerminalBoardingNotificationRequestTypeFromValue: added
+- NewTerminalSettingsDataUpdateSourceFromValue: added
+- NewTerminalSettingsNotificationRequestTypeFromValue: added
+- NewVerificationErrorRecursiveTypeFromValue: added
+- NewVerificationErrorTypeFromValue: added
+- NullableCapabilityProblemEntityRecursiveType: added
+- NullableCapabilityProblemEntityType: added
+- NullableMerchantCreatedNotificationRequestType: added
+- NullableMerchantUpdatedNotificationRequestType: added
+- NullableMidServiceNotificationDataStatus: added
+- NullableMidServiceNotificationDataVerificationStatus: added
+- NullablePaymentMethodCreatedNotificationRequestType: added
+- NullablePaymentMethodRequestRemovedNotificationRequestType: added
+- NullablePaymentMethodScheduledForRemovalNotificationRequestType: added
+- NullableTerminalBoardingNotificationRequestType: added
+- NullableTerminalSettingsDataUpdateSource: added
+- NullableTerminalSettingsNotificationRequestType: added
+- NullableVerificationErrorRecursiveType: added
+- NullableVerificationErrorType: added
+- PaymentMethodCreatedNotificationRequestType: added
 - PaymentMethodCreatedNotificationRequestTypePaymentMethodCreated: added
+- PaymentMethodRequestRemovedNotificationRequestType: added
 - PaymentMethodRequestRemovedNotificationRequestTypePaymentMethodRequestRemoved: added
+- PaymentMethodScheduledForRemovalNotificationRequestType: added
 - PaymentMethodScheduledForRemovalNotificationRequestTypePaymentMethodRequestScheduledForRemoval: added
+- TerminalBoardingNotificationRequestType: added
 - TerminalBoardingNotificationRequestTypeTerminalBoardingTriggered: added
+- TerminalSettingsDataUpdateSource: added
 - TerminalSettingsDataUpdateSourceCustomerArea: added
 - TerminalSettingsDataUpdateSourceManagementApi: added
+- TerminalSettingsNotificationRequestType: added
 - TerminalSettingsNotificationRequestTypeTerminalSettingsModified: added
+- VerificationErrorRecursiveType: added
 - VerificationErrorRecursiveTypeDataMissing: added
 - VerificationErrorRecursiveTypeDataReview: added
 - VerificationErrorRecursiveTypeInvalidInput: added
 - VerificationErrorRecursiveTypePendingStatus: added
+- VerificationErrorType: added
 - VerificationErrorTypeDataMissing: added
 - VerificationErrorTypeDataReview: added
 - VerificationErrorTypeInvalidInput: added

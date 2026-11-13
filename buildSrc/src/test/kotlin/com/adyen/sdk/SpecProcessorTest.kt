@@ -212,32 +212,53 @@ class SpecProcessorTest {
     }
 
     @Test
-    fun `detects a schema used by an operation response`() {
-        val direct = """
-            { "paths": { "/a": { "get": { "responses": { "422": { "content": { "application/json": {
-              "schema": { "${'$'}ref": "#/components/schemas/RestServiceError" } } } } } } } } }
-        """.trimIndent()
-        val shared = """
-            { "paths": { "/a": { "get": { "responses": { "500": { "${'$'}ref": "#/components/responses/Error" } } } } },
-              "components": { "responses": { "Error": { "content": { "application/problem+json": {
-                "schema": { "${'$'}ref": "#/components/schemas/RestServiceError" } } } } } } }
+    fun `names inline enums of array items after their model and property when asked`() {
+        val input = """
+            { "openapi": "3.1.0", "components": { "schemas": { "PaymentRequest": { "properties": {
+              "channels": { "type": "array", "items": { "type": "string", "enum": ["web", "app"] } },
+              "titled": { "type": "array", "items": { "type": "string", "enum": ["a"], "title": "Kept" } },
+              "refs": { "type": "array", "items": { "${'$'}ref": "#/components/schemas/Channel" } },
+              "tags": { "type": "array", "items": { "type": "string" } }
+            } } } } }
         """.trimIndent()
 
-        assertThat(SpecProcessor.respondsWithSchema(direct, "RestServiceError")).isTrue()
-        assertThat(SpecProcessor.respondsWithSchema(shared, "RestServiceError")).isTrue()
+        @Suppress("UNCHECKED_CAST")
+        val props = ((groovy.json.JsonSlurper().parseText(
+            SpecProcessor.process(input, SpecProcessor.Options(nameArrayItemEnums = true))
+        ) as Map<String, Map<String, Map<String, Map<String, Any?>>>>)["components"]!!["schemas"]!!["PaymentRequest"]!!["properties"]
+            as Map<String, Map<String, Map<String, Any?>>>)
+
+        assertThat(props["channels"]!!["items"]).containsEntry("title", "PaymentRequest_channels")
+        assertThat(props["titled"]!!["items"]).containsEntry("title", "Kept")
+        assertThat(props["refs"]!!["items"]).doesNotContainKey("title")
+        assertThat(props["tags"]!!["items"]).doesNotContainKey("title")
+        assertThat(SpecProcessor.process(input)).doesNotContain("PaymentRequest_channels")
     }
 
     @Test
-    fun `ignores schemas that are only declared, nested in names, or used in requests`() {
+    fun `uses enum values as variable names when asked`() {
         val input = """
-            { "paths": { "/a": { "post": {
-                "requestBody": { "content": { "application/json": { "schema": { "${'$'}ref": "#/components/schemas/RestServiceError" } } } },
-                "responses": { "422": { "content": { "application/json": {
-                  "schema": { "${'$'}ref": "#/components/schemas/RestServiceErrorDetail" } } } } } } } },
-              "components": { "schemas": { "RestServiceError": { "type": "object" } } } }
+            { "openapi": "3.1.0", "components": { "schemas": {
+              "Status": { "type": "string", "enum": ["active", "", "ONECLICK,RECURRING"] },
+              "Code": { "type": "integer", "enum": [1, 2] },
+              "Named": { "type": "string", "enum": ["a"], "x-enum-varnames": ["Custom"] },
+              "Model": { "properties": { "kind": { "type": "string", "enum": ["card"] } },
+                "example": { "enum": ["x"] } }
+            } } }
         """.trimIndent()
 
-        assertThat(SpecProcessor.respondsWithSchema(input, "RestServiceError")).isFalse()
-        assertThat(SpecProcessor.respondsWithSchema("[]", "RestServiceError")).isFalse()
+        @Suppress("UNCHECKED_CAST")
+        val schemas = (groovy.json.JsonSlurper().parseText(
+            SpecProcessor.process(input, SpecProcessor.Options(enumValuesAsVarNames = true))
+        ) as Map<String, Map<String, Map<String, Map<String, Any?>>>>)["components"]!!["schemas"]!!
+        @Suppress("UNCHECKED_CAST")
+        val kind = (schemas["Model"]!!["properties"] as Map<String, Map<String, Any?>>)["kind"]!!
+
+        assertThat(schemas["Status"]).containsEntry("x-enum-varnames", listOf("active", "Empty", "ONECLICK,RECURRING"))
+        assertThat(schemas["Code"]).containsEntry("x-enum-varnames", listOf("1", "2"))
+        assertThat(schemas["Named"]).containsEntry("x-enum-varnames", listOf("Custom"))
+        assertThat(kind).containsEntry("x-enum-varnames", listOf("card"))
+        assertThat(schemas["Model"]!!["example"]).isEqualTo(mapOf("enum" to listOf("x")))
+        assertThat(SpecProcessor.process(input)).doesNotContain("\"Empty\"")
     }
 }

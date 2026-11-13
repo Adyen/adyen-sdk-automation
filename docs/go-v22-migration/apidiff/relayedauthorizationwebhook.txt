@@ -1,18 +1,102 @@
+Incompatible changes:
+- (*AmountAdjustment).GetAmountAdjustmentType: changed from func() string to func() AmountAdjustmentAmountAdjustmentType
+- (*AmountAdjustment).GetAmountAdjustmentTypeOk: changed from func() (*string, bool) to func() (*AmountAdjustmentAmountAdjustmentType, bool)
+- (*AmountAdjustment).SetAmountAdjustmentType: changed from func(string) to func(AmountAdjustmentAmountAdjustmentType)
+- (*AuthorisationDecisionResponse).GetStatus: changed from func() string to func() AuthorisationDecisionResponseStatus
+- (*AuthorisationDecisionResponse).GetStatusOk: changed from func() (*string, bool) to func() (*AuthorisationDecisionResponseStatus, bool)
+- (*AuthorisationDecisionResponse).SetStatus: changed from func(string) to func(AuthorisationDecisionResponseStatus)
+- (*Card).GetFormFactor: changed from func() string to func() CardFormFactor
+- (*Card).GetFormFactorOk: changed from func() (*string, bool) to func() (*CardFormFactor, bool)
+- (*Card).SetFormFactor: changed from func(string) to func(CardFormFactor)
+- (*IbanAccountIdentification).GetType: changed from func() string to func() IbanAccountIdentificationType
+- (*IbanAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*IbanAccountIdentificationType, bool)
+- (*IbanAccountIdentification).SetType: changed from func(string) to func(IbanAccountIdentificationType)
+- (*PaymentInstrument).GetStatus: changed from func() string to func() PaymentInstrumentStatus
+- (*PaymentInstrument).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentInstrumentStatus, bool)
+- (*PaymentInstrument).GetStatusReason: changed from func() string to func() PaymentInstrumentStatusReason
+- (*PaymentInstrument).GetStatusReasonOk: changed from func() (*string, bool) to func() (*PaymentInstrumentStatusReason, bool)
+- (*PaymentInstrument).GetType: changed from func() string to func() PaymentInstrumentType
+- (*PaymentInstrument).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentInstrumentType, bool)
+- (*PaymentInstrument).SetStatus: changed from func(string) to func(PaymentInstrumentStatus)
+- (*PaymentInstrument).SetStatusReason: changed from func(string) to func(PaymentInstrumentStatusReason)
+- (*PaymentInstrument).SetType: changed from func(string) to func(PaymentInstrumentType)
+- (*Phone).GetType: changed from func() string to func() PhoneType
+- (*Phone).GetTypeOk: changed from func() (*string, bool) to func() (*PhoneType, bool)
+- (*Phone).SetType: changed from func(string) to func(PhoneType)
+- (*RelayedAuthorisationRequest).GetType: changed from func() string to func() RelayedAuthorisationRequestType
+- (*RelayedAuthorisationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*RelayedAuthorisationRequestType, bool)
+- (*RelayedAuthorisationRequest).SetType: changed from func(string) to func(RelayedAuthorisationRequestType)
+- AmountAdjustment.AmountAdjustmentType: changed from *string to *AmountAdjustmentAmountAdjustmentType
+- AuthorisationDecisionResponse.Status: changed from string to AuthorisationDecisionResponseStatus
+- Card.FormFactor: changed from string to CardFormFactor
+- IbanAccountIdentification.Type: changed from string to IbanAccountIdentificationType
+- NewAuthorisationDecisionResponse: changed from func(string) *AuthorisationDecisionResponse to func(AuthorisationDecisionResponseStatus) *AuthorisationDecisionResponse
+- NewCard: changed from func(string, string, string, string) *Card to func(string, string, string, CardFormFactor) *Card
+- NewIbanAccountIdentification: changed from func(string, string) *IbanAccountIdentification to func(string, IbanAccountIdentificationType) *IbanAccountIdentification
+- NewPaymentInstrument: changed from func(string, string, string, string) *PaymentInstrument to func(string, string, string, PaymentInstrumentType) *PaymentInstrument
+- NewPhone: changed from func(string, string) *Phone to func(string, PhoneType) *Phone
+- PaymentInstrument.Status: changed from *string to *PaymentInstrumentStatus
+- PaymentInstrument.StatusReason: changed from *string to *PaymentInstrumentStatusReason
+- PaymentInstrument.Type: changed from string to PaymentInstrumentType
+- Phone.Type: changed from string to PhoneType
+- RelayedAuthorisationRequest.Type: changed from *string to *RelayedAuthorisationRequestType
 Compatible changes:
+- AllowedAmountAdjustmentAmountAdjustmentTypeEnumValues: added
+- AllowedAuthorisationDecisionResponseStatusEnumValues: added
+- AllowedCardFormFactorEnumValues: added
+- AllowedIbanAccountIdentificationTypeEnumValues: added
+- AllowedPaymentInstrumentStatusEnumValues: added
+- AllowedPaymentInstrumentStatusReasonEnumValues: added
+- AllowedPaymentInstrumentTypeEnumValues: added
+- AllowedPhoneTypeEnumValues: added
+- AllowedRelayedAuthorisationRequestTypeEnumValues: added
+- AmountAdjustmentAmountAdjustmentType: added
 - AmountAdjustmentAmountAdjustmentTypeAtmMarkup: added
 - AmountAdjustmentAmountAdjustmentTypeAuthHoldReserve: added
 - AmountAdjustmentAmountAdjustmentTypeExchange: added
 - AmountAdjustmentAmountAdjustmentTypeForexMarkup: added
+- AuthorisationDecisionResponseStatus: added
 - AuthorisationDecisionResponseStatusAuthorised: added
 - AuthorisationDecisionResponseStatusRefused: added
+- CardFormFactor: added
 - CardFormFactorPhysical: added
 - CardFormFactorUnknown: added
 - CardFormFactorVirtual: added
 - HandleRelayedAuthorisationRequest: added
+- IbanAccountIdentificationType: added
 - IbanAccountIdentificationTypeIban: added
+- NewAmountAdjustmentAmountAdjustmentTypeFromValue: added
+- NewAuthorisationDecisionResponseStatusFromValue: added
+- NewCardFormFactorFromValue: added
+- NewIbanAccountIdentificationTypeFromValue: added
+- NewNullableAmountAdjustmentAmountAdjustmentType: added
+- NewNullableAuthorisationDecisionResponseStatus: added
+- NewNullableCardFormFactor: added
+- NewNullableIbanAccountIdentificationType: added
+- NewNullablePaymentInstrumentStatus: added
+- NewNullablePaymentInstrumentStatusReason: added
+- NewNullablePaymentInstrumentType: added
+- NewNullablePhoneType: added
+- NewNullableRelayedAuthorisationRequestType: added
+- NewPaymentInstrumentStatusFromValue: added
+- NewPaymentInstrumentStatusReasonFromValue: added
+- NewPaymentInstrumentTypeFromValue: added
+- NewPhoneTypeFromValue: added
+- NewRelayedAuthorisationRequestTypeFromValue: added
+- NullableAmountAdjustmentAmountAdjustmentType: added
+- NullableAuthorisationDecisionResponseStatus: added
+- NullableCardFormFactor: added
+- NullableIbanAccountIdentificationType: added
+- NullablePaymentInstrumentStatus: added
+- NullablePaymentInstrumentStatusReason: added
+- NullablePaymentInstrumentType: added
+- NullablePhoneType: added
+- NullableRelayedAuthorisationRequestType: added
+- PaymentInstrumentStatus: added
 - PaymentInstrumentStatusActive: added
 - PaymentInstrumentStatusClosed: added
 - PaymentInstrumentStatusInactive: added
+- PaymentInstrumentStatusReason: added
 - PaymentInstrumentStatusReasonAccountClosure: added
 - PaymentInstrumentStatusReasonDamaged: added
 - PaymentInstrumentStatusReasonEndOfLife: added
@@ -23,8 +107,11 @@ Compatible changes:
 - PaymentInstrumentStatusReasonSuspectedFraud: added
 - PaymentInstrumentStatusReasonTransactionRule: added
 - PaymentInstrumentStatusSuspended: added
+- PaymentInstrumentType: added
 - PaymentInstrumentTypeBankAccount: added
 - PaymentInstrumentTypeCard: added
+- PhoneType: added
 - PhoneTypeLandline: added
 - PhoneTypeMobile: added
+- RelayedAuthorisationRequestType: added
 - RelayedAuthorisationRequestTypeBalancePlatformAuthorisationRelayed: added

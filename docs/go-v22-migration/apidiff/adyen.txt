@@ -1,5 +1,26 @@
 Incompatible changes:
+- (*APIClient).BalanceControl: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/balancecontrol.GeneralApi to func() *github.com/adyen/adyen-go-api-library/v21/balancecontrol.GeneralApi
+- (*APIClient).BalancePlatform: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/balanceplatform.APIClient to func() *github.com/adyen/adyen-go-api-library/v21/balanceplatform.APIClient
+- (*APIClient).BinLookup: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/binlookup.GeneralApi to func() *github.com/adyen/adyen-go-api-library/v21/binlookup.GeneralApi
+- (*APIClient).Checkout: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/checkout.APIClient to func() *github.com/adyen/adyen-go-api-library/v21/checkout.APIClient
+- (*APIClient).DataProtection: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/dataprotection.GeneralApi to func() *github.com/adyen/adyen-go-api-library/v21/dataprotection.GeneralApi
+- (*APIClient).Disputes: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/disputes.GeneralApi to func() *github.com/adyen/adyen-go-api-library/v21/disputes.GeneralApi
+- (*APIClient).GetConfig: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/common.Config to func() *github.com/adyen/adyen-go-api-library/v21/common.Config
+- (*APIClient).LegalEntity: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/legalentity.APIClient to func() *github.com/adyen/adyen-go-api-library/v21/legalentity.APIClient
+- (*APIClient).Management: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/management.APIClient to func() *github.com/adyen/adyen-go-api-library/v21/management.APIClient
+- (*APIClient).Payments: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/payments.APIClient to func() *github.com/adyen/adyen-go-api-library/v21/payments.APIClient
+- (*APIClient).PaymentsApp: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/paymentsapp.PaymentsAppApi to func() *github.com/adyen/adyen-go-api-library/v21/paymentsapp.PaymentsAppApi
+- (*APIClient).Payout: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/payout.APIClient to func() *github.com/adyen/adyen-go-api-library/v21/payout.APIClient
+- (*APIClient).PosTerminalManagement: removed
+- (*APIClient).Recurring: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/recurring.GeneralApi to func() *github.com/adyen/adyen-go-api-library/v21/recurring.GeneralApi
+- (*APIClient).SetEnvironment: changed from func(github.com/adyen/adyen-go-api-library/v21/src/common.Environment, string) to func(github.com/adyen/adyen-go-api-library/v21/common.Environment, string)
+- (*APIClient).StoredValue: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/storedvalue.GeneralApi to func() *github.com/adyen/adyen-go-api-library/v21/storedvalue.GeneralApi
+- (*APIClient).Transfers: changed from func() *github.com/adyen/adyen-go-api-library/v21/src/transfers.APIClient to func() *github.com/adyen/adyen-go-api-library/v21/transfers.APIClient
 - CheckoutAPIVersion: value changed from "v71" to "v72"
+- NewClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Config) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Config) *APIClient
+- PosTerminalManagementAPIVersion: removed
+- PosTerminalManagementEndpointLive: removed
+- PosTerminalManagementEndpointTest: removed
 Compatible changes:
 - (*APIClient).Capital: added
 - (*APIClient).DocumentCollector: added

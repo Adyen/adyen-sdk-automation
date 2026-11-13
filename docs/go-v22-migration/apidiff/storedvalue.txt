@@ -1,49 +1,133 @@
+Incompatible changes:
+- (*StoredValueBalanceCheckRequest).GetShopperInteraction: changed from func() string to func() StoredValueBalanceCheckRequestShopperInteraction
+- (*StoredValueBalanceCheckRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*StoredValueBalanceCheckRequestShopperInteraction, bool)
+- (*StoredValueBalanceCheckRequest).SetShopperInteraction: changed from func(string) to func(StoredValueBalanceCheckRequestShopperInteraction)
+- (*StoredValueBalanceCheckResponse).GetResultCode: changed from func() string to func() StoredValueBalanceCheckResponseResultCode
+- (*StoredValueBalanceCheckResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*StoredValueBalanceCheckResponseResultCode, bool)
+- (*StoredValueBalanceCheckResponse).SetResultCode: changed from func(string) to func(StoredValueBalanceCheckResponseResultCode)
+- (*StoredValueBalanceMergeRequest).GetShopperInteraction: changed from func() string to func() StoredValueBalanceMergeRequestShopperInteraction
+- (*StoredValueBalanceMergeRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*StoredValueBalanceMergeRequestShopperInteraction, bool)
+- (*StoredValueBalanceMergeRequest).SetShopperInteraction: changed from func(string) to func(StoredValueBalanceMergeRequestShopperInteraction)
+- (*StoredValueBalanceMergeResponse).GetResultCode: changed from func() string to func() StoredValueBalanceMergeResponseResultCode
+- (*StoredValueBalanceMergeResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*StoredValueBalanceMergeResponseResultCode, bool)
+- (*StoredValueBalanceMergeResponse).SetResultCode: changed from func(string) to func(StoredValueBalanceMergeResponseResultCode)
+- (*StoredValueIssueRequest).GetShopperInteraction: changed from func() string to func() StoredValueBalanceCheckRequestShopperInteraction
+- (*StoredValueIssueRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*StoredValueBalanceCheckRequestShopperInteraction, bool)
+- (*StoredValueIssueRequest).SetShopperInteraction: changed from func(string) to func(StoredValueBalanceCheckRequestShopperInteraction)
+- (*StoredValueIssueResponse).GetResultCode: changed from func() string to func() StoredValueIssueResponseResultCode
+- (*StoredValueIssueResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*StoredValueIssueResponseResultCode, bool)
+- (*StoredValueIssueResponse).SetResultCode: changed from func(string) to func(StoredValueIssueResponseResultCode)
+- (*StoredValueLoadRequest).GetLoadType: changed from func() string to func() StoredValueLoadRequestLoadType
+- (*StoredValueLoadRequest).GetLoadTypeOk: changed from func() (*string, bool) to func() (*StoredValueLoadRequestLoadType, bool)
+- (*StoredValueLoadRequest).GetShopperInteraction: changed from func() string to func() StoredValueLoadRequestShopperInteraction
+- (*StoredValueLoadRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*StoredValueLoadRequestShopperInteraction, bool)
+- (*StoredValueLoadRequest).SetLoadType: changed from func(string) to func(StoredValueLoadRequestLoadType)
+- (*StoredValueLoadRequest).SetShopperInteraction: changed from func(string) to func(StoredValueLoadRequestShopperInteraction)
+- (*StoredValueLoadResponse).GetResultCode: changed from func() string to func() StoredValueBalanceMergeResponseResultCode
+- (*StoredValueLoadResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*StoredValueBalanceMergeResponseResultCode, bool)
+- (*StoredValueLoadResponse).SetResultCode: changed from func(string) to func(StoredValueBalanceMergeResponseResultCode)
+- (*StoredValueStatusChangeRequest).GetShopperInteraction: changed from func() string to func() StoredValueStatusChangeRequestShopperInteraction
+- (*StoredValueStatusChangeRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*StoredValueStatusChangeRequestShopperInteraction, bool)
+- (*StoredValueStatusChangeRequest).GetStatus: changed from func() string to func() StoredValueStatusChangeRequestStatus
+- (*StoredValueStatusChangeRequest).GetStatusOk: changed from func() (*string, bool) to func() (*StoredValueStatusChangeRequestStatus, bool)
+- (*StoredValueStatusChangeRequest).SetShopperInteraction: changed from func(string) to func(StoredValueStatusChangeRequestShopperInteraction)
+- (*StoredValueStatusChangeRequest).SetStatus: changed from func(string) to func(StoredValueStatusChangeRequestStatus)
+- (*StoredValueStatusChangeResponse).GetResultCode: changed from func() string to func() StoredValueBalanceMergeResponseResultCode
+- (*StoredValueStatusChangeResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*StoredValueBalanceMergeResponseResultCode, bool)
+- (*StoredValueStatusChangeResponse).SetResultCode: changed from func(string) to func(StoredValueBalanceMergeResponseResultCode)
+- (*StoredValueVoidResponse).GetResultCode: changed from func() string to func() StoredValueBalanceCheckResponseResultCode
+- (*StoredValueVoidResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*StoredValueBalanceCheckResponseResultCode, bool)
+- (*StoredValueVoidResponse).SetResultCode: changed from func(string) to func(StoredValueBalanceCheckResponseResultCode)
+- GeneralApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- NewStoredValueStatusChangeRequest: changed from func(string, map[string]string, string, string) *StoredValueStatusChangeRequest to func(string, map[string]string, string, StoredValueStatusChangeRequestStatus) *StoredValueStatusChangeRequest
+- StoredValueBalanceCheckRequest.ShopperInteraction: changed from *string to *StoredValueBalanceCheckRequestShopperInteraction
+- StoredValueBalanceCheckResponse.ResultCode: changed from *string to *StoredValueBalanceCheckResponseResultCode
+- StoredValueBalanceMergeRequest.ShopperInteraction: changed from *string to *StoredValueBalanceMergeRequestShopperInteraction
+- StoredValueBalanceMergeResponse.ResultCode: changed from *string to *StoredValueBalanceMergeResponseResultCode
+- StoredValueIssueRequest.ShopperInteraction: changed from *string to *StoredValueBalanceCheckRequestShopperInteraction
+- StoredValueIssueResponse.ResultCode: changed from *string to *StoredValueIssueResponseResultCode
+- StoredValueLoadRequest.LoadType: changed from *string to *StoredValueLoadRequestLoadType
+- StoredValueLoadRequest.ShopperInteraction: changed from *string to *StoredValueLoadRequestShopperInteraction
+- StoredValueLoadResponse.ResultCode: changed from *string to *StoredValueBalanceMergeResponseResultCode
+- StoredValueStatusChangeRequest.ShopperInteraction: changed from *string to *StoredValueStatusChangeRequestShopperInteraction
+- StoredValueStatusChangeRequest.Status: changed from string to StoredValueStatusChangeRequestStatus
+- StoredValueStatusChangeResponse.ResultCode: changed from *string to *StoredValueBalanceMergeResponseResultCode
+- StoredValueVoidResponse.ResultCode: changed from *string to *StoredValueBalanceCheckResponseResultCode
 Compatible changes:
+- AllowedStoredValueBalanceCheckRequestShopperInteractionEnumValues: added
+- AllowedStoredValueBalanceCheckResponseResultCodeEnumValues: added
+- AllowedStoredValueBalanceMergeRequestShopperInteractionEnumValues: added
+- AllowedStoredValueBalanceMergeResponseResultCodeEnumValues: added
+- AllowedStoredValueIssueResponseResultCodeEnumValues: added
+- AllowedStoredValueLoadRequestLoadTypeEnumValues: added
+- AllowedStoredValueLoadRequestShopperInteractionEnumValues: added
+- AllowedStoredValueStatusChangeRequestShopperInteractionEnumValues: added
+- AllowedStoredValueStatusChangeRequestStatusEnumValues: added
+- NewNullableStoredValueBalanceCheckRequestShopperInteraction: added
+- NewNullableStoredValueBalanceCheckResponseResultCode: added
+- NewNullableStoredValueBalanceMergeRequestShopperInteraction: added
+- NewNullableStoredValueBalanceMergeResponseResultCode: added
+- NewNullableStoredValueIssueResponseResultCode: added
+- NewNullableStoredValueLoadRequestLoadType: added
+- NewNullableStoredValueLoadRequestShopperInteraction: added
+- NewNullableStoredValueStatusChangeRequestShopperInteraction: added
+- NewNullableStoredValueStatusChangeRequestStatus: added
+- NewStoredValueBalanceCheckRequestShopperInteractionFromValue: added
+- NewStoredValueBalanceCheckResponseResultCodeFromValue: added
+- NewStoredValueBalanceMergeRequestShopperInteractionFromValue: added
+- NewStoredValueBalanceMergeResponseResultCodeFromValue: added
+- NewStoredValueIssueResponseResultCodeFromValue: added
+- NewStoredValueLoadRequestLoadTypeFromValue: added
+- NewStoredValueLoadRequestShopperInteractionFromValue: added
+- NewStoredValueStatusChangeRequestShopperInteractionFromValue: added
+- NewStoredValueStatusChangeRequestStatusFromValue: added
+- NullableStoredValueBalanceCheckRequestShopperInteraction: added
+- NullableStoredValueBalanceCheckResponseResultCode: added
+- NullableStoredValueBalanceMergeRequestShopperInteraction: added
+- NullableStoredValueBalanceMergeResponseResultCode: added
+- NullableStoredValueIssueResponseResultCode: added
+- NullableStoredValueLoadRequestLoadType: added
+- NullableStoredValueLoadRequestShopperInteraction: added
+- NullableStoredValueStatusChangeRequestShopperInteraction: added
+- NullableStoredValueStatusChangeRequestStatus: added
+- StoredValueBalanceCheckRequestShopperInteraction: added
 - StoredValueBalanceCheckRequestShopperInteractionContAuth: added
 - StoredValueBalanceCheckRequestShopperInteractionEcommerce: added
 - StoredValueBalanceCheckRequestShopperInteractionMoto: added
 - StoredValueBalanceCheckRequestShopperInteractionPOS: added
+- StoredValueBalanceCheckResponseResultCode: added
 - StoredValueBalanceCheckResponseResultCodeError: added
 - StoredValueBalanceCheckResponseResultCodeNotEnoughBalance: added
 - StoredValueBalanceCheckResponseResultCodeRefused: added
 - StoredValueBalanceCheckResponseResultCodeSuccess: added
+- StoredValueBalanceMergeRequestShopperInteraction: added
 - StoredValueBalanceMergeRequestShopperInteractionContAuth: added
 - StoredValueBalanceMergeRequestShopperInteractionEcommerce: added
 - StoredValueBalanceMergeRequestShopperInteractionMoto: added
 - StoredValueBalanceMergeRequestShopperInteractionPOS: added
+- StoredValueBalanceMergeResponseResultCode: added
 - StoredValueBalanceMergeResponseResultCodeError: added
 - StoredValueBalanceMergeResponseResultCodeNotEnoughBalance: added
 - StoredValueBalanceMergeResponseResultCodeRefused: added
 - StoredValueBalanceMergeResponseResultCodeSuccess: added
-- StoredValueIssueRequestShopperInteractionContAuth: added
-- StoredValueIssueRequestShopperInteractionEcommerce: added
-- StoredValueIssueRequestShopperInteractionMoto: added
-- StoredValueIssueRequestShopperInteractionPOS: added
+- StoredValueIssueResponseResultCode: added
 - StoredValueIssueResponseResultCodeError: added
 - StoredValueIssueResponseResultCodeNotEnoughBalance: added
 - StoredValueIssueResponseResultCodeRefused: added
 - StoredValueIssueResponseResultCodeSuccess: added
+- StoredValueLoadRequestLoadType: added
 - StoredValueLoadRequestLoadTypeLoad: added
 - StoredValueLoadRequestLoadTypeMerchandiseReturn: added
+- StoredValueLoadRequestShopperInteraction: added
 - StoredValueLoadRequestShopperInteractionContAuth: added
 - StoredValueLoadRequestShopperInteractionEcommerce: added
 - StoredValueLoadRequestShopperInteractionMoto: added
 - StoredValueLoadRequestShopperInteractionPOS: added
-- StoredValueLoadResponseResultCodeError: added
-- StoredValueLoadResponseResultCodeNotEnoughBalance: added
-- StoredValueLoadResponseResultCodeRefused: added
-- StoredValueLoadResponseResultCodeSuccess: added
+- StoredValueStatusChangeRequestShopperInteraction: added
 - StoredValueStatusChangeRequestShopperInteractionContAuth: added
 - StoredValueStatusChangeRequestShopperInteractionEcommerce: added
 - StoredValueStatusChangeRequestShopperInteractionMoto: added
 - StoredValueStatusChangeRequestShopperInteractionPOS: added
+- StoredValueStatusChangeRequestStatus: added
 - StoredValueStatusChangeRequestStatusActive: added
 - StoredValueStatusChangeRequestStatusInactive: added
-- StoredValueStatusChangeResponseResultCodeError: added
-- StoredValueStatusChangeResponseResultCodeNotEnoughBalance: added
-- StoredValueStatusChangeResponseResultCodeRefused: added
-- StoredValueStatusChangeResponseResultCodeSuccess: added
-- StoredValueVoidResponseResultCodeError: added
-- StoredValueVoidResponseResultCodeNotEnoughBalance: added
-- StoredValueVoidResponseResultCodeRefused: added
-- StoredValueVoidResponseResultCodeSuccess: added

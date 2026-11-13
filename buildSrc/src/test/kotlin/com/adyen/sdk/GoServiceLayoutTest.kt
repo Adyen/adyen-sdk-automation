@@ -10,7 +10,7 @@ class GoServiceLayoutTest {
         val layout = GoServiceLayout.of(Service(name = "Checkout", version = 71))
 
         assertThat(layout.packageName).isEqualTo("checkout")
-        assertThat(layout.directory).isEqualTo("src/checkout")
+        assertThat(layout.directory).isEqualTo("checkout")
         assertThat(layout.serviceName).isEqualTo("Checkout")
         assertThat(layout.supportingFile).isEqualTo("client.go")
         assertThat(layout.deploysClient(listOf("api_payments.go", "api_donations.go", "client.go"))).isTrue()
@@ -44,7 +44,7 @@ class GoServiceLayoutTest {
         val layout = GoServiceLayout.of(Service(name = "AcsWebhooks", version = 1))
 
         assertThat(layout.packageName).isEqualTo("acswebhook")
-        assertThat(layout.directory).isEqualTo("src/acswebhook")
+        assertThat(layout.directory).isEqualTo("acswebhook")
         assertThat(layout.supportingFile).isEqualTo("webhook_handler.go")
         assertThat(layout.deploysClient(listOf("api_general.go", "api_other.go", "client.go"))).isFalse()
     }

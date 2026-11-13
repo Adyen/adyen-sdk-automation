@@ -1,8 +1,296 @@
 Incompatible changes:
+- (*AULocalAccountIdentification).GetType: changed from func() string to func() AULocalAccountIdentificationType
+- (*AULocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*AULocalAccountIdentificationType, bool)
+- (*AULocalAccountIdentification).SetType: changed from func(string) to func(AULocalAccountIdentificationType)
+- (*AcceptTermsOfServiceResponse).GetType: changed from func() string to func() AcceptTermsOfServiceResponseType
+- (*AcceptTermsOfServiceResponse).GetTypeOk: changed from func() (*string, bool) to func() (*AcceptTermsOfServiceResponseType, bool)
+- (*AcceptTermsOfServiceResponse).SetType: changed from func(string) to func(AcceptTermsOfServiceResponseType)
+- (*AdditionalBankIdentification).GetType: changed from func() string to func() AdditionalBankIdentificationType
+- (*AdditionalBankIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*AdditionalBankIdentificationType, bool)
+- (*AdditionalBankIdentification).SetType: changed from func(string) to func(AdditionalBankIdentificationType)
+- (*BusinessLine).GetService: changed from func() string to func() BusinessLineService
+- (*BusinessLine).GetServiceOk: changed from func() (*string, bool) to func() (*BusinessLineService, bool)
+- (*BusinessLine).SetService: changed from func(string) to func(BusinessLineService)
+- (*BusinessLineInfo).GetService: changed from func() string to func() BusinessLineInfoService
+- (*BusinessLineInfo).GetServiceOk: changed from func() (*string, bool) to func() (*BusinessLineInfoService, bool)
+- (*BusinessLineInfo).SetService: changed from func(string) to func(BusinessLineInfoService)
+- (*CALocalAccountIdentification).GetAccountType: changed from func() string to func() CALocalAccountIdentificationAccountType
+- (*CALocalAccountIdentification).GetAccountTypeOk: changed from func() (*string, bool) to func() (*CALocalAccountIdentificationAccountType, bool)
+- (*CALocalAccountIdentification).GetType: changed from func() string to func() CALocalAccountIdentificationType
+- (*CALocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*CALocalAccountIdentificationType, bool)
+- (*CALocalAccountIdentification).SetAccountType: changed from func(string) to func(CALocalAccountIdentificationAccountType)
+- (*CALocalAccountIdentification).SetType: changed from func(string) to func(CALocalAccountIdentificationType)
+- (*CZLocalAccountIdentification).GetType: changed from func() string to func() CZLocalAccountIdentificationType
+- (*CZLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*CZLocalAccountIdentificationType, bool)
+- (*CZLocalAccountIdentification).SetType: changed from func(string) to func(CZLocalAccountIdentificationType)
+- (*CalculatePciStatusRequest).GetAdditionalSalesChannels: changed from func() []string to func() []CalculatePciStatusRequestAdditionalSalesChannels
+- (*CalculatePciStatusRequest).GetAdditionalSalesChannelsOk: changed from func() ([]string, bool) to func() ([]CalculatePciStatusRequestAdditionalSalesChannels, bool)
+- (*CalculatePciStatusRequest).SetAdditionalSalesChannels: changed from func([]string) to func([]CalculatePciStatusRequestAdditionalSalesChannels)
+- (*CalculateTermsOfServiceStatusResponse).GetTermsOfServiceTypes: changed from func() []string to func() []CalculateTermsOfServiceStatusResponseTermsOfServiceTypes
+- (*CalculateTermsOfServiceStatusResponse).GetTermsOfServiceTypesOk: changed from func() ([]string, bool) to func() ([]CalculateTermsOfServiceStatusResponseTermsOfServiceTypes, bool)
+- (*CalculateTermsOfServiceStatusResponse).SetTermsOfServiceTypes: changed from func([]string) to func([]CalculateTermsOfServiceStatusResponseTermsOfServiceTypes)
+- (*CapabilityProblemEntity).GetType: changed from func() string to func() CapabilityProblemEntityType
+- (*CapabilityProblemEntity).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityType, bool)
+- (*CapabilityProblemEntity).SetType: changed from func(string) to func(CapabilityProblemEntityType)
+- (*CapabilityProblemEntityRecursive).GetType: changed from func() string to func() CapabilityProblemEntityRecursiveType
+- (*CapabilityProblemEntityRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityRecursiveType, bool)
+- (*CapabilityProblemEntityRecursive).SetType: changed from func(string) to func(CapabilityProblemEntityRecursiveType)
+- (*CapabilitySettings).GetFundingSource: changed from func() []string to func() []CapabilitySettingsFundingSource
+- (*CapabilitySettings).GetFundingSourceOk: changed from func() ([]string, bool) to func() ([]CapabilitySettingsFundingSource, bool)
+- (*CapabilitySettings).GetInterval: changed from func() string to func() CapabilitySettingsInterval
+- (*CapabilitySettings).GetIntervalOk: changed from func() (*string, bool) to func() (*CapabilitySettingsInterval, bool)
+- (*CapabilitySettings).SetFundingSource: changed from func([]string) to func([]CapabilitySettingsFundingSource)
+- (*CapabilitySettings).SetInterval: changed from func(string) to func(CapabilitySettingsInterval)
+- (*DKLocalAccountIdentification).GetType: changed from func() string to func() DKLocalAccountIdentificationType
+- (*DKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*DKLocalAccountIdentificationType, bool)
+- (*DKLocalAccountIdentification).SetType: changed from func(string) to func(DKLocalAccountIdentificationType)
+- (*Document).GetType: changed from func() string to func() DocumentType
+- (*Document).GetTypeOk: changed from func() (*string, bool) to func() (*DocumentType, bool)
+- (*Document).SetType: changed from func(string) to func(DocumentType)
+- (*DocumentPage).GetType: changed from func() string to func() DocumentPageType
+- (*DocumentPage).GetTypeOk: changed from func() (*string, bool) to func() (*DocumentPageType, bool)
+- (*DocumentPage).SetType: changed from func(string) to func(DocumentPageType)
+- (*GeneratePciDescriptionRequest).GetAdditionalSalesChannels: changed from func() []string to func() []GeneratePciDescriptionRequestAdditionalSalesChannels
+- (*GeneratePciDescriptionRequest).GetAdditionalSalesChannelsOk: changed from func() ([]string, bool) to func() ([]GeneratePciDescriptionRequestAdditionalSalesChannels, bool)
+- (*GeneratePciDescriptionRequest).SetAdditionalSalesChannels: changed from func([]string) to func([]GeneratePciDescriptionRequestAdditionalSalesChannels)
+- (*GetAcceptedTermsOfServiceDocumentResponse).GetTermsOfServiceDocumentFormat: changed from func() string to func() GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormat
+- (*GetAcceptedTermsOfServiceDocumentResponse).GetTermsOfServiceDocumentFormatOk: changed from func() (*string, bool) to func() (*GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormat, bool)
+- (*GetAcceptedTermsOfServiceDocumentResponse).SetTermsOfServiceDocumentFormat: changed from func(string) to func(GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormat)
+- (*GetTermsOfServiceDocumentRequest).GetType: changed from func() string to func() GetTermsOfServiceDocumentRequestType
+- (*GetTermsOfServiceDocumentRequest).GetTypeOk: changed from func() (*string, bool) to func() (*GetTermsOfServiceDocumentRequestType, bool)
+- (*GetTermsOfServiceDocumentRequest).SetType: changed from func(string) to func(GetTermsOfServiceDocumentRequestType)
+- (*GetTermsOfServiceDocumentResponse).GetType: changed from func() string to func() GetTermsOfServiceDocumentResponseType
+- (*GetTermsOfServiceDocumentResponse).GetTypeOk: changed from func() (*string, bool) to func() (*GetTermsOfServiceDocumentResponseType, bool)
+- (*GetTermsOfServiceDocumentResponse).SetType: changed from func(string) to func(GetTermsOfServiceDocumentResponseType)
+- (*HKLocalAccountIdentification).GetType: changed from func() string to func() HKLocalAccountIdentificationType
+- (*HKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*HKLocalAccountIdentificationType, bool)
+- (*HKLocalAccountIdentification).SetType: changed from func(string) to func(HKLocalAccountIdentificationType)
+- (*HULocalAccountIdentification).GetType: changed from func() string to func() HULocalAccountIdentificationType
+- (*HULocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*HULocalAccountIdentificationType, bool)
+- (*HULocalAccountIdentification).SetType: changed from func(string) to func(HULocalAccountIdentificationType)
+- (*IbanAccountIdentification).GetType: changed from func() string to func() IbanAccountIdentificationType
+- (*IbanAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*IbanAccountIdentificationType, bool)
+- (*IbanAccountIdentification).SetType: changed from func(string) to func(IbanAccountIdentificationType)
+- (*IdentificationData).GetType: changed from func() string to func() IdentificationDataType
+- (*IdentificationData).GetTypeOk: changed from func() (*string, bool) to func() (*IdentificationDataType, bool)
+- (*IdentificationData).SetType: changed from func(string) to func(IdentificationDataType)
+- (*LegalEntity).GetType: changed from func() string to func() LegalEntityType
+- (*LegalEntity).GetTypeOk: changed from func() (*string, bool) to func() (*LegalEntityType, bool)
+- (*LegalEntity).SetType: changed from func(string) to func(LegalEntityType)
+- (*LegalEntityAssociation).GetType: changed from func() string to func() LegalEntityAssociationType
+- (*LegalEntityAssociation).GetTypeOk: changed from func() (*string, bool) to func() (*LegalEntityAssociationType, bool)
+- (*LegalEntityAssociation).SetType: changed from func(string) to func(LegalEntityAssociationType)
+- (*LegalEntityCapability).GetAllowedLevel: changed from func() string to func() LegalEntityCapabilityAllowedLevel
+- (*LegalEntityCapability).GetAllowedLevelOk: changed from func() (*string, bool) to func() (*LegalEntityCapabilityAllowedLevel, bool)
+- (*LegalEntityCapability).GetRequestedLevel: changed from func() string to func() LegalEntityCapabilityRequestedLevel
+- (*LegalEntityCapability).GetRequestedLevelOk: changed from func() (*string, bool) to func() (*LegalEntityCapabilityRequestedLevel, bool)
+- (*LegalEntityCapability).SetAllowedLevel: changed from func(string) to func(LegalEntityCapabilityAllowedLevel)
+- (*LegalEntityCapability).SetRequestedLevel: changed from func(string) to func(LegalEntityCapabilityRequestedLevel)
+- (*LegalEntityInfo).GetType: changed from func() string to func() LegalEntityInfoType
+- (*LegalEntityInfo).GetTypeOk: changed from func() (*string, bool) to func() (*LegalEntityInfoType, bool)
+- (*LegalEntityInfo).SetType: changed from func(string) to func(LegalEntityInfoType)
+- (*LegalEntityInfoRequiredType).GetType: changed from func() string to func() LegalEntityInfoRequiredTypeType
+- (*LegalEntityInfoRequiredType).GetTypeOk: changed from func() (*string, bool) to func() (*LegalEntityInfoRequiredTypeType, bool)
+- (*LegalEntityInfoRequiredType).SetType: changed from func(string) to func(LegalEntityInfoRequiredTypeType)
+- (*NOLocalAccountIdentification).GetType: changed from func() string to func() NOLocalAccountIdentificationType
+- (*NOLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NOLocalAccountIdentificationType, bool)
+- (*NOLocalAccountIdentification).SetType: changed from func(string) to func(NOLocalAccountIdentificationType)
+- (*NZLocalAccountIdentification).GetType: changed from func() string to func() NZLocalAccountIdentificationType
+- (*NZLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NZLocalAccountIdentificationType, bool)
+- (*NZLocalAccountIdentification).SetType: changed from func(string) to func(NZLocalAccountIdentificationType)
+- (*NumberAndBicAccountIdentification).GetType: changed from func() string to func() NumberAndBicAccountIdentificationType
+- (*NumberAndBicAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NumberAndBicAccountIdentificationType, bool)
+- (*NumberAndBicAccountIdentification).SetType: changed from func(string) to func(NumberAndBicAccountIdentificationType)
+- (*Organization).GetInstitutionalSector: changed from func() string to func() OrganizationInstitutionalSector
+- (*Organization).GetInstitutionalSectorOk: changed from func() (*string, bool) to func() (*OrganizationInstitutionalSector, bool)
+- (*Organization).GetStatusOfLegalProceeding: changed from func() string to func() OrganizationStatusOfLegalProceeding
+- (*Organization).GetStatusOfLegalProceedingOk: changed from func() (*string, bool) to func() (*OrganizationStatusOfLegalProceeding, bool)
+- (*Organization).GetType: changed from func() string to func() OrganizationType
+- (*Organization).GetTypeOk: changed from func() (*string, bool) to func() (*OrganizationType, bool)
+- (*Organization).GetVatAbsenceReason: changed from func() string to func() OrganizationVatAbsenceReason
+- (*Organization).GetVatAbsenceReasonOk: changed from func() (*string, bool) to func() (*OrganizationVatAbsenceReason, bool)
+- (*Organization).SetInstitutionalSector: changed from func(string) to func(OrganizationInstitutionalSector)
+- (*Organization).SetStatusOfLegalProceeding: changed from func(string) to func(OrganizationStatusOfLegalProceeding)
+- (*Organization).SetType: changed from func(string) to func(OrganizationType)
+- (*Organization).SetVatAbsenceReason: changed from func(string) to func(OrganizationVatAbsenceReason)
+- (*PLLocalAccountIdentification).GetType: changed from func() string to func() PLLocalAccountIdentificationType
+- (*PLLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*PLLocalAccountIdentificationType, bool)
+- (*PLLocalAccountIdentification).SetType: changed from func(string) to func(PLLocalAccountIdentificationType)
+- (*SELocalAccountIdentification).GetType: changed from func() string to func() SELocalAccountIdentificationType
+- (*SELocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*SELocalAccountIdentificationType, bool)
+- (*SELocalAccountIdentification).SetType: changed from func(string) to func(SELocalAccountIdentificationType)
+- (*SGLocalAccountIdentification).GetType: changed from func() string to func() SGLocalAccountIdentificationType
+- (*SGLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*SGLocalAccountIdentificationType, bool)
+- (*SGLocalAccountIdentification).SetType: changed from func(string) to func(SGLocalAccountIdentificationType)
+- (*SoleProprietorship).GetVatAbsenceReason: changed from func() string to func() SoleProprietorshipVatAbsenceReason
+- (*SoleProprietorship).GetVatAbsenceReasonOk: changed from func() (*string, bool) to func() (*SoleProprietorshipVatAbsenceReason, bool)
+- (*SoleProprietorship).SetVatAbsenceReason: changed from func(string) to func(SoleProprietorshipVatAbsenceReason)
+- (*SourceOfFunds).GetType: changed from func() string to func() SourceOfFundsType
+- (*SourceOfFunds).GetTypeOk: changed from func() (*string, bool) to func() (*SourceOfFundsType, bool)
+- (*SourceOfFunds).SetType: changed from func(string) to func(SourceOfFundsType)
+- (*TaxReportingClassification).GetBusinessType: changed from func() string to func() TaxReportingClassificationBusinessType
+- (*TaxReportingClassification).GetBusinessTypeOk: changed from func() (*string, bool) to func() (*TaxReportingClassificationBusinessType, bool)
+- (*TaxReportingClassification).GetMainSourceOfIncome: changed from func() string to func() TaxReportingClassificationMainSourceOfIncome
+- (*TaxReportingClassification).GetMainSourceOfIncomeOk: changed from func() (*string, bool) to func() (*TaxReportingClassificationMainSourceOfIncome, bool)
+- (*TaxReportingClassification).GetType: changed from func() string to func() TaxReportingClassificationType
+- (*TaxReportingClassification).GetTypeOk: changed from func() (*string, bool) to func() (*TaxReportingClassificationType, bool)
+- (*TaxReportingClassification).SetBusinessType: changed from func(string) to func(TaxReportingClassificationBusinessType)
+- (*TaxReportingClassification).SetMainSourceOfIncome: changed from func(string) to func(TaxReportingClassificationMainSourceOfIncome)
+- (*TaxReportingClassification).SetType: changed from func(string) to func(TaxReportingClassificationType)
+- (*TermsOfServiceAcceptanceInfo).GetType: changed from func() string to func() TermsOfServiceAcceptanceInfoType
+- (*TermsOfServiceAcceptanceInfo).GetTypeOk: changed from func() (*string, bool) to func() (*TermsOfServiceAcceptanceInfoType, bool)
+- (*TermsOfServiceAcceptanceInfo).SetType: changed from func(string) to func(TermsOfServiceAcceptanceInfoType)
+- (*TransferInstrument).GetType: changed from func() string to func() TransferInstrumentType
+- (*TransferInstrument).GetTypeOk: changed from func() (*string, bool) to func() (*TransferInstrumentType, bool)
+- (*TransferInstrument).SetType: changed from func(string) to func(TransferInstrumentType)
+- (*TransferInstrumentInfo).GetType: changed from func() string to func() TransferInstrumentInfoType
+- (*TransferInstrumentInfo).GetTypeOk: changed from func() (*string, bool) to func() (*TransferInstrumentInfoType, bool)
+- (*TransferInstrumentInfo).SetType: changed from func(string) to func(TransferInstrumentInfoType)
+- (*Trust).GetType: changed from func() string to func() TrustType
+- (*Trust).GetTypeOk: changed from func() (*string, bool) to func() (*TrustType, bool)
+- (*Trust).GetVatAbsenceReason: changed from func() string to func() TrustVatAbsenceReason
+- (*Trust).GetVatAbsenceReasonOk: changed from func() (*string, bool) to func() (*TrustVatAbsenceReason, bool)
+- (*Trust).SetType: changed from func(string) to func(TrustType)
+- (*Trust).SetVatAbsenceReason: changed from func(string) to func(TrustVatAbsenceReason)
+- (*UKLocalAccountIdentification).GetType: changed from func() string to func() UKLocalAccountIdentificationType
+- (*UKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*UKLocalAccountIdentificationType, bool)
+- (*UKLocalAccountIdentification).SetType: changed from func(string) to func(UKLocalAccountIdentificationType)
+- (*USLocalAccountIdentification).GetAccountType: changed from func() string to func() USLocalAccountIdentificationAccountType
+- (*USLocalAccountIdentification).GetAccountTypeOk: changed from func() (*string, bool) to func() (*USLocalAccountIdentificationAccountType, bool)
+- (*USLocalAccountIdentification).GetType: changed from func() string to func() USLocalAccountIdentificationType
+- (*USLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*USLocalAccountIdentificationType, bool)
+- (*USLocalAccountIdentification).SetAccountType: changed from func(string) to func(USLocalAccountIdentificationAccountType)
+- (*USLocalAccountIdentification).SetType: changed from func(string) to func(USLocalAccountIdentificationType)
+- (*UnincorporatedPartnership).GetType: changed from func() string to func() UnincorporatedPartnershipType
+- (*UnincorporatedPartnership).GetTypeOk: changed from func() (*string, bool) to func() (*UnincorporatedPartnershipType, bool)
+- (*UnincorporatedPartnership).GetVatAbsenceReason: changed from func() string to func() UnincorporatedPartnershipVatAbsenceReason
+- (*UnincorporatedPartnership).GetVatAbsenceReasonOk: changed from func() (*string, bool) to func() (*UnincorporatedPartnershipVatAbsenceReason, bool)
+- (*UnincorporatedPartnership).SetType: changed from func(string) to func(UnincorporatedPartnershipType)
+- (*UnincorporatedPartnership).SetVatAbsenceReason: changed from func(string) to func(UnincorporatedPartnershipVatAbsenceReason)
+- (*VerificationDeadline).GetCapabilities: changed from func() []string to func() []VerificationDeadlineCapabilities
+- (*VerificationDeadline).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationDeadlineCapabilities, bool)
+- (*VerificationDeadline).SetCapabilities: changed from func([]string) to func([]VerificationDeadlineCapabilities)
+- (*VerificationError).GetCapabilities: changed from func() []string to func() []VerificationErrorCapabilities
+- (*VerificationError).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationErrorCapabilities, bool)
+- (*VerificationError).GetType: changed from func() string to func() VerificationErrorType
+- (*VerificationError).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorType, bool)
+- (*VerificationError).SetCapabilities: changed from func([]string) to func([]VerificationErrorCapabilities)
+- (*VerificationError).SetType: changed from func(string) to func(VerificationErrorType)
+- (*VerificationErrorRecursive).GetCapabilities: changed from func() []string to func() []VerificationErrorRecursiveCapabilities
+- (*VerificationErrorRecursive).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationErrorRecursiveCapabilities, bool)
+- (*VerificationErrorRecursive).GetType: changed from func() string to func() VerificationErrorRecursiveType
+- (*VerificationErrorRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorRecursiveType, bool)
+- (*VerificationErrorRecursive).SetCapabilities: changed from func([]string) to func([]VerificationErrorRecursiveCapabilities)
+- (*VerificationErrorRecursive).SetType: changed from func(string) to func(VerificationErrorRecursiveType)
+- (*WebDataExemption).GetReason: changed from func() string to func() WebDataExemptionReason
+- (*WebDataExemption).GetReasonOk: changed from func() (*string, bool) to func() (*WebDataExemptionReason, bool)
+- (*WebDataExemption).SetReason: changed from func(string) to func(WebDataExemptionReason)
+- AULocalAccountIdentification.Type: changed from string to AULocalAccountIdentificationType
+- AcceptTermsOfServiceResponse.Type: changed from *string to *AcceptTermsOfServiceResponseType
+- AdditionalBankIdentification.Type: changed from *string to *AdditionalBankIdentificationType
+- BusinessLine.Service: changed from string to BusinessLineService
+- BusinessLineInfo.Service: changed from string to BusinessLineInfoService
+- BusinessLinesApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- CALocalAccountIdentification.AccountType: changed from *string to *CALocalAccountIdentificationAccountType
+- CALocalAccountIdentification.Type: changed from string to CALocalAccountIdentificationType
+- CZLocalAccountIdentification.Type: changed from string to CZLocalAccountIdentificationType
+- CalculatePciStatusRequest.AdditionalSalesChannels: changed from []string to []CalculatePciStatusRequestAdditionalSalesChannels
+- CalculateTermsOfServiceStatusResponse.TermsOfServiceTypes: changed from []string to []CalculateTermsOfServiceStatusResponseTermsOfServiceTypes
+- CapabilityProblemEntity.Type: changed from *string to *CapabilityProblemEntityType
+- CapabilityProblemEntityRecursive.Type: changed from *string to *CapabilityProblemEntityRecursiveType
+- CapabilitySettings.FundingSource: changed from []string to []CapabilitySettingsFundingSource
+- CapabilitySettings.Interval: changed from *string to *CapabilitySettingsInterval
+- DKLocalAccountIdentification.Type: changed from string to DKLocalAccountIdentificationType
+- Document.Type: changed from string to DocumentType
+- DocumentPage.Type: changed from *string to *DocumentPageType
+- DocumentsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
 - FinancialReport.DateOfFinancialData: changed from string to *string
+- GeneratePciDescriptionRequest.AdditionalSalesChannels: changed from []string to []GeneratePciDescriptionRequestAdditionalSalesChannels
+- GetAcceptedTermsOfServiceDocumentResponse.TermsOfServiceDocumentFormat: changed from *string to *GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormat
+- GetTermsOfServiceDocumentRequest.Type: changed from string to GetTermsOfServiceDocumentRequestType
+- GetTermsOfServiceDocumentResponse.Type: changed from *string to *GetTermsOfServiceDocumentResponseType
+- HKLocalAccountIdentification.Type: changed from string to HKLocalAccountIdentificationType
+- HULocalAccountIdentification.Type: changed from string to HULocalAccountIdentificationType
+- HostedOnboardingApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- IbanAccountIdentification.Type: changed from string to IbanAccountIdentificationType
+- IdentificationData.Type: changed from string to IdentificationDataType
+- LegalEntitiesApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- LegalEntity.Type: changed from *string to *LegalEntityType
+- LegalEntityAssociation.Type: changed from string to LegalEntityAssociationType
+- LegalEntityCapability.AllowedLevel: changed from *string to *LegalEntityCapabilityAllowedLevel
+- LegalEntityCapability.RequestedLevel: changed from *string to *LegalEntityCapabilityRequestedLevel
+- LegalEntityInfo.Type: changed from *string to *LegalEntityInfoType
+- LegalEntityInfoRequiredType.Type: changed from string to LegalEntityInfoRequiredTypeType
+- NOLocalAccountIdentification.Type: changed from string to NOLocalAccountIdentificationType
+- NZLocalAccountIdentification.Type: changed from string to NZLocalAccountIdentificationType
+- NewAPIClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Client) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Client) *APIClient
+- NewAULocalAccountIdentification: changed from func(string, string, string) *AULocalAccountIdentification to func(string, string, AULocalAccountIdentificationType) *AULocalAccountIdentification
+- NewBusinessLine: changed from func(string, string, string, string) *BusinessLine to func(string, string, string, BusinessLineService) *BusinessLine
+- NewBusinessLineInfo: changed from func(string, string, string) *BusinessLineInfo to func(string, string, BusinessLineInfoService) *BusinessLineInfo
+- NewCALocalAccountIdentification: changed from func(string, string, string, string) *CALocalAccountIdentification to func(string, string, string, CALocalAccountIdentificationType) *CALocalAccountIdentification
+- NewCZLocalAccountIdentification: changed from func(string, string, string) *CZLocalAccountIdentification to func(string, string, CZLocalAccountIdentificationType) *CZLocalAccountIdentification
+- NewDKLocalAccountIdentification: changed from func(string, string, string) *DKLocalAccountIdentification to func(string, string, DKLocalAccountIdentificationType) *DKLocalAccountIdentification
+- NewDocument: changed from func(string, string) *Document to func(string, DocumentType) *Document
 - NewFinancialReport: changed from func(string) *FinancialReport to func() *FinancialReport
+- NewGetTermsOfServiceDocumentRequest: changed from func(string, string) *GetTermsOfServiceDocumentRequest to func(string, GetTermsOfServiceDocumentRequestType) *GetTermsOfServiceDocumentRequest
+- NewHKLocalAccountIdentification: changed from func(string, string, string) *HKLocalAccountIdentification to func(string, string, HKLocalAccountIdentificationType) *HKLocalAccountIdentification
+- NewHULocalAccountIdentification: changed from func(string, string) *HULocalAccountIdentification to func(string, HULocalAccountIdentificationType) *HULocalAccountIdentification
+- NewIbanAccountIdentification: changed from func(string, string) *IbanAccountIdentification to func(string, IbanAccountIdentificationType) *IbanAccountIdentification
+- NewIdentificationData: changed from func(string) *IdentificationData to func(IdentificationDataType) *IdentificationData
+- NewLegalEntityAssociation: changed from func(string, string) *LegalEntityAssociation to func(string, LegalEntityAssociationType) *LegalEntityAssociation
+- NewLegalEntityInfoRequiredType: changed from func(string) *LegalEntityInfoRequiredType to func(LegalEntityInfoRequiredTypeType) *LegalEntityInfoRequiredType
+- NewNOLocalAccountIdentification: changed from func(string, string) *NOLocalAccountIdentification to func(string, NOLocalAccountIdentificationType) *NOLocalAccountIdentification
+- NewNZLocalAccountIdentification: changed from func(string, string) *NZLocalAccountIdentification to func(string, NZLocalAccountIdentificationType) *NZLocalAccountIdentification
+- NewNumberAndBicAccountIdentification: changed from func(string, string, string) *NumberAndBicAccountIdentification to func(string, string, NumberAndBicAccountIdentificationType) *NumberAndBicAccountIdentification
+- NewPLLocalAccountIdentification: changed from func(string, string) *PLLocalAccountIdentification to func(string, PLLocalAccountIdentificationType) *PLLocalAccountIdentification
+- NewSELocalAccountIdentification: changed from func(string, string, string) *SELocalAccountIdentification to func(string, string, SELocalAccountIdentificationType) *SELocalAccountIdentification
 - NewSoleProprietorship: changed from func(string, string, Address) *SoleProprietorship to func(string, Address) *SoleProprietorship
+- NewTransferInstrument: changed from func(BankAccountInfo, string, string, string) *TransferInstrument to func(BankAccountInfo, string, string, TransferInstrumentType) *TransferInstrument
+- NewTransferInstrumentInfo: changed from func(BankAccountInfo, string, string) *TransferInstrumentInfo to func(BankAccountInfo, string, TransferInstrumentInfoType) *TransferInstrumentInfo
+- NewTrust: changed from func(string, string, Address, string) *Trust to func(string, string, Address, TrustType) *Trust
+- NewUKLocalAccountIdentification: changed from func(string, string, string) *UKLocalAccountIdentification to func(string, string, UKLocalAccountIdentificationType) *UKLocalAccountIdentification
+- NewUSLocalAccountIdentification: changed from func(string, string, string) *USLocalAccountIdentification to func(string, string, USLocalAccountIdentificationType) *USLocalAccountIdentification
+- NewVerificationDeadline: changed from func([]string, time.Time) *VerificationDeadline to func([]VerificationDeadlineCapabilities, time.Time) *VerificationDeadline
+- NumberAndBicAccountIdentification.Type: changed from string to NumberAndBicAccountIdentificationType
+- Organization.DoingBusinessAsAbsent: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableBool to github.com/adyen/adyen-go-api-library/v21/common.NullableBool
+- Organization.InstitutionalSector: changed from *string to *OrganizationInstitutionalSector
+- Organization.RegistrationNumberAbsent: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableBool to github.com/adyen/adyen-go-api-library/v21/common.NullableBool
+- Organization.StatusOfLegalProceeding: changed from *string to *OrganizationStatusOfLegalProceeding
+- Organization.Type: changed from *string to *OrganizationType
+- Organization.VatAbsenceReason: changed from *string to *OrganizationVatAbsenceReason
+- PCIQuestionnairesApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PLLocalAccountIdentification.Type: changed from string to PLLocalAccountIdentificationType
+- SELocalAccountIdentification.Type: changed from string to SELocalAccountIdentificationType
+- SGLocalAccountIdentification.Type: changed from *string to *SGLocalAccountIdentificationType
 - SoleProprietorship.CountryOfGoverningLaw: changed from string to *string
+- SoleProprietorship.DoingBusinessAsAbsent: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableBool to github.com/adyen/adyen-go-api-library/v21/common.NullableBool
+- SoleProprietorship.TaxAbsent: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableBool to github.com/adyen/adyen-go-api-library/v21/common.NullableBool
+- SoleProprietorship.VatAbsenceReason: changed from *string to *SoleProprietorshipVatAbsenceReason
+- SourceOfFunds.Type: changed from *string to *SourceOfFundsType
+- TaxEDeliveryConsentApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TaxReportingClassification.BusinessType: changed from *string to *TaxReportingClassificationBusinessType
+- TaxReportingClassification.MainSourceOfIncome: changed from *string to *TaxReportingClassificationMainSourceOfIncome
+- TaxReportingClassification.Type: changed from *string to *TaxReportingClassificationType
+- TermsOfServiceAcceptanceInfo.Type: changed from *string to *TermsOfServiceAcceptanceInfoType
+- TermsOfServiceApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TransferInstrument.Type: changed from string to TransferInstrumentType
+- TransferInstrumentInfo.Type: changed from string to TransferInstrumentInfoType
+- TransferInstrumentsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- Trust.DoingBusinessAsAbsent: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableBool to github.com/adyen/adyen-go-api-library/v21/common.NullableBool
+- Trust.Type: changed from string to TrustType
+- Trust.VatAbsenceReason: changed from *string to *TrustVatAbsenceReason
+- UKLocalAccountIdentification.Type: changed from string to UKLocalAccountIdentificationType
+- USLocalAccountIdentification.AccountType: changed from *string to *USLocalAccountIdentificationAccountType
+- USLocalAccountIdentification.Type: changed from string to USLocalAccountIdentificationType
+- UnincorporatedPartnership.DoingBusinessAsAbsent: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableBool to github.com/adyen/adyen-go-api-library/v21/common.NullableBool
+- UnincorporatedPartnership.Type: changed from *string to *UnincorporatedPartnershipType
+- UnincorporatedPartnership.VatAbsenceReason: changed from *string to *UnincorporatedPartnershipVatAbsenceReason
+- VerificationDeadline.Capabilities: changed from []string to []VerificationDeadlineCapabilities
+- VerificationError.Capabilities: changed from []string to []VerificationErrorCapabilities
+- VerificationError.Type: changed from *string to *VerificationErrorType
+- VerificationErrorRecursive.Capabilities: changed from []string to []VerificationErrorRecursiveCapabilities
+- VerificationErrorRecursive.Type: changed from *string to *VerificationErrorRecursiveType
+- WebDataExemption.Reason: changed from *string to *WebDataExemptionReason
 Compatible changes:
 - (*BusinessLine).GetIndustryCodeDescription: added
 - (*BusinessLine).GetIndustryCodeDescriptionOk: added
@@ -48,7 +336,9 @@ Compatible changes:
 - (*UnincorporatedPartnership).SetResidentialAddressIndicator: added
 - (*UnincorporatedPartnership).SetResidentialAddressIndicatorNil: added
 - (*UnincorporatedPartnership).UnsetResidentialAddressIndicator: added
+- AULocalAccountIdentificationType: added
 - AULocalAccountIdentificationTypeAuLocal: added
+- AcceptTermsOfServiceResponseType: added
 - AcceptTermsOfServiceResponseTypeAdyenAccount: added
 - AcceptTermsOfServiceResponseTypeAdyenCapital: added
 - AcceptTermsOfServiceResponseTypeAdyenCapitalCashAdvance: added
@@ -61,27 +351,97 @@ Compatible changes:
 - AcceptTermsOfServiceResponseTypeAdyenPccr: added
 - AcceptTermsOfServiceResponseTypeDirectDebit: added
 - AcceptTermsOfServiceResponseTypeKycOnInvite: added
+- AdditionalBankIdentificationType: added
 - AdditionalBankIdentificationTypeAuBsbCode: added
 - AdditionalBankIdentificationTypeCaRoutingNumber: added
 - AdditionalBankIdentificationTypeGbSortCode: added
 - AdditionalBankIdentificationTypeUsRoutingNumber: added
+- AllowedAULocalAccountIdentificationTypeEnumValues: added
+- AllowedAcceptTermsOfServiceResponseTypeEnumValues: added
+- AllowedAdditionalBankIdentificationTypeEnumValues: added
+- AllowedBusinessLineInfoServiceEnumValues: added
+- AllowedBusinessLineServiceEnumValues: added
+- AllowedCALocalAccountIdentificationAccountTypeEnumValues: added
+- AllowedCALocalAccountIdentificationTypeEnumValues: added
+- AllowedCZLocalAccountIdentificationTypeEnumValues: added
+- AllowedCalculatePciStatusRequestAdditionalSalesChannelsEnumValues: added
+- AllowedCalculateTermsOfServiceStatusResponseTermsOfServiceTypesEnumValues: added
+- AllowedCapabilityProblemEntityRecursiveTypeEnumValues: added
+- AllowedCapabilityProblemEntityTypeEnumValues: added
+- AllowedCapabilitySettingsFundingSourceEnumValues: added
+- AllowedCapabilitySettingsIntervalEnumValues: added
+- AllowedDKLocalAccountIdentificationTypeEnumValues: added
+- AllowedDocumentPageTypeEnumValues: added
+- AllowedDocumentTypeEnumValues: added
+- AllowedGeneratePciDescriptionRequestAdditionalSalesChannelsEnumValues: added
+- AllowedGetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormatEnumValues: added
+- AllowedGetTermsOfServiceDocumentRequestTypeEnumValues: added
+- AllowedGetTermsOfServiceDocumentResponseTypeEnumValues: added
+- AllowedHKLocalAccountIdentificationTypeEnumValues: added
+- AllowedHULocalAccountIdentificationTypeEnumValues: added
+- AllowedIbanAccountIdentificationTypeEnumValues: added
+- AllowedIdentificationDataTypeEnumValues: added
+- AllowedLegalEntityAssociationTypeEnumValues: added
+- AllowedLegalEntityCapabilityAllowedLevelEnumValues: added
+- AllowedLegalEntityCapabilityRequestedLevelEnumValues: added
+- AllowedLegalEntityInfoRequiredTypeTypeEnumValues: added
+- AllowedLegalEntityInfoTypeEnumValues: added
+- AllowedLegalEntityTypeEnumValues: added
+- AllowedNOLocalAccountIdentificationTypeEnumValues: added
+- AllowedNZLocalAccountIdentificationTypeEnumValues: added
+- AllowedNumberAndBicAccountIdentificationTypeEnumValues: added
+- AllowedOrganizationInstitutionalSectorEnumValues: added
+- AllowedOrganizationStatusOfLegalProceedingEnumValues: added
+- AllowedOrganizationTypeEnumValues: added
+- AllowedOrganizationVatAbsenceReasonEnumValues: added
+- AllowedPLLocalAccountIdentificationTypeEnumValues: added
+- AllowedSELocalAccountIdentificationTypeEnumValues: added
+- AllowedSGLocalAccountIdentificationTypeEnumValues: added
+- AllowedSoleProprietorshipVatAbsenceReasonEnumValues: added
+- AllowedSourceOfFundsTypeEnumValues: added
+- AllowedTaxReportingClassificationBusinessTypeEnumValues: added
+- AllowedTaxReportingClassificationMainSourceOfIncomeEnumValues: added
+- AllowedTaxReportingClassificationTypeEnumValues: added
+- AllowedTermsOfServiceAcceptanceInfoTypeEnumValues: added
+- AllowedTransferInstrumentInfoTypeEnumValues: added
+- AllowedTransferInstrumentTypeEnumValues: added
+- AllowedTrustTypeEnumValues: added
+- AllowedTrustVatAbsenceReasonEnumValues: added
+- AllowedUKLocalAccountIdentificationTypeEnumValues: added
+- AllowedUSLocalAccountIdentificationAccountTypeEnumValues: added
+- AllowedUSLocalAccountIdentificationTypeEnumValues: added
+- AllowedUnincorporatedPartnershipTypeEnumValues: added
+- AllowedUnincorporatedPartnershipVatAbsenceReasonEnumValues: added
+- AllowedVerificationDeadlineCapabilitiesEnumValues: added
+- AllowedVerificationErrorCapabilitiesEnumValues: added
+- AllowedVerificationErrorRecursiveCapabilitiesEnumValues: added
+- AllowedVerificationErrorRecursiveTypeEnumValues: added
+- AllowedVerificationErrorTypeEnumValues: added
+- AllowedWebDataExemptionReasonEnumValues: added
 - BusinessLine.IndustryCodeDescription: added
 - BusinessLineInfo.IndustryCodeDescription: added
+- BusinessLineInfoService: added
 - BusinessLineInfoServiceBanking: added
 - BusinessLineInfoServiceIssuing: added
 - BusinessLineInfoServicePaymentProcessing: added
 - BusinessLineInfoUpdate.IndustryCodeDescription: added
+- BusinessLineService: added
 - BusinessLineServiceBanking: added
 - BusinessLineServiceIssuing: added
 - BusinessLineServicePaymentProcessing: added
+- CALocalAccountIdentificationAccountType: added
 - CALocalAccountIdentificationAccountTypeChecking: added
 - CALocalAccountIdentificationAccountTypeSavings: added
+- CALocalAccountIdentificationType: added
 - CALocalAccountIdentificationTypeCaLocal: added
+- CZLocalAccountIdentificationType: added
 - CZLocalAccountIdentificationTypeCzLocal: added
+- CalculatePciStatusRequestAdditionalSalesChannels: added
 - CalculatePciStatusRequestAdditionalSalesChannelsECommerce: added
 - CalculatePciStatusRequestAdditionalSalesChannelsEcomMoto: added
 - CalculatePciStatusRequestAdditionalSalesChannelsPos: added
 - CalculatePciStatusRequestAdditionalSalesChannelsPosMoto: added
+- CalculateTermsOfServiceStatusResponseTermsOfServiceTypes: added
 - CalculateTermsOfServiceStatusResponseTermsOfServiceTypesAdyenAccount: added
 - CalculateTermsOfServiceStatusResponseTermsOfServiceTypesAdyenCapital: added
 - CalculateTermsOfServiceStatusResponseTermsOfServiceTypesAdyenCapitalCashAdvance: added
@@ -94,24 +454,31 @@ Compatible changes:
 - CalculateTermsOfServiceStatusResponseTermsOfServiceTypesAdyenPccr: added
 - CalculateTermsOfServiceStatusResponseTermsOfServiceTypesDirectDebit: added
 - CalculateTermsOfServiceStatusResponseTermsOfServiceTypesKycOnInvite: added
+- CapabilityProblemEntityRecursiveType: added
 - CapabilityProblemEntityRecursiveTypeBankAccount: added
 - CapabilityProblemEntityRecursiveTypeDocument: added
 - CapabilityProblemEntityRecursiveTypeLegalEntity: added
 - CapabilityProblemEntityRecursiveTypeProduct: added
+- CapabilityProblemEntityType: added
 - CapabilityProblemEntityTypeBankAccount: added
 - CapabilityProblemEntityTypeDocument: added
 - CapabilityProblemEntityTypeLegalEntity: added
 - CapabilityProblemEntityTypeProduct: added
+- CapabilitySettingsFundingSource: added
 - CapabilitySettingsFundingSourceCredit: added
 - CapabilitySettingsFundingSourceDebit: added
 - CapabilitySettingsFundingSourcePrepaid: added
+- CapabilitySettingsInterval: added
 - CapabilitySettingsIntervalDaily: added
 - CapabilitySettingsIntervalMonthly: added
 - CapabilitySettingsIntervalWeekly: added
+- DKLocalAccountIdentificationType: added
 - DKLocalAccountIdentificationTypeDkLocal: added
+- DocumentPageType: added
 - DocumentPageTypeBACK: added
 - DocumentPageTypeFRONT: added
 - DocumentPageTypeUNDEFINED: added
+- DocumentType: added
 - DocumentTypeBankStatement: added
 - DocumentTypeConstitutionalDocument: added
 - DocumentTypeDriversLicense: added
@@ -132,13 +499,16 @@ Compatible changes:
 - DocumentTypeProofOfSignatory: added
 - DocumentTypeRegistrationDocument: added
 - DocumentTypeVatDocument: added
+- GeneratePciDescriptionRequestAdditionalSalesChannels: added
 - GeneratePciDescriptionRequestAdditionalSalesChannelsECommerce: added
 - GeneratePciDescriptionRequestAdditionalSalesChannelsEcomMoto: added
 - GeneratePciDescriptionRequestAdditionalSalesChannelsPos: added
 - GeneratePciDescriptionRequestAdditionalSalesChannelsPosMoto: added
+- GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormat: added
 - GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormatJSON: added
 - GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormatPDF: added
 - GetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormatTXT: added
+- GetTermsOfServiceDocumentRequestType: added
 - GetTermsOfServiceDocumentRequestTypeAdyenAccount: added
 - GetTermsOfServiceDocumentRequestTypeAdyenCapital: added
 - GetTermsOfServiceDocumentRequestTypeAdyenCapitalCashAdvance: added
@@ -151,6 +521,7 @@ Compatible changes:
 - GetTermsOfServiceDocumentRequestTypeAdyenPccr: added
 - GetTermsOfServiceDocumentRequestTypeDirectDebit: added
 - GetTermsOfServiceDocumentRequestTypeKycOnInvite: added
+- GetTermsOfServiceDocumentResponseType: added
 - GetTermsOfServiceDocumentResponseTypeAdyenAccount: added
 - GetTermsOfServiceDocumentResponseTypeAdyenCapital: added
 - GetTermsOfServiceDocumentResponseTypeAdyenCapitalCashAdvance: added
@@ -163,15 +534,20 @@ Compatible changes:
 - GetTermsOfServiceDocumentResponseTypeAdyenPccr: added
 - GetTermsOfServiceDocumentResponseTypeDirectDebit: added
 - GetTermsOfServiceDocumentResponseTypeKycOnInvite: added
+- HKLocalAccountIdentificationType: added
 - HKLocalAccountIdentificationTypeHkLocal: added
+- HULocalAccountIdentificationType: added
 - HULocalAccountIdentificationTypeHuLocal: added
 - IbanAccountIdentification.Bic: added
+- IbanAccountIdentificationType: added
 - IbanAccountIdentificationTypeIban: added
+- IdentificationDataType: added
 - IdentificationDataTypeDriversLicense: added
 - IdentificationDataTypeIdentityCard: added
 - IdentificationDataTypeNationalIdNumber: added
 - IdentificationDataTypePassport: added
 - LegalEntitiesApiRequestPeriodicReviewInput: added
+- LegalEntityAssociationType: added
 - LegalEntityAssociationTypeDefinedBeneficiary: added
 - LegalEntityAssociationTypeDirector: added
 - LegalEntityAssociationTypeImmediateParentCompany: added
@@ -190,33 +566,228 @@ Compatible changes:
 - LegalEntityAssociationTypeUltimateParentCompany: added
 - LegalEntityAssociationTypeUndefinedBeneficiary: added
 - LegalEntityAssociationTypeUnincorporatedPartnership: added
+- LegalEntityCapabilityAllowedLevel: added
 - LegalEntityCapabilityAllowedLevelHigh: added
 - LegalEntityCapabilityAllowedLevelLow: added
 - LegalEntityCapabilityAllowedLevelMedium: added
 - LegalEntityCapabilityAllowedLevelNotApplicable: added
+- LegalEntityCapabilityRequestedLevel: added
 - LegalEntityCapabilityRequestedLevelHigh: added
 - LegalEntityCapabilityRequestedLevelLow: added
 - LegalEntityCapabilityRequestedLevelMedium: added
 - LegalEntityCapabilityRequestedLevelNotApplicable: added
+- LegalEntityInfoRequiredTypeType: added
 - LegalEntityInfoRequiredTypeTypeIndividual: added
 - LegalEntityInfoRequiredTypeTypeOrganization: added
 - LegalEntityInfoRequiredTypeTypeSoleProprietorship: added
 - LegalEntityInfoRequiredTypeTypeTrust: added
 - LegalEntityInfoRequiredTypeTypeUnincorporatedPartnership: added
+- LegalEntityInfoType: added
 - LegalEntityInfoTypeIndividual: added
 - LegalEntityInfoTypeOrganization: added
 - LegalEntityInfoTypeSoleProprietorship: added
 - LegalEntityInfoTypeTrust: added
 - LegalEntityInfoTypeUnincorporatedPartnership: added
+- LegalEntityType: added
 - LegalEntityTypeIndividual: added
 - LegalEntityTypeOrganization: added
 - LegalEntityTypeSoleProprietorship: added
 - LegalEntityTypeTrust: added
 - LegalEntityTypeUnincorporatedPartnership: added
+- NOLocalAccountIdentificationType: added
 - NOLocalAccountIdentificationTypeNoLocal: added
+- NZLocalAccountIdentificationType: added
 - NZLocalAccountIdentificationTypeNzLocal: added
+- NewAULocalAccountIdentificationTypeFromValue: added
+- NewAcceptTermsOfServiceResponseTypeFromValue: added
+- NewAdditionalBankIdentificationTypeFromValue: added
+- NewBusinessLineInfoServiceFromValue: added
+- NewBusinessLineServiceFromValue: added
+- NewCALocalAccountIdentificationAccountTypeFromValue: added
+- NewCALocalAccountIdentificationTypeFromValue: added
+- NewCZLocalAccountIdentificationTypeFromValue: added
+- NewCalculatePciStatusRequestAdditionalSalesChannelsFromValue: added
+- NewCalculateTermsOfServiceStatusResponseTermsOfServiceTypesFromValue: added
+- NewCapabilityProblemEntityRecursiveTypeFromValue: added
+- NewCapabilityProblemEntityTypeFromValue: added
+- NewCapabilitySettingsFundingSourceFromValue: added
+- NewCapabilitySettingsIntervalFromValue: added
+- NewDKLocalAccountIdentificationTypeFromValue: added
+- NewDocumentPageTypeFromValue: added
+- NewDocumentTypeFromValue: added
+- NewGeneratePciDescriptionRequestAdditionalSalesChannelsFromValue: added
+- NewGetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormatFromValue: added
+- NewGetTermsOfServiceDocumentRequestTypeFromValue: added
+- NewGetTermsOfServiceDocumentResponseTypeFromValue: added
+- NewHKLocalAccountIdentificationTypeFromValue: added
+- NewHULocalAccountIdentificationTypeFromValue: added
+- NewIbanAccountIdentificationTypeFromValue: added
+- NewIdentificationDataTypeFromValue: added
+- NewLegalEntityAssociationTypeFromValue: added
+- NewLegalEntityCapabilityAllowedLevelFromValue: added
+- NewLegalEntityCapabilityRequestedLevelFromValue: added
+- NewLegalEntityInfoRequiredTypeTypeFromValue: added
+- NewLegalEntityInfoTypeFromValue: added
+- NewLegalEntityTypeFromValue: added
+- NewNOLocalAccountIdentificationTypeFromValue: added
+- NewNZLocalAccountIdentificationTypeFromValue: added
+- NewNullableAULocalAccountIdentificationType: added
+- NewNullableAcceptTermsOfServiceResponseType: added
+- NewNullableAdditionalBankIdentificationType: added
+- NewNullableBusinessLineInfoService: added
+- NewNullableBusinessLineService: added
+- NewNullableCALocalAccountIdentificationAccountType: added
+- NewNullableCALocalAccountIdentificationType: added
+- NewNullableCZLocalAccountIdentificationType: added
+- NewNullableCalculatePciStatusRequestAdditionalSalesChannels: added
+- NewNullableCalculateTermsOfServiceStatusResponseTermsOfServiceTypes: added
+- NewNullableCapabilityProblemEntityRecursiveType: added
+- NewNullableCapabilityProblemEntityType: added
+- NewNullableCapabilitySettingsFundingSource: added
+- NewNullableCapabilitySettingsInterval: added
+- NewNullableDKLocalAccountIdentificationType: added
+- NewNullableDocumentPageType: added
+- NewNullableDocumentType: added
+- NewNullableGeneratePciDescriptionRequestAdditionalSalesChannels: added
+- NewNullableGetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormat: added
+- NewNullableGetTermsOfServiceDocumentRequestType: added
+- NewNullableGetTermsOfServiceDocumentResponseType: added
+- NewNullableHKLocalAccountIdentificationType: added
+- NewNullableHULocalAccountIdentificationType: added
+- NewNullableIbanAccountIdentificationType: added
+- NewNullableIdentificationDataType: added
+- NewNullableLegalEntityAssociationType: added
+- NewNullableLegalEntityCapabilityAllowedLevel: added
+- NewNullableLegalEntityCapabilityRequestedLevel: added
+- NewNullableLegalEntityInfoRequiredTypeType: added
+- NewNullableLegalEntityInfoType: added
+- NewNullableLegalEntityType: added
+- NewNullableNOLocalAccountIdentificationType: added
+- NewNullableNZLocalAccountIdentificationType: added
+- NewNullableNumberAndBicAccountIdentificationType: added
+- NewNullableOrganizationInstitutionalSector: added
+- NewNullableOrganizationStatusOfLegalProceeding: added
+- NewNullableOrganizationType: added
+- NewNullableOrganizationVatAbsenceReason: added
+- NewNullablePLLocalAccountIdentificationType: added
+- NewNullableSELocalAccountIdentificationType: added
+- NewNullableSGLocalAccountIdentificationType: added
+- NewNullableSoleProprietorshipVatAbsenceReason: added
+- NewNullableSourceOfFundsType: added
+- NewNullableTaxReportingClassificationBusinessType: added
+- NewNullableTaxReportingClassificationMainSourceOfIncome: added
+- NewNullableTaxReportingClassificationType: added
+- NewNullableTermsOfServiceAcceptanceInfoType: added
+- NewNullableTransferInstrumentInfoType: added
+- NewNullableTransferInstrumentType: added
+- NewNullableTrustType: added
+- NewNullableTrustVatAbsenceReason: added
+- NewNullableUKLocalAccountIdentificationType: added
+- NewNullableUSLocalAccountIdentificationAccountType: added
+- NewNullableUSLocalAccountIdentificationType: added
+- NewNullableUnincorporatedPartnershipType: added
+- NewNullableUnincorporatedPartnershipVatAbsenceReason: added
+- NewNullableVerificationDeadlineCapabilities: added
+- NewNullableVerificationErrorCapabilities: added
+- NewNullableVerificationErrorRecursiveCapabilities: added
+- NewNullableVerificationErrorRecursiveType: added
+- NewNullableVerificationErrorType: added
+- NewNullableWebDataExemptionReason: added
+- NewNumberAndBicAccountIdentificationTypeFromValue: added
+- NewOrganizationInstitutionalSectorFromValue: added
+- NewOrganizationStatusOfLegalProceedingFromValue: added
+- NewOrganizationTypeFromValue: added
+- NewOrganizationVatAbsenceReasonFromValue: added
+- NewPLLocalAccountIdentificationTypeFromValue: added
+- NewSELocalAccountIdentificationTypeFromValue: added
+- NewSGLocalAccountIdentificationTypeFromValue: added
+- NewSoleProprietorshipVatAbsenceReasonFromValue: added
+- NewSourceOfFundsTypeFromValue: added
+- NewTaxReportingClassificationBusinessTypeFromValue: added
+- NewTaxReportingClassificationMainSourceOfIncomeFromValue: added
+- NewTaxReportingClassificationTypeFromValue: added
+- NewTermsOfServiceAcceptanceInfoTypeFromValue: added
+- NewTransferInstrumentInfoTypeFromValue: added
+- NewTransferInstrumentTypeFromValue: added
+- NewTrustTypeFromValue: added
+- NewTrustVatAbsenceReasonFromValue: added
+- NewUKLocalAccountIdentificationTypeFromValue: added
+- NewUSLocalAccountIdentificationAccountTypeFromValue: added
+- NewUSLocalAccountIdentificationTypeFromValue: added
+- NewUnincorporatedPartnershipTypeFromValue: added
+- NewUnincorporatedPartnershipVatAbsenceReasonFromValue: added
+- NewVerificationDeadlineCapabilitiesFromValue: added
+- NewVerificationErrorCapabilitiesFromValue: added
+- NewVerificationErrorRecursiveCapabilitiesFromValue: added
+- NewVerificationErrorRecursiveTypeFromValue: added
+- NewVerificationErrorTypeFromValue: added
+- NewWebDataExemptionReasonFromValue: added
+- NullableAULocalAccountIdentificationType: added
+- NullableAcceptTermsOfServiceResponseType: added
+- NullableAdditionalBankIdentificationType: added
+- NullableBusinessLineInfoService: added
+- NullableBusinessLineService: added
+- NullableCALocalAccountIdentificationAccountType: added
+- NullableCALocalAccountIdentificationType: added
+- NullableCZLocalAccountIdentificationType: added
+- NullableCalculatePciStatusRequestAdditionalSalesChannels: added
+- NullableCalculateTermsOfServiceStatusResponseTermsOfServiceTypes: added
+- NullableCapabilityProblemEntityRecursiveType: added
+- NullableCapabilityProblemEntityType: added
+- NullableCapabilitySettingsFundingSource: added
+- NullableCapabilitySettingsInterval: added
+- NullableDKLocalAccountIdentificationType: added
+- NullableDocumentPageType: added
+- NullableDocumentType: added
+- NullableGeneratePciDescriptionRequestAdditionalSalesChannels: added
+- NullableGetAcceptedTermsOfServiceDocumentResponseTermsOfServiceDocumentFormat: added
+- NullableGetTermsOfServiceDocumentRequestType: added
+- NullableGetTermsOfServiceDocumentResponseType: added
+- NullableHKLocalAccountIdentificationType: added
+- NullableHULocalAccountIdentificationType: added
+- NullableIbanAccountIdentificationType: added
+- NullableIdentificationDataType: added
+- NullableLegalEntityAssociationType: added
+- NullableLegalEntityCapabilityAllowedLevel: added
+- NullableLegalEntityCapabilityRequestedLevel: added
+- NullableLegalEntityInfoRequiredTypeType: added
+- NullableLegalEntityInfoType: added
+- NullableLegalEntityType: added
+- NullableNOLocalAccountIdentificationType: added
+- NullableNZLocalAccountIdentificationType: added
+- NullableNumberAndBicAccountIdentificationType: added
+- NullableOrganizationInstitutionalSector: added
+- NullableOrganizationStatusOfLegalProceeding: added
+- NullableOrganizationType: added
+- NullableOrganizationVatAbsenceReason: added
+- NullablePLLocalAccountIdentificationType: added
+- NullableSELocalAccountIdentificationType: added
+- NullableSGLocalAccountIdentificationType: added
+- NullableSoleProprietorshipVatAbsenceReason: added
+- NullableSourceOfFundsType: added
+- NullableTaxReportingClassificationBusinessType: added
+- NullableTaxReportingClassificationMainSourceOfIncome: added
+- NullableTaxReportingClassificationType: added
+- NullableTermsOfServiceAcceptanceInfoType: added
+- NullableTransferInstrumentInfoType: added
+- NullableTransferInstrumentType: added
+- NullableTrustType: added
+- NullableTrustVatAbsenceReason: added
+- NullableUKLocalAccountIdentificationType: added
+- NullableUSLocalAccountIdentificationAccountType: added
+- NullableUSLocalAccountIdentificationType: added
+- NullableUnincorporatedPartnershipType: added
+- NullableUnincorporatedPartnershipVatAbsenceReason: added
+- NullableVerificationDeadlineCapabilities: added
+- NullableVerificationErrorCapabilities: added
+- NullableVerificationErrorRecursiveCapabilities: added
+- NullableVerificationErrorRecursiveType: added
+- NullableVerificationErrorType: added
+- NullableWebDataExemptionReason: added
+- NumberAndBicAccountIdentificationType: added
 - NumberAndBicAccountIdentificationTypeNumberAndBic: added
 - Organization.ResidentialAddressIndicator: added
+- OrganizationInstitutionalSector: added
 - OrganizationInstitutionalSectorCaptiveFinancialInstitutionsAndMoneyLenders: added
 - OrganizationInstitutionalSectorCentralBank: added
 - OrganizationInstitutionalSectorCentralGovernment: added
@@ -234,24 +805,32 @@ Compatible changes:
 - OrganizationInstitutionalSectorPensionFunds: added
 - OrganizationInstitutionalSectorSocialSecurityFunds: added
 - OrganizationInstitutionalSectorStateGovernment: added
+- OrganizationStatusOfLegalProceeding: added
 - OrganizationStatusOfLegalProceedingBankruptcyInsolvency: added
 - OrganizationStatusOfLegalProceedingNoLegalActionsTaken: added
 - OrganizationStatusOfLegalProceedingOtherLegalMeasures: added
 - OrganizationStatusOfLegalProceedingUnderJudicialAdministration: added
+- OrganizationType: added
 - OrganizationTypeAssociationIncorporated: added
 - OrganizationTypeGovernmentalOrganization: added
 - OrganizationTypeListedPublicCompany: added
 - OrganizationTypeNonProfit: added
 - OrganizationTypePartnershipIncorporated: added
 - OrganizationTypePrivateCompany: added
+- OrganizationVatAbsenceReason: added
 - OrganizationVatAbsenceReasonBelowTaxThreshold: added
 - OrganizationVatAbsenceReasonIndustryExemption: added
+- PLLocalAccountIdentificationType: added
 - PLLocalAccountIdentificationTypePlLocal: added
+- SELocalAccountIdentificationType: added
 - SELocalAccountIdentificationTypeSeLocal: added
+- SGLocalAccountIdentificationType: added
 - SGLocalAccountIdentificationTypeSgLocal: added
 - SoleProprietorship.ResidentialAddressIndicator: added
+- SoleProprietorshipVatAbsenceReason: added
 - SoleProprietorshipVatAbsenceReasonBelowTaxThreshold: added
 - SoleProprietorshipVatAbsenceReasonIndustryExemption: added
+- SourceOfFundsType: added
 - SourceOfFundsTypeAssetSale: added
 - SourceOfFundsTypeBusiness: added
 - SourceOfFundsTypeCryptocurrencyIncome: added
@@ -267,21 +846,25 @@ Compatible changes:
 - SourceOfFundsTypeRentalIncome: added
 - SourceOfFundsTypeRoyaltyIncome: added
 - SourceOfFundsTypeThirdPartyFunding: added
+- TaxReportingClassificationBusinessType: added
 - TaxReportingClassificationBusinessTypeFinancialInstitution: added
 - TaxReportingClassificationBusinessTypeGovernmentalOrganization: added
 - TaxReportingClassificationBusinessTypeInternationalOrganization: added
 - TaxReportingClassificationBusinessTypeListedPublicCompany: added
 - TaxReportingClassificationBusinessTypeOther: added
 - TaxReportingClassificationBusinessTypeSubsidiaryOfListedPublicCompany: added
+- TaxReportingClassificationMainSourceOfIncome: added
 - TaxReportingClassificationMainSourceOfIncomeBusinessOperation: added
 - TaxReportingClassificationMainSourceOfIncomeInvestmentInterestOrRoyalty: added
 - TaxReportingClassificationMainSourceOfIncomeOther: added
 - TaxReportingClassificationMainSourceOfIncomePropertyRental: added
 - TaxReportingClassificationMainSourceOfIncomeRealEstateSales: added
+- TaxReportingClassificationType: added
 - TaxReportingClassificationTypeFinancialNonReportable: added
 - TaxReportingClassificationTypeNonFinancialActive: added
 - TaxReportingClassificationTypeNonFinancialNonReportable: added
 - TaxReportingClassificationTypeNonFinancialPassive: added
+- TermsOfServiceAcceptanceInfoType: added
 - TermsOfServiceAcceptanceInfoTypeAdyenAccount: added
 - TermsOfServiceAcceptanceInfoTypeAdyenCapital: added
 - TermsOfServiceAcceptanceInfoTypeAdyenCapitalCashAdvance: added
@@ -294,11 +877,14 @@ Compatible changes:
 - TermsOfServiceAcceptanceInfoTypeAdyenPccr: added
 - TermsOfServiceAcceptanceInfoTypeDirectDebit: added
 - TermsOfServiceAcceptanceInfoTypeKycOnInvite: added
+- TransferInstrumentInfoType: added
 - TransferInstrumentInfoTypeBankAccount: added
 - TransferInstrumentInfoTypeRecurringDetail: added
+- TransferInstrumentType: added
 - TransferInstrumentTypeBankAccount: added
 - TransferInstrumentTypeRecurringDetail: added
 - Trust.ResidentialAddressIndicator: added
+- TrustType: added
 - TrustTypeBusinessTrust: added
 - TrustTypeCashManagementTrust: added
 - TrustTypeCharitableTrust: added
@@ -318,13 +904,18 @@ Compatible changes:
 - TrustTypePooledSuperannuationTrust: added
 - TrustTypePublicTradingTrust: added
 - TrustTypeUnlistedPublicUnitTrust: added
+- TrustVatAbsenceReason: added
 - TrustVatAbsenceReasonBelowTaxThreshold: added
 - TrustVatAbsenceReasonIndustryExemption: added
+- UKLocalAccountIdentificationType: added
 - UKLocalAccountIdentificationTypeUkLocal: added
+- USLocalAccountIdentificationAccountType: added
 - USLocalAccountIdentificationAccountTypeChecking: added
 - USLocalAccountIdentificationAccountTypeSavings: added
+- USLocalAccountIdentificationType: added
 - USLocalAccountIdentificationTypeUsLocal: added
 - UnincorporatedPartnership.ResidentialAddressIndicator: added
+- UnincorporatedPartnershipType: added
 - UnincorporatedPartnershipTypeBt: added
 - UnincorporatedPartnershipTypeBusinessPartnership: added
 - UnincorporatedPartnershipTypeBusinessTrustEntity: added
@@ -353,8 +944,10 @@ Compatible changes:
 - UnincorporatedPartnershipTypeSnc: added
 - UnincorporatedPartnershipTypeVof: added
 - UnincorporatedPartnershipTypeVos: added
+- UnincorporatedPartnershipVatAbsenceReason: added
 - UnincorporatedPartnershipVatAbsenceReasonBelowTaxThreshold: added
 - UnincorporatedPartnershipVatAbsenceReasonIndustryExemption: added
+- VerificationDeadlineCapabilities: added
 - VerificationDeadlineCapabilitiesAcceptExternalFunding: added
 - VerificationDeadlineCapabilitiesAcceptPspFunding: added
 - VerificationDeadlineCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -410,6 +1003,7 @@ Compatible changes:
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorCapabilities: added
 - VerificationErrorCapabilitiesAcceptExternalFunding: added
 - VerificationErrorCapabilitiesAcceptPspFunding: added
 - VerificationErrorCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -465,6 +1059,7 @@ Compatible changes:
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorRecursiveCapabilities: added
 - VerificationErrorRecursiveCapabilitiesAcceptExternalFunding: added
 - VerificationErrorRecursiveCapabilitiesAcceptPspFunding: added
 - VerificationErrorRecursiveCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -520,15 +1115,18 @@ Compatible changes:
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorRecursiveType: added
 - VerificationErrorRecursiveTypeDataMissing: added
 - VerificationErrorRecursiveTypeDataReview: added
 - VerificationErrorRecursiveTypeInvalidInput: added
 - VerificationErrorRecursiveTypePendingStatus: added
 - VerificationErrorRecursiveTypeRejected: added
+- VerificationErrorType: added
 - VerificationErrorTypeDataMissing: added
 - VerificationErrorTypeDataReview: added
 - VerificationErrorTypeInvalidInput: added
 - VerificationErrorTypePendingStatus: added
 - VerificationErrorTypeRejected: added
+- WebDataExemptionReason: added
 - WebDataExemptionReasonNoOnlinePresence: added
 - WebDataExemptionReasonNotCollectedDuringOnboarding: added

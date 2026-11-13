@@ -53,12 +53,13 @@ fields), discriminated and non-discriminated `oneOf`, and `anyOf`.
 - **THEN** decoding returns an error rather than a partially filled variant
 
 ### Requirement: Enum constants never collide
-Generated enum constants in one package MUST be unique: constants of top-level enum types SHALL be
-prefixed with their type name, and constants that exist in v21.2.3 keep their names.
+Generated enum constants in one package MUST be unique: every enum constant SHALL be named after
+its enum type and the value in Go case, without the generator's upper-case type prefix
+(`CalculationTypeLRSTCS`), and constants that exist in v21.2.3 keep their names.
 
 #### Scenario: Capital bank account types
 - **WHEN** Capital is generated with `CALocalBankAccountType` and `USLocalBankAccountType`
-- **THEN** the package compiles
+- **THEN** the package compiles with `CALocalBankAccountTypeChecking` and `USLocalBankAccountTypeChecking`
 
 ### Requirement: Typed maps stay pointers
 Optional properties with `additionalProperties` of a given type SHALL be generated as
@@ -92,17 +93,22 @@ JSON.
 - **THEN** the server receives a multipart form with both fields and the file under its base name
 
 ### Requirement: Inline enum values have constants
-Every model field whose schema lists allowed values inline SHALL get one constant per value, named
-after the model, the field, and the value converted to Go case, with the value's own casing kept.
-Field types MUST stay unchanged.
+Every model field whose schema lists allowed values inline SHALL have a named string type
+`<Model><Field>` (array items included) with one constant per value, named after the type and the
+value converted to Go case, with the value's own casing kept. Decoding SHALL accept values that are
+not in the spec; `IsValid()` SHALL report whether a value is a known constant.
 
 #### Scenario: Shopper interaction
 - **WHEN** `PaymentRequest.shopperInteraction` allows `Ecommerce` and `POS`
-- **THEN** `PaymentRequestShopperInteractionEcommerce` and `PaymentRequestShopperInteractionPOS` exist and `SetShopperInteraction` still takes a `string`
+- **THEN** `SetShopperInteraction` takes a `PaymentRequestShopperInteraction` and `PaymentRequestShopperInteractionEcommerce` and `PaymentRequestShopperInteractionPOS` exist
 
 #### Scenario: Values with separators
 - **WHEN** a value contains `,` or `/`, as in `ONECLICK,RECURRING` or `application/pdf`
 - **THEN** the separator is dropped from the constant name
+
+#### Scenario: Unknown value in a response
+- **WHEN** a response carries a value added to the API after this SDK version
+- **THEN** it decodes, re-encodes unchanged, and `IsValid()` returns false
 
 ### Requirement: Doc comments are plain Go text
 Generated doc comments SHALL NOT contain HTML entities such as `&#x60;` or `&quot;`.

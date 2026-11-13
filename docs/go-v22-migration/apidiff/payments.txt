@@ -1,32 +1,268 @@
 Incompatible changes:
+- (*AccountInfo).GetAccountAgeIndicator: changed from func() string to func() AccountInfoAccountAgeIndicator
+- (*AccountInfo).GetAccountAgeIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoAccountAgeIndicator, bool)
+- (*AccountInfo).GetAccountChangeIndicator: changed from func() string to func() AccountInfoAccountChangeIndicator
+- (*AccountInfo).GetAccountChangeIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoAccountChangeIndicator, bool)
+- (*AccountInfo).GetAccountType: changed from func() string to func() AccountInfoAccountType
+- (*AccountInfo).GetAccountTypeOk: changed from func() (*string, bool) to func() (*AccountInfoAccountType, bool)
+- (*AccountInfo).GetDeliveryAddressUsageIndicator: changed from func() string to func() AccountInfoDeliveryAddressUsageIndicator
+- (*AccountInfo).GetDeliveryAddressUsageIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoDeliveryAddressUsageIndicator, bool)
+- (*AccountInfo).GetPasswordChangeIndicator: changed from func() string to func() AccountInfoPasswordChangeIndicator
+- (*AccountInfo).GetPasswordChangeIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoPasswordChangeIndicator, bool)
+- (*AccountInfo).GetPaymentAccountIndicator: changed from func() string to func() AccountInfoPaymentAccountIndicator
+- (*AccountInfo).GetPaymentAccountIndicatorOk: changed from func() (*string, bool) to func() (*AccountInfoPaymentAccountIndicator, bool)
+- (*AccountInfo).SetAccountAgeIndicator: changed from func(string) to func(AccountInfoAccountAgeIndicator)
+- (*AccountInfo).SetAccountChangeIndicator: changed from func(string) to func(AccountInfoAccountChangeIndicator)
+- (*AccountInfo).SetAccountType: changed from func(string) to func(AccountInfoAccountType)
+- (*AccountInfo).SetDeliveryAddressUsageIndicator: changed from func(string) to func(AccountInfoDeliveryAddressUsageIndicator)
+- (*AccountInfo).SetPasswordChangeIndicator: changed from func(string) to func(AccountInfoPasswordChangeIndicator)
+- (*AccountInfo).SetPaymentAccountIndicator: changed from func(string) to func(AccountInfoPaymentAccountIndicator)
+- (*AcctInfo).GetChAccAgeInd: changed from func() string to func() AcctInfoChAccAgeInd
+- (*AcctInfo).GetChAccAgeIndOk: changed from func() (*string, bool) to func() (*AcctInfoChAccAgeInd, bool)
+- (*AcctInfo).GetChAccChangeInd: changed from func() string to func() AcctInfoChAccChangeInd
+- (*AcctInfo).GetChAccChangeIndOk: changed from func() (*string, bool) to func() (*AcctInfoChAccChangeInd, bool)
+- (*AcctInfo).GetChAccPwChangeInd: changed from func() string to func() AcctInfoChAccPwChangeInd
+- (*AcctInfo).GetChAccPwChangeIndOk: changed from func() (*string, bool) to func() (*AcctInfoChAccPwChangeInd, bool)
+- (*AcctInfo).GetPaymentAccInd: changed from func() string to func() AcctInfoPaymentAccInd
+- (*AcctInfo).GetPaymentAccIndOk: changed from func() (*string, bool) to func() (*AcctInfoPaymentAccInd, bool)
+- (*AcctInfo).GetShipAddressUsageInd: changed from func() string to func() AcctInfoShipAddressUsageInd
+- (*AcctInfo).GetShipAddressUsageIndOk: changed from func() (*string, bool) to func() (*AcctInfoShipAddressUsageInd, bool)
+- (*AcctInfo).GetShipNameIndicator: changed from func() string to func() AcctInfoShipNameIndicator
+- (*AcctInfo).GetShipNameIndicatorOk: changed from func() (*string, bool) to func() (*AcctInfoShipNameIndicator, bool)
+- (*AcctInfo).GetSuspiciousAccActivity: changed from func() string to func() AcctInfoSuspiciousAccActivity
+- (*AcctInfo).GetSuspiciousAccActivityOk: changed from func() (*string, bool) to func() (*AcctInfoSuspiciousAccActivity, bool)
+- (*AcctInfo).SetChAccAgeInd: changed from func(string) to func(AcctInfoChAccAgeInd)
+- (*AcctInfo).SetChAccChangeInd: changed from func(string) to func(AcctInfoChAccChangeInd)
+- (*AcctInfo).SetChAccPwChangeInd: changed from func(string) to func(AcctInfoChAccPwChangeInd)
+- (*AcctInfo).SetPaymentAccInd: changed from func(string) to func(AcctInfoPaymentAccInd)
+- (*AcctInfo).SetShipAddressUsageInd: changed from func(string) to func(AcctInfoShipAddressUsageInd)
+- (*AcctInfo).SetShipNameIndicator: changed from func(string) to func(AcctInfoShipNameIndicator)
+- (*AcctInfo).SetSuspiciousAccActivity: changed from func(string) to func(AcctInfoSuspiciousAccActivity)
+- (*AdditionalData3DSecure).GetChallengeWindowSize: changed from func() string to func() AdditionalData3DSecureChallengeWindowSize
+- (*AdditionalData3DSecure).GetChallengeWindowSizeOk: changed from func() (*string, bool) to func() (*AdditionalData3DSecureChallengeWindowSize, bool)
+- (*AdditionalData3DSecure).SetChallengeWindowSize: changed from func(string) to func(AdditionalData3DSecureChallengeWindowSize)
+- (*AdditionalDataCommon).GetIndustryUsage: changed from func() string to func() AdditionalDataCommonIndustryUsage
+- (*AdditionalDataCommon).GetIndustryUsageOk: changed from func() (*string, bool) to func() (*AdditionalDataCommonIndustryUsage, bool)
+- (*AdditionalDataCommon).SetIndustryUsage: changed from func(string) to func(AdditionalDataCommonIndustryUsage)
+- (*DeviceRenderOptions).GetSdkInterface: changed from func() string to func() DeviceRenderOptionsSdkInterface
+- (*DeviceRenderOptions).GetSdkInterfaceOk: changed from func() (*string, bool) to func() (*DeviceRenderOptionsSdkInterface, bool)
+- (*DeviceRenderOptions).GetSdkUiType: changed from func() []string to func() []DeviceRenderOptionsSdkUiType
+- (*DeviceRenderOptions).GetSdkUiTypeOk: changed from func() ([]string, bool) to func() ([]DeviceRenderOptionsSdkUiType, bool)
+- (*DeviceRenderOptions).SetSdkInterface: changed from func(string) to func(DeviceRenderOptionsSdkInterface)
+- (*DeviceRenderOptions).SetSdkUiType: changed from func([]string) to func([]DeviceRenderOptionsSdkUiType)
+- (*Installments).GetPlan: changed from func() string to func() InstallmentsPlan
+- (*Installments).GetPlanOk: changed from func() (*string, bool) to func() (*InstallmentsPlan, bool)
+- (*Installments).SetPlan: changed from func(string) to func(InstallmentsPlan)
+- (*Mandate).GetAmountRule: changed from func() string to func() MandateAmountRule
+- (*Mandate).GetAmountRuleOk: changed from func() (*string, bool) to func() (*MandateAmountRule, bool)
+- (*Mandate).GetBillingAttemptsRule: changed from func() string to func() MandateBillingAttemptsRule
+- (*Mandate).GetBillingAttemptsRuleOk: changed from func() (*string, bool) to func() (*MandateBillingAttemptsRule, bool)
+- (*Mandate).GetFrequency: changed from func() string to func() MandateFrequency
+- (*Mandate).GetFrequencyOk: changed from func() (*string, bool) to func() (*MandateFrequency, bool)
+- (*Mandate).SetAmountRule: changed from func(string) to func(MandateAmountRule)
+- (*Mandate).SetBillingAttemptsRule: changed from func(string) to func(MandateBillingAttemptsRule)
+- (*Mandate).SetFrequency: changed from func(string) to func(MandateFrequency)
+- (*MerchantRiskIndicator).GetDeliveryAddressIndicator: changed from func() string to func() MerchantRiskIndicatorDeliveryAddressIndicator
+- (*MerchantRiskIndicator).GetDeliveryAddressIndicatorOk: changed from func() (*string, bool) to func() (*MerchantRiskIndicatorDeliveryAddressIndicator, bool)
+- (*MerchantRiskIndicator).GetDeliveryTimeframe: changed from func() string to func() MerchantRiskIndicatorDeliveryTimeframe
+- (*MerchantRiskIndicator).GetDeliveryTimeframeOk: changed from func() (*string, bool) to func() (*MerchantRiskIndicatorDeliveryTimeframe, bool)
+- (*MerchantRiskIndicator).SetDeliveryAddressIndicator: changed from func(string) to func(MerchantRiskIndicatorDeliveryAddressIndicator)
+- (*MerchantRiskIndicator).SetDeliveryTimeframe: changed from func(string) to func(MerchantRiskIndicatorDeliveryTimeframe)
+- (*ModificationResult).GetResponse: changed from func() string to func() ModificationResultResponse
+- (*ModificationResult).GetResponseOk: changed from func() (*string, bool) to func() (*ModificationResultResponse, bool)
+- (*ModificationResult).SetResponse: changed from func(string) to func(ModificationResultResponse)
+- (*PaymentRequest).GetEntityType: changed from func() string to func() PaymentRequestEntityType
+- (*PaymentRequest).GetEntityTypeOk: changed from func() (*string, bool) to func() (*PaymentRequestEntityType, bool)
+- (*PaymentRequest).GetFundingSource: changed from func() string to func() PaymentRequestFundingSource
+- (*PaymentRequest).GetFundingSourceOk: changed from func() (*string, bool) to func() (*PaymentRequestFundingSource, bool)
+- (*PaymentRequest).GetRecurringProcessingModel: changed from func() string to func() PaymentRequestRecurringProcessingModel
+- (*PaymentRequest).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*PaymentRequestRecurringProcessingModel, bool)
+- (*PaymentRequest).GetShopperInteraction: changed from func() string to func() PaymentRequestShopperInteraction
+- (*PaymentRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*PaymentRequestShopperInteraction, bool)
+- (*PaymentRequest).SetEntityType: changed from func(string) to func(PaymentRequestEntityType)
+- (*PaymentRequest).SetFundingSource: changed from func(string) to func(PaymentRequestFundingSource)
+- (*PaymentRequest).SetRecurringProcessingModel: changed from func(string) to func(PaymentRequestRecurringProcessingModel)
+- (*PaymentRequest).SetShopperInteraction: changed from func(string) to func(PaymentRequestShopperInteraction)
+- (*PaymentRequest3d).GetRecurringProcessingModel: changed from func() string to func() PaymentRequest3dRecurringProcessingModel
+- (*PaymentRequest3d).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*PaymentRequest3dRecurringProcessingModel, bool)
+- (*PaymentRequest3d).GetShopperInteraction: changed from func() string to func() PaymentRequest3dShopperInteraction
+- (*PaymentRequest3d).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*PaymentRequest3dShopperInteraction, bool)
+- (*PaymentRequest3d).SetRecurringProcessingModel: changed from func(string) to func(PaymentRequest3dRecurringProcessingModel)
+- (*PaymentRequest3d).SetShopperInteraction: changed from func(string) to func(PaymentRequest3dShopperInteraction)
+- (*PaymentRequest3ds2).GetRecurringProcessingModel: changed from func() string to func() PaymentRequest3ds2RecurringProcessingModel
+- (*PaymentRequest3ds2).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*PaymentRequest3ds2RecurringProcessingModel, bool)
+- (*PaymentRequest3ds2).GetShopperInteraction: changed from func() string to func() PaymentRequest3ds2ShopperInteraction
+- (*PaymentRequest3ds2).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*PaymentRequest3ds2ShopperInteraction, bool)
+- (*PaymentRequest3ds2).SetRecurringProcessingModel: changed from func(string) to func(PaymentRequest3ds2RecurringProcessingModel)
+- (*PaymentRequest3ds2).SetShopperInteraction: changed from func(string) to func(PaymentRequest3ds2ShopperInteraction)
+- (*PaymentResult).GetResultCode: changed from func() string to func() PaymentResultResultCode
+- (*PaymentResult).GetResultCodeOk: changed from func() (*string, bool) to func() (*PaymentResultResultCode, bool)
+- (*PaymentResult).SetResultCode: changed from func(string) to func(PaymentResultResultCode)
+- (*PlatformChargebackLogic).GetBehavior: changed from func() string to func() PlatformChargebackLogicBehavior
+- (*PlatformChargebackLogic).GetBehaviorOk: changed from func() (*string, bool) to func() (*PlatformChargebackLogicBehavior, bool)
+- (*PlatformChargebackLogic).SetBehavior: changed from func(string) to func(PlatformChargebackLogicBehavior)
+- (*Recurring).GetContract: changed from func() string to func() RecurringContract
+- (*Recurring).GetContractOk: changed from func() (*string, bool) to func() (*RecurringContract, bool)
+- (*Recurring).GetTokenService: changed from func() string to func() RecurringTokenService
+- (*Recurring).GetTokenServiceOk: changed from func() (*string, bool) to func() (*RecurringTokenService, bool)
+- (*Recurring).SetContract: changed from func(string) to func(RecurringContract)
+- (*Recurring).SetTokenService: changed from func(string) to func(RecurringTokenService)
+- (*ResponseAdditionalDataCommon).GetFraudResultType: changed from func() string to func() ResponseAdditionalDataCommonFraudResultType
+- (*ResponseAdditionalDataCommon).GetFraudResultTypeOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonFraudResultType, bool)
+- (*ResponseAdditionalDataCommon).GetFraudRiskLevel: changed from func() string to func() ResponseAdditionalDataCommonFraudRiskLevel
+- (*ResponseAdditionalDataCommon).GetFraudRiskLevelOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonFraudRiskLevel, bool)
+- (*ResponseAdditionalDataCommon).GetRecurringProcessingModel: changed from func() string to func() ResponseAdditionalDataCommonRecurringProcessingModel
+- (*ResponseAdditionalDataCommon).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonRecurringProcessingModel, bool)
+- (*ResponseAdditionalDataCommon).GetTokenizationStoreOperationType: changed from func() string to func() ResponseAdditionalDataCommonTokenizationStoreOperationType
+- (*ResponseAdditionalDataCommon).GetTokenizationStoreOperationTypeOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonTokenizationStoreOperationType, bool)
+- (*ResponseAdditionalDataCommon).SetFraudResultType: changed from func(string) to func(ResponseAdditionalDataCommonFraudResultType)
+- (*ResponseAdditionalDataCommon).SetFraudRiskLevel: changed from func(string) to func(ResponseAdditionalDataCommonFraudRiskLevel)
+- (*ResponseAdditionalDataCommon).SetRecurringProcessingModel: changed from func(string) to func(ResponseAdditionalDataCommonRecurringProcessingModel)
+- (*ResponseAdditionalDataCommon).SetTokenizationStoreOperationType: changed from func(string) to func(ResponseAdditionalDataCommonTokenizationStoreOperationType)
+- (*SecureRemoteCommerceCheckoutData).GetScheme: changed from func() string to func() SecureRemoteCommerceCheckoutDataScheme
+- (*SecureRemoteCommerceCheckoutData).GetSchemeOk: changed from func() (*string, bool) to func() (*SecureRemoteCommerceCheckoutDataScheme, bool)
+- (*SecureRemoteCommerceCheckoutData).SetScheme: changed from func(string) to func(SecureRemoteCommerceCheckoutDataScheme)
+- (*Split).GetType: changed from func() string to func() SplitType
+- (*Split).GetTypeOk: changed from func() (*string, bool) to func() (*SplitType, bool)
+- (*Split).SetType: changed from func(string) to func(SplitType)
+- (*ThreeDS2RequestData).GetAcctType: changed from func() string to func() ThreeDS2RequestDataAcctType
+- (*ThreeDS2RequestData).GetAcctTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataAcctType, bool)
+- (*ThreeDS2RequestData).GetAddrMatch: changed from func() string to func() ThreeDS2RequestDataAddrMatch
+- (*ThreeDS2RequestData).GetAddrMatchOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataAddrMatch, bool)
+- (*ThreeDS2RequestData).GetChallengeIndicator: changed from func() string to func() ThreeDS2RequestDataChallengeIndicator
+- (*ThreeDS2RequestData).GetChallengeIndicatorOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataChallengeIndicator, bool)
+- (*ThreeDS2RequestData).GetThreeDSRequestorChallengeInd: changed from func() string to func() ThreeDS2RequestDataThreeDSRequestorChallengeInd
+- (*ThreeDS2RequestData).GetThreeDSRequestorChallengeIndOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataThreeDSRequestorChallengeInd, bool)
+- (*ThreeDS2RequestData).GetTransType: changed from func() string to func() ThreeDS2RequestDataTransType
+- (*ThreeDS2RequestData).GetTransTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataTransType, bool)
+- (*ThreeDS2RequestData).GetTransactionType: changed from func() string to func() ThreeDS2RequestDataTransactionType
+- (*ThreeDS2RequestData).GetTransactionTypeOk: changed from func() (*string, bool) to func() (*ThreeDS2RequestDataTransactionType, bool)
+- (*ThreeDS2RequestData).SetAcctType: changed from func(string) to func(ThreeDS2RequestDataAcctType)
+- (*ThreeDS2RequestData).SetAddrMatch: changed from func(string) to func(ThreeDS2RequestDataAddrMatch)
+- (*ThreeDS2RequestData).SetChallengeIndicator: changed from func(string) to func(ThreeDS2RequestDataChallengeIndicator)
+- (*ThreeDS2RequestData).SetThreeDSRequestorChallengeInd: changed from func(string) to func(ThreeDS2RequestDataThreeDSRequestorChallengeInd)
+- (*ThreeDS2RequestData).SetTransType: changed from func(string) to func(ThreeDS2RequestDataTransType)
+- (*ThreeDS2RequestData).SetTransactionType: changed from func(string) to func(ThreeDS2RequestDataTransactionType)
+- (*ThreeDS2Result).GetChallengeCancel: changed from func() string to func() ThreeDS2ResultChallengeCancel
+- (*ThreeDS2Result).GetChallengeCancelOk: changed from func() (*string, bool) to func() (*ThreeDS2ResultChallengeCancel, bool)
+- (*ThreeDS2Result).GetExemptionIndicator: changed from func() string to func() ThreeDS2ResultExemptionIndicator
+- (*ThreeDS2Result).GetExemptionIndicatorOk: changed from func() (*string, bool) to func() (*ThreeDS2ResultExemptionIndicator, bool)
+- (*ThreeDS2Result).GetThreeDSRequestorChallengeInd: changed from func() string to func() ThreeDS2ResultThreeDSRequestorChallengeInd
+- (*ThreeDS2Result).GetThreeDSRequestorChallengeIndOk: changed from func() (*string, bool) to func() (*ThreeDS2ResultThreeDSRequestorChallengeInd, bool)
+- (*ThreeDS2Result).SetChallengeCancel: changed from func(string) to func(ThreeDS2ResultChallengeCancel)
+- (*ThreeDS2Result).SetExemptionIndicator: changed from func(string) to func(ThreeDS2ResultExemptionIndicator)
+- (*ThreeDS2Result).SetThreeDSRequestorChallengeInd: changed from func(string) to func(ThreeDS2ResultThreeDSRequestorChallengeInd)
+- (*ThreeDSRequestorAuthenticationInfo).GetThreeDSReqAuthMethod: changed from func() string to func() ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod
+- (*ThreeDSRequestorAuthenticationInfo).GetThreeDSReqAuthMethodOk: changed from func() (*string, bool) to func() (*ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod, bool)
+- (*ThreeDSRequestorAuthenticationInfo).SetThreeDSReqAuthMethod: changed from func(string) to func(ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod)
+- (*ThreeDSRequestorPriorAuthenticationInfo).GetThreeDSReqPriorAuthMethod: changed from func() string to func() ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod
+- (*ThreeDSRequestorPriorAuthenticationInfo).GetThreeDSReqPriorAuthMethodOk: changed from func() (*string, bool) to func() (*ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod, bool)
+- (*ThreeDSRequestorPriorAuthenticationInfo).SetThreeDSReqPriorAuthMethod: changed from func(string) to func(ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod)
+- (*ThreeDSecureData).GetAuthenticationResponse: changed from func() string to func() ThreeDSecureDataAuthenticationResponse
+- (*ThreeDSecureData).GetAuthenticationResponseOk: changed from func() (*string, bool) to func() (*ThreeDSecureDataAuthenticationResponse, bool)
+- (*ThreeDSecureData).GetChallengeCancel: changed from func() string to func() ThreeDSecureDataChallengeCancel
+- (*ThreeDSecureData).GetChallengeCancelOk: changed from func() (*string, bool) to func() (*ThreeDSecureDataChallengeCancel, bool)
+- (*ThreeDSecureData).GetDirectoryResponse: changed from func() string to func() ThreeDSecureDataDirectoryResponse
+- (*ThreeDSecureData).GetDirectoryResponseOk: changed from func() (*string, bool) to func() (*ThreeDSecureDataDirectoryResponse, bool)
+- (*ThreeDSecureData).SetAuthenticationResponse: changed from func(string) to func(ThreeDSecureDataAuthenticationResponse)
+- (*ThreeDSecureData).SetChallengeCancel: changed from func(string) to func(ThreeDSecureDataChallengeCancel)
+- (*ThreeDSecureData).SetDirectoryResponse: changed from func(string) to func(ThreeDSecureDataDirectoryResponse)
+- AccountInfo.AccountAgeIndicator: changed from *string to *AccountInfoAccountAgeIndicator
+- AccountInfo.AccountChangeIndicator: changed from *string to *AccountInfoAccountChangeIndicator
+- AccountInfo.AccountType: changed from *string to *AccountInfoAccountType
+- AccountInfo.DeliveryAddressUsageIndicator: changed from *string to *AccountInfoDeliveryAddressUsageIndicator
+- AccountInfo.PasswordChangeIndicator: changed from *string to *AccountInfoPasswordChangeIndicator
+- AccountInfo.PaymentAccountIndicator: changed from *string to *AccountInfoPaymentAccountIndicator
+- AcctInfo.ChAccAgeInd: changed from *string to *AcctInfoChAccAgeInd
+- AcctInfo.ChAccChangeInd: changed from *string to *AcctInfoChAccChangeInd
+- AcctInfo.ChAccPwChangeInd: changed from *string to *AcctInfoChAccPwChangeInd
+- AcctInfo.PaymentAccInd: changed from *string to *AcctInfoPaymentAccInd
+- AcctInfo.ShipAddressUsageInd: changed from *string to *AcctInfoShipAddressUsageInd
+- AcctInfo.ShipNameIndicator: changed from *string to *AcctInfoShipNameIndicator
+- AcctInfo.SuspiciousAccActivity: changed from *string to *AcctInfoSuspiciousAccActivity
+- AdditionalData3DSecure.ChallengeWindowSize: changed from *string to *AdditionalData3DSecureChallengeWindowSize
+- AdditionalDataCommon.IndustryUsage: changed from *string to *AdditionalDataCommonIndustryUsage
+- DeviceRenderOptions.SdkInterface: changed from *string to *DeviceRenderOptionsSdkInterface
+- DeviceRenderOptions.SdkUiType: changed from []string to []DeviceRenderOptionsSdkUiType
 - GeneralApi: removed
 - GeneralApiAuthorise3dInput: removed
 - GeneralApiAuthorise3ds2Input: removed
 - GeneralApiAuthoriseInput: removed
 - GeneralApiGetAuthenticationResultInput: removed
 - GeneralApiRetrieve3ds2ResultInput: removed
+- Installments.Plan: changed from *string to *InstallmentsPlan
+- Mandate.AmountRule: changed from *string to *MandateAmountRule
+- Mandate.BillingAttemptsRule: changed from *string to *MandateBillingAttemptsRule
+- Mandate.Frequency: changed from string to MandateFrequency
+- MerchantRiskIndicator.DeliveryAddressIndicator: changed from *string to *MerchantRiskIndicatorDeliveryAddressIndicator
+- MerchantRiskIndicator.DeliveryTimeframe: changed from *string to *MerchantRiskIndicatorDeliveryTimeframe
+- ModificationResult.Response: changed from string to ModificationResultResponse
+- ModificationsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- NewAPIClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Client) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Client) *APIClient
+- NewMandate: changed from func(string, string, string) *Mandate to func(string, string, MandateFrequency) *Mandate
+- NewModificationResult: changed from func(string, string) *ModificationResult to func(string, ModificationResultResponse) *ModificationResult
+- NewSplit: changed from func(string) *Split to func(SplitType) *Split
+- PaymentRequest.EntityType: changed from *string to *PaymentRequestEntityType
+- PaymentRequest.FundingSource: changed from *string to *PaymentRequestFundingSource
+- PaymentRequest.RecurringProcessingModel: changed from *string to *PaymentRequestRecurringProcessingModel
+- PaymentRequest.ShopperInteraction: changed from *string to *PaymentRequestShopperInteraction
+- PaymentRequest3d.RecurringProcessingModel: changed from *string to *PaymentRequest3dRecurringProcessingModel
+- PaymentRequest3d.ShopperInteraction: changed from *string to *PaymentRequest3dShopperInteraction
+- PaymentRequest3ds2.RecurringProcessingModel: changed from *string to *PaymentRequest3ds2RecurringProcessingModel
+- PaymentRequest3ds2.ShopperInteraction: changed from *string to *PaymentRequest3ds2ShopperInteraction
+- PaymentResult.ResultCode: changed from *string to *PaymentResultResultCode
+- PaymentsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PlatformChargebackLogic.Behavior: changed from *string to *PlatformChargebackLogicBehavior
+- Recurring.Contract: changed from *string to *RecurringContract
+- Recurring.TokenService: changed from *string to *RecurringTokenService
+- ResponseAdditionalDataCommon.FraudResultType: changed from *string to *ResponseAdditionalDataCommonFraudResultType
+- ResponseAdditionalDataCommon.FraudRiskLevel: changed from *string to *ResponseAdditionalDataCommonFraudRiskLevel
+- ResponseAdditionalDataCommon.RecurringProcessingModel: changed from *string to *ResponseAdditionalDataCommonRecurringProcessingModel
+- ResponseAdditionalDataCommon.TokenizationStoreOperationType: changed from *string to *ResponseAdditionalDataCommonTokenizationStoreOperationType
+- SecureRemoteCommerceCheckoutData.Scheme: changed from *string to *SecureRemoteCommerceCheckoutDataScheme
+- Split.Type: changed from string to SplitType
+- ThreeDS2RequestData.AcctType: changed from *string to *ThreeDS2RequestDataAcctType
+- ThreeDS2RequestData.AddrMatch: changed from *string to *ThreeDS2RequestDataAddrMatch
+- ThreeDS2RequestData.ChallengeIndicator: changed from *string to *ThreeDS2RequestDataChallengeIndicator
+- ThreeDS2RequestData.ThreeDSRequestorChallengeInd: changed from *string to *ThreeDS2RequestDataThreeDSRequestorChallengeInd
+- ThreeDS2RequestData.TransType: changed from *string to *ThreeDS2RequestDataTransType
+- ThreeDS2RequestData.TransactionType: changed from *string to *ThreeDS2RequestDataTransactionType
+- ThreeDS2Result.ChallengeCancel: changed from *string to *ThreeDS2ResultChallengeCancel
+- ThreeDS2Result.ExemptionIndicator: changed from *string to *ThreeDS2ResultExemptionIndicator
+- ThreeDS2Result.ThreeDSRequestorChallengeInd: changed from *string to *ThreeDS2ResultThreeDSRequestorChallengeInd
+- ThreeDSRequestorAuthenticationInfo.ThreeDSReqAuthMethod: changed from *string to *ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod
+- ThreeDSRequestorPriorAuthenticationInfo.ThreeDSReqPriorAuthMethod: changed from *string to *ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod
+- ThreeDSecureData.AuthenticationResponse: changed from *string to *ThreeDSecureDataAuthenticationResponse
+- ThreeDSecureData.ChallengeCancel: changed from *string to *ThreeDSecureDataChallengeCancel
+- ThreeDSecureData.DirectoryResponse: changed from *string to *ThreeDSecureDataDirectoryResponse
 Compatible changes:
+- AccountInfoAccountAgeIndicator: added
 - AccountInfoAccountAgeIndicatorFrom30To60Days: added
 - AccountInfoAccountAgeIndicatorLessThan30Days: added
 - AccountInfoAccountAgeIndicatorMoreThan60Days: added
 - AccountInfoAccountAgeIndicatorNotApplicable: added
 - AccountInfoAccountAgeIndicatorThisTransaction: added
+- AccountInfoAccountChangeIndicator: added
 - AccountInfoAccountChangeIndicatorFrom30To60Days: added
 - AccountInfoAccountChangeIndicatorLessThan30Days: added
 - AccountInfoAccountChangeIndicatorMoreThan60Days: added
 - AccountInfoAccountChangeIndicatorThisTransaction: added
+- AccountInfoAccountType: added
 - AccountInfoAccountTypeCredit: added
 - AccountInfoAccountTypeDebit: added
 - AccountInfoAccountTypeNotApplicable: added
+- AccountInfoDeliveryAddressUsageIndicator: added
 - AccountInfoDeliveryAddressUsageIndicatorFrom30To60Days: added
 - AccountInfoDeliveryAddressUsageIndicatorLessThan30Days: added
 - AccountInfoDeliveryAddressUsageIndicatorMoreThan60Days: added
 - AccountInfoDeliveryAddressUsageIndicatorThisTransaction: added
+- AccountInfoPasswordChangeIndicator: added
 - AccountInfoPasswordChangeIndicatorFrom30To60Days: added
 - AccountInfoPasswordChangeIndicatorLessThan30Days: added
 - AccountInfoPasswordChangeIndicatorMoreThan60Days: added
 - AccountInfoPasswordChangeIndicatorNotApplicable: added
 - AccountInfoPasswordChangeIndicatorThisTransaction: added
+- AccountInfoPaymentAccountIndicator: added
 - AccountInfoPaymentAccountIndicatorFrom30To60Days: added
 - AccountInfoPaymentAccountIndicatorLessThan30Days: added
 - AccountInfoPaymentAccountIndicatorMoreThan60Days: added
@@ -37,43 +273,111 @@ Compatible changes:
 - AcctInfoChAccAgeInd03: added
 - AcctInfoChAccAgeInd04: added
 - AcctInfoChAccAgeInd05: added
+- AcctInfoChAccAgeInd: added
 - AcctInfoChAccChangeInd01: added
 - AcctInfoChAccChangeInd02: added
 - AcctInfoChAccChangeInd03: added
 - AcctInfoChAccChangeInd04: added
+- AcctInfoChAccChangeInd: added
 - AcctInfoChAccPwChangeInd01: added
 - AcctInfoChAccPwChangeInd02: added
 - AcctInfoChAccPwChangeInd03: added
 - AcctInfoChAccPwChangeInd04: added
 - AcctInfoChAccPwChangeInd05: added
+- AcctInfoChAccPwChangeInd: added
 - AcctInfoPaymentAccInd01: added
 - AcctInfoPaymentAccInd02: added
 - AcctInfoPaymentAccInd03: added
 - AcctInfoPaymentAccInd04: added
 - AcctInfoPaymentAccInd05: added
+- AcctInfoPaymentAccInd: added
 - AcctInfoShipAddressUsageInd01: added
 - AcctInfoShipAddressUsageInd02: added
 - AcctInfoShipAddressUsageInd03: added
 - AcctInfoShipAddressUsageInd04: added
+- AcctInfoShipAddressUsageInd: added
 - AcctInfoShipNameIndicator01: added
 - AcctInfoShipNameIndicator02: added
+- AcctInfoShipNameIndicator: added
 - AcctInfoSuspiciousAccActivity01: added
 - AcctInfoSuspiciousAccActivity02: added
+- AcctInfoSuspiciousAccActivity: added
 - AdditionalData3DSecureChallengeWindowSize01: added
 - AdditionalData3DSecureChallengeWindowSize02: added
 - AdditionalData3DSecureChallengeWindowSize03: added
 - AdditionalData3DSecureChallengeWindowSize04: added
 - AdditionalData3DSecureChallengeWindowSize05: added
+- AdditionalData3DSecureChallengeWindowSize: added
+- AdditionalDataCommonIndustryUsage: added
 - AdditionalDataCommonIndustryUsageDelayedCharge: added
 - AdditionalDataCommonIndustryUsageNoShow: added
+- AllowedAccountInfoAccountAgeIndicatorEnumValues: added
+- AllowedAccountInfoAccountChangeIndicatorEnumValues: added
+- AllowedAccountInfoAccountTypeEnumValues: added
+- AllowedAccountInfoDeliveryAddressUsageIndicatorEnumValues: added
+- AllowedAccountInfoPasswordChangeIndicatorEnumValues: added
+- AllowedAccountInfoPaymentAccountIndicatorEnumValues: added
+- AllowedAcctInfoChAccAgeIndEnumValues: added
+- AllowedAcctInfoChAccChangeIndEnumValues: added
+- AllowedAcctInfoChAccPwChangeIndEnumValues: added
+- AllowedAcctInfoPaymentAccIndEnumValues: added
+- AllowedAcctInfoShipAddressUsageIndEnumValues: added
+- AllowedAcctInfoShipNameIndicatorEnumValues: added
+- AllowedAcctInfoSuspiciousAccActivityEnumValues: added
+- AllowedAdditionalData3DSecureChallengeWindowSizeEnumValues: added
+- AllowedAdditionalDataCommonIndustryUsageEnumValues: added
+- AllowedDeviceRenderOptionsSdkInterfaceEnumValues: added
+- AllowedDeviceRenderOptionsSdkUiTypeEnumValues: added
+- AllowedInstallmentsPlanEnumValues: added
+- AllowedMandateAmountRuleEnumValues: added
+- AllowedMandateBillingAttemptsRuleEnumValues: added
+- AllowedMandateFrequencyEnumValues: added
+- AllowedMerchantRiskIndicatorDeliveryAddressIndicatorEnumValues: added
+- AllowedMerchantRiskIndicatorDeliveryTimeframeEnumValues: added
+- AllowedModificationResultResponseEnumValues: added
+- AllowedPaymentRequest3dRecurringProcessingModelEnumValues: added
+- AllowedPaymentRequest3dShopperInteractionEnumValues: added
+- AllowedPaymentRequest3ds2RecurringProcessingModelEnumValues: added
+- AllowedPaymentRequest3ds2ShopperInteractionEnumValues: added
+- AllowedPaymentRequestEntityTypeEnumValues: added
+- AllowedPaymentRequestFundingSourceEnumValues: added
+- AllowedPaymentRequestRecurringProcessingModelEnumValues: added
+- AllowedPaymentRequestShopperInteractionEnumValues: added
+- AllowedPaymentResultResultCodeEnumValues: added
+- AllowedPlatformChargebackLogicBehaviorEnumValues: added
+- AllowedRecurringContractEnumValues: added
+- AllowedRecurringTokenServiceEnumValues: added
+- AllowedResponseAdditionalDataCommonFraudResultTypeEnumValues: added
+- AllowedResponseAdditionalDataCommonFraudRiskLevelEnumValues: added
+- AllowedResponseAdditionalDataCommonRecurringProcessingModelEnumValues: added
+- AllowedResponseAdditionalDataCommonTokenizationStoreOperationTypeEnumValues: added
+- AllowedSecureRemoteCommerceCheckoutDataSchemeEnumValues: added
+- AllowedSplitTypeEnumValues: added
+- AllowedThreeDS2RequestDataAcctTypeEnumValues: added
+- AllowedThreeDS2RequestDataAddrMatchEnumValues: added
+- AllowedThreeDS2RequestDataChallengeIndicatorEnumValues: added
+- AllowedThreeDS2RequestDataThreeDSRequestorChallengeIndEnumValues: added
+- AllowedThreeDS2RequestDataTransTypeEnumValues: added
+- AllowedThreeDS2RequestDataTransactionTypeEnumValues: added
+- AllowedThreeDS2ResultChallengeCancelEnumValues: added
+- AllowedThreeDS2ResultExemptionIndicatorEnumValues: added
+- AllowedThreeDS2ResultThreeDSRequestorChallengeIndEnumValues: added
+- AllowedThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethodEnumValues: added
+- AllowedThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethodEnumValues: added
+- AllowedThreeDSecureDataAuthenticationResponseEnumValues: added
+- AllowedThreeDSecureDataChallengeCancelEnumValues: added
+- AllowedThreeDSecureDataDirectoryResponseEnumValues: added
+- DeviceRenderOptionsSdkInterface: added
 - DeviceRenderOptionsSdkInterfaceBoth: added
 - DeviceRenderOptionsSdkInterfaceHtml: added
 - DeviceRenderOptionsSdkInterfaceNative: added
+- DeviceRenderOptionsSdkUiType: added
 - DeviceRenderOptionsSdkUiTypeMultiSelect: added
 - DeviceRenderOptionsSdkUiTypeOtherHtml: added
 - DeviceRenderOptionsSdkUiTypeOutOfBand: added
 - DeviceRenderOptionsSdkUiTypeSingleSelect: added
 - DeviceRenderOptionsSdkUiTypeText: added
+- InstallmentsPlan: added
 - InstallmentsPlanBonus: added
 - InstallmentsPlanBuynowPaylater: added
 - InstallmentsPlanInteresRefundPrctg: added
@@ -84,11 +388,14 @@ Compatible changes:
 - InstallmentsPlanRegular: added
 - InstallmentsPlanRevolving: added
 - InstallmentsPlanWithInterest: added
+- MandateAmountRule: added
 - MandateAmountRuleExact: added
 - MandateAmountRuleMax: added
+- MandateBillingAttemptsRule: added
 - MandateBillingAttemptsRuleAfter: added
 - MandateBillingAttemptsRuleBefore: added
 - MandateBillingAttemptsRuleOn: added
+- MandateFrequency: added
 - MandateFrequencyAdhoc: added
 - MandateFrequencyBiWeekly: added
 - MandateFrequencyDaily: added
@@ -97,6 +404,7 @@ Compatible changes:
 - MandateFrequencyQuarterly: added
 - MandateFrequencyWeekly: added
 - MandateFrequencyYearly: added
+- MerchantRiskIndicatorDeliveryAddressIndicator: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorDigitalGoods: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorGoodsNotShipped: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorOther: added
@@ -104,10 +412,12 @@ Compatible changes:
 - MerchantRiskIndicatorDeliveryAddressIndicatorShipToNewAddress: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorShipToStore: added
 - MerchantRiskIndicatorDeliveryAddressIndicatorShipToVerifiedAddress: added
+- MerchantRiskIndicatorDeliveryTimeframe: added
 - MerchantRiskIndicatorDeliveryTimeframeElectronicDelivery: added
 - MerchantRiskIndicatorDeliveryTimeframeOvernightShipping: added
 - MerchantRiskIndicatorDeliveryTimeframeSameDayShipping: added
 - MerchantRiskIndicatorDeliveryTimeframeTwoOrMoreDaysShipping: added
+- ModificationResultResponse: added
 - ModificationResultResponseAuthorised: added
 - ModificationResultResponseError: added
 - ModificationResultResponseRefused: added
@@ -119,32 +429,209 @@ Compatible changes:
 - ModificationResultResponse_RefundReceived: added
 - ModificationResultResponse_TechnicalCancelReceived: added
 - ModificationResultResponse_VoidPendingRefundReceived: added
+- NewAccountInfoAccountAgeIndicatorFromValue: added
+- NewAccountInfoAccountChangeIndicatorFromValue: added
+- NewAccountInfoAccountTypeFromValue: added
+- NewAccountInfoDeliveryAddressUsageIndicatorFromValue: added
+- NewAccountInfoPasswordChangeIndicatorFromValue: added
+- NewAccountInfoPaymentAccountIndicatorFromValue: added
+- NewAcctInfoChAccAgeIndFromValue: added
+- NewAcctInfoChAccChangeIndFromValue: added
+- NewAcctInfoChAccPwChangeIndFromValue: added
+- NewAcctInfoPaymentAccIndFromValue: added
+- NewAcctInfoShipAddressUsageIndFromValue: added
+- NewAcctInfoShipNameIndicatorFromValue: added
+- NewAcctInfoSuspiciousAccActivityFromValue: added
+- NewAdditionalData3DSecureChallengeWindowSizeFromValue: added
+- NewAdditionalDataCommonIndustryUsageFromValue: added
+- NewDeviceRenderOptionsSdkInterfaceFromValue: added
+- NewDeviceRenderOptionsSdkUiTypeFromValue: added
+- NewInstallmentsPlanFromValue: added
+- NewMandateAmountRuleFromValue: added
+- NewMandateBillingAttemptsRuleFromValue: added
+- NewMandateFrequencyFromValue: added
+- NewMerchantRiskIndicatorDeliveryAddressIndicatorFromValue: added
+- NewMerchantRiskIndicatorDeliveryTimeframeFromValue: added
+- NewModificationResultResponseFromValue: added
+- NewNullableAccountInfoAccountAgeIndicator: added
+- NewNullableAccountInfoAccountChangeIndicator: added
+- NewNullableAccountInfoAccountType: added
+- NewNullableAccountInfoDeliveryAddressUsageIndicator: added
+- NewNullableAccountInfoPasswordChangeIndicator: added
+- NewNullableAccountInfoPaymentAccountIndicator: added
+- NewNullableAcctInfoChAccAgeInd: added
+- NewNullableAcctInfoChAccChangeInd: added
+- NewNullableAcctInfoChAccPwChangeInd: added
+- NewNullableAcctInfoPaymentAccInd: added
+- NewNullableAcctInfoShipAddressUsageInd: added
+- NewNullableAcctInfoShipNameIndicator: added
+- NewNullableAcctInfoSuspiciousAccActivity: added
+- NewNullableAdditionalData3DSecureChallengeWindowSize: added
+- NewNullableAdditionalDataCommonIndustryUsage: added
+- NewNullableDeviceRenderOptionsSdkInterface: added
+- NewNullableDeviceRenderOptionsSdkUiType: added
+- NewNullableInstallmentsPlan: added
+- NewNullableMandateAmountRule: added
+- NewNullableMandateBillingAttemptsRule: added
+- NewNullableMandateFrequency: added
+- NewNullableMerchantRiskIndicatorDeliveryAddressIndicator: added
+- NewNullableMerchantRiskIndicatorDeliveryTimeframe: added
+- NewNullableModificationResultResponse: added
+- NewNullablePaymentRequest3dRecurringProcessingModel: added
+- NewNullablePaymentRequest3dShopperInteraction: added
+- NewNullablePaymentRequest3ds2RecurringProcessingModel: added
+- NewNullablePaymentRequest3ds2ShopperInteraction: added
+- NewNullablePaymentRequestEntityType: added
+- NewNullablePaymentRequestFundingSource: added
+- NewNullablePaymentRequestRecurringProcessingModel: added
+- NewNullablePaymentRequestShopperInteraction: added
+- NewNullablePaymentResultResultCode: added
+- NewNullablePlatformChargebackLogicBehavior: added
+- NewNullableRecurringContract: added
+- NewNullableRecurringTokenService: added
+- NewNullableResponseAdditionalDataCommonFraudResultType: added
+- NewNullableResponseAdditionalDataCommonFraudRiskLevel: added
+- NewNullableResponseAdditionalDataCommonRecurringProcessingModel: added
+- NewNullableResponseAdditionalDataCommonTokenizationStoreOperationType: added
+- NewNullableSecureRemoteCommerceCheckoutDataScheme: added
+- NewNullableSplitType: added
+- NewNullableThreeDS2RequestDataAcctType: added
+- NewNullableThreeDS2RequestDataAddrMatch: added
+- NewNullableThreeDS2RequestDataChallengeIndicator: added
+- NewNullableThreeDS2RequestDataThreeDSRequestorChallengeInd: added
+- NewNullableThreeDS2RequestDataTransType: added
+- NewNullableThreeDS2RequestDataTransactionType: added
+- NewNullableThreeDS2ResultChallengeCancel: added
+- NewNullableThreeDS2ResultExemptionIndicator: added
+- NewNullableThreeDS2ResultThreeDSRequestorChallengeInd: added
+- NewNullableThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod: added
+- NewNullableThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod: added
+- NewNullableThreeDSecureDataAuthenticationResponse: added
+- NewNullableThreeDSecureDataChallengeCancel: added
+- NewNullableThreeDSecureDataDirectoryResponse: added
+- NewPaymentRequest3dRecurringProcessingModelFromValue: added
+- NewPaymentRequest3dShopperInteractionFromValue: added
+- NewPaymentRequest3ds2RecurringProcessingModelFromValue: added
+- NewPaymentRequest3ds2ShopperInteractionFromValue: added
+- NewPaymentRequestEntityTypeFromValue: added
+- NewPaymentRequestFundingSourceFromValue: added
+- NewPaymentRequestRecurringProcessingModelFromValue: added
+- NewPaymentRequestShopperInteractionFromValue: added
+- NewPaymentResultResultCodeFromValue: added
+- NewPlatformChargebackLogicBehaviorFromValue: added
+- NewRecurringContractFromValue: added
+- NewRecurringTokenServiceFromValue: added
+- NewResponseAdditionalDataCommonFraudResultTypeFromValue: added
+- NewResponseAdditionalDataCommonFraudRiskLevelFromValue: added
+- NewResponseAdditionalDataCommonRecurringProcessingModelFromValue: added
+- NewResponseAdditionalDataCommonTokenizationStoreOperationTypeFromValue: added
+- NewSecureRemoteCommerceCheckoutDataSchemeFromValue: added
+- NewSplitTypeFromValue: added
+- NewThreeDS2RequestDataAcctTypeFromValue: added
+- NewThreeDS2RequestDataAddrMatchFromValue: added
+- NewThreeDS2RequestDataChallengeIndicatorFromValue: added
+- NewThreeDS2RequestDataThreeDSRequestorChallengeIndFromValue: added
+- NewThreeDS2RequestDataTransTypeFromValue: added
+- NewThreeDS2RequestDataTransactionTypeFromValue: added
+- NewThreeDS2ResultChallengeCancelFromValue: added
+- NewThreeDS2ResultExemptionIndicatorFromValue: added
+- NewThreeDS2ResultThreeDSRequestorChallengeIndFromValue: added
+- NewThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethodFromValue: added
+- NewThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethodFromValue: added
+- NewThreeDSecureDataAuthenticationResponseFromValue: added
+- NewThreeDSecureDataChallengeCancelFromValue: added
+- NewThreeDSecureDataDirectoryResponseFromValue: added
+- NullableAccountInfoAccountAgeIndicator: added
+- NullableAccountInfoAccountChangeIndicator: added
+- NullableAccountInfoAccountType: added
+- NullableAccountInfoDeliveryAddressUsageIndicator: added
+- NullableAccountInfoPasswordChangeIndicator: added
+- NullableAccountInfoPaymentAccountIndicator: added
+- NullableAcctInfoChAccAgeInd: added
+- NullableAcctInfoChAccChangeInd: added
+- NullableAcctInfoChAccPwChangeInd: added
+- NullableAcctInfoPaymentAccInd: added
+- NullableAcctInfoShipAddressUsageInd: added
+- NullableAcctInfoShipNameIndicator: added
+- NullableAcctInfoSuspiciousAccActivity: added
+- NullableAdditionalData3DSecureChallengeWindowSize: added
+- NullableAdditionalDataCommonIndustryUsage: added
+- NullableDeviceRenderOptionsSdkInterface: added
+- NullableDeviceRenderOptionsSdkUiType: added
+- NullableInstallmentsPlan: added
+- NullableMandateAmountRule: added
+- NullableMandateBillingAttemptsRule: added
+- NullableMandateFrequency: added
+- NullableMerchantRiskIndicatorDeliveryAddressIndicator: added
+- NullableMerchantRiskIndicatorDeliveryTimeframe: added
+- NullableModificationResultResponse: added
+- NullablePaymentRequest3dRecurringProcessingModel: added
+- NullablePaymentRequest3dShopperInteraction: added
+- NullablePaymentRequest3ds2RecurringProcessingModel: added
+- NullablePaymentRequest3ds2ShopperInteraction: added
+- NullablePaymentRequestEntityType: added
+- NullablePaymentRequestFundingSource: added
+- NullablePaymentRequestRecurringProcessingModel: added
+- NullablePaymentRequestShopperInteraction: added
+- NullablePaymentResultResultCode: added
+- NullablePlatformChargebackLogicBehavior: added
+- NullableRecurringContract: added
+- NullableRecurringTokenService: added
+- NullableResponseAdditionalDataCommonFraudResultType: added
+- NullableResponseAdditionalDataCommonFraudRiskLevel: added
+- NullableResponseAdditionalDataCommonRecurringProcessingModel: added
+- NullableResponseAdditionalDataCommonTokenizationStoreOperationType: added
+- NullableSecureRemoteCommerceCheckoutDataScheme: added
+- NullableSplitType: added
+- NullableThreeDS2RequestDataAcctType: added
+- NullableThreeDS2RequestDataAddrMatch: added
+- NullableThreeDS2RequestDataChallengeIndicator: added
+- NullableThreeDS2RequestDataThreeDSRequestorChallengeInd: added
+- NullableThreeDS2RequestDataTransType: added
+- NullableThreeDS2RequestDataTransactionType: added
+- NullableThreeDS2ResultChallengeCancel: added
+- NullableThreeDS2ResultExemptionIndicator: added
+- NullableThreeDS2ResultThreeDSRequestorChallengeInd: added
+- NullableThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod: added
+- NullableThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod: added
+- NullableThreeDSecureDataAuthenticationResponse: added
+- NullableThreeDSecureDataChallengeCancel: added
+- NullableThreeDSecureDataDirectoryResponse: added
+- PaymentRequest3dRecurringProcessingModel: added
 - PaymentRequest3dRecurringProcessingModelCardOnFile: added
 - PaymentRequest3dRecurringProcessingModelSubscription: added
 - PaymentRequest3dRecurringProcessingModelUnscheduledCardOnFile: added
+- PaymentRequest3dShopperInteraction: added
 - PaymentRequest3dShopperInteractionContAuth: added
 - PaymentRequest3dShopperInteractionEcommerce: added
 - PaymentRequest3dShopperInteractionMoto: added
 - PaymentRequest3dShopperInteractionPOS: added
+- PaymentRequest3ds2RecurringProcessingModel: added
 - PaymentRequest3ds2RecurringProcessingModelCardOnFile: added
 - PaymentRequest3ds2RecurringProcessingModelSubscription: added
 - PaymentRequest3ds2RecurringProcessingModelUnscheduledCardOnFile: added
+- PaymentRequest3ds2ShopperInteraction: added
 - PaymentRequest3ds2ShopperInteractionContAuth: added
 - PaymentRequest3ds2ShopperInteractionEcommerce: added
 - PaymentRequest3ds2ShopperInteractionMoto: added
 - PaymentRequest3ds2ShopperInteractionPOS: added
+- PaymentRequestEntityType: added
 - PaymentRequestEntityTypeCompanyName: added
 - PaymentRequestEntityTypeNaturalPerson: added
+- PaymentRequestFundingSource: added
 - PaymentRequestFundingSourceCredit: added
 - PaymentRequestFundingSourceDebit: added
 - PaymentRequestFundingSourcePrepaid: added
+- PaymentRequestRecurringProcessingModel: added
 - PaymentRequestRecurringProcessingModelCardOnFile: added
 - PaymentRequestRecurringProcessingModelSubscription: added
 - PaymentRequestRecurringProcessingModelUnscheduledCardOnFile: added
+- PaymentRequestShopperInteraction: added
 - PaymentRequestShopperInteractionContAuth: added
 - PaymentRequestShopperInteractionEcommerce: added
 - PaymentRequestShopperInteractionMoto: added
 - PaymentRequestShopperInteractionPOS: added
+- PaymentResultResultCode: added
 - PaymentResultResultCodeAuthenticationFinished: added
 - PaymentResultResultCodeAuthenticationNotRequired: added
 - PaymentResultResultCodeAuthorised: added
@@ -159,34 +646,43 @@ Compatible changes:
 - PaymentResultResultCodeRedirectShopper: added
 - PaymentResultResultCodeRefused: added
 - PaymentResultResultCodeSuccess: added
+- PlatformChargebackLogicBehavior: added
 - PlatformChargebackLogicBehaviorDeductAccordingToSplitRatio: added
 - PlatformChargebackLogicBehaviorDeductFromLiableAccount: added
 - PlatformChargebackLogicBehaviorDeductFromOneBalanceAccount: added
+- RecurringContract: added
 - RecurringContractEXTERNAL: added
 - RecurringContractONECLICK: added
 - RecurringContractONECLICKRECURRING: added
 - RecurringContractPAYOUT: added
 - RecurringContractRECURRING: added
+- RecurringTokenService: added
 - RecurringTokenServiceAMEXTOKENSERVICE: added
 - RecurringTokenServiceMCTOKENSERVICE: added
 - RecurringTokenServiceTOKENSHARING: added
 - RecurringTokenServiceVISATOKENSERVICE: added
+- ResponseAdditionalDataCommonFraudResultType: added
 - ResponseAdditionalDataCommonFraudResultTypeAMBER: added
 - ResponseAdditionalDataCommonFraudResultTypeGREEN: added
 - ResponseAdditionalDataCommonFraudResultTypeRED: added
+- ResponseAdditionalDataCommonFraudRiskLevel: added
 - ResponseAdditionalDataCommonFraudRiskLevelHigh: added
 - ResponseAdditionalDataCommonFraudRiskLevelLow: added
 - ResponseAdditionalDataCommonFraudRiskLevelMedium: added
 - ResponseAdditionalDataCommonFraudRiskLevelVeryHigh: added
 - ResponseAdditionalDataCommonFraudRiskLevelVeryLow: added
+- ResponseAdditionalDataCommonRecurringProcessingModel: added
 - ResponseAdditionalDataCommonRecurringProcessingModelCardOnFile: added
 - ResponseAdditionalDataCommonRecurringProcessingModelSubscription: added
 - ResponseAdditionalDataCommonRecurringProcessingModelUnscheduledCardOnFile: added
+- ResponseAdditionalDataCommonTokenizationStoreOperationType: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeAlreadyExisting: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeCreated: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeUpdated: added
+- SecureRemoteCommerceCheckoutDataScheme: added
 - SecureRemoteCommerceCheckoutDataSchemeMc: added
 - SecureRemoteCommerceCheckoutDataSchemeVisa: added
+- SplitType: added
 - SplitTypeAcquiringFees: added
 - SplitTypeAdyenCommission: added
 - SplitTypeAdyenFees: added
@@ -206,8 +702,11 @@ Compatible changes:
 - ThreeDS2RequestDataAcctType01: added
 - ThreeDS2RequestDataAcctType02: added
 - ThreeDS2RequestDataAcctType03: added
+- ThreeDS2RequestDataAcctType: added
+- ThreeDS2RequestDataAddrMatch: added
 - ThreeDS2RequestDataAddrMatchN: added
 - ThreeDS2RequestDataAddrMatchY: added
+- ThreeDS2RequestDataChallengeIndicator: added
 - ThreeDS2RequestDataChallengeIndicatorNoPreference: added
 - ThreeDS2RequestDataChallengeIndicatorRequestChallenge: added
 - ThreeDS2RequestDataChallengeIndicatorRequestChallengeAsMandate: added
@@ -218,11 +717,14 @@ Compatible changes:
 - ThreeDS2RequestDataThreeDSRequestorChallengeInd04: added
 - ThreeDS2RequestDataThreeDSRequestorChallengeInd05: added
 - ThreeDS2RequestDataThreeDSRequestorChallengeInd06: added
+- ThreeDS2RequestDataThreeDSRequestorChallengeInd: added
 - ThreeDS2RequestDataTransType01: added
 - ThreeDS2RequestDataTransType03: added
 - ThreeDS2RequestDataTransType10: added
 - ThreeDS2RequestDataTransType11: added
 - ThreeDS2RequestDataTransType28: added
+- ThreeDS2RequestDataTransType: added
+- ThreeDS2RequestDataTransactionType: added
 - ThreeDS2RequestDataTransactionTypeAccountFunding: added
 - ThreeDS2RequestDataTransactionTypeCheckAcceptance: added
 - ThreeDS2RequestDataTransactionTypeGoodsOrServicePurchase: added
@@ -235,6 +737,8 @@ Compatible changes:
 - ThreeDS2ResultChallengeCancel05: added
 - ThreeDS2ResultChallengeCancel06: added
 - ThreeDS2ResultChallengeCancel07: added
+- ThreeDS2ResultChallengeCancel: added
+- ThreeDS2ResultExemptionIndicator: added
 - ThreeDS2ResultExemptionIndicatorLowValue: added
 - ThreeDS2ResultExemptionIndicatorSecureCorporate: added
 - ThreeDS2ResultExemptionIndicatorTransactionRiskAnalysis: added
@@ -245,16 +749,20 @@ Compatible changes:
 - ThreeDS2ResultThreeDSRequestorChallengeInd04: added
 - ThreeDS2ResultThreeDSRequestorChallengeInd05: added
 - ThreeDS2ResultThreeDSRequestorChallengeInd06: added
+- ThreeDS2ResultThreeDSRequestorChallengeInd: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod01: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod02: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod03: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod04: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod05: added
 - ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod06: added
+- ThreeDSRequestorAuthenticationInfoThreeDSReqAuthMethod: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod01: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod02: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod03: added
 - ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod04: added
+- ThreeDSRequestorPriorAuthenticationInfoThreeDSReqPriorAuthMethod: added
+- ThreeDSecureDataAuthenticationResponse: added
 - ThreeDSecureDataAuthenticationResponseA: added
 - ThreeDSecureDataAuthenticationResponseN: added
 - ThreeDSecureDataAuthenticationResponseU: added
@@ -266,6 +774,8 @@ Compatible changes:
 - ThreeDSecureDataChallengeCancel05: added
 - ThreeDSecureDataChallengeCancel06: added
 - ThreeDSecureDataChallengeCancel07: added
+- ThreeDSecureDataChallengeCancel: added
+- ThreeDSecureDataDirectoryResponse: added
 - ThreeDSecureDataDirectoryResponseA: added
 - ThreeDSecureDataDirectoryResponseC: added
 - ThreeDSecureDataDirectoryResponseD: added

@@ -97,6 +97,9 @@ applicableServices.forEach { svc ->
                 generalTagReplacement = if (svc.small && removeTags) svc.name else null,
                 markWebhookRoots = svc.isWebhook,
                 normalizeForOpenApi31 = preserve,
+                // Only the native 3.1 (Go) generation resolves inline enums into named types.
+                nameArrayItemEnums = preserve,
+                enumValuesAsVarNames = preserve,
             )
         }
         inputs.file(sourceSpec)

@@ -1,10 +1,30 @@
+Incompatible changes:
+- (*DisputeEventNotification).GetType: changed from func() string to func() DisputeEventNotificationType
+- (*DisputeEventNotification).GetTypeOk: changed from func() (*string, bool) to func() (*DisputeEventNotificationType, bool)
+- (*DisputeEventNotification).SetType: changed from func(string) to func(DisputeEventNotificationType)
+- (*DisputeNotificationRequest).GetType: changed from func() string to func() DisputeNotificationRequestType
+- (*DisputeNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*DisputeNotificationRequestType, bool)
+- (*DisputeNotificationRequest).SetType: changed from func(string) to func(DisputeNotificationRequestType)
+- DisputeEventNotification.Type: changed from *string to *DisputeEventNotificationType
+- DisputeNotificationRequest.Type: changed from string to DisputeNotificationRequestType
+- NewDisputeNotificationRequest: changed from func(DisputeEventNotification, string) *DisputeNotificationRequest to func(DisputeEventNotification, DisputeNotificationRequestType) *DisputeNotificationRequest
 Compatible changes:
+- AllowedDisputeEventNotificationTypeEnumValues: added
+- AllowedDisputeNotificationRequestTypeEnumValues: added
+- DisputeEventNotificationType: added
 - DisputeEventNotificationTypeCancelled: added
 - DisputeEventNotificationTypeDuplicate: added
 - DisputeEventNotificationTypeFraud: added
 - DisputeEventNotificationTypeNotAsDescribed: added
 - DisputeEventNotificationTypeNotDelivered: added
 - DisputeEventNotificationTypeOther: added
+- DisputeNotificationRequestType: added
 - DisputeNotificationRequestTypeBalancePlatformDisputeCreated: added
 - DisputeNotificationRequestTypeBalancePlatformDisputeUpdated: added
 - HandleDisputeNotificationRequest: added
+- NewDisputeEventNotificationTypeFromValue: added
+- NewDisputeNotificationRequestTypeFromValue: added
+- NewNullableDisputeEventNotificationType: added
+- NewNullableDisputeNotificationRequestType: added
+- NullableDisputeEventNotificationType: added
+- NullableDisputeNotificationRequestType: added

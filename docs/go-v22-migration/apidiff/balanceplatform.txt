@@ -1,4 +1,67 @@
 Incompatible changes:
+- (*AULocalAccountIdentification).GetType: changed from func() string to func() AULocalAccountIdentificationType
+- (*AULocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*AULocalAccountIdentificationType, bool)
+- (*AULocalAccountIdentification).SetType: changed from func(string) to func(AULocalAccountIdentificationType)
+- (*AccountHolder).GetStatus: changed from func() string to func() AccountHolderStatus
+- (*AccountHolder).GetStatusOk: changed from func() (*string, bool) to func() (*AccountHolderStatus, bool)
+- (*AccountHolder).SetStatus: changed from func(string) to func(AccountHolderStatus)
+- (*AccountHolderCapability).GetAllowedLevel: changed from func() string to func() AccountHolderCapabilityAllowedLevel
+- (*AccountHolderCapability).GetAllowedLevelOk: changed from func() (*string, bool) to func() (*AccountHolderCapabilityAllowedLevel, bool)
+- (*AccountHolderCapability).GetRequestedLevel: changed from func() string to func() AccountHolderCapabilityRequestedLevel
+- (*AccountHolderCapability).GetRequestedLevelOk: changed from func() (*string, bool) to func() (*AccountHolderCapabilityRequestedLevel, bool)
+- (*AccountHolderCapability).GetVerificationStatus: changed from func() string to func() AccountHolderCapabilityVerificationStatus
+- (*AccountHolderCapability).GetVerificationStatusOk: changed from func() (*string, bool) to func() (*AccountHolderCapabilityVerificationStatus, bool)
+- (*AccountHolderCapability).SetAllowedLevel: changed from func(string) to func(AccountHolderCapabilityAllowedLevel)
+- (*AccountHolderCapability).SetRequestedLevel: changed from func(string) to func(AccountHolderCapabilityRequestedLevel)
+- (*AccountHolderCapability).SetVerificationStatus: changed from func(string) to func(AccountHolderCapabilityVerificationStatus)
+- (*AccountHolderUpdateRequest).GetStatus: changed from func() string to func() AccountHolderUpdateRequestStatus
+- (*AccountHolderUpdateRequest).GetStatusOk: changed from func() (*string, bool) to func() (*AccountHolderUpdateRequestStatus, bool)
+- (*AccountHolderUpdateRequest).SetStatus: changed from func(string) to func(AccountHolderUpdateRequestStatus)
+- (*AccountSupportingEntityCapability).GetAllowedLevel: changed from func() string to func() AccountSupportingEntityCapabilityAllowedLevel
+- (*AccountSupportingEntityCapability).GetAllowedLevelOk: changed from func() (*string, bool) to func() (*AccountSupportingEntityCapabilityAllowedLevel, bool)
+- (*AccountSupportingEntityCapability).GetRequestedLevel: changed from func() string to func() AccountSupportingEntityCapabilityRequestedLevel
+- (*AccountSupportingEntityCapability).GetRequestedLevelOk: changed from func() (*string, bool) to func() (*AccountSupportingEntityCapabilityRequestedLevel, bool)
+- (*AccountSupportingEntityCapability).GetVerificationStatus: changed from func() string to func() AccountSupportingEntityCapabilityVerificationStatus
+- (*AccountSupportingEntityCapability).GetVerificationStatusOk: changed from func() (*string, bool) to func() (*AccountSupportingEntityCapabilityVerificationStatus, bool)
+- (*AccountSupportingEntityCapability).SetAllowedLevel: changed from func(string) to func(AccountSupportingEntityCapabilityAllowedLevel)
+- (*AccountSupportingEntityCapability).SetRequestedLevel: changed from func(string) to func(AccountSupportingEntityCapabilityRequestedLevel)
+- (*AccountSupportingEntityCapability).SetVerificationStatus: changed from func(string) to func(AccountSupportingEntityCapabilityVerificationStatus)
+- (*AdditionalBankIdentification).GetType: changed from func() string to func() AdditionalBankIdentificationType
+- (*AdditionalBankIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*AdditionalBankIdentificationType, bool)
+- (*AdditionalBankIdentification).SetType: changed from func(string) to func(AdditionalBankIdentificationType)
+- (*AddressRequirement).GetRequiredAddressFields: changed from func() []string to func() []AddressRequirementRequiredAddressFields
+- (*AddressRequirement).GetRequiredAddressFieldsOk: changed from func() ([]string, bool) to func() ([]AddressRequirementRequiredAddressFields, bool)
+- (*AddressRequirement).GetType: changed from func() string to func() AddressRequirementType
+- (*AddressRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*AddressRequirementType, bool)
+- (*AddressRequirement).SetRequiredAddressFields: changed from func([]string) to func([]AddressRequirementRequiredAddressFields)
+- (*AddressRequirement).SetType: changed from func(string) to func(AddressRequirementType)
+- (*AmountMinMaxRequirement).GetType: changed from func() string to func() AmountMinMaxRequirementType
+- (*AmountMinMaxRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*AmountMinMaxRequirementType, bool)
+- (*AmountMinMaxRequirement).SetType: changed from func(string) to func(AmountMinMaxRequirementType)
+- (*AmountNonZeroDecimalsRequirement).GetType: changed from func() string to func() AmountNonZeroDecimalsRequirementType
+- (*AmountNonZeroDecimalsRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*AmountNonZeroDecimalsRequirementType, bool)
+- (*AmountNonZeroDecimalsRequirement).SetType: changed from func(string) to func(AmountNonZeroDecimalsRequirementType)
+- (*AssociationFinaliseRequest).GetType: changed from func() string to func() AssociationFinaliseRequestType
+- (*AssociationFinaliseRequest).GetTypeOk: changed from func() (*string, bool) to func() (*AssociationFinaliseRequestType, bool)
+- (*AssociationFinaliseRequest).SetType: changed from func(string) to func(AssociationFinaliseRequestType)
+- (*AssociationFinaliseResponse).GetType: changed from func() string to func() AssociationFinaliseResponseType
+- (*AssociationFinaliseResponse).GetTypeOk: changed from func() (*string, bool) to func() (*AssociationFinaliseResponseType, bool)
+- (*AssociationFinaliseResponse).SetType: changed from func(string) to func(AssociationFinaliseResponseType)
+- (*AssociationInitiateRequest).GetType: changed from func() string to func() AssociationInitiateRequestType
+- (*AssociationInitiateRequest).GetTypeOk: changed from func() (*string, bool) to func() (*AssociationInitiateRequestType, bool)
+- (*AssociationInitiateRequest).SetType: changed from func(string) to func(AssociationInitiateRequestType)
+- (*BRLocalAccountIdentification).GetType: changed from func() string to func() BRLocalAccountIdentificationType
+- (*BRLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*BRLocalAccountIdentificationType, bool)
+- (*BRLocalAccountIdentification).SetType: changed from func(string) to func(BRLocalAccountIdentificationType)
+- (*BalanceAccount).GetStatus: changed from func() string to func() BalanceAccountStatus
+- (*BalanceAccount).GetStatusOk: changed from func() (*string, bool) to func() (*BalanceAccountStatus, bool)
+- (*BalanceAccount).SetStatus: changed from func(string) to func(BalanceAccountStatus)
+- (*BalanceAccountBase).GetStatus: changed from func() string to func() BalanceAccountBaseStatus
+- (*BalanceAccountBase).GetStatusOk: changed from func() (*string, bool) to func() (*BalanceAccountBaseStatus, bool)
+- (*BalanceAccountBase).SetStatus: changed from func(string) to func(BalanceAccountBaseStatus)
+- (*BalanceAccountUpdateRequest).GetStatus: changed from func() string to func() BalanceAccountUpdateRequestStatus
+- (*BalanceAccountUpdateRequest).GetStatusOk: changed from func() (*string, bool) to func() (*BalanceAccountUpdateRequestStatus, bool)
+- (*BalanceAccountUpdateRequest).SetStatus: changed from func(string) to func(BalanceAccountUpdateRequestStatus)
 - (*BalanceAccountsApi).CreateSweep: removed
 - (*BalanceAccountsApi).CreateSweepInput: removed
 - (*BalanceAccountsApi).DeleteSweep: removed
@@ -9,6 +72,78 @@ Incompatible changes:
 - (*BalanceAccountsApi).GetSweepInput: removed
 - (*BalanceAccountsApi).UpdateSweep: removed
 - (*BalanceAccountsApi).UpdateSweepInput: removed
+- (*BankAccountIdentificationTypeRequirement).GetBankAccountIdentificationTypes: changed from func() []string to func() []BankAccountIdentificationTypeRequirementBankAccountIdentificationTypes
+- (*BankAccountIdentificationTypeRequirement).GetBankAccountIdentificationTypesOk: changed from func() ([]string, bool) to func() ([]BankAccountIdentificationTypeRequirementBankAccountIdentificationTypes, bool)
+- (*BankAccountIdentificationTypeRequirement).GetType: changed from func() string to func() BankAccountIdentificationTypeRequirementType
+- (*BankAccountIdentificationTypeRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*BankAccountIdentificationTypeRequirementType, bool)
+- (*BankAccountIdentificationTypeRequirement).SetBankAccountIdentificationTypes: changed from func([]string) to func([]BankAccountIdentificationTypeRequirementBankAccountIdentificationTypes)
+- (*BankAccountIdentificationTypeRequirement).SetType: changed from func(string) to func(BankAccountIdentificationTypeRequirementType)
+- (*BankAccountModel).GetFormFactor: changed from func() string to func() BankAccountModelFormFactor
+- (*BankAccountModel).GetFormFactorOk: changed from func() (*string, bool) to func() (*BankAccountModelFormFactor, bool)
+- (*BankAccountModel).SetFormFactor: changed from func(string) to func(BankAccountModelFormFactor)
+- (*BankIdentification).GetIdentificationType: changed from func() string to func() BankIdentificationIdentificationType
+- (*BankIdentification).GetIdentificationTypeOk: changed from func() (*string, bool) to func() (*BankIdentificationIdentificationType, bool)
+- (*BankIdentification).SetIdentificationType: changed from func(string) to func(BankIdentificationIdentificationType)
+- (*CALocalAccountIdentification).GetAccountType: changed from func() string to func() CALocalAccountIdentificationAccountType
+- (*CALocalAccountIdentification).GetAccountTypeOk: changed from func() (*string, bool) to func() (*CALocalAccountIdentificationAccountType, bool)
+- (*CALocalAccountIdentification).GetType: changed from func() string to func() CALocalAccountIdentificationType
+- (*CALocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*CALocalAccountIdentificationType, bool)
+- (*CALocalAccountIdentification).SetAccountType: changed from func(string) to func(CALocalAccountIdentificationAccountType)
+- (*CALocalAccountIdentification).SetType: changed from func(string) to func(CALocalAccountIdentificationType)
+- (*CZLocalAccountIdentification).GetType: changed from func() string to func() CZLocalAccountIdentificationType
+- (*CZLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*CZLocalAccountIdentificationType, bool)
+- (*CZLocalAccountIdentification).SetType: changed from func(string) to func(CZLocalAccountIdentificationType)
+- (*CapabilityProblemEntity).GetType: changed from func() string to func() CapabilityProblemEntityType
+- (*CapabilityProblemEntity).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityType, bool)
+- (*CapabilityProblemEntity).SetType: changed from func(string) to func(CapabilityProblemEntityType)
+- (*CapabilityProblemEntityRecursive).GetType: changed from func() string to func() CapabilityProblemEntityRecursiveType
+- (*CapabilityProblemEntityRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityRecursiveType, bool)
+- (*CapabilityProblemEntityRecursive).SetType: changed from func(string) to func(CapabilityProblemEntityRecursiveType)
+- (*CapabilitySettings).GetFundingSource: changed from func() []string to func() []CapabilitySettingsFundingSource
+- (*CapabilitySettings).GetFundingSourceOk: changed from func() ([]string, bool) to func() ([]CapabilitySettingsFundingSource, bool)
+- (*CapabilitySettings).GetInterval: changed from func() string to func() CapabilitySettingsInterval
+- (*CapabilitySettings).GetIntervalOk: changed from func() (*string, bool) to func() (*CapabilitySettingsInterval, bool)
+- (*CapabilitySettings).SetFundingSource: changed from func([]string) to func([]CapabilitySettingsFundingSource)
+- (*CapabilitySettings).SetInterval: changed from func(string) to func(CapabilitySettingsInterval)
+- (*Card).GetFormFactor: changed from func() string to func() CardFormFactor
+- (*Card).GetFormFactorOk: changed from func() (*string, bool) to func() (*CardFormFactor, bool)
+- (*Card).SetFormFactor: changed from func(string) to func(CardFormFactor)
+- (*CardInfo).GetFormFactor: changed from func() string to func() CardInfoFormFactor
+- (*CardInfo).GetFormFactorOk: changed from func() (*string, bool) to func() (*CardInfoFormFactor, bool)
+- (*CardInfo).SetFormFactor: changed from func(string) to func(CardInfoFormFactor)
+- (*CardOrder).GetStatus: changed from func() string to func() CardOrderStatus
+- (*CardOrder).GetStatusOk: changed from func() (*string, bool) to func() (*CardOrderStatus, bool)
+- (*CardOrder).SetStatus: changed from func(string) to func(CardOrderStatus)
+- (*CardOrderItemDeliveryStatus).GetStatus: changed from func() string to func() CardOrderItemDeliveryStatusStatus
+- (*CardOrderItemDeliveryStatus).GetStatusOk: changed from func() (*string, bool) to func() (*CardOrderItemDeliveryStatusStatus, bool)
+- (*CardOrderItemDeliveryStatus).SetStatus: changed from func(string) to func(CardOrderItemDeliveryStatusStatus)
+- (*CounterpartyTypesRestriction).GetValue: changed from func() []string to func() []CounterpartyTypesRestrictionValue
+- (*CounterpartyTypesRestriction).GetValueOk: changed from func() ([]string, bool) to func() ([]CounterpartyTypesRestrictionValue, bool)
+- (*CounterpartyTypesRestriction).SetValue: changed from func([]string) to func([]CounterpartyTypesRestrictionValue)
+- (*CreateSweepConfigurationV2).GetCategory: changed from func() string to func() CreateSweepConfigurationV2Category
+- (*CreateSweepConfigurationV2).GetCategoryOk: changed from func() (*string, bool) to func() (*CreateSweepConfigurationV2Category, bool)
+- (*CreateSweepConfigurationV2).GetPriorities: changed from func() []string to func() []CreateSweepConfigurationV2Priorities
+- (*CreateSweepConfigurationV2).GetPrioritiesOk: changed from func() ([]string, bool) to func() ([]CreateSweepConfigurationV2Priorities, bool)
+- (*CreateSweepConfigurationV2).GetReason: changed from func() string to func() CreateSweepConfigurationV2Reason
+- (*CreateSweepConfigurationV2).GetReasonOk: changed from func() (*string, bool) to func() (*CreateSweepConfigurationV2Reason, bool)
+- (*CreateSweepConfigurationV2).GetStatus: changed from func() string to func() CreateSweepConfigurationV2Status
+- (*CreateSweepConfigurationV2).GetStatusOk: changed from func() (*string, bool) to func() (*CreateSweepConfigurationV2Status, bool)
+- (*CreateSweepConfigurationV2).GetType: changed from func() string to func() CreateSweepConfigurationV2Type
+- (*CreateSweepConfigurationV2).GetTypeOk: changed from func() (*string, bool) to func() (*CreateSweepConfigurationV2Type, bool)
+- (*CreateSweepConfigurationV2).SetCategory: changed from func(string) to func(CreateSweepConfigurationV2Category)
+- (*CreateSweepConfigurationV2).SetPriorities: changed from func([]string) to func([]CreateSweepConfigurationV2Priorities)
+- (*CreateSweepConfigurationV2).SetReason: changed from func(string) to func(CreateSweepConfigurationV2Reason)
+- (*CreateSweepConfigurationV2).SetStatus: changed from func(string) to func(CreateSweepConfigurationV2Status)
+- (*CreateSweepConfigurationV2).SetType: changed from func(string) to func(CreateSweepConfigurationV2Type)
+- (*DKLocalAccountIdentification).GetType: changed from func() string to func() DKLocalAccountIdentificationType
+- (*DKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*DKLocalAccountIdentificationType, bool)
+- (*DKLocalAccountIdentification).SetType: changed from func(string) to func(DKLocalAccountIdentificationType)
+- (*DayOfWeekRestriction).GetValue: changed from func() []string to func() []DayOfWeekRestrictionValue
+- (*DayOfWeekRestriction).GetValueOk: changed from func() ([]string, bool) to func() ([]DayOfWeekRestrictionValue, bool)
+- (*DayOfWeekRestriction).SetValue: changed from func([]string) to func([]DayOfWeekRestrictionValue)
+- (*Device).GetType: changed from func() string to func() DeviceType
+- (*Device).GetTypeOk: changed from func() (*string, bool) to func() (*DeviceType, bool)
+- (*Device).SetType: changed from func(string) to func(DeviceType)
 - (*DeviceInfo).GetCardCaptureTechnology: removed
 - (*DeviceInfo).GetCardCaptureTechnologyOk: removed
 - (*DeviceInfo).GetDeviceName: removed
@@ -45,12 +180,278 @@ Incompatible changes:
 - (*DeviceInfo).SetPaymentTypes: removed
 - (*DeviceInfo).SetSerialNumber: removed
 - (*DeviceInfo).SetStorageTechnology: removed
+- (*Duration).GetUnit: changed from func() string to func() DurationUnit
+- (*Duration).GetUnitOk: changed from func() (*string, bool) to func() (*DurationUnit, bool)
+- (*Duration).SetUnit: changed from func(string) to func(DurationUnit)
+- (*EntryModesRestriction).GetValue: changed from func() []string to func() []EntryModesRestrictionValue
+- (*EntryModesRestriction).GetValueOk: changed from func() ([]string, bool) to func() ([]EntryModesRestrictionValue, bool)
+- (*EntryModesRestriction).SetValue: changed from func([]string) to func([]EntryModesRestrictionValue)
+- (*GetTaxFormResponse).GetContentType: changed from func() string to func() GetTaxFormResponseContentType
+- (*GetTaxFormResponse).GetContentTypeOk: changed from func() (*string, bool) to func() (*GetTaxFormResponseContentType, bool)
+- (*GetTaxFormResponse).SetContentType: changed from func(string) to func(GetTaxFormResponseContentType)
+- (*GrantOffer).GetContractType: changed from func() string to func() GrantOfferContractType
+- (*GrantOffer).GetContractTypeOk: changed from func() (*string, bool) to func() (*GrantOfferContractType, bool)
+- (*GrantOffer).SetContractType: changed from func(string) to func(GrantOfferContractType)
+- (*HKLocalAccountIdentification).GetType: changed from func() string to func() HKLocalAccountIdentificationType
+- (*HKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*HKLocalAccountIdentificationType, bool)
+- (*HKLocalAccountIdentification).SetType: changed from func(string) to func(HKLocalAccountIdentificationType)
+- (*HULocalAccountIdentification).GetType: changed from func() string to func() HULocalAccountIdentificationType
+- (*HULocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*HULocalAccountIdentificationType, bool)
+- (*HULocalAccountIdentification).SetType: changed from func(string) to func(HULocalAccountIdentificationType)
+- (*IbanAccountIdentification).GetType: changed from func() string to func() IbanAccountIdentificationType
+- (*IbanAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*IbanAccountIdentificationType, bool)
+- (*IbanAccountIdentification).SetType: changed from func(string) to func(IbanAccountIdentificationType)
+- (*IbanAccountIdentificationRequirement).GetType: changed from func() string to func() IbanAccountIdentificationRequirementType
+- (*IbanAccountIdentificationRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*IbanAccountIdentificationRequirementType, bool)
+- (*IbanAccountIdentificationRequirement).SetType: changed from func(string) to func(IbanAccountIdentificationRequirementType)
+- (*MatchingValuesRestriction).GetValue: changed from func() []string to func() []MatchingValuesRestrictionValue
+- (*MatchingValuesRestriction).GetValueOk: changed from func() ([]string, bool) to func() ([]MatchingValuesRestrictionValue, bool)
+- (*MatchingValuesRestriction).SetValue: changed from func([]string) to func([]MatchingValuesRestrictionValue)
+- (*NOLocalAccountIdentification).GetType: changed from func() string to func() NOLocalAccountIdentificationType
+- (*NOLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NOLocalAccountIdentificationType, bool)
+- (*NOLocalAccountIdentification).SetType: changed from func(string) to func(NOLocalAccountIdentificationType)
+- (*NZLocalAccountIdentification).GetType: changed from func() string to func() NZLocalAccountIdentificationType
+- (*NZLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NZLocalAccountIdentificationType, bool)
+- (*NZLocalAccountIdentification).SetType: changed from func(string) to func(NZLocalAccountIdentificationType)
+- (*NetworkToken).GetStatus: changed from func() string to func() NetworkTokenStatus
+- (*NetworkToken).GetStatusOk: changed from func() (*string, bool) to func() (*NetworkTokenStatus, bool)
+- (*NetworkToken).SetStatus: changed from func(string) to func(NetworkTokenStatus)
+- (*NumberAndBicAccountIdentification).GetType: changed from func() string to func() NumberAndBicAccountIdentificationType
+- (*NumberAndBicAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*NumberAndBicAccountIdentificationType, bool)
+- (*NumberAndBicAccountIdentification).SetType: changed from func(string) to func(NumberAndBicAccountIdentificationType)
+- (*PLLocalAccountIdentification).GetType: changed from func() string to func() PLLocalAccountIdentificationType
+- (*PLLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*PLLocalAccountIdentificationType, bool)
+- (*PLLocalAccountIdentification).SetType: changed from func(string) to func(PLLocalAccountIdentificationType)
+- (*PaymentInstrument).GetStatus: changed from func() string to func() PaymentInstrumentStatus
+- (*PaymentInstrument).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentInstrumentStatus, bool)
+- (*PaymentInstrument).GetStatusReason: changed from func() string to func() PaymentInstrumentStatusReason
+- (*PaymentInstrument).GetStatusReasonOk: changed from func() (*string, bool) to func() (*PaymentInstrumentStatusReason, bool)
+- (*PaymentInstrument).GetType: changed from func() string to func() PaymentInstrumentType
+- (*PaymentInstrument).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentInstrumentType, bool)
+- (*PaymentInstrument).SetStatus: changed from func(string) to func(PaymentInstrumentStatus)
+- (*PaymentInstrument).SetStatusReason: changed from func(string) to func(PaymentInstrumentStatusReason)
+- (*PaymentInstrument).SetType: changed from func(string) to func(PaymentInstrumentType)
+- (*PaymentInstrumentInfo).GetStatus: changed from func() string to func() PaymentInstrumentInfoStatus
+- (*PaymentInstrumentInfo).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentInstrumentInfoStatus, bool)
+- (*PaymentInstrumentInfo).GetStatusReason: changed from func() string to func() PaymentInstrumentInfoStatusReason
+- (*PaymentInstrumentInfo).GetStatusReasonOk: changed from func() (*string, bool) to func() (*PaymentInstrumentInfoStatusReason, bool)
+- (*PaymentInstrumentInfo).GetType: changed from func() string to func() PaymentInstrumentInfoType
+- (*PaymentInstrumentInfo).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentInstrumentInfoType, bool)
+- (*PaymentInstrumentInfo).SetStatus: changed from func(string) to func(PaymentInstrumentInfoStatus)
+- (*PaymentInstrumentInfo).SetStatusReason: changed from func(string) to func(PaymentInstrumentInfoStatusReason)
+- (*PaymentInstrumentInfo).SetType: changed from func(string) to func(PaymentInstrumentInfoType)
+- (*PaymentInstrumentRequirement).GetPaymentInstrumentType: changed from func() string to func() PaymentInstrumentRequirementPaymentInstrumentType
+- (*PaymentInstrumentRequirement).GetPaymentInstrumentTypeOk: changed from func() (*string, bool) to func() (*PaymentInstrumentRequirementPaymentInstrumentType, bool)
+- (*PaymentInstrumentRequirement).GetType: changed from func() string to func() PaymentInstrumentRequirementType
+- (*PaymentInstrumentRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentInstrumentRequirementType, bool)
+- (*PaymentInstrumentRequirement).SetPaymentInstrumentType: changed from func(string) to func(PaymentInstrumentRequirementPaymentInstrumentType)
+- (*PaymentInstrumentRequirement).SetType: changed from func(string) to func(PaymentInstrumentRequirementType)
+- (*PaymentInstrumentUpdateRequest).GetStatus: changed from func() string to func() PaymentInstrumentUpdateRequestStatus
+- (*PaymentInstrumentUpdateRequest).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentInstrumentUpdateRequestStatus, bool)
+- (*PaymentInstrumentUpdateRequest).GetStatusReason: changed from func() string to func() PaymentInstrumentUpdateRequestStatusReason
+- (*PaymentInstrumentUpdateRequest).GetStatusReasonOk: changed from func() (*string, bool) to func() (*PaymentInstrumentUpdateRequestStatusReason, bool)
+- (*PaymentInstrumentUpdateRequest).SetStatus: changed from func(string) to func(PaymentInstrumentUpdateRequestStatus)
+- (*PaymentInstrumentUpdateRequest).SetStatusReason: changed from func(string) to func(PaymentInstrumentUpdateRequestStatusReason)
+- (*Phone).GetType: changed from func() string to func() PhoneType
+- (*Phone).GetTypeOk: changed from func() (*string, bool) to func() (*PhoneType, bool)
+- (*Phone).SetType: changed from func(string) to func(PhoneType)
+- (*PhoneNumber).GetPhoneType: changed from func() string to func() PhoneNumberPhoneType
+- (*PhoneNumber).GetPhoneTypeOk: changed from func() (*string, bool) to func() (*PhoneNumberPhoneType, bool)
+- (*PhoneNumber).SetPhoneType: changed from func(string) to func(PhoneNumberPhoneType)
+- (*PinChangeResponse).GetStatus: changed from func() string to func() PinChangeResponseStatus
+- (*PinChangeResponse).GetStatusOk: changed from func() (*string, bool) to func() (*PinChangeResponseStatus, bool)
+- (*PinChangeResponse).SetStatus: changed from func(string) to func(PinChangeResponseStatus)
+- (*ProcessingTypesRestriction).GetValue: changed from func() []string to func() []ProcessingTypesRestrictionValue
+- (*ProcessingTypesRestriction).GetValueOk: changed from func() ([]string, bool) to func() ([]ProcessingTypesRestrictionValue, bool)
+- (*ProcessingTypesRestriction).SetValue: changed from func([]string) to func([]ProcessingTypesRestrictionValue)
+- (*SELocalAccountIdentification).GetType: changed from func() string to func() SELocalAccountIdentificationType
+- (*SELocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*SELocalAccountIdentificationType, bool)
+- (*SELocalAccountIdentification).SetType: changed from func(string) to func(SELocalAccountIdentificationType)
+- (*SGLocalAccountIdentification).GetType: changed from func() string to func() SGLocalAccountIdentificationType
+- (*SGLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*SGLocalAccountIdentificationType, bool)
+- (*SGLocalAccountIdentification).SetType: changed from func(string) to func(SGLocalAccountIdentificationType)
+- (*SourceAccountTypesRestriction).GetValue: changed from func() []string to func() []SourceAccountTypesRestrictionValue
+- (*SourceAccountTypesRestriction).GetValueOk: changed from func() ([]string, bool) to func() ([]SourceAccountTypesRestrictionValue, bool)
+- (*SourceAccountTypesRestriction).SetValue: changed from func([]string) to func([]SourceAccountTypesRestrictionValue)
+- (*StringMatch).GetOperation: changed from func() string to func() StringMatchOperation
+- (*StringMatch).GetOperationOk: changed from func() (*string, bool) to func() (*StringMatchOperation, bool)
+- (*StringMatch).SetOperation: changed from func(string) to func(StringMatchOperation)
+- (*SweepConfigurationV2).GetCategory: changed from func() string to func() SweepConfigurationV2Category
+- (*SweepConfigurationV2).GetCategoryOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Category, bool)
+- (*SweepConfigurationV2).GetPriorities: changed from func() []string to func() []SweepConfigurationV2Priorities
+- (*SweepConfigurationV2).GetPrioritiesOk: changed from func() ([]string, bool) to func() ([]SweepConfigurationV2Priorities, bool)
+- (*SweepConfigurationV2).GetReason: changed from func() string to func() SweepConfigurationV2Reason
+- (*SweepConfigurationV2).GetReasonOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Reason, bool)
+- (*SweepConfigurationV2).GetStatus: changed from func() string to func() SweepConfigurationV2Status
+- (*SweepConfigurationV2).GetStatusOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Status, bool)
+- (*SweepConfigurationV2).GetType: changed from func() string to func() SweepConfigurationV2Type
+- (*SweepConfigurationV2).GetTypeOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Type, bool)
+- (*SweepConfigurationV2).SetCategory: changed from func(string) to func(SweepConfigurationV2Category)
+- (*SweepConfigurationV2).SetPriorities: changed from func([]string) to func([]SweepConfigurationV2Priorities)
+- (*SweepConfigurationV2).SetReason: changed from func(string) to func(SweepConfigurationV2Reason)
+- (*SweepConfigurationV2).SetStatus: changed from func(string) to func(SweepConfigurationV2Status)
+- (*SweepConfigurationV2).SetType: changed from func(string) to func(SweepConfigurationV2Type)
+- (*SweepSchedule).GetType: changed from func() string to func() SweepScheduleType
+- (*SweepSchedule).GetTypeOk: changed from func() (*string, bool) to func() (*SweepScheduleType, bool)
+- (*SweepSchedule).SetType: changed from func(string) to func(SweepScheduleType)
+- (*TransactionRule).GetOutcomeType: changed from func() string to func() TransactionRuleOutcomeType
+- (*TransactionRule).GetOutcomeTypeOk: changed from func() (*string, bool) to func() (*TransactionRuleOutcomeType, bool)
+- (*TransactionRule).GetRequestType: changed from func() string to func() TransactionRuleRequestType
+- (*TransactionRule).GetRequestTypeOk: changed from func() (*string, bool) to func() (*TransactionRuleRequestType, bool)
+- (*TransactionRule).GetStatus: changed from func() string to func() TransactionRuleStatus
+- (*TransactionRule).GetStatusOk: changed from func() (*string, bool) to func() (*TransactionRuleStatus, bool)
+- (*TransactionRule).GetType: changed from func() string to func() TransactionRuleType
+- (*TransactionRule).GetTypeOk: changed from func() (*string, bool) to func() (*TransactionRuleType, bool)
+- (*TransactionRule).SetOutcomeType: changed from func(string) to func(TransactionRuleOutcomeType)
+- (*TransactionRule).SetRequestType: changed from func(string) to func(TransactionRuleRequestType)
+- (*TransactionRule).SetStatus: changed from func(string) to func(TransactionRuleStatus)
+- (*TransactionRule).SetType: changed from func(string) to func(TransactionRuleType)
+- (*TransactionRuleInfo).GetOutcomeType: changed from func() string to func() TransactionRuleInfoOutcomeType
+- (*TransactionRuleInfo).GetOutcomeTypeOk: changed from func() (*string, bool) to func() (*TransactionRuleInfoOutcomeType, bool)
+- (*TransactionRuleInfo).GetRequestType: changed from func() string to func() TransactionRuleInfoRequestType
+- (*TransactionRuleInfo).GetRequestTypeOk: changed from func() (*string, bool) to func() (*TransactionRuleInfoRequestType, bool)
+- (*TransactionRuleInfo).GetStatus: changed from func() string to func() TransactionRuleInfoStatus
+- (*TransactionRuleInfo).GetStatusOk: changed from func() (*string, bool) to func() (*TransactionRuleInfoStatus, bool)
+- (*TransactionRuleInfo).GetType: changed from func() string to func() TransactionRuleInfoType
+- (*TransactionRuleInfo).GetTypeOk: changed from func() (*string, bool) to func() (*TransactionRuleInfoType, bool)
+- (*TransactionRuleInfo).SetOutcomeType: changed from func(string) to func(TransactionRuleInfoOutcomeType)
+- (*TransactionRuleInfo).SetRequestType: changed from func(string) to func(TransactionRuleInfoRequestType)
+- (*TransactionRuleInfo).SetStatus: changed from func(string) to func(TransactionRuleInfoStatus)
+- (*TransactionRuleInfo).SetType: changed from func(string) to func(TransactionRuleInfoType)
+- (*TransactionRuleInterval).GetDayOfWeek: changed from func() string to func() TransactionRuleIntervalDayOfWeek
+- (*TransactionRuleInterval).GetDayOfWeekOk: changed from func() (*string, bool) to func() (*TransactionRuleIntervalDayOfWeek, bool)
+- (*TransactionRuleInterval).GetType: changed from func() string to func() TransactionRuleIntervalType
+- (*TransactionRuleInterval).GetTypeOk: changed from func() (*string, bool) to func() (*TransactionRuleIntervalType, bool)
+- (*TransactionRuleInterval).SetDayOfWeek: changed from func(string) to func(TransactionRuleIntervalDayOfWeek)
+- (*TransactionRuleInterval).SetType: changed from func(string) to func(TransactionRuleIntervalType)
+- (*TransferRoute).GetCategory: changed from func() string to func() TransferRouteCategory
+- (*TransferRoute).GetCategoryOk: changed from func() (*string, bool) to func() (*TransferRouteCategory, bool)
+- (*TransferRoute).GetPriority: changed from func() string to func() TransferRoutePriority
+- (*TransferRoute).GetPriorityOk: changed from func() (*string, bool) to func() (*TransferRoutePriority, bool)
+- (*TransferRoute).SetCategory: changed from func(string) to func(TransferRouteCategory)
+- (*TransferRoute).SetPriority: changed from func(string) to func(TransferRoutePriority)
+- (*TransferRouteRequest).GetCategory: changed from func() string to func() TransferRouteRequestCategory
+- (*TransferRouteRequest).GetCategoryOk: changed from func() (*string, bool) to func() (*TransferRouteRequestCategory, bool)
+- (*TransferRouteRequest).GetPriorities: changed from func() []string to func() []TransferRouteRequestPriorities
+- (*TransferRouteRequest).GetPrioritiesOk: changed from func() ([]string, bool) to func() ([]TransferRouteRequestPriorities, bool)
+- (*TransferRouteRequest).SetCategory: changed from func(string) to func(TransferRouteRequestCategory)
+- (*TransferRouteRequest).SetPriorities: changed from func([]string) to func([]TransferRouteRequestPriorities)
+- (*UKLocalAccountIdentification).GetType: changed from func() string to func() UKLocalAccountIdentificationType
+- (*UKLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*UKLocalAccountIdentificationType, bool)
+- (*UKLocalAccountIdentification).SetType: changed from func(string) to func(UKLocalAccountIdentificationType)
+- (*USInstantPayoutAddressRequirement).GetType: changed from func() string to func() USInstantPayoutAddressRequirementType
+- (*USInstantPayoutAddressRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*USInstantPayoutAddressRequirementType, bool)
+- (*USInstantPayoutAddressRequirement).SetType: changed from func(string) to func(USInstantPayoutAddressRequirementType)
+- (*USInternationalAchAddressRequirement).GetType: changed from func() string to func() USInternationalAchAddressRequirementType
+- (*USInternationalAchAddressRequirement).GetTypeOk: changed from func() (*string, bool) to func() (*USInternationalAchAddressRequirementType, bool)
+- (*USInternationalAchAddressRequirement).SetType: changed from func(string) to func(USInternationalAchAddressRequirementType)
+- (*USLocalAccountIdentification).GetAccountType: changed from func() string to func() USLocalAccountIdentificationAccountType
+- (*USLocalAccountIdentification).GetAccountTypeOk: changed from func() (*string, bool) to func() (*USLocalAccountIdentificationAccountType, bool)
+- (*USLocalAccountIdentification).GetType: changed from func() string to func() USLocalAccountIdentificationType
+- (*USLocalAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*USLocalAccountIdentificationType, bool)
+- (*USLocalAccountIdentification).SetAccountType: changed from func(string) to func(USLocalAccountIdentificationAccountType)
+- (*USLocalAccountIdentification).SetType: changed from func(string) to func(USLocalAccountIdentificationType)
+- (*UpdateNetworkTokenRequest).GetStatus: changed from func() string to func() UpdateNetworkTokenRequestStatus
+- (*UpdateNetworkTokenRequest).GetStatusOk: changed from func() (*string, bool) to func() (*UpdateNetworkTokenRequestStatus, bool)
+- (*UpdateNetworkTokenRequest).SetStatus: changed from func(string) to func(UpdateNetworkTokenRequestStatus)
+- (*UpdatePaymentInstrument).GetAdditionalBankAccountIdentifications: changed from func() []PaymentInstrumentAdditionalBankAccountIdentificationsInner to func() []UpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner
+- (*UpdatePaymentInstrument).GetAdditionalBankAccountIdentificationsOk: changed from func() ([]PaymentInstrumentAdditionalBankAccountIdentificationsInner, bool) to func() ([]UpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner, bool)
+- (*UpdatePaymentInstrument).GetStatus: changed from func() string to func() UpdatePaymentInstrumentStatus
+- (*UpdatePaymentInstrument).GetStatusOk: changed from func() (*string, bool) to func() (*UpdatePaymentInstrumentStatus, bool)
+- (*UpdatePaymentInstrument).GetStatusReason: changed from func() string to func() UpdatePaymentInstrumentStatusReason
+- (*UpdatePaymentInstrument).GetStatusReasonOk: changed from func() (*string, bool) to func() (*UpdatePaymentInstrumentStatusReason, bool)
+- (*UpdatePaymentInstrument).GetType: changed from func() string to func() UpdatePaymentInstrumentType
+- (*UpdatePaymentInstrument).GetTypeOk: changed from func() (*string, bool) to func() (*UpdatePaymentInstrumentType, bool)
+- (*UpdatePaymentInstrument).SetAdditionalBankAccountIdentifications: changed from func([]PaymentInstrumentAdditionalBankAccountIdentificationsInner) to func([]UpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner)
+- (*UpdatePaymentInstrument).SetStatus: changed from func(string) to func(UpdatePaymentInstrumentStatus)
+- (*UpdatePaymentInstrument).SetStatusReason: changed from func(string) to func(UpdatePaymentInstrumentStatusReason)
+- (*UpdatePaymentInstrument).SetType: changed from func(string) to func(UpdatePaymentInstrumentType)
+- (*UpdateSweepConfigurationV2).GetCategory: changed from func() string to func() UpdateSweepConfigurationV2Category
+- (*UpdateSweepConfigurationV2).GetCategoryOk: changed from func() (*string, bool) to func() (*UpdateSweepConfigurationV2Category, bool)
+- (*UpdateSweepConfigurationV2).GetPriorities: changed from func() []string to func() []UpdateSweepConfigurationV2Priorities
+- (*UpdateSweepConfigurationV2).GetPrioritiesOk: changed from func() ([]string, bool) to func() ([]UpdateSweepConfigurationV2Priorities, bool)
+- (*UpdateSweepConfigurationV2).GetReason: changed from func() string to func() UpdateSweepConfigurationV2Reason
+- (*UpdateSweepConfigurationV2).GetReasonOk: changed from func() (*string, bool) to func() (*UpdateSweepConfigurationV2Reason, bool)
+- (*UpdateSweepConfigurationV2).GetStatus: changed from func() string to func() UpdateSweepConfigurationV2Status
+- (*UpdateSweepConfigurationV2).GetStatusOk: changed from func() (*string, bool) to func() (*UpdateSweepConfigurationV2Status, bool)
+- (*UpdateSweepConfigurationV2).GetType: changed from func() string to func() UpdateSweepConfigurationV2Type
+- (*UpdateSweepConfigurationV2).GetTypeOk: changed from func() (*string, bool) to func() (*UpdateSweepConfigurationV2Type, bool)
+- (*UpdateSweepConfigurationV2).SetCategory: changed from func(string) to func(UpdateSweepConfigurationV2Category)
+- (*UpdateSweepConfigurationV2).SetPriorities: changed from func([]string) to func([]UpdateSweepConfigurationV2Priorities)
+- (*UpdateSweepConfigurationV2).SetReason: changed from func(string) to func(UpdateSweepConfigurationV2Reason)
+- (*UpdateSweepConfigurationV2).SetStatus: changed from func(string) to func(UpdateSweepConfigurationV2Status)
+- (*UpdateSweepConfigurationV2).SetType: changed from func(string) to func(UpdateSweepConfigurationV2Type)
+- (*VerificationDeadline).GetCapabilities: changed from func() []string to func() []VerificationDeadlineCapabilities
+- (*VerificationDeadline).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationDeadlineCapabilities, bool)
+- (*VerificationDeadline).SetCapabilities: changed from func([]string) to func([]VerificationDeadlineCapabilities)
+- (*VerificationError).GetCapabilities: changed from func() []string to func() []VerificationErrorCapabilities
+- (*VerificationError).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationErrorCapabilities, bool)
+- (*VerificationError).GetType: changed from func() string to func() VerificationErrorType
+- (*VerificationError).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorType, bool)
+- (*VerificationError).SetCapabilities: changed from func([]string) to func([]VerificationErrorCapabilities)
+- (*VerificationError).SetType: changed from func(string) to func(VerificationErrorType)
+- (*VerificationErrorRecursive).GetCapabilities: changed from func() []string to func() []VerificationErrorRecursiveCapabilities
+- (*VerificationErrorRecursive).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationErrorRecursiveCapabilities, bool)
+- (*VerificationErrorRecursive).GetType: changed from func() string to func() VerificationErrorRecursiveType
+- (*VerificationErrorRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorRecursiveType, bool)
+- (*VerificationErrorRecursive).SetCapabilities: changed from func([]string) to func([]VerificationErrorRecursiveCapabilities)
+- (*VerificationErrorRecursive).SetType: changed from func(string) to func(VerificationErrorRecursiveType)
+- AULocalAccountIdentification.Type: changed from string to AULocalAccountIdentificationType
+- AccountHolder.Status: changed from *string to *AccountHolderStatus
+- AccountHolderCapability.AllowedLevel: changed from *string to *AccountHolderCapabilityAllowedLevel
+- AccountHolderCapability.RequestedLevel: changed from *string to *AccountHolderCapabilityRequestedLevel
+- AccountHolderCapability.VerificationStatus: changed from *string to *AccountHolderCapabilityVerificationStatus
+- AccountHolderUpdateRequest.Status: changed from *string to *AccountHolderUpdateRequestStatus
+- AccountHoldersApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- AccountHoldersApiGetTaxFormInput.FormType: changed from func(string) AccountHoldersApiGetTaxFormInput to func(GetTaxFormFormTypeParameter) AccountHoldersApiGetTaxFormInput
+- AccountSupportingEntityCapability.AllowedLevel: changed from *string to *AccountSupportingEntityCapabilityAllowedLevel
+- AccountSupportingEntityCapability.RequestedLevel: changed from *string to *AccountSupportingEntityCapabilityRequestedLevel
+- AccountSupportingEntityCapability.VerificationStatus: changed from *string to *AccountSupportingEntityCapabilityVerificationStatus
+- AdditionalBankIdentification.Type: changed from *string to *AdditionalBankIdentificationType
+- AddressRequirement.RequiredAddressFields: changed from []string to []AddressRequirementRequiredAddressFields
+- AddressRequirement.Type: changed from string to AddressRequirementType
+- AmountMinMaxRequirement.Type: changed from string to AmountMinMaxRequirementType
+- AmountNonZeroDecimalsRequirement.Type: changed from string to AmountNonZeroDecimalsRequirementType
+- AssociationFinaliseRequest.Type: changed from string to AssociationFinaliseRequestType
+- AssociationFinaliseResponse.Type: changed from string to AssociationFinaliseResponseType
+- AssociationInitiateRequest.Type: changed from string to AssociationInitiateRequestType
+- BRLocalAccountIdentification.Type: changed from string to BRLocalAccountIdentificationType
+- BalanceAccount.Status: changed from *string to *BalanceAccountStatus
+- BalanceAccountBase.Status: changed from *string to *BalanceAccountBaseStatus
+- BalanceAccountUpdateRequest.Status: changed from *string to *BalanceAccountUpdateRequestStatus
+- BalanceAccountsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
 - BalanceAccountsApiCreateSweepInput: removed
 - BalanceAccountsApiDeleteSweepInput: removed
 - BalanceAccountsApiGetAllSweepsForBalanceAccountInput: removed
 - BalanceAccountsApiGetSweepInput: removed
 - BalanceAccountsApiUpdateSweepInput: removed
+- BankAccountIdentificationTypeRequirement.BankAccountIdentificationTypes: changed from []string to []BankAccountIdentificationTypeRequirementBankAccountIdentificationTypes
+- BankAccountIdentificationTypeRequirement.Type: changed from string to BankAccountIdentificationTypeRequirementType
+- BankAccountModel.FormFactor: changed from github.com/adyen/adyen-go-api-library/v21/src/common.NullableString to NullableBankAccountModelFormFactor
+- BankAccountValidationApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- BankIdentification.IdentificationType: changed from *string to *BankIdentificationIdentificationType
+- CALocalAccountIdentification.AccountType: changed from *string to *CALocalAccountIdentificationAccountType
+- CALocalAccountIdentification.Type: changed from string to CALocalAccountIdentificationType
+- CZLocalAccountIdentification.Type: changed from string to CZLocalAccountIdentificationType
+- CapabilityProblemEntity.Type: changed from *string to *CapabilityProblemEntityType
+- CapabilityProblemEntityRecursive.Type: changed from *string to *CapabilityProblemEntityRecursiveType
+- CapabilitySettings.FundingSource: changed from []string to []CapabilitySettingsFundingSource
+- CapabilitySettings.Interval: changed from *string to *CapabilitySettingsInterval
+- Card.FormFactor: changed from string to CardFormFactor
 - Card.Number: changed from string to *string
+- CardInfo.FormFactor: changed from string to CardInfoFormFactor
+- CardOrder.Status: changed from *string to *CardOrderStatus
+- CardOrderItemDeliveryStatus.Status: changed from *string to *CardOrderItemDeliveryStatusStatus
+- CardOrdersApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- CounterpartyTypesRestriction.Value: changed from []string to []CounterpartyTypesRestrictionValue
+- CreateSweepConfigurationV2.Category: changed from *string to *CreateSweepConfigurationV2Category
+- CreateSweepConfigurationV2.Priorities: changed from []string to []CreateSweepConfigurationV2Priorities
+- CreateSweepConfigurationV2.Reason: changed from *string to *CreateSweepConfigurationV2Reason
+- CreateSweepConfigurationV2.Status: changed from *string to *CreateSweepConfigurationV2Status
+- CreateSweepConfigurationV2.Type: changed from *string to *CreateSweepConfigurationV2Type
+- DKLocalAccountIdentification.Type: changed from string to DKLocalAccountIdentificationType
+- DayOfWeekRestriction.Value: changed from []string to []DayOfWeekRestrictionValue
+- Device.Type: changed from *string to *DeviceType
 - DeviceInfo.CardCaptureTechnology: removed
 - DeviceInfo.DeviceName: removed
 - DeviceInfo.Imei: removed
@@ -60,7 +461,128 @@ Incompatible changes:
 - DeviceInfo.PaymentTypes: removed
 - DeviceInfo.SerialNumber: removed
 - DeviceInfo.StorageTechnology: removed
-- NewCard: changed from func(string, string, string, string, string) *Card to func(string, string, string, string) *Card
+- Duration.Unit: changed from *string to *DurationUnit
+- EntryModesRestriction.Value: changed from []string to []EntryModesRestrictionValue
+- GetTaxFormResponse.ContentType: changed from *string to *GetTaxFormResponseContentType
+- GrantAccountsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- GrantOffer.ContractType: changed from *string to *GrantOfferContractType
+- GrantOffersApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- HKLocalAccountIdentification.Type: changed from string to HKLocalAccountIdentificationType
+- HULocalAccountIdentification.Type: changed from string to HULocalAccountIdentificationType
+- IbanAccountIdentification.Type: changed from string to IbanAccountIdentificationType
+- IbanAccountIdentificationRequirement.Type: changed from string to IbanAccountIdentificationRequirementType
+- ManageCardPINApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- ManageSCADevicesApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- MatchingValuesRestriction.Value: changed from []string to []MatchingValuesRestrictionValue
+- NOLocalAccountIdentification.Type: changed from string to NOLocalAccountIdentificationType
+- NZLocalAccountIdentification.Type: changed from string to NZLocalAccountIdentificationType
+- NetworkToken.Status: changed from *string to *NetworkTokenStatus
+- NetworkTokensApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- NewAPIClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Client) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Client) *APIClient
+- NewAULocalAccountIdentification: changed from func(string, string, string) *AULocalAccountIdentification to func(string, string, AULocalAccountIdentificationType) *AULocalAccountIdentification
+- NewAddressRequirement: changed from func(string) *AddressRequirement to func(AddressRequirementType) *AddressRequirement
+- NewAmountMinMaxRequirement: changed from func(string) *AmountMinMaxRequirement to func(AmountMinMaxRequirementType) *AmountMinMaxRequirement
+- NewAmountNonZeroDecimalsRequirement: changed from func(string) *AmountNonZeroDecimalsRequirement to func(AmountNonZeroDecimalsRequirementType) *AmountNonZeroDecimalsRequirement
+- NewAssociationFinaliseRequest: changed from func([]string, AssociationDelegatedAuthenticationData, string) *AssociationFinaliseRequest to func([]string, AssociationDelegatedAuthenticationData, AssociationFinaliseRequestType) *AssociationFinaliseRequest
+- NewAssociationFinaliseResponse: changed from func(string) *AssociationFinaliseResponse to func(AssociationFinaliseResponseType) *AssociationFinaliseResponse
+- NewAssociationInitiateRequest: changed from func([]string, string) *AssociationInitiateRequest to func([]string, AssociationInitiateRequestType) *AssociationInitiateRequest
+- NewBRLocalAccountIdentification: changed from func(string, string, string, string) *BRLocalAccountIdentification to func(string, string, string, BRLocalAccountIdentificationType) *BRLocalAccountIdentification
+- NewBankAccountIdentificationTypeRequirement: changed from func(string) *BankAccountIdentificationTypeRequirement to func(BankAccountIdentificationTypeRequirementType) *BankAccountIdentificationTypeRequirement
+- NewCALocalAccountIdentification: changed from func(string, string, string, string) *CALocalAccountIdentification to func(string, string, string, CALocalAccountIdentificationType) *CALocalAccountIdentification
+- NewCZLocalAccountIdentification: changed from func(string, string, string) *CZLocalAccountIdentification to func(string, string, CZLocalAccountIdentificationType) *CZLocalAccountIdentification
+- NewCard: changed from func(string, string, string, string, string) *Card to func(string, string, string, CardFormFactor) *Card
+- NewCardInfo: changed from func(string, string, string, string) *CardInfo to func(string, string, string, CardInfoFormFactor) *CardInfo
+- NewDKLocalAccountIdentification: changed from func(string, string, string) *DKLocalAccountIdentification to func(string, string, DKLocalAccountIdentificationType) *DKLocalAccountIdentification
+- NewHKLocalAccountIdentification: changed from func(string, string, string) *HKLocalAccountIdentification to func(string, string, HKLocalAccountIdentificationType) *HKLocalAccountIdentification
+- NewHULocalAccountIdentification: changed from func(string, string) *HULocalAccountIdentification to func(string, HULocalAccountIdentificationType) *HULocalAccountIdentification
+- NewIbanAccountIdentification: changed from func(string, string) *IbanAccountIdentification to func(string, IbanAccountIdentificationType) *IbanAccountIdentification
+- NewIbanAccountIdentificationRequirement: changed from func(string) *IbanAccountIdentificationRequirement to func(IbanAccountIdentificationRequirementType) *IbanAccountIdentificationRequirement
+- NewNOLocalAccountIdentification: changed from func(string, string) *NOLocalAccountIdentification to func(string, NOLocalAccountIdentificationType) *NOLocalAccountIdentification
+- NewNZLocalAccountIdentification: changed from func(string, string) *NZLocalAccountIdentification to func(string, NZLocalAccountIdentificationType) *NZLocalAccountIdentification
+- NewNumberAndBicAccountIdentification: changed from func(string, string, string) *NumberAndBicAccountIdentification to func(string, string, NumberAndBicAccountIdentificationType) *NumberAndBicAccountIdentification
+- NewPLLocalAccountIdentification: changed from func(string, string) *PLLocalAccountIdentification to func(string, PLLocalAccountIdentificationType) *PLLocalAccountIdentification
+- NewPaymentInstrument: changed from func(string, string, string, string) *PaymentInstrument to func(string, string, string, PaymentInstrumentType) *PaymentInstrument
+- NewPaymentInstrumentInfo: changed from func(string, string, string) *PaymentInstrumentInfo to func(string, string, PaymentInstrumentInfoType) *PaymentInstrumentInfo
+- NewPaymentInstrumentRequirement: changed from func(string) *PaymentInstrumentRequirement to func(PaymentInstrumentRequirementType) *PaymentInstrumentRequirement
+- NewPhone: changed from func(string, string) *Phone to func(string, PhoneType) *Phone
+- NewPinChangeResponse: changed from func(string) *PinChangeResponse to func(PinChangeResponseStatus) *PinChangeResponse
+- NewSELocalAccountIdentification: changed from func(string, string, string) *SELocalAccountIdentification to func(string, string, SELocalAccountIdentificationType) *SELocalAccountIdentification
+- NewSweepSchedule: changed from func(string) *SweepSchedule to func(SweepScheduleType) *SweepSchedule
+- NewTransactionRule: changed from func(string, TransactionRuleEntityKey, TransactionRuleInterval, string, TransactionRuleRestrictions, string) *TransactionRule to func(string, TransactionRuleEntityKey, TransactionRuleInterval, string, TransactionRuleRestrictions, TransactionRuleType) *TransactionRule
+- NewTransactionRuleInfo: changed from func(string, TransactionRuleEntityKey, TransactionRuleInterval, string, TransactionRuleRestrictions, string) *TransactionRuleInfo to func(string, TransactionRuleEntityKey, TransactionRuleInterval, string, TransactionRuleRestrictions, TransactionRuleInfoType) *TransactionRuleInfo
+- NewTransactionRuleInterval: changed from func(string) *TransactionRuleInterval to func(TransactionRuleIntervalType) *TransactionRuleInterval
+- NewTransferRouteRequest: changed from func(string, string, string) *TransferRouteRequest to func(string, TransferRouteRequestCategory, string) *TransferRouteRequest
+- NewUKLocalAccountIdentification: changed from func(string, string, string) *UKLocalAccountIdentification to func(string, string, UKLocalAccountIdentificationType) *UKLocalAccountIdentification
+- NewUSInstantPayoutAddressRequirement: changed from func(string) *USInstantPayoutAddressRequirement to func(USInstantPayoutAddressRequirementType) *USInstantPayoutAddressRequirement
+- NewUSInternationalAchAddressRequirement: changed from func(string) *USInternationalAchAddressRequirement to func(USInternationalAchAddressRequirementType) *USInternationalAchAddressRequirement
+- NewUSLocalAccountIdentification: changed from func(string, string, string) *USLocalAccountIdentification to func(string, string, USLocalAccountIdentificationType) *USLocalAccountIdentification
+- NewUpdatePaymentInstrument: changed from func(string, string, string, string) *UpdatePaymentInstrument to func(string, string, string, UpdatePaymentInstrumentType) *UpdatePaymentInstrument
+- NewVerificationDeadline: changed from func([]string, time.Time) *VerificationDeadline to func([]VerificationDeadlineCapabilities, time.Time) *VerificationDeadline
+- NumberAndBicAccountIdentification.Type: changed from string to NumberAndBicAccountIdentificationType
+- PLLocalAccountIdentification.Type: changed from string to PLLocalAccountIdentificationType
+- PaymentInstrument.Status: changed from *string to *PaymentInstrumentStatus
+- PaymentInstrument.StatusReason: changed from *string to *PaymentInstrumentStatusReason
+- PaymentInstrument.Type: changed from string to PaymentInstrumentType
+- PaymentInstrumentGroupsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- PaymentInstrumentInfo.Status: changed from *string to *PaymentInstrumentInfoStatus
+- PaymentInstrumentInfo.StatusReason: changed from *string to *PaymentInstrumentInfoStatusReason
+- PaymentInstrumentInfo.Type: changed from string to PaymentInstrumentInfoType
+- PaymentInstrumentRequirement.PaymentInstrumentType: changed from *string to *PaymentInstrumentRequirementPaymentInstrumentType
+- PaymentInstrumentRequirement.Type: changed from string to PaymentInstrumentRequirementType
+- PaymentInstrumentUpdateRequest.Status: changed from *string to *PaymentInstrumentUpdateRequestStatus
+- PaymentInstrumentUpdateRequest.StatusReason: changed from *string to *PaymentInstrumentUpdateRequestStatusReason
+- PaymentInstrumentsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- Phone.Type: changed from string to PhoneType
+- PhoneNumber.PhoneType: changed from *string to *PhoneNumberPhoneType
+- PinChangeResponse.Status: changed from string to PinChangeResponseStatus
+- PlatformApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- ProcessingTypesRestriction.Value: changed from []string to []ProcessingTypesRestrictionValue
+- SELocalAccountIdentification.Type: changed from string to SELocalAccountIdentificationType
+- SGLocalAccountIdentification.Type: changed from *string to *SGLocalAccountIdentificationType
+- SourceAccountTypesRestriction.Value: changed from []string to []SourceAccountTypesRestrictionValue
+- StringMatch.Operation: changed from *string to *StringMatchOperation
+- SweepConfigurationV2.Category: changed from *string to *SweepConfigurationV2Category
+- SweepConfigurationV2.Priorities: changed from []string to []SweepConfigurationV2Priorities
+- SweepConfigurationV2.Reason: changed from *string to *SweepConfigurationV2Reason
+- SweepConfigurationV2.Status: changed from *string to *SweepConfigurationV2Status
+- SweepConfigurationV2.Type: changed from *string to *SweepConfigurationV2Type
+- SweepSchedule.Type: changed from string to SweepScheduleType
+- TransactionRule.OutcomeType: changed from *string to *TransactionRuleOutcomeType
+- TransactionRule.RequestType: changed from *string to *TransactionRuleRequestType
+- TransactionRule.Status: changed from *string to *TransactionRuleStatus
+- TransactionRule.Type: changed from string to TransactionRuleType
+- TransactionRuleInfo.OutcomeType: changed from *string to *TransactionRuleInfoOutcomeType
+- TransactionRuleInfo.RequestType: changed from *string to *TransactionRuleInfoRequestType
+- TransactionRuleInfo.Status: changed from *string to *TransactionRuleInfoStatus
+- TransactionRuleInfo.Type: changed from string to TransactionRuleInfoType
+- TransactionRuleInterval.DayOfWeek: changed from *string to *TransactionRuleIntervalDayOfWeek
+- TransactionRuleInterval.Type: changed from string to TransactionRuleIntervalType
+- TransactionRulesApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- TransferRoute.Category: changed from *string to *TransferRouteCategory
+- TransferRoute.Priority: changed from *string to *TransferRoutePriority
+- TransferRouteRequest.Category: changed from string to TransferRouteRequestCategory
+- TransferRouteRequest.Priorities: changed from []string to []TransferRouteRequestPriorities
+- TransferRoutesApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- UKLocalAccountIdentification.Type: changed from string to UKLocalAccountIdentificationType
+- USInstantPayoutAddressRequirement.Type: changed from string to USInstantPayoutAddressRequirementType
+- USInternationalAchAddressRequirement.Type: changed from string to USInternationalAchAddressRequirementType
+- USLocalAccountIdentification.AccountType: changed from *string to *USLocalAccountIdentificationAccountType
+- USLocalAccountIdentification.Type: changed from string to USLocalAccountIdentificationType
+- UpdateNetworkTokenRequest.Status: changed from *string to *UpdateNetworkTokenRequestStatus
+- UpdatePaymentInstrument.AdditionalBankAccountIdentifications: changed from []PaymentInstrumentAdditionalBankAccountIdentificationsInner to []UpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner
+- UpdatePaymentInstrument.Status: changed from *string to *UpdatePaymentInstrumentStatus
+- UpdatePaymentInstrument.StatusReason: changed from *string to *UpdatePaymentInstrumentStatusReason
+- UpdatePaymentInstrument.Type: changed from string to UpdatePaymentInstrumentType
+- UpdateSweepConfigurationV2.Category: changed from *string to *UpdateSweepConfigurationV2Category
+- UpdateSweepConfigurationV2.Priorities: changed from []string to []UpdateSweepConfigurationV2Priorities
+- UpdateSweepConfigurationV2.Reason: changed from *string to *UpdateSweepConfigurationV2Reason
+- UpdateSweepConfigurationV2.Status: changed from *string to *UpdateSweepConfigurationV2Status
+- UpdateSweepConfigurationV2.Type: changed from *string to *UpdateSweepConfigurationV2Type
+- VerificationDeadline.Capabilities: changed from []string to []VerificationDeadlineCapabilities
+- VerificationError.Capabilities: changed from []string to []VerificationErrorCapabilities
+- VerificationError.Type: changed from *string to *VerificationErrorType
+- VerificationErrorRecursive.Capabilities: changed from []string to []VerificationErrorRecursiveCapabilities
+- VerificationErrorRecursive.Type: changed from *string to *VerificationErrorRecursiveType
 Compatible changes:
 - (*AccountHoldersApi).GetTaxFormSummary: added
 - (*AccountHoldersApi).GetTaxFormSummaryInput: added
@@ -143,63 +665,164 @@ Compatible changes:
 - APIClient.SCADeviceManagementApi: added
 - APIClient.TransferLimitsBalanceAccountLevelApi: added
 - APIClient.TransferLimitsBalancePlatformLevelApi: added
-- ASSOCIATIONSTATUS_ACTIVE: added
-- ASSOCIATIONSTATUS_PENDING_APPROVAL: added
+- AULocalAccountIdentificationType: added
 - AULocalAccountIdentificationTypeAuLocal: added
+- AccountHolderCapabilityAllowedLevel: added
 - AccountHolderCapabilityAllowedLevelHigh: added
 - AccountHolderCapabilityAllowedLevelLow: added
 - AccountHolderCapabilityAllowedLevelMedium: added
 - AccountHolderCapabilityAllowedLevelNotApplicable: added
+- AccountHolderCapabilityRequestedLevel: added
 - AccountHolderCapabilityRequestedLevelHigh: added
 - AccountHolderCapabilityRequestedLevelLow: added
 - AccountHolderCapabilityRequestedLevelMedium: added
 - AccountHolderCapabilityRequestedLevelNotApplicable: added
+- AccountHolderCapabilityVerificationStatus: added
 - AccountHolderCapabilityVerificationStatusInvalid: added
 - AccountHolderCapabilityVerificationStatusPending: added
 - AccountHolderCapabilityVerificationStatusRejected: added
 - AccountHolderCapabilityVerificationStatusValid: added
+- AccountHolderStatus: added
 - AccountHolderStatusActive: added
 - AccountHolderStatusClosed: added
 - AccountHolderStatusSuspended: added
+- AccountHolderUpdateRequestStatus: added
 - AccountHolderUpdateRequestStatusActive: added
 - AccountHolderUpdateRequestStatusClosed: added
 - AccountHolderUpdateRequestStatusSuspended: added
 - AccountHoldersApiGetTaxFormInput.LegalEntityId: added
 - AccountHoldersApiGetTaxFormSummaryInput: added
+- AccountSupportingEntityCapabilityAllowedLevel: added
 - AccountSupportingEntityCapabilityAllowedLevelHigh: added
 - AccountSupportingEntityCapabilityAllowedLevelLow: added
 - AccountSupportingEntityCapabilityAllowedLevelMedium: added
 - AccountSupportingEntityCapabilityAllowedLevelNotApplicable: added
+- AccountSupportingEntityCapabilityRequestedLevel: added
 - AccountSupportingEntityCapabilityRequestedLevelHigh: added
 - AccountSupportingEntityCapabilityRequestedLevelLow: added
 - AccountSupportingEntityCapabilityRequestedLevelMedium: added
 - AccountSupportingEntityCapabilityRequestedLevelNotApplicable: added
+- AccountSupportingEntityCapabilityVerificationStatus: added
 - AccountSupportingEntityCapabilityVerificationStatusInvalid: added
 - AccountSupportingEntityCapabilityVerificationStatusPending: added
 - AccountSupportingEntityCapabilityVerificationStatusRejected: added
 - AccountSupportingEntityCapabilityVerificationStatusValid: added
 - AdditionalBankIdentificationRequirement: added
+- AdditionalBankIdentificationRequirementAdditionalBankIdentificationType: added
 - AdditionalBankIdentificationRequirementAdditionalBankIdentificationTypeAuBsbCode: added
 - AdditionalBankIdentificationRequirementAdditionalBankIdentificationTypeCaRoutingNumber: added
 - AdditionalBankIdentificationRequirementAdditionalBankIdentificationTypeGbSortCode: added
 - AdditionalBankIdentificationRequirementAdditionalBankIdentificationTypeUsRoutingNumber: added
 - AdditionalBankIdentificationRequirementAsTransferRouteRequirementsInner: added
+- AdditionalBankIdentificationRequirementType: added
 - AdditionalBankIdentificationRequirementTypeAdditionalBankIdentificationRequirement: added
+- AdditionalBankIdentificationType: added
 - AdditionalBankIdentificationTypeAuBsbCode: added
 - AdditionalBankIdentificationTypeCaRoutingNumber: added
 - AdditionalBankIdentificationTypeGbSortCode: added
 - AdditionalBankIdentificationTypeUsRoutingNumber: added
+- AddressRequirementRequiredAddressFields: added
 - AddressRequirementRequiredAddressFieldsCity: added
 - AddressRequirementRequiredAddressFieldsCountry: added
 - AddressRequirementRequiredAddressFieldsLine1: added
 - AddressRequirementRequiredAddressFieldsPostalCode: added
 - AddressRequirementRequiredAddressFieldsStateOrProvince: added
+- AddressRequirementType: added
 - AddressRequirementTypeAddressRequirement: added
+- AllowedAULocalAccountIdentificationTypeEnumValues: added
+- AllowedAccountHolderCapabilityAllowedLevelEnumValues: added
+- AllowedAccountHolderCapabilityRequestedLevelEnumValues: added
+- AllowedAccountHolderCapabilityVerificationStatusEnumValues: added
+- AllowedAccountHolderStatusEnumValues: added
+- AllowedAccountHolderUpdateRequestStatusEnumValues: added
+- AllowedAccountSupportingEntityCapabilityAllowedLevelEnumValues: added
+- AllowedAccountSupportingEntityCapabilityRequestedLevelEnumValues: added
+- AllowedAccountSupportingEntityCapabilityVerificationStatusEnumValues: added
+- AllowedAdditionalBankIdentificationRequirementAdditionalBankIdentificationTypeEnumValues: added
+- AllowedAdditionalBankIdentificationRequirementTypeEnumValues: added
+- AllowedAdditionalBankIdentificationTypeEnumValues: added
+- AllowedAddressRequirementRequiredAddressFieldsEnumValues: added
+- AllowedAddressRequirementTypeEnumValues: added
+- AllowedAmountMinMaxRequirementTypeEnumValues: added
+- AllowedAmountNonZeroDecimalsRequirementTypeEnumValues: added
+- AllowedAssociationFinaliseRequestTypeEnumValues: added
+- AllowedAssociationFinaliseResponseTypeEnumValues: added
+- AllowedAssociationInitiateRequestTypeEnumValues: added
 - AllowedAssociationStatusEnumValues: added
+- AllowedBRLocalAccountIdentificationTypeEnumValues: added
+- AllowedBalanceAccountBaseStatusEnumValues: added
+- AllowedBalanceAccountConfigurationRequestFrequencyEnumValues: added
+- AllowedBalanceAccountConfigurationUpdateFrequencyEnumValues: added
+- AllowedBalanceAccountStatusEnumValues: added
+- AllowedBalanceAccountUpdateRequestStatusEnumValues: added
+- AllowedBalanceWebhookSettingInfoStatusEnumValues: added
+- AllowedBalanceWebhookSettingInfoTypeEnumValues: added
+- AllowedBalanceWebhookSettingInfoUpdateStatusEnumValues: added
+- AllowedBalanceWebhookSettingInfoUpdateTypeEnumValues: added
+- AllowedBankAccountIdentificationTypeRequirementBankAccountIdentificationTypesEnumValues: added
+- AllowedBankAccountIdentificationTypeRequirementTypeEnumValues: added
+- AllowedBankAccountModelFormFactorEnumValues: added
+- AllowedBankIdentificationIdentificationTypeEnumValues: added
+- AllowedCALocalAccountIdentificationAccountTypeEnumValues: added
+- AllowedCALocalAccountIdentificationTypeEnumValues: added
+- AllowedCZLocalAccountIdentificationTypeEnumValues: added
+- AllowedCapabilityProblemEntityRecursiveTypeEnumValues: added
+- AllowedCapabilityProblemEntityTypeEnumValues: added
+- AllowedCapabilitySettingsFundingSourceEnumValues: added
+- AllowedCapabilitySettingsIntervalEnumValues: added
+- AllowedCardFormFactorEnumValues: added
+- AllowedCardInfoFormFactorEnumValues: added
+- AllowedCardOrderItemDeliveryStatusStatusEnumValues: added
+- AllowedCardOrderStatusEnumValues: added
+- AllowedConditionBalanceTypeEnumValues: added
+- AllowedConditionConditionTypeEnumValues: added
+- AllowedCounterpartyTypesRestrictionValueEnumValues: added
+- AllowedCreateRecurringTopUpStatusEnumValues: added
+- AllowedCreateSweepConfigurationV2CategoryEnumValues: added
+- AllowedCreateSweepConfigurationV2PrioritiesEnumValues: added
+- AllowedCreateSweepConfigurationV2ReasonEnumValues: added
+- AllowedCreateSweepConfigurationV2StatusEnumValues: added
+- AllowedCreateSweepConfigurationV2TypeEnumValues: added
+- AllowedDKLocalAccountIdentificationTypeEnumValues: added
+- AllowedDayOfWeekRestrictionValueEnumValues: added
+- AllowedDeviceTypeEnumValues: added
+- AllowedDurationUnitEnumValues: added
+- AllowedEntryModesRestrictionValueEnumValues: added
 - AllowedExecutionResultEnumValues: added
+- AllowedGetTaxFormFormTypeParameterEnumValues: added
+- AllowedGetTaxFormResponseContentTypeEnumValues: added
+- AllowedGrantOfferContractTypeEnumValues: added
+- AllowedHKLocalAccountIdentificationTypeEnumValues: added
+- AllowedHULocalAccountIdentificationTypeEnumValues: added
+- AllowedIbanAccountIdentificationRequirementTypeEnumValues: added
+- AllowedIbanAccountIdentificationTypeEnumValues: added
 - AllowedLimitStatusEnumValues: added
 - AllowedMandateStatusEnumValues: added
 - AllowedMandateTypeEnumValues: added
+- AllowedMatchingValuesRestrictionValueEnumValues: added
+- AllowedNOLocalAccountIdentificationTypeEnumValues: added
+- AllowedNZLocalAccountIdentificationTypeEnumValues: added
+- AllowedNetworkTokenStatusEnumValues: added
+- AllowedNumberAndBicAccountIdentificationTypeEnumValues: added
+- AllowedPLLocalAccountIdentificationTypeEnumValues: added
+- AllowedPaymentInstrumentInfoStatusEnumValues: added
+- AllowedPaymentInstrumentInfoStatusReasonEnumValues: added
+- AllowedPaymentInstrumentInfoTypeEnumValues: added
+- AllowedPaymentInstrumentRequirementPaymentInstrumentTypeEnumValues: added
+- AllowedPaymentInstrumentRequirementTypeEnumValues: added
+- AllowedPaymentInstrumentStatusEnumValues: added
+- AllowedPaymentInstrumentStatusReasonEnumValues: added
+- AllowedPaymentInstrumentTypeEnumValues: added
+- AllowedPaymentInstrumentUpdateRequestStatusEnumValues: added
+- AllowedPaymentInstrumentUpdateRequestStatusReasonEnumValues: added
+- AllowedPhoneNumberPhoneTypeEnumValues: added
+- AllowedPhoneTypeEnumValues: added
+- AllowedPinChangeResponseStatusEnumValues: added
+- AllowedProcessingTypesRestrictionValueEnumValues: added
+- AllowedRecurringTopUpStatusEnumValues: added
+- AllowedRecurringTopUpUpdateStatusEnumValues: added
+- AllowedSELocalAccountIdentificationTypeEnumValues: added
+- AllowedSGLocalAccountIdentificationTypeEnumValues: added
 - AllowedScaDeviceTypeEnumValues: added
 - AllowedScaEntityTypeEnumValues: added
 - AllowedScaExemptionEnumValues: added
@@ -207,48 +830,108 @@ Compatible changes:
 - AllowedScheduleTypeEnumValues: added
 - AllowedScopeEnumValues: added
 - AllowedSettingTypeEnumValues: added
+- AllowedSourceAccountTypesRestrictionValueEnumValues: added
+- AllowedStringMatchOperationEnumValues: added
+- AllowedSweepConfigurationV2CategoryEnumValues: added
+- AllowedSweepConfigurationV2PrioritiesEnumValues: added
+- AllowedSweepConfigurationV2ReasonEnumValues: added
+- AllowedSweepConfigurationV2StatusEnumValues: added
+- AllowedSweepConfigurationV2TypeEnumValues: added
+- AllowedSweepScheduleTypeEnumValues: added
+- AllowedTargetTypeEnumValues: added
+- AllowedTargetUpdateTypeEnumValues: added
+- AllowedTransactionRuleInfoOutcomeTypeEnumValues: added
+- AllowedTransactionRuleInfoPurposeEnumValues: added
+- AllowedTransactionRuleInfoRequestTypeEnumValues: added
+- AllowedTransactionRuleInfoStatusEnumValues: added
+- AllowedTransactionRuleInfoTypeEnumValues: added
+- AllowedTransactionRuleIntervalDayOfWeekEnumValues: added
+- AllowedTransactionRuleIntervalTypeEnumValues: added
+- AllowedTransactionRuleOutcomeTypeEnumValues: added
+- AllowedTransactionRulePurposeEnumValues: added
+- AllowedTransactionRuleRequestTypeEnumValues: added
+- AllowedTransactionRuleStatusEnumValues: added
+- AllowedTransactionRuleTypeEnumValues: added
+- AllowedTransferRouteCategoryEnumValues: added
+- AllowedTransferRoutePriorityEnumValues: added
+- AllowedTransferRouteRequestCategoryEnumValues: added
+- AllowedTransferRouteRequestPrioritiesEnumValues: added
 - AllowedTransferTypeEnumValues: added
+- AllowedUKLocalAccountIdentificationTypeEnumValues: added
+- AllowedUSInstantPayoutAddressRequirementTypeEnumValues: added
+- AllowedUSInternationalAchAddressRequirementTypeEnumValues: added
+- AllowedUSInternationalAchPriorityRequirementTypeEnumValues: added
+- AllowedUSLocalAccountIdentificationAccountTypeEnumValues: added
+- AllowedUSLocalAccountIdentificationTypeEnumValues: added
+- AllowedUpdateNetworkTokenRequestStatusEnumValues: added
+- AllowedUpdatePaymentInstrumentStatusEnumValues: added
+- AllowedUpdatePaymentInstrumentStatusReasonEnumValues: added
+- AllowedUpdatePaymentInstrumentTypeEnumValues: added
+- AllowedUpdateSweepConfigurationV2CategoryEnumValues: added
+- AllowedUpdateSweepConfigurationV2PrioritiesEnumValues: added
+- AllowedUpdateSweepConfigurationV2ReasonEnumValues: added
+- AllowedUpdateSweepConfigurationV2StatusEnumValues: added
+- AllowedUpdateSweepConfigurationV2TypeEnumValues: added
+- AllowedVerificationDeadlineCapabilitiesEnumValues: added
+- AllowedVerificationErrorCapabilitiesEnumValues: added
+- AllowedVerificationErrorRecursiveCapabilitiesEnumValues: added
+- AllowedVerificationErrorRecursiveTypeEnumValues: added
+- AllowedVerificationErrorTypeEnumValues: added
+- AllowedWalletProviderDeviceTypeValueEnumValues: added
 - AmountDTO: added
+- AmountMinMaxRequirementType: added
 - AmountMinMaxRequirementTypeAmountMinMaxRequirement: added
+- AmountNonZeroDecimalsRequirementType: added
 - AmountNonZeroDecimalsRequirementTypeAmountNonZeroDecimalsRequirement: added
 - AmountUpdate: added
 - ApproveAssociationRequest: added
 - ApproveAssociationResponse: added
 - ApproveTransferLimitRequest: added
 - Association: added
+- AssociationFinaliseRequestType: added
 - AssociationFinaliseRequestTypePaymentInstrument: added
+- AssociationFinaliseResponseType: added
 - AssociationFinaliseResponseTypePAYMENTINSTRUMENT: added
+- AssociationInitiateRequestType: added
 - AssociationInitiateRequestTypePaymentInstrument: added
 - AssociationListing: added
 - AssociationStatus: added
+- AssociationStatusActive: added
+- AssociationStatusPendingApproval: added
 - AuthorisedCardUsers: added
 - AuthorizedCardUsersApi: added
 - AuthorizedCardUsersApiCreateAuthorisedCardUsersInput: added
 - AuthorizedCardUsersApiDeleteAuthorisedCardUsersInput: added
 - AuthorizedCardUsersApiGetAllAuthorisedCardUsersInput: added
 - AuthorizedCardUsersApiUpdateAuthorisedCardUsersInput: added
+- BRLocalAccountIdentificationType: added
 - BRLocalAccountIdentificationTypeBrLocal: added
 - Balance.PendingAvailable: added
+- BalanceAccountBaseStatus: added
 - BalanceAccountBaseStatusActive: added
 - BalanceAccountBaseStatusClosed: added
 - BalanceAccountBaseStatusInactive: added
 - BalanceAccountBaseStatusSuspended: added
 - BalanceAccountConfiguration: added
 - BalanceAccountConfigurationRequest: added
+- BalanceAccountConfigurationRequestFrequency: added
 - BalanceAccountConfigurationRequestFrequencyDaily: added
 - BalanceAccountConfigurationRequestFrequencyMonthly: added
 - BalanceAccountConfigurationRequestFrequencyWeekdays: added
 - BalanceAccountConfigurationRequestFrequencyWeekly: added
 - BalanceAccountConfigurationUpdate: added
+- BalanceAccountConfigurationUpdateFrequency: added
 - BalanceAccountConfigurationUpdateFrequencyDaily: added
 - BalanceAccountConfigurationUpdateFrequencyMonthly: added
 - BalanceAccountConfigurationUpdateFrequencyWeekdays: added
 - BalanceAccountConfigurationUpdateFrequencyWeekly: added
 - BalanceAccountConfigurations: added
+- BalanceAccountStatus: added
 - BalanceAccountStatusActive: added
 - BalanceAccountStatusClosed: added
 - BalanceAccountStatusInactive: added
 - BalanceAccountStatusSuspended: added
+- BalanceAccountUpdateRequestStatus: added
 - BalanceAccountUpdateRequestStatusActive: added
 - BalanceAccountUpdateRequestStatusClosed: added
 - BalanceAccountUpdateRequestStatusInactive: added
@@ -257,12 +940,16 @@ Compatible changes:
 - BalancePlatformConfigurations: added
 - BalanceWebhookSetting: added
 - BalanceWebhookSettingInfo: added
+- BalanceWebhookSettingInfoStatus: added
 - BalanceWebhookSettingInfoStatusActive: added
 - BalanceWebhookSettingInfoStatusInactive: added
+- BalanceWebhookSettingInfoType: added
 - BalanceWebhookSettingInfoTypeBalance: added
 - BalanceWebhookSettingInfoUpdate: added
+- BalanceWebhookSettingInfoUpdateStatus: added
 - BalanceWebhookSettingInfoUpdateStatusActive: added
 - BalanceWebhookSettingInfoUpdateStatusInactive: added
+- BalanceWebhookSettingInfoUpdateType: added
 - BalanceWebhookSettingInfoUpdateTypeBalance: added
 - BalancesApi: added
 - BalancesApiCreateWebhookSettingInput: added
@@ -270,6 +957,7 @@ Compatible changes:
 - BalancesApiGetAllWebhookSettingsInput: added
 - BalancesApiGetWebhookSettingInput: added
 - BalancesApiUpdateWebhookSettingInput: added
+- BankAccountIdentificationTypeRequirementBankAccountIdentificationTypes: added
 - BankAccountIdentificationTypeRequirementBankAccountIdentificationTypesAuLocal: added
 - BankAccountIdentificationTypeRequirementBankAccountIdentificationTypesBrLocal: added
 - BankAccountIdentificationTypeRequirementBankAccountIdentificationTypesCaLocal: added
@@ -291,10 +979,13 @@ Compatible changes:
 - BankAccountIdentificationTypeRequirementBankAccountIdentificationTypesSgLocal: added
 - BankAccountIdentificationTypeRequirementBankAccountIdentificationTypesUkLocal: added
 - BankAccountIdentificationTypeRequirementBankAccountIdentificationTypesUsLocal: added
+- BankAccountIdentificationTypeRequirementType: added
 - BankAccountIdentificationTypeRequirementTypeBankAccountIdentificationTypeRequirement: added
+- BankAccountModelFormFactor: added
 - BankAccountModelFormFactorPhysical: added
 - BankAccountModelFormFactorUnknown: added
 - BankAccountModelFormFactorVirtual: added
+- BankIdentificationIdentificationType: added
 - BankIdentificationIdentificationTypeBic: added
 - BankIdentificationIdentificationTypeIban: added
 - BankIdentificationIdentificationTypeRoutingNumber: added
@@ -305,31 +996,41 @@ Compatible changes:
 - BulkAddress.Line2: added
 - BulkAddress.Line3: added
 - BulkAddress.Name: added
+- CALocalAccountIdentificationAccountType: added
 - CALocalAccountIdentificationAccountTypeChecking: added
 - CALocalAccountIdentificationAccountTypeSavings: added
+- CALocalAccountIdentificationType: added
 - CALocalAccountIdentificationTypeCaLocal: added
+- CZLocalAccountIdentificationType: added
 - CZLocalAccountIdentificationTypeCzLocal: added
+- CapabilityProblemEntityRecursiveType: added
 - CapabilityProblemEntityRecursiveTypeBankAccount: added
 - CapabilityProblemEntityRecursiveTypeDocument: added
 - CapabilityProblemEntityRecursiveTypeLegalEntity: added
+- CapabilityProblemEntityType: added
 - CapabilityProblemEntityTypeBankAccount: added
 - CapabilityProblemEntityTypeDocument: added
 - CapabilityProblemEntityTypeLegalEntity: added
+- CapabilitySettingsFundingSource: added
 - CapabilitySettingsFundingSourceCredit: added
 - CapabilitySettingsFundingSourceDebit: added
 - CapabilitySettingsFundingSourcePrepaid: added
+- CapabilitySettingsInterval: added
 - CapabilitySettingsIntervalDaily: added
 - CapabilitySettingsIntervalMonthly: added
 - CapabilitySettingsIntervalWeekly: added
 - Card.Usage: added
 - CardConfiguration.PrintLine: added
+- CardFormFactor: added
 - CardFormFactorPhysical: added
 - CardFormFactorUnknown: added
 - CardFormFactorVirtual: added
 - CardInfo.Usage: added
+- CardInfoFormFactor: added
 - CardInfoFormFactorPhysical: added
 - CardInfoFormFactorUnknown: added
 - CardInfoFormFactorVirtual: added
+- CardOrderItemDeliveryStatusStatus: added
 - CardOrderItemDeliveryStatusStatusCreated: added
 - CardOrderItemDeliveryStatusStatusDelivered: added
 - CardOrderItemDeliveryStatusStatusNotApplicable: added
@@ -338,34 +1039,42 @@ Compatible changes:
 - CardOrderItemDeliveryStatusStatusRejected: added
 - CardOrderItemDeliveryStatusStatusShipped: added
 - CardOrderItemDeliveryStatusStatusUnknown: added
+- CardOrderStatus: added
 - CardOrderStatusClosed: added
 - CardOrderStatusOpen: added
 - Condition: added
+- ConditionBalanceType: added
 - ConditionBalanceTypeAvailable: added
 - ConditionBalanceTypeBalance: added
 - ConditionBalanceTypePending: added
 - ConditionBalanceTypeReserved: added
+- ConditionConditionType: added
 - ConditionConditionTypeGreaterThan: added
 - ConditionConditionTypeGreaterThanOrEqual: added
 - ConditionConditionTypeLessThan: added
 - ConditionConditionTypeLessThanOrEqual: added
+- CounterpartyTypesRestrictionValue: added
 - CounterpartyTypesRestrictionValueBalanceAccount: added
 - CounterpartyTypesRestrictionValueBankAccount: added
 - CounterpartyTypesRestrictionValueCard: added
 - CounterpartyTypesRestrictionValueTransferInstrument: added
 - CreateRecurringTopUp: added
+- CreateRecurringTopUpStatus: added
 - CreateRecurringTopUpStatusActive: added
 - CreateRecurringTopUpStatusInactive: added
 - CreateScaInformation: added
+- CreateSweepConfigurationV2Category: added
 - CreateSweepConfigurationV2CategoryBank: added
 - CreateSweepConfigurationV2CategoryInternal: added
 - CreateSweepConfigurationV2CategoryPlatformPayment: added
+- CreateSweepConfigurationV2Priorities: added
 - CreateSweepConfigurationV2PrioritiesCrossBorder: added
 - CreateSweepConfigurationV2PrioritiesFast: added
 - CreateSweepConfigurationV2PrioritiesInstant: added
 - CreateSweepConfigurationV2PrioritiesInternal: added
 - CreateSweepConfigurationV2PrioritiesRegular: added
 - CreateSweepConfigurationV2PrioritiesWire: added
+- CreateSweepConfigurationV2Reason: added
 - CreateSweepConfigurationV2ReasonAccountHierarchyNotActive: added
 - CreateSweepConfigurationV2ReasonAmountLimitExceeded: added
 - CreateSweepConfigurationV2ReasonApproved: added
@@ -382,8 +1091,10 @@ Compatible changes:
 - CreateSweepConfigurationV2ReasonRouteNotFound: added
 - CreateSweepConfigurationV2ReasonTransferInstrumentDoesNotExist: added
 - CreateSweepConfigurationV2ReasonUnknown: added
+- CreateSweepConfigurationV2Status: added
 - CreateSweepConfigurationV2StatusActive: added
 - CreateSweepConfigurationV2StatusInactive: added
+- CreateSweepConfigurationV2Type: added
 - CreateSweepConfigurationV2TypePull: added
 - CreateSweepConfigurationV2TypePush: added
 - CreateTransferLimitRequest: added
@@ -394,7 +1105,9 @@ Compatible changes:
 - CustomPayoutSchedulesSweepsApiGetSweepExecutionsInput: added
 - CustomPayoutSchedulesSweepsApiGetSweepInput: added
 - CustomPayoutSchedulesSweepsApiUpdateSweepInput: added
+- DKLocalAccountIdentificationType: added
 - DKLocalAccountIdentificationTypeDkLocal: added
+- DayOfWeekRestrictionValue: added
 - DayOfWeekRestrictionValueFriday: added
 - DayOfWeekRestrictionValueMonday: added
 - DayOfWeekRestrictionValueSaturday: added
@@ -404,6 +1117,7 @@ Compatible changes:
 - DayOfWeekRestrictionValueWednesday: added
 - DefaultErrorResponseEntity: added
 - DeviceInfo.Phone: added
+- DeviceType: added
 - DeviceTypeAndroid: added
 - DeviceTypeBrowser: added
 - DeviceTypeIos: added
@@ -412,14 +1126,13 @@ Compatible changes:
 - DirectDebitMandatesApiGetListOfMandatesInput: added
 - DirectDebitMandatesApiGetMandateByIdInput: added
 - DirectDebitMandatesApiUpdateMandateInput: added
+- DurationUnit: added
 - DurationUnitDays: added
 - DurationUnitHours: added
 - DurationUnitMinutes: added
 - DurationUnitMonths: added
 - DurationUnitWeeks: added
-- EXECUTIONRESULT_FAILED: added
-- EXECUTIONRESULT_SKIPPED: added
-- EXECUTIONRESULT_SUCCEEDED: added
+- EntryModesRestrictionValue: added
 - EntryModesRestrictionValueBarcode: added
 - EntryModesRestrictionValueChip: added
 - EntryModesRestrictionValueCof: added
@@ -430,27 +1143,36 @@ Compatible changes:
 - EntryModesRestrictionValueServer: added
 - EntryModesRestrictionValueUnknown: added
 - ExecutionResult: added
+- ExecutionResultFailed: added
+- ExecutionResultSkipped: added
+- ExecutionResultSucceeded: added
 - FinishScaDeviceRegistrationRequest: added
 - FinishScaDeviceRegistrationResponse: added
+- GetTaxFormFormTypeParameter: added
+- GetTaxFormFormTypeParameterUS1099k: added
+- GetTaxFormFormTypeParameterUS1099nec: added
+- GetTaxFormResponseContentType: added
 - GetTaxFormResponseContentTypeApplicationPdf: added
+- GrantOfferContractType: added
 - GrantOfferContractTypeCashAdvance: added
 - GrantOfferContractTypeLoan: added
+- HKLocalAccountIdentificationType: added
 - HKLocalAccountIdentificationTypeHkLocal: added
+- HULocalAccountIdentificationType: added
 - HULocalAccountIdentificationTypeHuLocal: added
 - IbanAccountIdentification.Bic: added
+- IbanAccountIdentificationAsUpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner: added
+- IbanAccountIdentificationRequirementType: added
 - IbanAccountIdentificationRequirementTypeIbanAccountIdentificationRequirement: added
+- IbanAccountIdentificationType: added
 - IbanAccountIdentificationTypeIban: added
-- LIMITSTATUS_ACTIVE: added
-- LIMITSTATUS_INACTIVE: added
-- LIMITSTATUS_PENDING_SCA: added
-- LIMITSTATUS_SCHEDULED: added
 - LimitStatus: added
+- LimitStatusActive: added
+- LimitStatusInactive: added
+- LimitStatusPendingSCA: added
+- LimitStatusScheduled: added
 - ListAssociationsResponse: added
 - ListMandatesResponse: added
-- MANDATESTATUS_APPROVED: added
-- MANDATESTATUS_CANCELLED: added
-- MANDATESTATUS_PENDING: added
-- MANDATETYPE_BACS: added
 - ManagedPayoutSchedulesApi: added
 - ManagedPayoutSchedulesApiApplyManagedScheduleInput: added
 - ManagedPayoutSchedulesApiDeleteBalanceAccountManagedScheduleInput: added
@@ -465,27 +1187,51 @@ Compatible changes:
 - MandateBankAccount: added
 - MandatePartyIdentification: added
 - MandateStatus: added
+- MandateStatusApproved: added
+- MandateStatusCancelled: added
+- MandateStatusPending: added
 - MandateType: added
+- MandateTypeBacs: added
 - MandateUpdate: added
+- MatchingValuesRestrictionValue: added
 - MatchingValuesRestrictionValueAcquirerId: added
 - MatchingValuesRestrictionValueAmount: added
 - MatchingValuesRestrictionValueCurrency: added
 - MatchingValuesRestrictionValueMerchantId: added
 - MatchingValuesRestrictionValueMerchantName: added
+- NOLocalAccountIdentificationType: added
 - NOLocalAccountIdentificationTypeNoLocal: added
+- NZLocalAccountIdentificationType: added
 - NZLocalAccountIdentificationTypeNzLocal: added
 - NetworkToken.TokenRequestor: added
 - NetworkTokenActivationDataRequest: added
 - NetworkTokenActivationDataResponse: added
 - NetworkTokenRequestor: added
+- NetworkTokenStatus: added
 - NetworkTokenStatusActive: added
 - NetworkTokenStatusClosed: added
 - NetworkTokenStatusInactive: added
 - NetworkTokenStatusSuspended: added
+- NewAULocalAccountIdentificationTypeFromValue: added
+- NewAccountHolderCapabilityAllowedLevelFromValue: added
+- NewAccountHolderCapabilityRequestedLevelFromValue: added
+- NewAccountHolderCapabilityVerificationStatusFromValue: added
+- NewAccountHolderStatusFromValue: added
+- NewAccountHolderUpdateRequestStatusFromValue: added
+- NewAccountSupportingEntityCapabilityAllowedLevelFromValue: added
+- NewAccountSupportingEntityCapabilityRequestedLevelFromValue: added
+- NewAccountSupportingEntityCapabilityVerificationStatusFromValue: added
 - NewAdditionalBankIdentificationRequirement: added
+- NewAdditionalBankIdentificationRequirementAdditionalBankIdentificationTypeFromValue: added
+- NewAdditionalBankIdentificationRequirementTypeFromValue: added
 - NewAdditionalBankIdentificationRequirementWithDefaults: added
+- NewAdditionalBankIdentificationTypeFromValue: added
+- NewAddressRequirementRequiredAddressFieldsFromValue: added
+- NewAddressRequirementTypeFromValue: added
 - NewAmountDTO: added
 - NewAmountDTOWithDefaults: added
+- NewAmountMinMaxRequirementTypeFromValue: added
+- NewAmountNonZeroDecimalsRequirementTypeFromValue: added
 - NewAmountUpdate: added
 - NewAmountUpdateWithDefaults: added
 - NewApproveAssociationRequest: added
@@ -495,49 +1241,98 @@ Compatible changes:
 - NewApproveTransferLimitRequest: added
 - NewApproveTransferLimitRequestWithDefaults: added
 - NewAssociation: added
+- NewAssociationFinaliseRequestTypeFromValue: added
+- NewAssociationFinaliseResponseTypeFromValue: added
+- NewAssociationInitiateRequestTypeFromValue: added
 - NewAssociationListing: added
 - NewAssociationListingWithDefaults: added
 - NewAssociationStatusFromValue: added
 - NewAssociationWithDefaults: added
 - NewAuthorisedCardUsers: added
 - NewAuthorisedCardUsersWithDefaults: added
+- NewBRLocalAccountIdentificationTypeFromValue: added
+- NewBalanceAccountBaseStatusFromValue: added
 - NewBalanceAccountConfiguration: added
 - NewBalanceAccountConfigurationRequest: added
+- NewBalanceAccountConfigurationRequestFrequencyFromValue: added
 - NewBalanceAccountConfigurationRequestWithDefaults: added
 - NewBalanceAccountConfigurationUpdate: added
+- NewBalanceAccountConfigurationUpdateFrequencyFromValue: added
 - NewBalanceAccountConfigurationUpdateWithDefaults: added
 - NewBalanceAccountConfigurationWithDefaults: added
 - NewBalanceAccountConfigurations: added
 - NewBalanceAccountConfigurationsWithDefaults: added
+- NewBalanceAccountStatusFromValue: added
+- NewBalanceAccountUpdateRequestStatusFromValue: added
 - NewBalancePlatformConfiguration: added
 - NewBalancePlatformConfigurationWithDefaults: added
 - NewBalancePlatformConfigurations: added
 - NewBalancePlatformConfigurationsWithDefaults: added
 - NewBalanceWebhookSetting: added
 - NewBalanceWebhookSettingInfo: added
+- NewBalanceWebhookSettingInfoStatusFromValue: added
+- NewBalanceWebhookSettingInfoTypeFromValue: added
 - NewBalanceWebhookSettingInfoUpdate: added
+- NewBalanceWebhookSettingInfoUpdateStatusFromValue: added
+- NewBalanceWebhookSettingInfoUpdateTypeFromValue: added
 - NewBalanceWebhookSettingInfoUpdateWithDefaults: added
 - NewBalanceWebhookSettingInfoWithDefaults: added
 - NewBalanceWebhookSettingWithDefaults: added
+- NewBankAccountIdentificationTypeRequirementBankAccountIdentificationTypesFromValue: added
+- NewBankAccountIdentificationTypeRequirementTypeFromValue: added
+- NewBankAccountModelFormFactorFromValue: added
+- NewBankIdentificationIdentificationTypeFromValue: added
 - NewBeginScaDeviceRegistrationRequest: added
 - NewBeginScaDeviceRegistrationRequestWithDefaults: added
 - NewBeginScaDeviceRegistrationResponse: added
 - NewBeginScaDeviceRegistrationResponseWithDefaults: added
+- NewCALocalAccountIdentificationAccountTypeFromValue: added
+- NewCALocalAccountIdentificationTypeFromValue: added
+- NewCZLocalAccountIdentificationTypeFromValue: added
+- NewCapabilityProblemEntityRecursiveTypeFromValue: added
+- NewCapabilityProblemEntityTypeFromValue: added
+- NewCapabilitySettingsFundingSourceFromValue: added
+- NewCapabilitySettingsIntervalFromValue: added
+- NewCardFormFactorFromValue: added
+- NewCardInfoFormFactorFromValue: added
+- NewCardOrderItemDeliveryStatusStatusFromValue: added
+- NewCardOrderStatusFromValue: added
 - NewCondition: added
+- NewConditionBalanceTypeFromValue: added
+- NewConditionConditionTypeFromValue: added
 - NewConditionWithDefaults: added
+- NewCounterpartyTypesRestrictionValueFromValue: added
 - NewCreateRecurringTopUp: added
+- NewCreateRecurringTopUpStatusFromValue: added
 - NewCreateRecurringTopUpWithDefaults: added
 - NewCreateScaInformation: added
 - NewCreateScaInformationWithDefaults: added
+- NewCreateSweepConfigurationV2CategoryFromValue: added
+- NewCreateSweepConfigurationV2PrioritiesFromValue: added
+- NewCreateSweepConfigurationV2ReasonFromValue: added
+- NewCreateSweepConfigurationV2StatusFromValue: added
+- NewCreateSweepConfigurationV2TypeFromValue: added
 - NewCreateTransferLimitRequest: added
 - NewCreateTransferLimitRequestWithDefaults: added
+- NewDKLocalAccountIdentificationTypeFromValue: added
+- NewDayOfWeekRestrictionValueFromValue: added
 - NewDefaultErrorResponseEntity: added
 - NewDefaultErrorResponseEntityWithDefaults: added
+- NewDeviceTypeFromValue: added
+- NewDurationUnitFromValue: added
+- NewEntryModesRestrictionValueFromValue: added
 - NewExecutionResultFromValue: added
 - NewFinishScaDeviceRegistrationRequest: added
 - NewFinishScaDeviceRegistrationRequestWithDefaults: added
 - NewFinishScaDeviceRegistrationResponse: added
 - NewFinishScaDeviceRegistrationResponseWithDefaults: added
+- NewGetTaxFormFormTypeParameterFromValue: added
+- NewGetTaxFormResponseContentTypeFromValue: added
+- NewGrantOfferContractTypeFromValue: added
+- NewHKLocalAccountIdentificationTypeFromValue: added
+- NewHULocalAccountIdentificationTypeFromValue: added
+- NewIbanAccountIdentificationRequirementTypeFromValue: added
+- NewIbanAccountIdentificationTypeFromValue: added
 - NewLimitStatusFromValue: added
 - NewListAssociationsResponse: added
 - NewListAssociationsResponseWithDefaults: added
@@ -555,41 +1350,110 @@ Compatible changes:
 - NewMandateUpdate: added
 - NewMandateUpdateWithDefaults: added
 - NewMandateWithDefaults: added
+- NewMatchingValuesRestrictionValueFromValue: added
+- NewNOLocalAccountIdentificationTypeFromValue: added
+- NewNZLocalAccountIdentificationTypeFromValue: added
 - NewNetworkTokenActivationDataRequest: added
 - NewNetworkTokenActivationDataRequestWithDefaults: added
 - NewNetworkTokenActivationDataResponse: added
 - NewNetworkTokenActivationDataResponseWithDefaults: added
 - NewNetworkTokenRequestor: added
 - NewNetworkTokenRequestorWithDefaults: added
+- NewNetworkTokenStatusFromValue: added
+- NewNullableAULocalAccountIdentificationType: added
+- NewNullableAccountHolderCapabilityAllowedLevel: added
+- NewNullableAccountHolderCapabilityRequestedLevel: added
+- NewNullableAccountHolderCapabilityVerificationStatus: added
+- NewNullableAccountHolderStatus: added
+- NewNullableAccountHolderUpdateRequestStatus: added
+- NewNullableAccountSupportingEntityCapabilityAllowedLevel: added
+- NewNullableAccountSupportingEntityCapabilityRequestedLevel: added
+- NewNullableAccountSupportingEntityCapabilityVerificationStatus: added
 - NewNullableAdditionalBankIdentificationRequirement: added
+- NewNullableAdditionalBankIdentificationRequirementAdditionalBankIdentificationType: added
+- NewNullableAdditionalBankIdentificationRequirementType: added
+- NewNullableAdditionalBankIdentificationType: added
+- NewNullableAddressRequirementRequiredAddressFields: added
+- NewNullableAddressRequirementType: added
 - NewNullableAmountDTO: added
+- NewNullableAmountMinMaxRequirementType: added
+- NewNullableAmountNonZeroDecimalsRequirementType: added
 - NewNullableAmountUpdate: added
 - NewNullableApproveAssociationRequest: added
 - NewNullableApproveAssociationResponse: added
 - NewNullableApproveTransferLimitRequest: added
 - NewNullableAssociation: added
+- NewNullableAssociationFinaliseRequestType: added
+- NewNullableAssociationFinaliseResponseType: added
+- NewNullableAssociationInitiateRequestType: added
 - NewNullableAssociationListing: added
 - NewNullableAssociationStatus: added
 - NewNullableAuthorisedCardUsers: added
+- NewNullableBRLocalAccountIdentificationType: added
+- NewNullableBalanceAccountBaseStatus: added
 - NewNullableBalanceAccountConfiguration: added
 - NewNullableBalanceAccountConfigurationRequest: added
+- NewNullableBalanceAccountConfigurationRequestFrequency: added
 - NewNullableBalanceAccountConfigurationUpdate: added
+- NewNullableBalanceAccountConfigurationUpdateFrequency: added
 - NewNullableBalanceAccountConfigurations: added
+- NewNullableBalanceAccountStatus: added
+- NewNullableBalanceAccountUpdateRequestStatus: added
 - NewNullableBalancePlatformConfiguration: added
 - NewNullableBalancePlatformConfigurations: added
 - NewNullableBalanceWebhookSetting: added
 - NewNullableBalanceWebhookSettingInfo: added
+- NewNullableBalanceWebhookSettingInfoStatus: added
+- NewNullableBalanceWebhookSettingInfoType: added
 - NewNullableBalanceWebhookSettingInfoUpdate: added
+- NewNullableBalanceWebhookSettingInfoUpdateStatus: added
+- NewNullableBalanceWebhookSettingInfoUpdateType: added
+- NewNullableBankAccountIdentificationTypeRequirementBankAccountIdentificationTypes: added
+- NewNullableBankAccountIdentificationTypeRequirementType: added
+- NewNullableBankAccountModelFormFactor: added
+- NewNullableBankIdentificationIdentificationType: added
 - NewNullableBeginScaDeviceRegistrationRequest: added
 - NewNullableBeginScaDeviceRegistrationResponse: added
+- NewNullableCALocalAccountIdentificationAccountType: added
+- NewNullableCALocalAccountIdentificationType: added
+- NewNullableCZLocalAccountIdentificationType: added
+- NewNullableCapabilityProblemEntityRecursiveType: added
+- NewNullableCapabilityProblemEntityType: added
+- NewNullableCapabilitySettingsFundingSource: added
+- NewNullableCapabilitySettingsInterval: added
+- NewNullableCardFormFactor: added
+- NewNullableCardInfoFormFactor: added
+- NewNullableCardOrderItemDeliveryStatusStatus: added
+- NewNullableCardOrderStatus: added
 - NewNullableCondition: added
+- NewNullableConditionBalanceType: added
+- NewNullableConditionConditionType: added
+- NewNullableCounterpartyTypesRestrictionValue: added
 - NewNullableCreateRecurringTopUp: added
+- NewNullableCreateRecurringTopUpStatus: added
 - NewNullableCreateScaInformation: added
+- NewNullableCreateSweepConfigurationV2Category: added
+- NewNullableCreateSweepConfigurationV2Priorities: added
+- NewNullableCreateSweepConfigurationV2Reason: added
+- NewNullableCreateSweepConfigurationV2Status: added
+- NewNullableCreateSweepConfigurationV2Type: added
 - NewNullableCreateTransferLimitRequest: added
+- NewNullableDKLocalAccountIdentificationType: added
+- NewNullableDayOfWeekRestrictionValue: added
 - NewNullableDefaultErrorResponseEntity: added
+- NewNullableDeviceType: added
+- NewNullableDurationUnit: added
+- NewNullableEntryModesRestrictionValue: added
 - NewNullableExecutionResult: added
 - NewNullableFinishScaDeviceRegistrationRequest: added
 - NewNullableFinishScaDeviceRegistrationResponse: added
+- NewNullableGetTaxFormFormTypeParameter: added
+- NewNullableGetTaxFormResponseContentType: added
+- NewNullableGrantOfferContractType: added
+- NewNullableHKLocalAccountIdentificationType: added
+- NewNullableHULocalAccountIdentificationType: added
+- NewNullableIbanAccountIdentificationRequirementType: added
+- NewNullableIbanAccountIdentificationType: added
 - NewNullableLimitStatus: added
 - NewNullableListAssociationsResponse: added
 - NewNullableListMandatesResponse: added
@@ -600,9 +1464,25 @@ Compatible changes:
 - NewNullableMandateStatus: added
 - NewNullableMandateType: added
 - NewNullableMandateUpdate: added
+- NewNullableMatchingValuesRestrictionValue: added
+- NewNullableNOLocalAccountIdentificationType: added
+- NewNullableNZLocalAccountIdentificationType: added
 - NewNullableNetworkTokenActivationDataRequest: added
 - NewNullableNetworkTokenActivationDataResponse: added
 - NewNullableNetworkTokenRequestor: added
+- NewNullableNetworkTokenStatus: added
+- NewNullableNumberAndBicAccountIdentificationType: added
+- NewNullablePLLocalAccountIdentificationType: added
+- NewNullablePaymentInstrumentInfoStatus: added
+- NewNullablePaymentInstrumentInfoStatusReason: added
+- NewNullablePaymentInstrumentInfoType: added
+- NewNullablePaymentInstrumentRequirementPaymentInstrumentType: added
+- NewNullablePaymentInstrumentRequirementType: added
+- NewNullablePaymentInstrumentStatus: added
+- NewNullablePaymentInstrumentStatusReason: added
+- NewNullablePaymentInstrumentType: added
+- NewNullablePaymentInstrumentUpdateRequestStatus: added
+- NewNullablePaymentInstrumentUpdateRequestStatusReason: added
 - NewNullablePayoutScheduleExecution: added
 - NewNullablePayoutScheduleExecutionDetails: added
 - NewNullablePayoutScheduleExecutions: added
@@ -610,10 +1490,18 @@ Compatible changes:
 - NewNullablePayoutSweepExecutionDetails: added
 - NewNullablePayoutSweepExecutions: added
 - NewNullablePhoneInfo: added
+- NewNullablePhoneNumberPhoneType: added
+- NewNullablePhoneType: added
+- NewNullablePinChangeResponseStatus: added
+- NewNullableProcessingTypesRestrictionValue: added
 - NewNullableRecurringTopUp: added
+- NewNullableRecurringTopUpStatus: added
 - NewNullableRecurringTopUpUpdate: added
+- NewNullableRecurringTopUpUpdateStatus: added
 - NewNullableRecurringTopUpsResult: added
 - NewNullableRemoveAssociationRequest: added
+- NewNullableSELocalAccountIdentificationType: added
+- NewNullableSGLocalAccountIdentificationType: added
 - NewNullableScaDevice: added
 - NewNullableScaDeviceType: added
 - NewNullableScaEntity: added
@@ -626,25 +1514,85 @@ Compatible changes:
 - NewNullableScheduleUpdate: added
 - NewNullableScope: added
 - NewNullableSettingType: added
+- NewNullableSourceAccountTypesRestrictionValue: added
+- NewNullableStringMatchOperation: added
 - NewNullableSubmitScaAssociationRequest: added
 - NewNullableSubmitScaAssociationResponse: added
 - NewNullableSummary: added
+- NewNullableSweepConfigurationV2Category: added
+- NewNullableSweepConfigurationV2Priorities: added
+- NewNullableSweepConfigurationV2Reason: added
+- NewNullableSweepConfigurationV2Status: added
+- NewNullableSweepConfigurationV2Type: added
+- NewNullableSweepScheduleType: added
 - NewNullableTarget: added
+- NewNullableTargetType: added
 - NewNullableTargetUpdate: added
+- NewNullableTargetUpdateType: added
 - NewNullableTaxFormSummaryResponse: added
 - NewNullableTopUpAmount: added
 - NewNullableTopUpAmountUpdate: added
 - NewNullableTopUpCounterparty: added
+- NewNullableTransactionRuleInfoOutcomeType: added
+- NewNullableTransactionRuleInfoPurpose: added
+- NewNullableTransactionRuleInfoRequestType: added
+- NewNullableTransactionRuleInfoStatus: added
+- NewNullableTransactionRuleInfoType: added
+- NewNullableTransactionRuleIntervalDayOfWeek: added
+- NewNullableTransactionRuleIntervalType: added
+- NewNullableTransactionRuleOutcomeType: added
+- NewNullableTransactionRulePurpose: added
+- NewNullableTransactionRuleRequestType: added
+- NewNullableTransactionRuleStatus: added
+- NewNullableTransactionRuleType: added
 - NewNullableTransferLimit: added
 - NewNullableTransferLimitListResponse: added
+- NewNullableTransferRouteCategory: added
+- NewNullableTransferRoutePriority: added
+- NewNullableTransferRouteRequestCategory: added
+- NewNullableTransferRouteRequestPriorities: added
 - NewNullableTransferType: added
 - NewNullableTrigger: added
 - NewNullableTriggerUpdate: added
+- NewNullableUKLocalAccountIdentificationType: added
 - NewNullableUKLocalMandateAccountIdentification: added
+- NewNullableUSInstantPayoutAddressRequirementType: added
+- NewNullableUSInternationalAchAddressRequirementType: added
 - NewNullableUSInternationalAchPriorityRequirement: added
+- NewNullableUSInternationalAchPriorityRequirementType: added
+- NewNullableUSLocalAccountIdentificationAccountType: added
+- NewNullableUSLocalAccountIdentificationType: added
+- NewNullableUpdateNetworkTokenRequestStatus: added
+- NewNullableUpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner: added
+- NewNullableUpdatePaymentInstrumentStatus: added
+- NewNullableUpdatePaymentInstrumentStatusReason: added
+- NewNullableUpdatePaymentInstrumentType: added
+- NewNullableUpdateSweepConfigurationV2Category: added
+- NewNullableUpdateSweepConfigurationV2Priorities: added
+- NewNullableUpdateSweepConfigurationV2Reason: added
+- NewNullableUpdateSweepConfigurationV2Status: added
+- NewNullableUpdateSweepConfigurationV2Type: added
+- NewNullableVerificationDeadlineCapabilities: added
+- NewNullableVerificationErrorCapabilities: added
+- NewNullableVerificationErrorRecursiveCapabilities: added
+- NewNullableVerificationErrorRecursiveType: added
+- NewNullableVerificationErrorType: added
 - NewNullableWalletProviderDeviceType: added
+- NewNullableWalletProviderDeviceTypeValue: added
 - NewNullableWebhookSetting: added
 - NewNullableWebhookSettings: added
+- NewNumberAndBicAccountIdentificationTypeFromValue: added
+- NewPLLocalAccountIdentificationTypeFromValue: added
+- NewPaymentInstrumentInfoStatusFromValue: added
+- NewPaymentInstrumentInfoStatusReasonFromValue: added
+- NewPaymentInstrumentInfoTypeFromValue: added
+- NewPaymentInstrumentRequirementPaymentInstrumentTypeFromValue: added
+- NewPaymentInstrumentRequirementTypeFromValue: added
+- NewPaymentInstrumentStatusFromValue: added
+- NewPaymentInstrumentStatusReasonFromValue: added
+- NewPaymentInstrumentTypeFromValue: added
+- NewPaymentInstrumentUpdateRequestStatusFromValue: added
+- NewPaymentInstrumentUpdateRequestStatusReasonFromValue: added
 - NewPayoutScheduleExecution: added
 - NewPayoutScheduleExecutionDetails: added
 - NewPayoutScheduleExecutionDetailsWithDefaults: added
@@ -659,14 +1607,22 @@ Compatible changes:
 - NewPayoutSweepExecutionsWithDefaults: added
 - NewPhoneInfo: added
 - NewPhoneInfoWithDefaults: added
+- NewPhoneNumberPhoneTypeFromValue: added
+- NewPhoneTypeFromValue: added
+- NewPinChangeResponseStatusFromValue: added
+- NewProcessingTypesRestrictionValueFromValue: added
 - NewRecurringTopUp: added
+- NewRecurringTopUpStatusFromValue: added
 - NewRecurringTopUpUpdate: added
+- NewRecurringTopUpUpdateStatusFromValue: added
 - NewRecurringTopUpUpdateWithDefaults: added
 - NewRecurringTopUpWithDefaults: added
 - NewRecurringTopUpsResult: added
 - NewRecurringTopUpsResultWithDefaults: added
 - NewRemoveAssociationRequest: added
 - NewRemoveAssociationRequestWithDefaults: added
+- NewSELocalAccountIdentificationTypeFromValue: added
+- NewSGLocalAccountIdentificationTypeFromValue: added
 - NewScaDevice: added
 - NewScaDeviceTypeFromValue: added
 - NewScaDeviceWithDefaults: added
@@ -684,14 +1640,24 @@ Compatible changes:
 - NewScheduleWithDefaults: added
 - NewScopeFromValue: added
 - NewSettingTypeFromValue: added
+- NewSourceAccountTypesRestrictionValueFromValue: added
+- NewStringMatchOperationFromValue: added
 - NewSubmitScaAssociationRequest: added
 - NewSubmitScaAssociationRequestWithDefaults: added
 - NewSubmitScaAssociationResponse: added
 - NewSubmitScaAssociationResponseWithDefaults: added
 - NewSummary: added
 - NewSummaryWithDefaults: added
+- NewSweepConfigurationV2CategoryFromValue: added
+- NewSweepConfigurationV2PrioritiesFromValue: added
+- NewSweepConfigurationV2ReasonFromValue: added
+- NewSweepConfigurationV2StatusFromValue: added
+- NewSweepConfigurationV2TypeFromValue: added
+- NewSweepScheduleTypeFromValue: added
 - NewTarget: added
+- NewTargetTypeFromValue: added
 - NewTargetUpdate: added
+- NewTargetUpdateTypeFromValue: added
 - NewTargetUpdateWithDefaults: added
 - NewTargetWithDefaults: added
 - NewTaxFormSummaryResponse: added
@@ -702,54 +1668,156 @@ Compatible changes:
 - NewTopUpAmountWithDefaults: added
 - NewTopUpCounterparty: added
 - NewTopUpCounterpartyWithDefaults: added
+- NewTransactionRuleInfoOutcomeTypeFromValue: added
+- NewTransactionRuleInfoPurposeFromValue: added
+- NewTransactionRuleInfoRequestTypeFromValue: added
+- NewTransactionRuleInfoStatusFromValue: added
+- NewTransactionRuleInfoTypeFromValue: added
+- NewTransactionRuleIntervalDayOfWeekFromValue: added
+- NewTransactionRuleIntervalTypeFromValue: added
+- NewTransactionRuleOutcomeTypeFromValue: added
+- NewTransactionRulePurposeFromValue: added
+- NewTransactionRuleRequestTypeFromValue: added
+- NewTransactionRuleStatusFromValue: added
+- NewTransactionRuleTypeFromValue: added
 - NewTransferLimit: added
 - NewTransferLimitListResponse: added
 - NewTransferLimitListResponseWithDefaults: added
 - NewTransferLimitWithDefaults: added
+- NewTransferRouteCategoryFromValue: added
+- NewTransferRoutePriorityFromValue: added
+- NewTransferRouteRequestCategoryFromValue: added
+- NewTransferRouteRequestPrioritiesFromValue: added
 - NewTransferTypeFromValue: added
 - NewTrigger: added
 - NewTriggerUpdate: added
 - NewTriggerUpdateWithDefaults: added
 - NewTriggerWithDefaults: added
+- NewUKLocalAccountIdentificationTypeFromValue: added
 - NewUKLocalMandateAccountIdentification: added
 - NewUKLocalMandateAccountIdentificationWithDefaults: added
+- NewUSInstantPayoutAddressRequirementTypeFromValue: added
+- NewUSInternationalAchAddressRequirementTypeFromValue: added
 - NewUSInternationalAchPriorityRequirement: added
+- NewUSInternationalAchPriorityRequirementTypeFromValue: added
 - NewUSInternationalAchPriorityRequirementWithDefaults: added
+- NewUSLocalAccountIdentificationAccountTypeFromValue: added
+- NewUSLocalAccountIdentificationTypeFromValue: added
+- NewUpdateNetworkTokenRequestStatusFromValue: added
+- NewUpdatePaymentInstrumentStatusFromValue: added
+- NewUpdatePaymentInstrumentStatusReasonFromValue: added
+- NewUpdatePaymentInstrumentTypeFromValue: added
+- NewUpdateSweepConfigurationV2CategoryFromValue: added
+- NewUpdateSweepConfigurationV2PrioritiesFromValue: added
+- NewUpdateSweepConfigurationV2ReasonFromValue: added
+- NewUpdateSweepConfigurationV2StatusFromValue: added
+- NewUpdateSweepConfigurationV2TypeFromValue: added
+- NewVerificationDeadlineCapabilitiesFromValue: added
+- NewVerificationErrorCapabilitiesFromValue: added
+- NewVerificationErrorRecursiveCapabilitiesFromValue: added
+- NewVerificationErrorRecursiveTypeFromValue: added
+- NewVerificationErrorTypeFromValue: added
 - NewWalletProviderDeviceType: added
+- NewWalletProviderDeviceTypeValueFromValue: added
 - NewWalletProviderDeviceTypeWithDefaults: added
 - NewWebhookSetting: added
 - NewWebhookSettingWithDefaults: added
 - NewWebhookSettings: added
 - NewWebhookSettingsWithDefaults: added
+- NullableAULocalAccountIdentificationType: added
+- NullableAccountHolderCapabilityAllowedLevel: added
+- NullableAccountHolderCapabilityRequestedLevel: added
+- NullableAccountHolderCapabilityVerificationStatus: added
+- NullableAccountHolderStatus: added
+- NullableAccountHolderUpdateRequestStatus: added
+- NullableAccountSupportingEntityCapabilityAllowedLevel: added
+- NullableAccountSupportingEntityCapabilityRequestedLevel: added
+- NullableAccountSupportingEntityCapabilityVerificationStatus: added
 - NullableAdditionalBankIdentificationRequirement: added
+- NullableAdditionalBankIdentificationRequirementAdditionalBankIdentificationType: added
+- NullableAdditionalBankIdentificationRequirementType: added
+- NullableAdditionalBankIdentificationType: added
+- NullableAddressRequirementRequiredAddressFields: added
+- NullableAddressRequirementType: added
 - NullableAmountDTO: added
+- NullableAmountMinMaxRequirementType: added
+- NullableAmountNonZeroDecimalsRequirementType: added
 - NullableAmountUpdate: added
 - NullableApproveAssociationRequest: added
 - NullableApproveAssociationResponse: added
 - NullableApproveTransferLimitRequest: added
 - NullableAssociation: added
+- NullableAssociationFinaliseRequestType: added
+- NullableAssociationFinaliseResponseType: added
+- NullableAssociationInitiateRequestType: added
 - NullableAssociationListing: added
 - NullableAssociationStatus: added
 - NullableAuthorisedCardUsers: added
+- NullableBRLocalAccountIdentificationType: added
+- NullableBalanceAccountBaseStatus: added
 - NullableBalanceAccountConfiguration: added
 - NullableBalanceAccountConfigurationRequest: added
+- NullableBalanceAccountConfigurationRequestFrequency: added
 - NullableBalanceAccountConfigurationUpdate: added
+- NullableBalanceAccountConfigurationUpdateFrequency: added
 - NullableBalanceAccountConfigurations: added
+- NullableBalanceAccountStatus: added
+- NullableBalanceAccountUpdateRequestStatus: added
 - NullableBalancePlatformConfiguration: added
 - NullableBalancePlatformConfigurations: added
 - NullableBalanceWebhookSetting: added
 - NullableBalanceWebhookSettingInfo: added
+- NullableBalanceWebhookSettingInfoStatus: added
+- NullableBalanceWebhookSettingInfoType: added
 - NullableBalanceWebhookSettingInfoUpdate: added
+- NullableBalanceWebhookSettingInfoUpdateStatus: added
+- NullableBalanceWebhookSettingInfoUpdateType: added
+- NullableBankAccountIdentificationTypeRequirementBankAccountIdentificationTypes: added
+- NullableBankAccountIdentificationTypeRequirementType: added
+- NullableBankAccountModelFormFactor: added
+- NullableBankIdentificationIdentificationType: added
 - NullableBeginScaDeviceRegistrationRequest: added
 - NullableBeginScaDeviceRegistrationResponse: added
+- NullableCALocalAccountIdentificationAccountType: added
+- NullableCALocalAccountIdentificationType: added
+- NullableCZLocalAccountIdentificationType: added
+- NullableCapabilityProblemEntityRecursiveType: added
+- NullableCapabilityProblemEntityType: added
+- NullableCapabilitySettingsFundingSource: added
+- NullableCapabilitySettingsInterval: added
+- NullableCardFormFactor: added
+- NullableCardInfoFormFactor: added
+- NullableCardOrderItemDeliveryStatusStatus: added
+- NullableCardOrderStatus: added
 - NullableCondition: added
+- NullableConditionBalanceType: added
+- NullableConditionConditionType: added
+- NullableCounterpartyTypesRestrictionValue: added
 - NullableCreateRecurringTopUp: added
+- NullableCreateRecurringTopUpStatus: added
 - NullableCreateScaInformation: added
+- NullableCreateSweepConfigurationV2Category: added
+- NullableCreateSweepConfigurationV2Priorities: added
+- NullableCreateSweepConfigurationV2Reason: added
+- NullableCreateSweepConfigurationV2Status: added
+- NullableCreateSweepConfigurationV2Type: added
 - NullableCreateTransferLimitRequest: added
+- NullableDKLocalAccountIdentificationType: added
+- NullableDayOfWeekRestrictionValue: added
 - NullableDefaultErrorResponseEntity: added
+- NullableDeviceType: added
+- NullableDurationUnit: added
+- NullableEntryModesRestrictionValue: added
 - NullableExecutionResult: added
 - NullableFinishScaDeviceRegistrationRequest: added
 - NullableFinishScaDeviceRegistrationResponse: added
+- NullableGetTaxFormFormTypeParameter: added
+- NullableGetTaxFormResponseContentType: added
+- NullableGrantOfferContractType: added
+- NullableHKLocalAccountIdentificationType: added
+- NullableHULocalAccountIdentificationType: added
+- NullableIbanAccountIdentificationRequirementType: added
+- NullableIbanAccountIdentificationType: added
 - NullableLimitStatus: added
 - NullableListAssociationsResponse: added
 - NullableListMandatesResponse: added
@@ -760,9 +1828,25 @@ Compatible changes:
 - NullableMandateStatus: added
 - NullableMandateType: added
 - NullableMandateUpdate: added
+- NullableMatchingValuesRestrictionValue: added
+- NullableNOLocalAccountIdentificationType: added
+- NullableNZLocalAccountIdentificationType: added
 - NullableNetworkTokenActivationDataRequest: added
 - NullableNetworkTokenActivationDataResponse: added
 - NullableNetworkTokenRequestor: added
+- NullableNetworkTokenStatus: added
+- NullableNumberAndBicAccountIdentificationType: added
+- NullablePLLocalAccountIdentificationType: added
+- NullablePaymentInstrumentInfoStatus: added
+- NullablePaymentInstrumentInfoStatusReason: added
+- NullablePaymentInstrumentInfoType: added
+- NullablePaymentInstrumentRequirementPaymentInstrumentType: added
+- NullablePaymentInstrumentRequirementType: added
+- NullablePaymentInstrumentStatus: added
+- NullablePaymentInstrumentStatusReason: added
+- NullablePaymentInstrumentType: added
+- NullablePaymentInstrumentUpdateRequestStatus: added
+- NullablePaymentInstrumentUpdateRequestStatusReason: added
 - NullablePayoutScheduleExecution: added
 - NullablePayoutScheduleExecutionDetails: added
 - NullablePayoutScheduleExecutions: added
@@ -770,10 +1854,18 @@ Compatible changes:
 - NullablePayoutSweepExecutionDetails: added
 - NullablePayoutSweepExecutions: added
 - NullablePhoneInfo: added
+- NullablePhoneNumberPhoneType: added
+- NullablePhoneType: added
+- NullablePinChangeResponseStatus: added
+- NullableProcessingTypesRestrictionValue: added
 - NullableRecurringTopUp: added
+- NullableRecurringTopUpStatus: added
 - NullableRecurringTopUpUpdate: added
+- NullableRecurringTopUpUpdateStatus: added
 - NullableRecurringTopUpsResult: added
 - NullableRemoveAssociationRequest: added
+- NullableSELocalAccountIdentificationType: added
+- NullableSGLocalAccountIdentificationType: added
 - NullableScaDevice: added
 - NullableScaDeviceType: added
 - NullableScaEntity: added
@@ -786,30 +1878,82 @@ Compatible changes:
 - NullableScheduleUpdate: added
 - NullableScope: added
 - NullableSettingType: added
+- NullableSourceAccountTypesRestrictionValue: added
+- NullableStringMatchOperation: added
 - NullableSubmitScaAssociationRequest: added
 - NullableSubmitScaAssociationResponse: added
 - NullableSummary: added
+- NullableSweepConfigurationV2Category: added
+- NullableSweepConfigurationV2Priorities: added
+- NullableSweepConfigurationV2Reason: added
+- NullableSweepConfigurationV2Status: added
+- NullableSweepConfigurationV2Type: added
+- NullableSweepScheduleType: added
 - NullableTarget: added
+- NullableTargetType: added
 - NullableTargetUpdate: added
+- NullableTargetUpdateType: added
 - NullableTaxFormSummaryResponse: added
 - NullableTopUpAmount: added
 - NullableTopUpAmountUpdate: added
 - NullableTopUpCounterparty: added
+- NullableTransactionRuleInfoOutcomeType: added
+- NullableTransactionRuleInfoPurpose: added
+- NullableTransactionRuleInfoRequestType: added
+- NullableTransactionRuleInfoStatus: added
+- NullableTransactionRuleInfoType: added
+- NullableTransactionRuleIntervalDayOfWeek: added
+- NullableTransactionRuleIntervalType: added
+- NullableTransactionRuleOutcomeType: added
+- NullableTransactionRulePurpose: added
+- NullableTransactionRuleRequestType: added
+- NullableTransactionRuleStatus: added
+- NullableTransactionRuleType: added
 - NullableTransferLimit: added
 - NullableTransferLimitListResponse: added
+- NullableTransferRouteCategory: added
+- NullableTransferRoutePriority: added
+- NullableTransferRouteRequestCategory: added
+- NullableTransferRouteRequestPriorities: added
 - NullableTransferType: added
 - NullableTrigger: added
 - NullableTriggerUpdate: added
+- NullableUKLocalAccountIdentificationType: added
 - NullableUKLocalMandateAccountIdentification: added
+- NullableUSInstantPayoutAddressRequirementType: added
+- NullableUSInternationalAchAddressRequirementType: added
 - NullableUSInternationalAchPriorityRequirement: added
+- NullableUSInternationalAchPriorityRequirementType: added
+- NullableUSLocalAccountIdentificationAccountType: added
+- NullableUSLocalAccountIdentificationType: added
+- NullableUpdateNetworkTokenRequestStatus: added
+- NullableUpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner: added
+- NullableUpdatePaymentInstrumentStatus: added
+- NullableUpdatePaymentInstrumentStatusReason: added
+- NullableUpdatePaymentInstrumentType: added
+- NullableUpdateSweepConfigurationV2Category: added
+- NullableUpdateSweepConfigurationV2Priorities: added
+- NullableUpdateSweepConfigurationV2Reason: added
+- NullableUpdateSweepConfigurationV2Status: added
+- NullableUpdateSweepConfigurationV2Type: added
+- NullableVerificationDeadlineCapabilities: added
+- NullableVerificationErrorCapabilities: added
+- NullableVerificationErrorRecursiveCapabilities: added
+- NullableVerificationErrorRecursiveType: added
+- NullableVerificationErrorType: added
 - NullableWalletProviderDeviceType: added
+- NullableWalletProviderDeviceTypeValue: added
 - NullableWebhookSetting: added
 - NullableWebhookSettings: added
+- NumberAndBicAccountIdentificationType: added
 - NumberAndBicAccountIdentificationTypeNumberAndBic: added
+- PLLocalAccountIdentificationType: added
 - PLLocalAccountIdentificationTypePlLocal: added
+- PaymentInstrumentInfoStatus: added
 - PaymentInstrumentInfoStatusActive: added
 - PaymentInstrumentInfoStatusClosed: added
 - PaymentInstrumentInfoStatusInactive: added
+- PaymentInstrumentInfoStatusReason: added
 - PaymentInstrumentInfoStatusReasonAccountClosure: added
 - PaymentInstrumentInfoStatusReasonDamaged: added
 - PaymentInstrumentInfoStatusReasonEndOfLife: added
@@ -820,14 +1964,19 @@ Compatible changes:
 - PaymentInstrumentInfoStatusReasonSuspectedFraud: added
 - PaymentInstrumentInfoStatusReasonTransactionRule: added
 - PaymentInstrumentInfoStatusSuspended: added
+- PaymentInstrumentInfoType: added
 - PaymentInstrumentInfoTypeBankAccount: added
 - PaymentInstrumentInfoTypeCard: added
+- PaymentInstrumentRequirementPaymentInstrumentType: added
 - PaymentInstrumentRequirementPaymentInstrumentTypeBankAccount: added
 - PaymentInstrumentRequirementPaymentInstrumentTypeCard: added
+- PaymentInstrumentRequirementType: added
 - PaymentInstrumentRequirementTypePaymentInstrumentRequirement: added
+- PaymentInstrumentStatus: added
 - PaymentInstrumentStatusActive: added
 - PaymentInstrumentStatusClosed: added
 - PaymentInstrumentStatusInactive: added
+- PaymentInstrumentStatusReason: added
 - PaymentInstrumentStatusReasonAccountClosure: added
 - PaymentInstrumentStatusReasonDamaged: added
 - PaymentInstrumentStatusReasonEndOfLife: added
@@ -838,11 +1987,14 @@ Compatible changes:
 - PaymentInstrumentStatusReasonSuspectedFraud: added
 - PaymentInstrumentStatusReasonTransactionRule: added
 - PaymentInstrumentStatusSuspended: added
+- PaymentInstrumentType: added
 - PaymentInstrumentTypeBankAccount: added
 - PaymentInstrumentTypeCard: added
+- PaymentInstrumentUpdateRequestStatus: added
 - PaymentInstrumentUpdateRequestStatusActive: added
 - PaymentInstrumentUpdateRequestStatusClosed: added
 - PaymentInstrumentUpdateRequestStatusInactive: added
+- PaymentInstrumentUpdateRequestStatusReason: added
 - PaymentInstrumentUpdateRequestStatusReasonAccountClosure: added
 - PaymentInstrumentUpdateRequestStatusReasonDamaged: added
 - PaymentInstrumentUpdateRequestStatusReasonEndOfLife: added
@@ -862,15 +2014,19 @@ Compatible changes:
 - PayoutSweepExecutionDetails: added
 - PayoutSweepExecutions: added
 - PhoneInfo: added
+- PhoneNumberPhoneType: added
 - PhoneNumberPhoneTypeFax: added
 - PhoneNumberPhoneTypeLandline: added
 - PhoneNumberPhoneTypeMobile: added
 - PhoneNumberPhoneTypeSIP: added
+- PhoneType: added
 - PhoneTypeLandline: added
 - PhoneTypeMobile: added
+- PinChangeResponseStatus: added
 - PinChangeResponseStatusCompleted: added
 - PinChangeResponseStatusPending: added
 - PinChangeResponseStatusUnavailable: added
+- ProcessingTypesRestrictionValue: added
 - ProcessingTypesRestrictionValueAtmWithdraw: added
 - ProcessingTypesRestrictionValueBalanceInquiry: added
 - ProcessingTypesRestrictionValueEcommerce: added
@@ -880,9 +2036,11 @@ Compatible changes:
 - ProcessingTypesRestrictionValueToken: added
 - ProcessingTypesRestrictionValueUnknown: added
 - RecurringTopUp: added
+- RecurringTopUpStatus: added
 - RecurringTopUpStatusActive: added
 - RecurringTopUpStatusInactive: added
 - RecurringTopUpUpdate: added
+- RecurringTopUpUpdateStatus: added
 - RecurringTopUpUpdateStatusActive: added
 - RecurringTopUpUpdateStatusInactive: added
 - RecurringTopUpsApi: added
@@ -896,47 +2054,51 @@ Compatible changes:
 - SCAAssociationManagementApiApproveAssociationInput: added
 - SCAAssociationManagementApiListAssociationsInput: added
 - SCAAssociationManagementApiRemoveAssociationInput: added
-- SCADEVICETYPE_ANDROID: added
-- SCADEVICETYPE_BROWSER: added
-- SCADEVICETYPE_IOS: added
 - SCADeviceManagementApi: added
 - SCADeviceManagementApiBeginScaDeviceRegistrationInput: added
 - SCADeviceManagementApiDeleteScaDeviceInput: added
 - SCADeviceManagementApiFinishScaDeviceRegistrationInput: added
 - SCADeviceManagementApiSubmitScaAssociationInput: added
-- SCAENTITYTYPE_ACCOUNT_HOLDER: added
-- SCAENTITYTYPE_LEGAL_ENTITY: added
-- SCAENTITYTYPE_PAYMENT_INSTRUMENT: added
-- SCAEXEMPTION_ALREADY_PERFORMED: added
-- SCAEXEMPTION_INITIAL_LIMIT: added
-- SCAEXEMPTION_LOWER_LIMIT: added
-- SCAEXEMPTION_NOT_REGULATED: added
-- SCAEXEMPTION_SET_BY_PLATFORM: added
-- SCASTATUS_NOT_PERFORMED: added
-- SCASTATUS_PENDING: added
-- SCASTATUS_PERFORMED: added
-- SCHEDULETYPE_MONTHLY: added
-- SCHEDULETYPE_WEEKDAYS: added
-- SCHEDULETYPE_WEEKLY: added
-- SCOPE_PER_DAY: added
-- SCOPE_PER_TRANSACTION: added
+- SELocalAccountIdentificationType: added
 - SELocalAccountIdentificationTypeSeLocal: added
-- SETTINGTYPE_BALANCE: added
+- SGLocalAccountIdentificationType: added
 - SGLocalAccountIdentificationTypeSgLocal: added
 - ScaDevice: added
 - ScaDeviceType: added
+- ScaDeviceTypeAndroid: added
+- ScaDeviceTypeBrowser: added
+- ScaDeviceTypeIos: added
 - ScaEntity: added
 - ScaEntityType: added
+- ScaEntityTypeAccountHolder: added
+- ScaEntityTypeLegalEntity: added
+- ScaEntityTypePaymentInstrument: added
 - ScaExemption: added
+- ScaExemptionAlreadyPerformed: added
+- ScaExemptionInitialLimit: added
+- ScaExemptionLowerLimit: added
+- ScaExemptionNotRegulated: added
+- ScaExemptionSetByPlatform: added
 - ScaInformation: added
 - ScaStatus: added
+- ScaStatusNotPerformed: added
+- ScaStatusPending: added
+- ScaStatusPerformed: added
 - Schedule: added
 - ScheduleType: added
+- ScheduleTypeMonthly: added
+- ScheduleTypeWeekdays: added
+- ScheduleTypeWeekly: added
 - ScheduleUpdate: added
 - Scope: added
+- ScopePerDay: added
+- ScopePerTransaction: added
 - SettingType: added
+- SettingTypeBalance: added
+- SourceAccountTypesRestrictionValue: added
 - SourceAccountTypesRestrictionValueBalanceAccount: added
 - SourceAccountTypesRestrictionValueBusinessAccount: added
+- StringMatchOperation: added
 - StringMatchOperationContains: added
 - StringMatchOperationEndsWith: added
 - StringMatchOperationIsEqualTo: added
@@ -944,15 +2106,18 @@ Compatible changes:
 - SubmitScaAssociationRequest: added
 - SubmitScaAssociationResponse: added
 - Summary: added
+- SweepConfigurationV2Category: added
 - SweepConfigurationV2CategoryBank: added
 - SweepConfigurationV2CategoryInternal: added
 - SweepConfigurationV2CategoryPlatformPayment: added
+- SweepConfigurationV2Priorities: added
 - SweepConfigurationV2PrioritiesCrossBorder: added
 - SweepConfigurationV2PrioritiesFast: added
 - SweepConfigurationV2PrioritiesInstant: added
 - SweepConfigurationV2PrioritiesInternal: added
 - SweepConfigurationV2PrioritiesRegular: added
 - SweepConfigurationV2PrioritiesWire: added
+- SweepConfigurationV2Reason: added
 - SweepConfigurationV2ReasonAccountHierarchyNotActive: added
 - SweepConfigurationV2ReasonAmountLimitExceeded: added
 - SweepConfigurationV2ReasonApproved: added
@@ -969,22 +2134,25 @@ Compatible changes:
 - SweepConfigurationV2ReasonRouteNotFound: added
 - SweepConfigurationV2ReasonTransferInstrumentDoesNotExist: added
 - SweepConfigurationV2ReasonUnknown: added
+- SweepConfigurationV2Status: added
 - SweepConfigurationV2StatusActive: added
 - SweepConfigurationV2StatusInactive: added
+- SweepConfigurationV2Type: added
 - SweepConfigurationV2TypePull: added
 - SweepConfigurationV2TypePush: added
+- SweepScheduleType: added
 - SweepScheduleTypeBalance: added
 - SweepScheduleTypeCron: added
 - SweepScheduleTypeDaily: added
 - SweepScheduleTypeMonthly: added
 - SweepScheduleTypeWeekly: added
-- TRANSFERTYPE_ALL: added
-- TRANSFERTYPE_INSTANT: added
 - Target: added
+- TargetType: added
 - TargetTypeAccountHolder: added
 - TargetTypeBalanceAccount: added
 - TargetTypeBalancePlatform: added
 - TargetUpdate: added
+- TargetUpdateType: added
 - TargetUpdateTypeAccountHolder: added
 - TargetUpdateTypeBalanceAccount: added
 - TargetUpdateTypeBalancePlatform: added
@@ -996,26 +2164,32 @@ Compatible changes:
 - TransactionRule.Purpose: added
 - TransactionRuleInfo.OverridesRule: added
 - TransactionRuleInfo.Purpose: added
+- TransactionRuleInfoOutcomeType: added
 - TransactionRuleInfoOutcomeTypeEnforceSCA: added
 - TransactionRuleInfoOutcomeTypeHardBlock: added
 - TransactionRuleInfoOutcomeTypeScoreBased: added
 - TransactionRuleInfoOutcomeTypeTimedBlock: added
+- TransactionRuleInfoPurpose: added
 - TransactionRuleInfoPurposeCompliance: added
 - TransactionRuleInfoPurposeFraud: added
 - TransactionRuleInfoPurposeInternalPolicy: added
 - TransactionRuleInfoPurposePolicy: added
 - TransactionRuleInfoPurposeSystem: added
+- TransactionRuleInfoRequestType: added
 - TransactionRuleInfoRequestTypeAuthentication: added
 - TransactionRuleInfoRequestTypeAuthorization: added
 - TransactionRuleInfoRequestTypeBankTransfer: added
 - TransactionRuleInfoRequestTypeTokenization: added
+- TransactionRuleInfoStatus: added
 - TransactionRuleInfoStatusActive: added
 - TransactionRuleInfoStatusInactive: added
+- TransactionRuleInfoType: added
 - TransactionRuleInfoTypeAllowList: added
 - TransactionRuleInfoTypeBlockList: added
 - TransactionRuleInfoTypeBypass: added
 - TransactionRuleInfoTypeMaxUsage: added
 - TransactionRuleInfoTypeVelocity: added
+- TransactionRuleIntervalDayOfWeek: added
 - TransactionRuleIntervalDayOfWeekFriday: added
 - TransactionRuleIntervalDayOfWeekMonday: added
 - TransactionRuleIntervalDayOfWeekSaturday: added
@@ -1023,6 +2197,7 @@ Compatible changes:
 - TransactionRuleIntervalDayOfWeekThursday: added
 - TransactionRuleIntervalDayOfWeekTuesday: added
 - TransactionRuleIntervalDayOfWeekWednesday: added
+- TransactionRuleIntervalType: added
 - TransactionRuleIntervalTypeDaily: added
 - TransactionRuleIntervalTypeLifetime: added
 - TransactionRuleIntervalTypeMonthly: added
@@ -1030,22 +2205,27 @@ Compatible changes:
 - TransactionRuleIntervalTypeRolling: added
 - TransactionRuleIntervalTypeSliding: added
 - TransactionRuleIntervalTypeWeekly: added
+- TransactionRuleOutcomeType: added
 - TransactionRuleOutcomeTypeEnforceSCA: added
 - TransactionRuleOutcomeTypeHardBlock: added
 - TransactionRuleOutcomeTypeScoreBased: added
 - TransactionRuleOutcomeTypeTimedBlock: added
+- TransactionRulePurpose: added
 - TransactionRulePurposeCompliance: added
 - TransactionRulePurposeFraud: added
 - TransactionRulePurposeInternalPolicy: added
 - TransactionRulePurposePolicy: added
 - TransactionRulePurposeSystem: added
+- TransactionRuleRequestType: added
 - TransactionRuleRequestTypeAuthentication: added
 - TransactionRuleRequestTypeAuthorization: added
 - TransactionRuleRequestTypeBankTransfer: added
 - TransactionRuleRequestTypeTokenization: added
 - TransactionRuleRestrictions.WalletProviderDeviceType: added
+- TransactionRuleStatus: added
 - TransactionRuleStatusActive: added
 - TransactionRuleStatusInactive: added
+- TransactionRuleType: added
 - TransactionRuleTypeAllowList: added
 - TransactionRuleTypeBlockList: added
 - TransactionRuleTypeBypass: added
@@ -1065,6 +2245,7 @@ Compatible changes:
 - TransferLimitsBalancePlatformLevelApiDeletePendingTransferLimitInput: added
 - TransferLimitsBalancePlatformLevelApiGetSpecificTransferLimitInput: added
 - TransferLimitsBalancePlatformLevelApiGetTransferLimitsInput: added
+- TransferRouteCategory: added
 - TransferRouteCategoryBank: added
 - TransferRouteCategoryCard: added
 - TransferRouteCategoryGrants: added
@@ -1075,13 +2256,16 @@ Compatible changes:
 - TransferRouteCategoryPlatformPayment: added
 - TransferRouteCategoryTopUp: added
 - TransferRouteCategoryUpgrade: added
+- TransferRoutePriority: added
 - TransferRoutePriorityCrossBorder: added
 - TransferRoutePriorityFast: added
 - TransferRoutePriorityInstant: added
 - TransferRoutePriorityInternal: added
 - TransferRoutePriorityRegular: added
 - TransferRoutePriorityWire: added
+- TransferRouteRequestCategory: added
 - TransferRouteRequestCategoryBank: added
+- TransferRouteRequestPriorities: added
 - TransferRouteRequestPrioritiesCrossBorder: added
 - TransferRouteRequestPrioritiesFast: added
 - TransferRouteRequestPrioritiesInstant: added
@@ -1091,24 +2275,36 @@ Compatible changes:
 - TransferRouteRequirementsInner.AdditionalBankIdentificationRequirement: added
 - TransferRouteRequirementsInner.USInternationalAchPriorityRequirement: added
 - TransferType: added
+- TransferTypeAll: added
+- TransferTypeInstant: added
 - Trigger: added
 - TriggerUpdate: added
+- UKLocalAccountIdentificationType: added
 - UKLocalAccountIdentificationTypeUkLocal: added
 - UKLocalMandateAccountIdentification: added
+- USInstantPayoutAddressRequirementType: added
 - USInstantPayoutAddressRequirementTypeUsInstantPayoutAddressRequirement: added
+- USInternationalAchAddressRequirementType: added
 - USInternationalAchAddressRequirementTypeUsInternationalAchAddressRequirement: added
 - USInternationalAchPriorityRequirement: added
 - USInternationalAchPriorityRequirementAsTransferRouteRequirementsInner: added
+- USInternationalAchPriorityRequirementType: added
 - USInternationalAchPriorityRequirementTypeUsInternationalAchPriorityRequirement: added
+- USLocalAccountIdentificationAccountType: added
 - USLocalAccountIdentificationAccountTypeChecking: added
 - USLocalAccountIdentificationAccountTypeSavings: added
+- USLocalAccountIdentificationType: added
 - USLocalAccountIdentificationTypeUsLocal: added
+- UpdateNetworkTokenRequestStatus: added
 - UpdateNetworkTokenRequestStatusActive: added
 - UpdateNetworkTokenRequestStatusClosed: added
 - UpdateNetworkTokenRequestStatusSuspended: added
+- UpdatePaymentInstrumentAdditionalBankAccountIdentificationsInner: added
+- UpdatePaymentInstrumentStatus: added
 - UpdatePaymentInstrumentStatusActive: added
 - UpdatePaymentInstrumentStatusClosed: added
 - UpdatePaymentInstrumentStatusInactive: added
+- UpdatePaymentInstrumentStatusReason: added
 - UpdatePaymentInstrumentStatusReasonAccountClosure: added
 - UpdatePaymentInstrumentStatusReasonDamaged: added
 - UpdatePaymentInstrumentStatusReasonEndOfLife: added
@@ -1119,17 +2315,21 @@ Compatible changes:
 - UpdatePaymentInstrumentStatusReasonSuspectedFraud: added
 - UpdatePaymentInstrumentStatusReasonTransactionRule: added
 - UpdatePaymentInstrumentStatusSuspended: added
+- UpdatePaymentInstrumentType: added
 - UpdatePaymentInstrumentTypeBankAccount: added
 - UpdatePaymentInstrumentTypeCard: added
+- UpdateSweepConfigurationV2Category: added
 - UpdateSweepConfigurationV2CategoryBank: added
 - UpdateSweepConfigurationV2CategoryInternal: added
 - UpdateSweepConfigurationV2CategoryPlatformPayment: added
+- UpdateSweepConfigurationV2Priorities: added
 - UpdateSweepConfigurationV2PrioritiesCrossBorder: added
 - UpdateSweepConfigurationV2PrioritiesFast: added
 - UpdateSweepConfigurationV2PrioritiesInstant: added
 - UpdateSweepConfigurationV2PrioritiesInternal: added
 - UpdateSweepConfigurationV2PrioritiesRegular: added
 - UpdateSweepConfigurationV2PrioritiesWire: added
+- UpdateSweepConfigurationV2Reason: added
 - UpdateSweepConfigurationV2ReasonAccountHierarchyNotActive: added
 - UpdateSweepConfigurationV2ReasonAmountLimitExceeded: added
 - UpdateSweepConfigurationV2ReasonApproved: added
@@ -1146,10 +2346,13 @@ Compatible changes:
 - UpdateSweepConfigurationV2ReasonRouteNotFound: added
 - UpdateSweepConfigurationV2ReasonTransferInstrumentDoesNotExist: added
 - UpdateSweepConfigurationV2ReasonUnknown: added
+- UpdateSweepConfigurationV2Status: added
 - UpdateSweepConfigurationV2StatusActive: added
 - UpdateSweepConfigurationV2StatusInactive: added
+- UpdateSweepConfigurationV2Type: added
 - UpdateSweepConfigurationV2TypePull: added
 - UpdateSweepConfigurationV2TypePush: added
+- VerificationDeadlineCapabilities: added
 - VerificationDeadlineCapabilitiesAcceptExternalFunding: added
 - VerificationDeadlineCapabilitiesAcceptPspFunding: added
 - VerificationDeadlineCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -1205,6 +2408,7 @@ Compatible changes:
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorCapabilities: added
 - VerificationErrorCapabilitiesAcceptExternalFunding: added
 - VerificationErrorCapabilitiesAcceptPspFunding: added
 - VerificationErrorCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -1260,6 +2464,7 @@ Compatible changes:
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorRecursiveCapabilities: added
 - VerificationErrorRecursiveCapabilitiesAcceptExternalFunding: added
 - VerificationErrorRecursiveCapabilitiesAcceptPspFunding: added
 - VerificationErrorRecursiveCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -1315,15 +2520,18 @@ Compatible changes:
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorRecursiveType: added
 - VerificationErrorRecursiveTypeDataMissing: added
 - VerificationErrorRecursiveTypeDataReview: added
 - VerificationErrorRecursiveTypeInvalidInput: added
 - VerificationErrorRecursiveTypePendingStatus: added
+- VerificationErrorType: added
 - VerificationErrorTypeDataMissing: added
 - VerificationErrorTypeDataReview: added
 - VerificationErrorTypeInvalidInput: added
 - VerificationErrorTypePendingStatus: added
 - WalletProviderDeviceType: added
+- WalletProviderDeviceTypeValue: added
 - WalletProviderDeviceTypeValueCARD: added
 - WalletProviderDeviceTypeValueMOBILEPHONE: added
 - WalletProviderDeviceTypeValueOTHER: added

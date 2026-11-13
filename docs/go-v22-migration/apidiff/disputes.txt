@@ -1,0 +1,2 @@
+Incompatible changes:
+- GeneralApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client

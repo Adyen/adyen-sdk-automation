@@ -24,6 +24,9 @@ tasks.withType(GenerateTask::class).configureEach {
         "apiDocs" to "false",
         "modelDocs" to "false"
     ))
+    // Inline enums become named string types (PaymentRequestRecurringProcessingModel), like
+    // enums declared as components.
+    inlineSchemaOptions.set(mapOf("RESOLVE_INLINE_ENUMS" to "true", "SKIP_SCHEMA_REUSE" to "true"))
 }
 
 // Package, directory, service name, error model and deployment of each service (GoServiceLayout).
@@ -44,7 +47,7 @@ val prepareFixtureSpec = tasks.register("prepareFixtureSpec") {
         target.writeText(
             com.adyen.sdk.SpecProcessor.process(
                 fixtureSpec.asFile.readText(),
-                com.adyen.sdk.SpecProcessor.Options(downgradeOpenApiVersion = false, normalizeForOpenApi31 = true)
+                com.adyen.sdk.SpecProcessor.Options(downgradeOpenApiVersion = false, normalizeForOpenApi31 = true, nameArrayItemEnums = true, enumValuesAsVarNames = true)
             )
         )
     }
@@ -63,6 +66,7 @@ val generateFixtures = tasks.register<GenerateTask>("generateFixtures") {
     validateSpec.set(false)
     skipValidateSpec.set(true)
     additionalProperties.set(mapOf("serviceName" to "Fixtures"))
+    doFirst { project.delete(outputDir.get()) }
 }
 val deployFixtures = tasks.register<Copy>("deployFixtures") {
     group = "deploy"

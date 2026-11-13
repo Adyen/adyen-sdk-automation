@@ -1,8 +1,105 @@
+Incompatible changes:
+- (*PayoutRequest).GetShopperInteraction: changed from func() string to func() PayoutRequestShopperInteraction
+- (*PayoutRequest).GetShopperInteractionOk: changed from func() (*string, bool) to func() (*PayoutRequestShopperInteraction, bool)
+- (*PayoutRequest).SetShopperInteraction: changed from func(string) to func(PayoutRequestShopperInteraction)
+- (*PayoutResponse).GetResultCode: changed from func() string to func() PayoutResponseResultCode
+- (*PayoutResponse).GetResultCodeOk: changed from func() (*string, bool) to func() (*PayoutResponseResultCode, bool)
+- (*PayoutResponse).SetResultCode: changed from func(string) to func(PayoutResponseResultCode)
+- (*Recurring).GetContract: changed from func() string to func() RecurringContract
+- (*Recurring).GetContractOk: changed from func() (*string, bool) to func() (*RecurringContract, bool)
+- (*Recurring).GetTokenService: changed from func() string to func() RecurringTokenService
+- (*Recurring).GetTokenServiceOk: changed from func() (*string, bool) to func() (*RecurringTokenService, bool)
+- (*Recurring).SetContract: changed from func(string) to func(RecurringContract)
+- (*Recurring).SetTokenService: changed from func(string) to func(RecurringTokenService)
+- (*ResponseAdditionalDataCommon).GetFraudResultType: changed from func() string to func() ResponseAdditionalDataCommonFraudResultType
+- (*ResponseAdditionalDataCommon).GetFraudResultTypeOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonFraudResultType, bool)
+- (*ResponseAdditionalDataCommon).GetFraudRiskLevel: changed from func() string to func() ResponseAdditionalDataCommonFraudRiskLevel
+- (*ResponseAdditionalDataCommon).GetFraudRiskLevelOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonFraudRiskLevel, bool)
+- (*ResponseAdditionalDataCommon).GetRecurringProcessingModel: changed from func() string to func() ResponseAdditionalDataCommonRecurringProcessingModel
+- (*ResponseAdditionalDataCommon).GetRecurringProcessingModelOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonRecurringProcessingModel, bool)
+- (*ResponseAdditionalDataCommon).GetTokenizationStoreOperationType: changed from func() string to func() ResponseAdditionalDataCommonTokenizationStoreOperationType
+- (*ResponseAdditionalDataCommon).GetTokenizationStoreOperationTypeOk: changed from func() (*string, bool) to func() (*ResponseAdditionalDataCommonTokenizationStoreOperationType, bool)
+- (*ResponseAdditionalDataCommon).SetFraudResultType: changed from func(string) to func(ResponseAdditionalDataCommonFraudResultType)
+- (*ResponseAdditionalDataCommon).SetFraudRiskLevel: changed from func(string) to func(ResponseAdditionalDataCommonFraudRiskLevel)
+- (*ResponseAdditionalDataCommon).SetRecurringProcessingModel: changed from func(string) to func(ResponseAdditionalDataCommonRecurringProcessingModel)
+- (*ResponseAdditionalDataCommon).SetTokenizationStoreOperationType: changed from func(string) to func(ResponseAdditionalDataCommonTokenizationStoreOperationType)
+- (*StoreDetailAndSubmitRequest).GetEntityType: changed from func() string to func() StoreDetailAndSubmitRequestEntityType
+- (*StoreDetailAndSubmitRequest).GetEntityTypeOk: changed from func() (*string, bool) to func() (*StoreDetailAndSubmitRequestEntityType, bool)
+- (*StoreDetailAndSubmitRequest).SetEntityType: changed from func(string) to func(StoreDetailAndSubmitRequestEntityType)
+- (*StoreDetailRequest).GetEntityType: changed from func() string to func() StoreDetailRequestEntityType
+- (*StoreDetailRequest).GetEntityTypeOk: changed from func() (*string, bool) to func() (*StoreDetailRequestEntityType, bool)
+- (*StoreDetailRequest).SetEntityType: changed from func(string) to func(StoreDetailRequestEntityType)
+- (*SubmitRequest).GetEntityType: changed from func() string to func() SubmitRequestEntityType
+- (*SubmitRequest).GetEntityTypeOk: changed from func() (*string, bool) to func() (*SubmitRequestEntityType, bool)
+- (*SubmitRequest).SetEntityType: changed from func(string) to func(SubmitRequestEntityType)
+- InitializationApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- InstantPayoutsApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- NewAPIClient: changed from func(*github.com/adyen/adyen-go-api-library/v21/src/common.Client) *APIClient to func(*github.com/adyen/adyen-go-api-library/v21/common.Client) *APIClient
+- NewStoreDetailAndSubmitRequest: changed from func(Amount, string, string, string, string, Recurring, string, string, string) *StoreDetailAndSubmitRequest to func(Amount, string, StoreDetailAndSubmitRequestEntityType, string, string, Recurring, string, string, string) *StoreDetailAndSubmitRequest
+- NewStoreDetailRequest: changed from func(string, string, string, string, Recurring, string, string) *StoreDetailRequest to func(string, StoreDetailRequestEntityType, string, string, Recurring, string, string) *StoreDetailRequest
+- PayoutRequest.ShopperInteraction: changed from *string to *PayoutRequestShopperInteraction
+- PayoutResponse.ResultCode: changed from *string to *PayoutResponseResultCode
+- Recurring.Contract: changed from *string to *RecurringContract
+- Recurring.TokenService: changed from *string to *RecurringTokenService
+- ResponseAdditionalDataCommon.FraudResultType: changed from *string to *ResponseAdditionalDataCommonFraudResultType
+- ResponseAdditionalDataCommon.FraudRiskLevel: changed from *string to *ResponseAdditionalDataCommonFraudRiskLevel
+- ResponseAdditionalDataCommon.RecurringProcessingModel: changed from *string to *ResponseAdditionalDataCommonRecurringProcessingModel
+- ResponseAdditionalDataCommon.TokenizationStoreOperationType: changed from *string to *ResponseAdditionalDataCommonTokenizationStoreOperationType
+- ReviewingApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- StoreDetailAndSubmitRequest.EntityType: changed from string to StoreDetailAndSubmitRequestEntityType
+- StoreDetailRequest.EntityType: changed from string to StoreDetailRequestEntityType
+- SubmitRequest.EntityType: changed from *string to *SubmitRequestEntityType
 Compatible changes:
+- AllowedPayoutRequestShopperInteractionEnumValues: added
+- AllowedPayoutResponseResultCodeEnumValues: added
+- AllowedRecurringContractEnumValues: added
+- AllowedRecurringTokenServiceEnumValues: added
+- AllowedResponseAdditionalDataCommonFraudResultTypeEnumValues: added
+- AllowedResponseAdditionalDataCommonFraudRiskLevelEnumValues: added
+- AllowedResponseAdditionalDataCommonRecurringProcessingModelEnumValues: added
+- AllowedResponseAdditionalDataCommonTokenizationStoreOperationTypeEnumValues: added
+- AllowedStoreDetailAndSubmitRequestEntityTypeEnumValues: added
+- AllowedStoreDetailRequestEntityTypeEnumValues: added
+- AllowedSubmitRequestEntityTypeEnumValues: added
+- NewNullablePayoutRequestShopperInteraction: added
+- NewNullablePayoutResponseResultCode: added
+- NewNullableRecurringContract: added
+- NewNullableRecurringTokenService: added
+- NewNullableResponseAdditionalDataCommonFraudResultType: added
+- NewNullableResponseAdditionalDataCommonFraudRiskLevel: added
+- NewNullableResponseAdditionalDataCommonRecurringProcessingModel: added
+- NewNullableResponseAdditionalDataCommonTokenizationStoreOperationType: added
+- NewNullableStoreDetailAndSubmitRequestEntityType: added
+- NewNullableStoreDetailRequestEntityType: added
+- NewNullableSubmitRequestEntityType: added
+- NewPayoutRequestShopperInteractionFromValue: added
+- NewPayoutResponseResultCodeFromValue: added
+- NewRecurringContractFromValue: added
+- NewRecurringTokenServiceFromValue: added
+- NewResponseAdditionalDataCommonFraudResultTypeFromValue: added
+- NewResponseAdditionalDataCommonFraudRiskLevelFromValue: added
+- NewResponseAdditionalDataCommonRecurringProcessingModelFromValue: added
+- NewResponseAdditionalDataCommonTokenizationStoreOperationTypeFromValue: added
+- NewStoreDetailAndSubmitRequestEntityTypeFromValue: added
+- NewStoreDetailRequestEntityTypeFromValue: added
+- NewSubmitRequestEntityTypeFromValue: added
+- NullablePayoutRequestShopperInteraction: added
+- NullablePayoutResponseResultCode: added
+- NullableRecurringContract: added
+- NullableRecurringTokenService: added
+- NullableResponseAdditionalDataCommonFraudResultType: added
+- NullableResponseAdditionalDataCommonFraudRiskLevel: added
+- NullableResponseAdditionalDataCommonRecurringProcessingModel: added
+- NullableResponseAdditionalDataCommonTokenizationStoreOperationType: added
+- NullableStoreDetailAndSubmitRequestEntityType: added
+- NullableStoreDetailRequestEntityType: added
+- NullableSubmitRequestEntityType: added
+- PayoutRequestShopperInteraction: added
 - PayoutRequestShopperInteractionContAuth: added
 - PayoutRequestShopperInteractionEcommerce: added
 - PayoutRequestShopperInteractionMoto: added
 - PayoutRequestShopperInteractionPOS: added
+- PayoutResponseResultCode: added
 - PayoutResponseResultCodeAuthenticationFinished: added
 - PayoutResponseResultCodeAuthenticationNotRequired: added
 - PayoutResponseResultCodeAuthorised: added
@@ -17,32 +114,41 @@ Compatible changes:
 - PayoutResponseResultCodeRedirectShopper: added
 - PayoutResponseResultCodeRefused: added
 - PayoutResponseResultCodeSuccess: added
+- RecurringContract: added
 - RecurringContractEXTERNAL: added
 - RecurringContractONECLICK: added
 - RecurringContractONECLICKRECURRING: added
 - RecurringContractPAYOUT: added
 - RecurringContractRECURRING: added
+- RecurringTokenService: added
 - RecurringTokenServiceAMEXTOKENSERVICE: added
 - RecurringTokenServiceMCTOKENSERVICE: added
 - RecurringTokenServiceTOKENSHARING: added
 - RecurringTokenServiceVISATOKENSERVICE: added
+- ResponseAdditionalDataCommonFraudResultType: added
 - ResponseAdditionalDataCommonFraudResultTypeAMBER: added
 - ResponseAdditionalDataCommonFraudResultTypeGREEN: added
 - ResponseAdditionalDataCommonFraudResultTypeRED: added
+- ResponseAdditionalDataCommonFraudRiskLevel: added
 - ResponseAdditionalDataCommonFraudRiskLevelHigh: added
 - ResponseAdditionalDataCommonFraudRiskLevelLow: added
 - ResponseAdditionalDataCommonFraudRiskLevelMedium: added
 - ResponseAdditionalDataCommonFraudRiskLevelVeryHigh: added
 - ResponseAdditionalDataCommonFraudRiskLevelVeryLow: added
+- ResponseAdditionalDataCommonRecurringProcessingModel: added
 - ResponseAdditionalDataCommonRecurringProcessingModelCardOnFile: added
 - ResponseAdditionalDataCommonRecurringProcessingModelSubscription: added
 - ResponseAdditionalDataCommonRecurringProcessingModelUnscheduledCardOnFile: added
+- ResponseAdditionalDataCommonTokenizationStoreOperationType: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeAlreadyExisting: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeCreated: added
 - ResponseAdditionalDataCommonTokenizationStoreOperationTypeUpdated: added
+- StoreDetailAndSubmitRequestEntityType: added
 - StoreDetailAndSubmitRequestEntityTypeCompany: added
 - StoreDetailAndSubmitRequestEntityTypeNaturalPerson: added
+- StoreDetailRequestEntityType: added
 - StoreDetailRequestEntityTypeCompany: added
 - StoreDetailRequestEntityTypeNaturalPerson: added
+- SubmitRequestEntityType: added
 - SubmitRequestEntityTypeCompany: added
 - SubmitRequestEntityTypeNaturalPerson: added

@@ -1,15 +1,77 @@
+Incompatible changes:
+- (*BankCategoryData).GetPriority: changed from func() string to func() BankCategoryDataPriority
+- (*BankCategoryData).GetPriorityOk: changed from func() (*string, bool) to func() (*BankCategoryDataPriority, bool)
+- (*BankCategoryData).GetType: changed from func() string to func() BankCategoryDataType
+- (*BankCategoryData).GetTypeOk: changed from func() (*string, bool) to func() (*BankCategoryDataType, bool)
+- (*BankCategoryData).SetPriority: changed from func(string) to func(BankCategoryDataPriority)
+- (*BankCategoryData).SetType: changed from func(string) to func(BankCategoryDataType)
+- (*InternalCategoryData).GetType: changed from func() string to func() InternalCategoryDataType
+- (*InternalCategoryData).GetTypeOk: changed from func() (*string, bool) to func() (*InternalCategoryDataType, bool)
+- (*InternalCategoryData).SetType: changed from func(string) to func(InternalCategoryDataType)
+- (*IssuedCard).GetNetworkVariant: changed from func() string to func() IssuedCardNetworkVariant
+- (*IssuedCard).GetNetworkVariantOk: changed from func() (*string, bool) to func() (*IssuedCardNetworkVariant, bool)
+- (*IssuedCard).GetPanEntryMode: changed from func() string to func() IssuedCardPanEntryMode
+- (*IssuedCard).GetPanEntryModeOk: changed from func() (*string, bool) to func() (*IssuedCardPanEntryMode, bool)
+- (*IssuedCard).GetProcessingType: changed from func() string to func() IssuedCardProcessingType
+- (*IssuedCard).GetProcessingTypeOk: changed from func() (*string, bool) to func() (*IssuedCardProcessingType, bool)
+- (*IssuedCard).GetType: changed from func() string to func() IssuedCardType
+- (*IssuedCard).GetTypeOk: changed from func() (*string, bool) to func() (*IssuedCardType, bool)
+- (*IssuedCard).SetNetworkVariant: changed from func(string) to func(IssuedCardNetworkVariant)
+- (*IssuedCard).SetPanEntryMode: changed from func(string) to func(IssuedCardPanEntryMode)
+- (*IssuedCard).SetProcessingType: changed from func(string) to func(IssuedCardProcessingType)
+- (*IssuedCard).SetType: changed from func(string) to func(IssuedCardType)
+- (*PlatformPayment).GetPlatformPaymentType: changed from func() string to func() PlatformPaymentPlatformPaymentType
+- (*PlatformPayment).GetPlatformPaymentTypeOk: changed from func() (*string, bool) to func() (*PlatformPaymentPlatformPaymentType, bool)
+- (*PlatformPayment).GetType: changed from func() string to func() PlatformPaymentType
+- (*PlatformPayment).GetTypeOk: changed from func() (*string, bool) to func() (*PlatformPaymentType, bool)
+- (*PlatformPayment).SetPlatformPaymentType: changed from func(string) to func(PlatformPaymentPlatformPaymentType)
+- (*PlatformPayment).SetType: changed from func(string) to func(PlatformPaymentType)
+- (*Transaction).GetStatus: changed from func() string to func() TransactionStatus
+- (*Transaction).GetStatusOk: changed from func() (*string, bool) to func() (*TransactionStatus, bool)
+- (*Transaction).SetStatus: changed from func(string) to func(TransactionStatus)
+- (*TransactionNotificationRequestV4).GetType: changed from func() string to func() TransactionNotificationRequestV4Type
+- (*TransactionNotificationRequestV4).GetTypeOk: changed from func() (*string, bool) to func() (*TransactionNotificationRequestV4Type, bool)
+- (*TransactionNotificationRequestV4).SetType: changed from func(string) to func(TransactionNotificationRequestV4Type)
+- BankCategoryData.Priority: changed from *string to *BankCategoryDataPriority
+- BankCategoryData.Type: changed from *string to *BankCategoryDataType
+- InternalCategoryData.Type: changed from *string to *InternalCategoryDataType
+- IssuedCard.NetworkVariant: changed from *string to *IssuedCardNetworkVariant
+- IssuedCard.PanEntryMode: changed from *string to *IssuedCardPanEntryMode
+- IssuedCard.ProcessingType: changed from *string to *IssuedCardProcessingType
+- IssuedCard.Type: changed from *string to *IssuedCardType
+- NewTransaction: changed from func(ResourceReference, Amount, ResourceReference, string, time.Time, string, string, time.Time) *Transaction to func(ResourceReference, Amount, ResourceReference, string, time.Time, string, TransactionStatus, time.Time) *Transaction
+- PlatformPayment.PlatformPaymentType: changed from *string to *PlatformPaymentPlatformPaymentType
+- PlatformPayment.Type: changed from *string to *PlatformPaymentType
+- Transaction.Status: changed from string to TransactionStatus
+- TransactionNotificationRequestV4.Type: changed from *string to *TransactionNotificationRequestV4Type
 Compatible changes:
+- AllowedBankCategoryDataPriorityEnumValues: added
+- AllowedBankCategoryDataTypeEnumValues: added
+- AllowedInternalCategoryDataTypeEnumValues: added
+- AllowedIssuedCardNetworkVariantEnumValues: added
+- AllowedIssuedCardPanEntryModeEnumValues: added
+- AllowedIssuedCardProcessingTypeEnumValues: added
+- AllowedIssuedCardTypeEnumValues: added
+- AllowedPlatformPaymentPlatformPaymentTypeEnumValues: added
+- AllowedPlatformPaymentTypeEnumValues: added
+- AllowedTransactionNotificationRequestV4TypeEnumValues: added
+- AllowedTransactionStatusEnumValues: added
+- BankCategoryDataPriority: added
 - BankCategoryDataPriorityCrossBorder: added
 - BankCategoryDataPriorityFast: added
 - BankCategoryDataPriorityInstant: added
 - BankCategoryDataPriorityInternal: added
 - BankCategoryDataPriorityRegular: added
 - BankCategoryDataPriorityWire: added
+- BankCategoryDataType: added
 - BankCategoryDataTypeBank: added
+- InternalCategoryDataType: added
 - InternalCategoryDataTypeInternal: added
+- IssuedCardNetworkVariant: added
 - IssuedCardNetworkVariantMaestroUs: added
 - IssuedCardNetworkVariantMastercard: added
 - IssuedCardNetworkVariantVisa: added
+- IssuedCardPanEntryMode: added
 - IssuedCardPanEntryModeChip: added
 - IssuedCardPanEntryModeCof: added
 - IssuedCardPanEntryModeContactless: added
@@ -17,6 +79,7 @@ Compatible changes:
 - IssuedCardPanEntryModeMagstripe: added
 - IssuedCardPanEntryModeManual: added
 - IssuedCardPanEntryModeToken: added
+- IssuedCardProcessingType: added
 - IssuedCardProcessingTypeAtmWithdraw: added
 - IssuedCardProcessingTypeBalanceInquiry: added
 - IssuedCardProcessingTypeEcommerce: added
@@ -25,7 +88,42 @@ Compatible changes:
 - IssuedCardProcessingTypePurchaseWithCashback: added
 - IssuedCardProcessingTypeRecurring: added
 - IssuedCardProcessingTypeToken: added
+- IssuedCardType: added
 - IssuedCardTypeIssuedCard: added
+- NewBankCategoryDataPriorityFromValue: added
+- NewBankCategoryDataTypeFromValue: added
+- NewInternalCategoryDataTypeFromValue: added
+- NewIssuedCardNetworkVariantFromValue: added
+- NewIssuedCardPanEntryModeFromValue: added
+- NewIssuedCardProcessingTypeFromValue: added
+- NewIssuedCardTypeFromValue: added
+- NewNullableBankCategoryDataPriority: added
+- NewNullableBankCategoryDataType: added
+- NewNullableInternalCategoryDataType: added
+- NewNullableIssuedCardNetworkVariant: added
+- NewNullableIssuedCardPanEntryMode: added
+- NewNullableIssuedCardProcessingType: added
+- NewNullableIssuedCardType: added
+- NewNullablePlatformPaymentPlatformPaymentType: added
+- NewNullablePlatformPaymentType: added
+- NewNullableTransactionNotificationRequestV4Type: added
+- NewNullableTransactionStatus: added
+- NewPlatformPaymentPlatformPaymentTypeFromValue: added
+- NewPlatformPaymentTypeFromValue: added
+- NewTransactionNotificationRequestV4TypeFromValue: added
+- NewTransactionStatusFromValue: added
+- NullableBankCategoryDataPriority: added
+- NullableBankCategoryDataType: added
+- NullableInternalCategoryDataType: added
+- NullableIssuedCardNetworkVariant: added
+- NullableIssuedCardPanEntryMode: added
+- NullableIssuedCardProcessingType: added
+- NullableIssuedCardType: added
+- NullablePlatformPaymentPlatformPaymentType: added
+- NullablePlatformPaymentType: added
+- NullableTransactionNotificationRequestV4Type: added
+- NullableTransactionStatus: added
+- PlatformPaymentPlatformPaymentType: added
 - PlatformPaymentPlatformPaymentTypeAcquiringFees: added
 - PlatformPaymentPlatformPaymentTypeAdyenCommission: added
 - PlatformPaymentPlatformPaymentTypeAdyenFees: added
@@ -44,7 +142,10 @@ Compatible changes:
 - PlatformPaymentPlatformPaymentTypeTip: added
 - PlatformPaymentPlatformPaymentTypeTopUp: added
 - PlatformPaymentPlatformPaymentTypeVAT: added
+- PlatformPaymentType: added
 - PlatformPaymentTypePlatformPayment: added
+- TransactionNotificationRequestV4Type: added
 - TransactionNotificationRequestV4TypeBalancePlatformTransactionCreated: added
+- TransactionStatus: added
 - TransactionStatusBooked: added
 - TransactionStatusPending: added

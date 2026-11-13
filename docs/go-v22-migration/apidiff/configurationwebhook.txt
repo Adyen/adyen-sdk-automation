@@ -1,6 +1,160 @@
 Incompatible changes:
+- (*AccountHolder).GetStatus: changed from func() string to func() AccountHolderStatus
+- (*AccountHolder).GetStatusOk: changed from func() (*string, bool) to func() (*AccountHolderStatus, bool)
+- (*AccountHolder).SetStatus: changed from func(string) to func(AccountHolderStatus)
+- (*AccountHolderCapability).GetAllowedLevel: changed from func() string to func() AccountHolderCapabilityAllowedLevel
+- (*AccountHolderCapability).GetAllowedLevelOk: changed from func() (*string, bool) to func() (*AccountHolderCapabilityAllowedLevel, bool)
+- (*AccountHolderCapability).GetRequestedLevel: changed from func() string to func() AccountHolderCapabilityRequestedLevel
+- (*AccountHolderCapability).GetRequestedLevelOk: changed from func() (*string, bool) to func() (*AccountHolderCapabilityRequestedLevel, bool)
+- (*AccountHolderCapability).GetVerificationStatus: changed from func() string to func() AccountHolderCapabilityVerificationStatus
+- (*AccountHolderCapability).GetVerificationStatusOk: changed from func() (*string, bool) to func() (*AccountHolderCapabilityVerificationStatus, bool)
+- (*AccountHolderCapability).SetAllowedLevel: changed from func(string) to func(AccountHolderCapabilityAllowedLevel)
+- (*AccountHolderCapability).SetRequestedLevel: changed from func(string) to func(AccountHolderCapabilityRequestedLevel)
+- (*AccountHolderCapability).SetVerificationStatus: changed from func(string) to func(AccountHolderCapabilityVerificationStatus)
+- (*AccountHolderNotificationRequest).GetType: changed from func() string to func() AccountHolderNotificationRequestType
+- (*AccountHolderNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*AccountHolderNotificationRequestType, bool)
+- (*AccountHolderNotificationRequest).SetType: changed from func(string) to func(AccountHolderNotificationRequestType)
+- (*AccountSupportingEntityCapability).GetAllowedLevel: changed from func() string to func() AccountSupportingEntityCapabilityAllowedLevel
+- (*AccountSupportingEntityCapability).GetAllowedLevelOk: changed from func() (*string, bool) to func() (*AccountSupportingEntityCapabilityAllowedLevel, bool)
+- (*AccountSupportingEntityCapability).GetRequestedLevel: changed from func() string to func() AccountSupportingEntityCapabilityRequestedLevel
+- (*AccountSupportingEntityCapability).GetRequestedLevelOk: changed from func() (*string, bool) to func() (*AccountSupportingEntityCapabilityRequestedLevel, bool)
+- (*AccountSupportingEntityCapability).GetVerificationStatus: changed from func() string to func() AccountSupportingEntityCapabilityVerificationStatus
+- (*AccountSupportingEntityCapability).GetVerificationStatusOk: changed from func() (*string, bool) to func() (*AccountSupportingEntityCapabilityVerificationStatus, bool)
+- (*AccountSupportingEntityCapability).SetAllowedLevel: changed from func(string) to func(AccountSupportingEntityCapabilityAllowedLevel)
+- (*AccountSupportingEntityCapability).SetRequestedLevel: changed from func(string) to func(AccountSupportingEntityCapabilityRequestedLevel)
+- (*AccountSupportingEntityCapability).SetVerificationStatus: changed from func(string) to func(AccountSupportingEntityCapabilityVerificationStatus)
+- (*BalanceAccount).GetStatus: changed from func() string to func() BalanceAccountStatus
+- (*BalanceAccount).GetStatusOk: changed from func() (*string, bool) to func() (*BalanceAccountStatus, bool)
+- (*BalanceAccount).SetStatus: changed from func(string) to func(BalanceAccountStatus)
+- (*BalanceAccountNotificationRequest).GetType: changed from func() string to func() BalanceAccountNotificationRequestType
+- (*BalanceAccountNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*BalanceAccountNotificationRequestType, bool)
+- (*BalanceAccountNotificationRequest).SetType: changed from func(string) to func(BalanceAccountNotificationRequestType)
+- (*CapabilityProblemEntity).GetType: changed from func() string to func() CapabilityProblemEntityType
+- (*CapabilityProblemEntity).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityType, bool)
+- (*CapabilityProblemEntity).SetType: changed from func(string) to func(CapabilityProblemEntityType)
+- (*CapabilityProblemEntityRecursive).GetType: changed from func() string to func() CapabilityProblemEntityRecursiveType
+- (*CapabilityProblemEntityRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*CapabilityProblemEntityRecursiveType, bool)
+- (*CapabilityProblemEntityRecursive).SetType: changed from func(string) to func(CapabilityProblemEntityRecursiveType)
+- (*CapabilitySettings).GetFundingSource: changed from func() []string to func() []CapabilitySettingsFundingSource
+- (*CapabilitySettings).GetFundingSourceOk: changed from func() ([]string, bool) to func() ([]CapabilitySettingsFundingSource, bool)
+- (*CapabilitySettings).GetInterval: changed from func() string to func() CapabilitySettingsInterval
+- (*CapabilitySettings).GetIntervalOk: changed from func() (*string, bool) to func() (*CapabilitySettingsInterval, bool)
+- (*CapabilitySettings).SetFundingSource: changed from func([]string) to func([]CapabilitySettingsFundingSource)
+- (*CapabilitySettings).SetInterval: changed from func(string) to func(CapabilitySettingsInterval)
+- (*Card).GetFormFactor: changed from func() string to func() CardFormFactor
+- (*Card).GetFormFactorOk: changed from func() (*string, bool) to func() (*CardFormFactor, bool)
+- (*Card).SetFormFactor: changed from func(string) to func(CardFormFactor)
+- (*CardOrderItemDeliveryStatus).GetStatus: changed from func() string to func() CardOrderItemDeliveryStatusStatus
+- (*CardOrderItemDeliveryStatus).GetStatusOk: changed from func() (*string, bool) to func() (*CardOrderItemDeliveryStatusStatus, bool)
+- (*CardOrderItemDeliveryStatus).SetStatus: changed from func(string) to func(CardOrderItemDeliveryStatusStatus)
+- (*CardOrderNotificationRequest).GetType: changed from func() string to func() CardOrderNotificationRequestType
+- (*CardOrderNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*CardOrderNotificationRequestType, bool)
+- (*CardOrderNotificationRequest).SetType: changed from func(string) to func(CardOrderNotificationRequestType)
+- (*IbanAccountIdentification).GetType: changed from func() string to func() IbanAccountIdentificationType
+- (*IbanAccountIdentification).GetTypeOk: changed from func() (*string, bool) to func() (*IbanAccountIdentificationType, bool)
+- (*IbanAccountIdentification).SetType: changed from func(string) to func(IbanAccountIdentificationType)
+- (*PaymentInstrument).GetStatus: changed from func() string to func() PaymentInstrumentStatus
+- (*PaymentInstrument).GetStatusOk: changed from func() (*string, bool) to func() (*PaymentInstrumentStatus, bool)
+- (*PaymentInstrument).GetStatusReason: changed from func() string to func() PaymentInstrumentStatusReason
+- (*PaymentInstrument).GetStatusReasonOk: changed from func() (*string, bool) to func() (*PaymentInstrumentStatusReason, bool)
+- (*PaymentInstrument).GetType: changed from func() string to func() PaymentInstrumentType
+- (*PaymentInstrument).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentInstrumentType, bool)
+- (*PaymentInstrument).SetStatus: changed from func(string) to func(PaymentInstrumentStatus)
+- (*PaymentInstrument).SetStatusReason: changed from func(string) to func(PaymentInstrumentStatusReason)
+- (*PaymentInstrument).SetType: changed from func(string) to func(PaymentInstrumentType)
+- (*PaymentNotificationRequest).GetType: changed from func() string to func() PaymentNotificationRequestType
+- (*PaymentNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*PaymentNotificationRequestType, bool)
+- (*PaymentNotificationRequest).SetType: changed from func(string) to func(PaymentNotificationRequestType)
+- (*Phone).GetType: changed from func() string to func() PhoneType
+- (*Phone).GetTypeOk: changed from func() (*string, bool) to func() (*PhoneType, bool)
+- (*Phone).SetType: changed from func(string) to func(PhoneType)
+- (*PhoneNumber).GetPhoneType: changed from func() string to func() PhoneNumberPhoneType
+- (*PhoneNumber).GetPhoneTypeOk: changed from func() (*string, bool) to func() (*PhoneNumberPhoneType, bool)
+- (*PhoneNumber).SetPhoneType: changed from func(string) to func(PhoneNumberPhoneType)
+- (*SweepConfigurationNotificationRequest).GetType: changed from func() string to func() SweepConfigurationNotificationRequestType
+- (*SweepConfigurationNotificationRequest).GetTypeOk: changed from func() (*string, bool) to func() (*SweepConfigurationNotificationRequestType, bool)
+- (*SweepConfigurationNotificationRequest).SetType: changed from func(string) to func(SweepConfigurationNotificationRequestType)
+- (*SweepConfigurationV2).GetCategory: changed from func() string to func() SweepConfigurationV2Category
+- (*SweepConfigurationV2).GetCategoryOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Category, bool)
+- (*SweepConfigurationV2).GetPriorities: changed from func() []string to func() []SweepConfigurationV2Priorities
+- (*SweepConfigurationV2).GetPrioritiesOk: changed from func() ([]string, bool) to func() ([]SweepConfigurationV2Priorities, bool)
+- (*SweepConfigurationV2).GetReason: changed from func() string to func() SweepConfigurationV2Reason
+- (*SweepConfigurationV2).GetReasonOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Reason, bool)
+- (*SweepConfigurationV2).GetStatus: changed from func() string to func() SweepConfigurationV2Status
+- (*SweepConfigurationV2).GetStatusOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Status, bool)
+- (*SweepConfigurationV2).GetType: changed from func() string to func() SweepConfigurationV2Type
+- (*SweepConfigurationV2).GetTypeOk: changed from func() (*string, bool) to func() (*SweepConfigurationV2Type, bool)
+- (*SweepConfigurationV2).SetCategory: changed from func(string) to func(SweepConfigurationV2Category)
+- (*SweepConfigurationV2).SetPriorities: changed from func([]string) to func([]SweepConfigurationV2Priorities)
+- (*SweepConfigurationV2).SetReason: changed from func(string) to func(SweepConfigurationV2Reason)
+- (*SweepConfigurationV2).SetStatus: changed from func(string) to func(SweepConfigurationV2Status)
+- (*SweepConfigurationV2).SetType: changed from func(string) to func(SweepConfigurationV2Type)
+- (*SweepSchedule).GetType: changed from func() string to func() SweepScheduleType
+- (*SweepSchedule).GetTypeOk: changed from func() (*string, bool) to func() (*SweepScheduleType, bool)
+- (*SweepSchedule).SetType: changed from func(string) to func(SweepScheduleType)
+- (*VerificationDeadline).GetCapabilities: changed from func() []string to func() []VerificationDeadlineCapabilities
+- (*VerificationDeadline).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationDeadlineCapabilities, bool)
+- (*VerificationDeadline).SetCapabilities: changed from func([]string) to func([]VerificationDeadlineCapabilities)
+- (*VerificationError).GetCapabilities: changed from func() []string to func() []VerificationErrorCapabilities
+- (*VerificationError).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationErrorCapabilities, bool)
+- (*VerificationError).GetType: changed from func() string to func() VerificationErrorType
+- (*VerificationError).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorType, bool)
+- (*VerificationError).SetCapabilities: changed from func([]string) to func([]VerificationErrorCapabilities)
+- (*VerificationError).SetType: changed from func(string) to func(VerificationErrorType)
+- (*VerificationErrorRecursive).GetCapabilities: changed from func() []string to func() []VerificationErrorRecursiveCapabilities
+- (*VerificationErrorRecursive).GetCapabilitiesOk: changed from func() ([]string, bool) to func() ([]VerificationErrorRecursiveCapabilities, bool)
+- (*VerificationErrorRecursive).GetType: changed from func() string to func() VerificationErrorRecursiveType
+- (*VerificationErrorRecursive).GetTypeOk: changed from func() (*string, bool) to func() (*VerificationErrorRecursiveType, bool)
+- (*VerificationErrorRecursive).SetCapabilities: changed from func([]string) to func([]VerificationErrorRecursiveCapabilities)
+- (*VerificationErrorRecursive).SetType: changed from func(string) to func(VerificationErrorRecursiveType)
+- AccountHolder.Status: changed from *string to *AccountHolderStatus
+- AccountHolderCapability.AllowedLevel: changed from *string to *AccountHolderCapabilityAllowedLevel
+- AccountHolderCapability.RequestedLevel: changed from *string to *AccountHolderCapabilityRequestedLevel
+- AccountHolderCapability.VerificationStatus: changed from *string to *AccountHolderCapabilityVerificationStatus
+- AccountHolderNotificationRequest.Type: changed from string to AccountHolderNotificationRequestType
+- AccountSupportingEntityCapability.AllowedLevel: changed from *string to *AccountSupportingEntityCapabilityAllowedLevel
+- AccountSupportingEntityCapability.RequestedLevel: changed from *string to *AccountSupportingEntityCapabilityRequestedLevel
+- AccountSupportingEntityCapability.VerificationStatus: changed from *string to *AccountSupportingEntityCapabilityVerificationStatus
+- BalanceAccount.Status: changed from *string to *BalanceAccountStatus
+- BalanceAccountNotificationRequest.Type: changed from string to BalanceAccountNotificationRequestType
+- CapabilityProblemEntity.Type: changed from *string to *CapabilityProblemEntityType
+- CapabilityProblemEntityRecursive.Type: changed from *string to *CapabilityProblemEntityRecursiveType
+- CapabilitySettings.FundingSource: changed from []string to []CapabilitySettingsFundingSource
+- CapabilitySettings.Interval: changed from *string to *CapabilitySettingsInterval
+- Card.FormFactor: changed from string to CardFormFactor
 - Card.Number: changed from string to *string
-- NewCard: changed from func(string, string, string, string, string) *Card to func(string, string, string, string) *Card
+- CardOrderItemDeliveryStatus.Status: changed from *string to *CardOrderItemDeliveryStatusStatus
+- CardOrderNotificationRequest.Type: changed from string to CardOrderNotificationRequestType
+- IbanAccountIdentification.Type: changed from string to IbanAccountIdentificationType
+- NewAccountHolderNotificationRequest: changed from func(AccountHolderNotificationData, string, string) *AccountHolderNotificationRequest to func(AccountHolderNotificationData, string, AccountHolderNotificationRequestType) *AccountHolderNotificationRequest
+- NewBalanceAccountNotificationRequest: changed from func(BalanceAccountNotificationData, string, string) *BalanceAccountNotificationRequest to func(BalanceAccountNotificationData, string, BalanceAccountNotificationRequestType) *BalanceAccountNotificationRequest
+- NewCard: changed from func(string, string, string, string, string) *Card to func(string, string, string, CardFormFactor) *Card
+- NewCardOrderNotificationRequest: changed from func(CardOrderItem, string, string) *CardOrderNotificationRequest to func(CardOrderItem, string, CardOrderNotificationRequestType) *CardOrderNotificationRequest
+- NewIbanAccountIdentification: changed from func(string, string) *IbanAccountIdentification to func(string, IbanAccountIdentificationType) *IbanAccountIdentification
+- NewPaymentInstrument: changed from func(string, string, string, string) *PaymentInstrument to func(string, string, string, PaymentInstrumentType) *PaymentInstrument
+- NewPaymentNotificationRequest: changed from func(PaymentInstrumentNotificationData, string, string) *PaymentNotificationRequest to func(PaymentInstrumentNotificationData, string, PaymentNotificationRequestType) *PaymentNotificationRequest
+- NewPhone: changed from func(string, string) *Phone to func(string, PhoneType) *Phone
+- NewSweepConfigurationNotificationRequest: changed from func(SweepConfigurationNotificationData, string, string) *SweepConfigurationNotificationRequest to func(SweepConfigurationNotificationData, string, SweepConfigurationNotificationRequestType) *SweepConfigurationNotificationRequest
+- NewSweepSchedule: changed from func(string) *SweepSchedule to func(SweepScheduleType) *SweepSchedule
+- NewVerificationDeadline: changed from func([]string, time.Time) *VerificationDeadline to func([]VerificationDeadlineCapabilities, time.Time) *VerificationDeadline
+- PaymentInstrument.Status: changed from *string to *PaymentInstrumentStatus
+- PaymentInstrument.StatusReason: changed from *string to *PaymentInstrumentStatusReason
+- PaymentInstrument.Type: changed from string to PaymentInstrumentType
+- PaymentNotificationRequest.Type: changed from string to PaymentNotificationRequestType
+- Phone.Type: changed from string to PhoneType
+- PhoneNumber.PhoneType: changed from *string to *PhoneNumberPhoneType
+- SweepConfigurationNotificationRequest.Type: changed from string to SweepConfigurationNotificationRequestType
+- SweepConfigurationV2.Category: changed from *string to *SweepConfigurationV2Category
+- SweepConfigurationV2.Priorities: changed from []string to []SweepConfigurationV2Priorities
+- SweepConfigurationV2.Reason: changed from *string to *SweepConfigurationV2Reason
+- SweepConfigurationV2.Status: changed from *string to *SweepConfigurationV2Status
+- SweepConfigurationV2.Type: changed from *string to *SweepConfigurationV2Type
+- SweepSchedule.Type: changed from string to SweepScheduleType
+- VerificationDeadline.Capabilities: changed from []string to []VerificationDeadlineCapabilities
+- VerificationError.Capabilities: changed from []string to []VerificationErrorCapabilities
+- VerificationError.Type: changed from *string to *VerificationErrorType
+- VerificationErrorRecursive.Capabilities: changed from []string to []VerificationErrorRecursiveCapabilities
+- VerificationErrorRecursive.Type: changed from *string to *VerificationErrorRecursiveType
 Compatible changes:
 - (*Balance).GetPendingAvailable: added
 - (*Balance).GetPendingAvailableOk: added
@@ -35,42 +189,109 @@ Compatible changes:
 - (*IbanAccountIdentification).GetBicOk: added
 - (*IbanAccountIdentification).HasBic: added
 - (*IbanAccountIdentification).SetBic: added
+- AccountHolderCapabilityAllowedLevel: added
 - AccountHolderCapabilityAllowedLevelHigh: added
 - AccountHolderCapabilityAllowedLevelLow: added
 - AccountHolderCapabilityAllowedLevelMedium: added
 - AccountHolderCapabilityAllowedLevelNotApplicable: added
+- AccountHolderCapabilityRequestedLevel: added
 - AccountHolderCapabilityRequestedLevelHigh: added
 - AccountHolderCapabilityRequestedLevelLow: added
 - AccountHolderCapabilityRequestedLevelMedium: added
 - AccountHolderCapabilityRequestedLevelNotApplicable: added
+- AccountHolderCapabilityVerificationStatus: added
 - AccountHolderCapabilityVerificationStatusInvalid: added
 - AccountHolderCapabilityVerificationStatusPending: added
 - AccountHolderCapabilityVerificationStatusRejected: added
 - AccountHolderCapabilityVerificationStatusValid: added
+- AccountHolderNotificationRequestType: added
 - AccountHolderNotificationRequestTypeBalancePlatformAccountHolderCreated: added
 - AccountHolderNotificationRequestTypeBalancePlatformAccountHolderUpdated: added
+- AccountHolderStatus: added
 - AccountHolderStatusActive: added
 - AccountHolderStatusClosed: added
 - AccountHolderStatusSuspended: added
 - AccountPayoutAutoApplicationNotificationRequest: added
+- AccountPayoutAutoApplicationNotificationRequestType: added
 - AccountPayoutAutoApplicationNotificationRequestTypeBalancePlatformBalanceAccountPayoutScheduleAutoApplicationFailed: added
 - AccountPayoutAutoApplicationWebhookData: added
 - AccountPayoutConfigWebhookData: added
+- AccountSupportingEntityCapabilityAllowedLevel: added
 - AccountSupportingEntityCapabilityAllowedLevelHigh: added
 - AccountSupportingEntityCapabilityAllowedLevelLow: added
 - AccountSupportingEntityCapabilityAllowedLevelMedium: added
 - AccountSupportingEntityCapabilityAllowedLevelNotApplicable: added
+- AccountSupportingEntityCapabilityRequestedLevel: added
 - AccountSupportingEntityCapabilityRequestedLevelHigh: added
 - AccountSupportingEntityCapabilityRequestedLevelLow: added
 - AccountSupportingEntityCapabilityRequestedLevelMedium: added
 - AccountSupportingEntityCapabilityRequestedLevelNotApplicable: added
+- AccountSupportingEntityCapabilityVerificationStatus: added
 - AccountSupportingEntityCapabilityVerificationStatusInvalid: added
 - AccountSupportingEntityCapabilityVerificationStatusPending: added
 - AccountSupportingEntityCapabilityVerificationStatusRejected: added
 - AccountSupportingEntityCapabilityVerificationStatusValid: added
+- AllowedAccountHolderCapabilityAllowedLevelEnumValues: added
+- AllowedAccountHolderCapabilityRequestedLevelEnumValues: added
+- AllowedAccountHolderCapabilityVerificationStatusEnumValues: added
+- AllowedAccountHolderNotificationRequestTypeEnumValues: added
+- AllowedAccountHolderStatusEnumValues: added
+- AllowedAccountPayoutAutoApplicationNotificationRequestTypeEnumValues: added
+- AllowedAccountSupportingEntityCapabilityAllowedLevelEnumValues: added
+- AllowedAccountSupportingEntityCapabilityRequestedLevelEnumValues: added
+- AllowedAccountSupportingEntityCapabilityVerificationStatusEnumValues: added
+- AllowedBalanceAccountNotificationRequestTypeEnumValues: added
+- AllowedBalanceAccountStatusEnumValues: added
+- AllowedCapabilityProblemEntityRecursiveTypeEnumValues: added
+- AllowedCapabilityProblemEntityTypeEnumValues: added
+- AllowedCapabilitySettingsFundingSourceEnumValues: added
+- AllowedCapabilitySettingsIntervalEnumValues: added
+- AllowedCardFormFactorEnumValues: added
+- AllowedCardOrderItemDeliveryStatusStatusEnumValues: added
+- AllowedCardOrderNotificationRequestTypeEnumValues: added
+- AllowedIbanAccountIdentificationTypeEnumValues: added
+- AllowedMandateNotificationRequestTypeEnumValues: added
+- AllowedMandateStatusEnumValues: added
+- AllowedMandateTypeEnumValues: added
+- AllowedNetworkTokenNotificationRequestTypeEnumValues: added
+- AllowedPaymentInstrumentStatusEnumValues: added
+- AllowedPaymentInstrumentStatusReasonEnumValues: added
+- AllowedPaymentInstrumentTypeEnumValues: added
+- AllowedPaymentNotificationRequestTypeEnumValues: added
+- AllowedPayoutScheduleBANotificationRequestTypeEnumValues: added
+- AllowedPayoutScheduleBPNotificationRequestTypeEnumValues: added
+- AllowedPayoutScheduleStateNotificationRequestTypeEnumValues: added
+- AllowedPayoutStateWebhookDataResultEnumValues: added
+- AllowedPhoneNumberPhoneTypeEnumValues: added
+- AllowedPhoneTypeEnumValues: added
+- AllowedScoreNotificationRequestTypeEnumValues: added
+- AllowedSweepConfigurationNotificationRequestTypeEnumValues: added
+- AllowedSweepConfigurationV2CategoryEnumValues: added
+- AllowedSweepConfigurationV2PrioritiesEnumValues: added
+- AllowedSweepConfigurationV2ReasonEnumValues: added
+- AllowedSweepConfigurationV2StatusEnumValues: added
+- AllowedSweepConfigurationV2TypeEnumValues: added
+- AllowedSweepExecutionNotificationDataResultEnumValues: added
+- AllowedSweepExecutionNotificationRequestTypeEnumValues: added
+- AllowedSweepScheduleTypeEnumValues: added
+- AllowedTopUpConfigurationEventRequestTypeEnumValues: added
+- AllowedTopUpConfigurationUpdatedEventRequestTypeEnumValues: added
+- AllowedUKLocalMandateAccountIdentificationTypeEnumValues: added
+- AllowedValidationFactsResultEnumValues: added
+- AllowedVerificationDeadlineCapabilitiesEnumValues: added
+- AllowedVerificationErrorCapabilitiesEnumValues: added
+- AllowedVerificationErrorRecursiveCapabilitiesEnumValues: added
+- AllowedVerificationErrorRecursiveTypeEnumValues: added
+- AllowedVerificationErrorTypeEnumValues: added
+- AllowedWalletRecommendationReasonsEnumValues: added
+- AllowedWebhookTopUpConfigurationStatusEnumValues: added
+- AllowedWebhookTopUpConfigurationUpdatedStatusEnumValues: added
+- AllowedWebhookTopUpTriggerScheduleEnumValues: added
 - Balance.PendingAvailable: added
+- BalanceAccountNotificationRequestType: added
 - BalanceAccountNotificationRequestTypeBalancePlatformBalanceAccountCreated: added
 - BalanceAccountNotificationRequestTypeBalancePlatformBalanceAccountUpdated: added
+- BalanceAccountStatus: added
 - BalanceAccountStatusActive: added
 - BalanceAccountStatusClosed: added
 - BalanceAccountStatusInactive: added
@@ -80,23 +301,29 @@ Compatible changes:
 - BulkAddress.Line2: added
 - BulkAddress.Line3: added
 - BulkAddress.Name: added
+- CapabilityProblemEntityRecursiveType: added
 - CapabilityProblemEntityRecursiveTypeBankAccount: added
 - CapabilityProblemEntityRecursiveTypeDocument: added
 - CapabilityProblemEntityRecursiveTypeLegalEntity: added
+- CapabilityProblemEntityType: added
 - CapabilityProblemEntityTypeBankAccount: added
 - CapabilityProblemEntityTypeDocument: added
 - CapabilityProblemEntityTypeLegalEntity: added
+- CapabilitySettingsFundingSource: added
 - CapabilitySettingsFundingSourceCredit: added
 - CapabilitySettingsFundingSourceDebit: added
 - CapabilitySettingsFundingSourcePrepaid: added
+- CapabilitySettingsInterval: added
 - CapabilitySettingsIntervalDaily: added
 - CapabilitySettingsIntervalMonthly: added
 - CapabilitySettingsIntervalWeekly: added
 - Card.Usage: added
 - CardConfiguration.PrintLine: added
+- CardFormFactor: added
 - CardFormFactorPhysical: added
 - CardFormFactorUnknown: added
 - CardFormFactorVirtual: added
+- CardOrderItemDeliveryStatusStatus: added
 - CardOrderItemDeliveryStatusStatusCreated: added
 - CardOrderItemDeliveryStatusStatusDelivered: added
 - CardOrderItemDeliveryStatusStatusNotApplicable: added
@@ -105,6 +332,7 @@ Compatible changes:
 - CardOrderItemDeliveryStatusStatusRejected: added
 - CardOrderItemDeliveryStatusStatusShipped: added
 - CardOrderItemDeliveryStatusStatusUnknown: added
+- CardOrderNotificationRequestType: added
 - CardOrderNotificationRequestTypeBalancePlatformCardorderCreated: added
 - CardOrderNotificationRequestTypeBalancePlatformCardorderUpdated: added
 - Device: added
@@ -119,21 +347,26 @@ Compatible changes:
 - HandleTopUpConfigurationEventRequest: added
 - HandleTopUpConfigurationUpdatedEventRequest: added
 - IbanAccountIdentification.Bic: added
+- IbanAccountIdentificationType: added
 - IbanAccountIdentificationTypeIban: added
 - Mandate: added
 - MandateBankAccount: added
 - MandateBankAccountAccountIdentification: added
 - MandateNotificationData: added
 - MandateNotificationRequest: added
+- MandateNotificationRequestType: added
 - MandateNotificationRequestTypeBalancePlatformMandateCreated: added
 - MandateNotificationRequestTypeBalancePlatformMandateUpdated: added
 - MandatePartyIdentification: added
+- MandateStatus: added
 - MandateStatusApproved: added
 - MandateStatusCancelled: added
 - MandateStatusPending: added
+- MandateType: added
 - MandateTypeBacs: added
 - NetworkTokenNotificationDataV2: added
 - NetworkTokenNotificationRequest: added
+- NetworkTokenNotificationRequestType: added
 - NetworkTokenNotificationRequestTypeBalancePlatformNetworkTokenCreated: added
 - NetworkTokenNotificationRequestTypeBalancePlatformNetworkTokenUpdated: added
 - NetworkTokenRequestor: added
@@ -141,29 +374,52 @@ Compatible changes:
 - NetworkTokenRiskRuleSource: added
 - NetworkTokenTransactionRulesResult: added
 - NetworkTokenTriggeredRiskRule: added
+- NewAccountHolderCapabilityAllowedLevelFromValue: added
+- NewAccountHolderCapabilityRequestedLevelFromValue: added
+- NewAccountHolderCapabilityVerificationStatusFromValue: added
+- NewAccountHolderNotificationRequestTypeFromValue: added
+- NewAccountHolderStatusFromValue: added
 - NewAccountPayoutAutoApplicationNotificationRequest: added
+- NewAccountPayoutAutoApplicationNotificationRequestTypeFromValue: added
 - NewAccountPayoutAutoApplicationNotificationRequestWithDefaults: added
 - NewAccountPayoutAutoApplicationWebhookData: added
 - NewAccountPayoutAutoApplicationWebhookDataWithDefaults: added
 - NewAccountPayoutConfigWebhookData: added
 - NewAccountPayoutConfigWebhookDataWithDefaults: added
+- NewAccountSupportingEntityCapabilityAllowedLevelFromValue: added
+- NewAccountSupportingEntityCapabilityRequestedLevelFromValue: added
+- NewAccountSupportingEntityCapabilityVerificationStatusFromValue: added
+- NewBalanceAccountNotificationRequestTypeFromValue: added
+- NewBalanceAccountStatusFromValue: added
 - NewBankScoreSignalTriggeredData: added
 - NewBankScoreSignalTriggeredDataWithDefaults: added
+- NewCapabilityProblemEntityRecursiveTypeFromValue: added
+- NewCapabilityProblemEntityTypeFromValue: added
+- NewCapabilitySettingsFundingSourceFromValue: added
+- NewCapabilitySettingsIntervalFromValue: added
+- NewCardFormFactorFromValue: added
+- NewCardOrderItemDeliveryStatusStatusFromValue: added
+- NewCardOrderNotificationRequestTypeFromValue: added
 - NewDevice: added
 - NewDeviceWithDefaults: added
+- NewIbanAccountIdentificationTypeFromValue: added
 - NewMandate: added
 - NewMandateBankAccount: added
 - NewMandateBankAccountWithDefaults: added
 - NewMandateNotificationData: added
 - NewMandateNotificationDataWithDefaults: added
 - NewMandateNotificationRequest: added
+- NewMandateNotificationRequestTypeFromValue: added
 - NewMandateNotificationRequestWithDefaults: added
 - NewMandatePartyIdentification: added
 - NewMandatePartyIdentificationWithDefaults: added
+- NewMandateStatusFromValue: added
+- NewMandateTypeFromValue: added
 - NewMandateWithDefaults: added
 - NewNetworkTokenNotificationDataV2: added
 - NewNetworkTokenNotificationDataV2WithDefaults: added
 - NewNetworkTokenNotificationRequest: added
+- NewNetworkTokenNotificationRequestTypeFromValue: added
 - NewNetworkTokenNotificationRequestWithDefaults: added
 - NewNetworkTokenRequestor: added
 - NewNetworkTokenRequestorWithDefaults: added
@@ -175,58 +431,124 @@ Compatible changes:
 - NewNetworkTokenTransactionRulesResultWithDefaults: added
 - NewNetworkTokenTriggeredRiskRule: added
 - NewNetworkTokenTriggeredRiskRuleWithDefaults: added
+- NewNullableAccountHolderCapabilityAllowedLevel: added
+- NewNullableAccountHolderCapabilityRequestedLevel: added
+- NewNullableAccountHolderCapabilityVerificationStatus: added
+- NewNullableAccountHolderNotificationRequestType: added
+- NewNullableAccountHolderStatus: added
 - NewNullableAccountPayoutAutoApplicationNotificationRequest: added
+- NewNullableAccountPayoutAutoApplicationNotificationRequestType: added
 - NewNullableAccountPayoutAutoApplicationWebhookData: added
 - NewNullableAccountPayoutConfigWebhookData: added
+- NewNullableAccountSupportingEntityCapabilityAllowedLevel: added
+- NewNullableAccountSupportingEntityCapabilityRequestedLevel: added
+- NewNullableAccountSupportingEntityCapabilityVerificationStatus: added
+- NewNullableBalanceAccountNotificationRequestType: added
+- NewNullableBalanceAccountStatus: added
 - NewNullableBankScoreSignalTriggeredData: added
+- NewNullableCapabilityProblemEntityRecursiveType: added
+- NewNullableCapabilityProblemEntityType: added
+- NewNullableCapabilitySettingsFundingSource: added
+- NewNullableCapabilitySettingsInterval: added
+- NewNullableCardFormFactor: added
+- NewNullableCardOrderItemDeliveryStatusStatus: added
+- NewNullableCardOrderNotificationRequestType: added
 - NewNullableDevice: added
+- NewNullableIbanAccountIdentificationType: added
 - NewNullableMandate: added
 - NewNullableMandateBankAccount: added
 - NewNullableMandateBankAccountAccountIdentification: added
 - NewNullableMandateNotificationData: added
 - NewNullableMandateNotificationRequest: added
+- NewNullableMandateNotificationRequestType: added
 - NewNullableMandatePartyIdentification: added
+- NewNullableMandateStatus: added
+- NewNullableMandateType: added
 - NewNullableNetworkTokenNotificationDataV2: added
 - NewNullableNetworkTokenNotificationRequest: added
+- NewNullableNetworkTokenNotificationRequestType: added
 - NewNullableNetworkTokenRequestor: added
 - NewNullableNetworkTokenRiskRuleData: added
 - NewNullableNetworkTokenRiskRuleSource: added
 - NewNullableNetworkTokenTransactionRulesResult: added
 - NewNullableNetworkTokenTriggeredRiskRule: added
+- NewNullablePaymentInstrumentStatus: added
+- NewNullablePaymentInstrumentStatusReason: added
+- NewNullablePaymentInstrumentType: added
+- NewNullablePaymentNotificationRequestType: added
 - NewNullablePayoutScheduleBANotificationRequest: added
+- NewNullablePayoutScheduleBANotificationRequestType: added
 - NewNullablePayoutScheduleBPNotificationRequest: added
+- NewNullablePayoutScheduleBPNotificationRequestType: added
 - NewNullablePayoutScheduleStateNotificationRequest: added
+- NewNullablePayoutScheduleStateNotificationRequestType: added
 - NewNullablePayoutStateWebhookData: added
+- NewNullablePayoutStateWebhookDataResult: added
+- NewNullablePhoneNumberPhoneType: added
+- NewNullablePhoneType: added
 - NewNullablePlatformPayoutConfigWebhookData: added
 - NewNullableResourceReference: added
 - NewNullableResultDetails: added
 - NewNullableScoreNotificationRequest: added
+- NewNullableScoreNotificationRequestType: added
+- NewNullableSweepConfigurationNotificationRequestType: added
+- NewNullableSweepConfigurationV2Category: added
+- NewNullableSweepConfigurationV2Priorities: added
+- NewNullableSweepConfigurationV2Reason: added
+- NewNullableSweepConfigurationV2Status: added
+- NewNullableSweepConfigurationV2Type: added
 - NewNullableSweepExecutionNotificationData: added
+- NewNullableSweepExecutionNotificationDataResult: added
 - NewNullableSweepExecutionNotificationRequest: added
+- NewNullableSweepExecutionNotificationRequestType: added
 - NewNullableSweepResultDetails: added
+- NewNullableSweepScheduleType: added
 - NewNullableTokenAuthentication: added
 - NewNullableTopUpConfigurationEventRequest: added
+- NewNullableTopUpConfigurationEventRequestType: added
 - NewNullableTopUpConfigurationUpdatedEventRequest: added
+- NewNullableTopUpConfigurationUpdatedEventRequestType: added
 - NewNullableTopUpUpdatedWebhookData: added
 - NewNullableTopUpWebhookData: added
 - NewNullableUKLocalMandateAccountIdentification: added
+- NewNullableUKLocalMandateAccountIdentificationType: added
 - NewNullableValidationFacts: added
+- NewNullableValidationFactsResult: added
+- NewNullableVerificationDeadlineCapabilities: added
+- NewNullableVerificationErrorCapabilities: added
+- NewNullableVerificationErrorRecursiveCapabilities: added
+- NewNullableVerificationErrorRecursiveType: added
+- NewNullableVerificationErrorType: added
 - NewNullableWallet: added
+- NewNullableWalletRecommendationReasons: added
 - NewNullableWebhookAmount: added
 - NewNullableWebhookTopUpAmount: added
 - NewNullableWebhookTopUpConfiguration: added
+- NewNullableWebhookTopUpConfigurationStatus: added
 - NewNullableWebhookTopUpConfigurationUpdated: added
+- NewNullableWebhookTopUpConfigurationUpdatedStatus: added
 - NewNullableWebhookTopUpCounterparty: added
 - NewNullableWebhookTopUpMandate: added
 - NewNullableWebhookTopUpTrigger: added
+- NewNullableWebhookTopUpTriggerSchedule: added
+- NewPaymentInstrumentStatusFromValue: added
+- NewPaymentInstrumentStatusReasonFromValue: added
+- NewPaymentInstrumentTypeFromValue: added
+- NewPaymentNotificationRequestTypeFromValue: added
 - NewPayoutScheduleBANotificationRequest: added
+- NewPayoutScheduleBANotificationRequestTypeFromValue: added
 - NewPayoutScheduleBANotificationRequestWithDefaults: added
 - NewPayoutScheduleBPNotificationRequest: added
+- NewPayoutScheduleBPNotificationRequestTypeFromValue: added
 - NewPayoutScheduleBPNotificationRequestWithDefaults: added
 - NewPayoutScheduleStateNotificationRequest: added
+- NewPayoutScheduleStateNotificationRequestTypeFromValue: added
 - NewPayoutScheduleStateNotificationRequestWithDefaults: added
 - NewPayoutStateWebhookData: added
+- NewPayoutStateWebhookDataResultFromValue: added
 - NewPayoutStateWebhookDataWithDefaults: added
+- NewPhoneNumberPhoneTypeFromValue: added
+- NewPhoneTypeFromValue: added
 - NewPlatformPayoutConfigWebhookData: added
 - NewPlatformPayoutConfigWebhookDataWithDefaults: added
 - NewResourceReference: added
@@ -234,35 +556,57 @@ Compatible changes:
 - NewResultDetails: added
 - NewResultDetailsWithDefaults: added
 - NewScoreNotificationRequest: added
+- NewScoreNotificationRequestTypeFromValue: added
 - NewScoreNotificationRequestWithDefaults: added
+- NewSweepConfigurationNotificationRequestTypeFromValue: added
+- NewSweepConfigurationV2CategoryFromValue: added
+- NewSweepConfigurationV2PrioritiesFromValue: added
+- NewSweepConfigurationV2ReasonFromValue: added
+- NewSweepConfigurationV2StatusFromValue: added
+- NewSweepConfigurationV2TypeFromValue: added
 - NewSweepExecutionNotificationData: added
+- NewSweepExecutionNotificationDataResultFromValue: added
 - NewSweepExecutionNotificationDataWithDefaults: added
 - NewSweepExecutionNotificationRequest: added
+- NewSweepExecutionNotificationRequestTypeFromValue: added
 - NewSweepExecutionNotificationRequestWithDefaults: added
 - NewSweepResultDetails: added
 - NewSweepResultDetailsWithDefaults: added
+- NewSweepScheduleTypeFromValue: added
 - NewTokenAuthentication: added
 - NewTokenAuthenticationWithDefaults: added
 - NewTopUpConfigurationEventRequest: added
+- NewTopUpConfigurationEventRequestTypeFromValue: added
 - NewTopUpConfigurationEventRequestWithDefaults: added
 - NewTopUpConfigurationUpdatedEventRequest: added
+- NewTopUpConfigurationUpdatedEventRequestTypeFromValue: added
 - NewTopUpConfigurationUpdatedEventRequestWithDefaults: added
 - NewTopUpUpdatedWebhookData: added
 - NewTopUpUpdatedWebhookDataWithDefaults: added
 - NewTopUpWebhookData: added
 - NewTopUpWebhookDataWithDefaults: added
 - NewUKLocalMandateAccountIdentification: added
+- NewUKLocalMandateAccountIdentificationTypeFromValue: added
 - NewUKLocalMandateAccountIdentificationWithDefaults: added
 - NewValidationFacts: added
+- NewValidationFactsResultFromValue: added
 - NewValidationFactsWithDefaults: added
+- NewVerificationDeadlineCapabilitiesFromValue: added
+- NewVerificationErrorCapabilitiesFromValue: added
+- NewVerificationErrorRecursiveCapabilitiesFromValue: added
+- NewVerificationErrorRecursiveTypeFromValue: added
+- NewVerificationErrorTypeFromValue: added
 - NewWallet: added
+- NewWalletRecommendationReasonsFromValue: added
 - NewWalletWithDefaults: added
 - NewWebhookAmount: added
 - NewWebhookAmountWithDefaults: added
 - NewWebhookTopUpAmount: added
 - NewWebhookTopUpAmountWithDefaults: added
 - NewWebhookTopUpConfiguration: added
+- NewWebhookTopUpConfigurationStatusFromValue: added
 - NewWebhookTopUpConfigurationUpdated: added
+- NewWebhookTopUpConfigurationUpdatedStatusFromValue: added
 - NewWebhookTopUpConfigurationUpdatedWithDefaults: added
 - NewWebhookTopUpConfigurationWithDefaults: added
 - NewWebhookTopUpCounterparty: added
@@ -270,54 +614,113 @@ Compatible changes:
 - NewWebhookTopUpMandate: added
 - NewWebhookTopUpMandateWithDefaults: added
 - NewWebhookTopUpTrigger: added
+- NewWebhookTopUpTriggerScheduleFromValue: added
 - NewWebhookTopUpTriggerWithDefaults: added
+- NullableAccountHolderCapabilityAllowedLevel: added
+- NullableAccountHolderCapabilityRequestedLevel: added
+- NullableAccountHolderCapabilityVerificationStatus: added
+- NullableAccountHolderNotificationRequestType: added
+- NullableAccountHolderStatus: added
 - NullableAccountPayoutAutoApplicationNotificationRequest: added
+- NullableAccountPayoutAutoApplicationNotificationRequestType: added
 - NullableAccountPayoutAutoApplicationWebhookData: added
 - NullableAccountPayoutConfigWebhookData: added
+- NullableAccountSupportingEntityCapabilityAllowedLevel: added
+- NullableAccountSupportingEntityCapabilityRequestedLevel: added
+- NullableAccountSupportingEntityCapabilityVerificationStatus: added
+- NullableBalanceAccountNotificationRequestType: added
+- NullableBalanceAccountStatus: added
 - NullableBankScoreSignalTriggeredData: added
+- NullableCapabilityProblemEntityRecursiveType: added
+- NullableCapabilityProblemEntityType: added
+- NullableCapabilitySettingsFundingSource: added
+- NullableCapabilitySettingsInterval: added
+- NullableCardFormFactor: added
+- NullableCardOrderItemDeliveryStatusStatus: added
+- NullableCardOrderNotificationRequestType: added
 - NullableDevice: added
+- NullableIbanAccountIdentificationType: added
 - NullableMandate: added
 - NullableMandateBankAccount: added
 - NullableMandateBankAccountAccountIdentification: added
 - NullableMandateNotificationData: added
 - NullableMandateNotificationRequest: added
+- NullableMandateNotificationRequestType: added
 - NullableMandatePartyIdentification: added
+- NullableMandateStatus: added
+- NullableMandateType: added
 - NullableNetworkTokenNotificationDataV2: added
 - NullableNetworkTokenNotificationRequest: added
+- NullableNetworkTokenNotificationRequestType: added
 - NullableNetworkTokenRequestor: added
 - NullableNetworkTokenRiskRuleData: added
 - NullableNetworkTokenRiskRuleSource: added
 - NullableNetworkTokenTransactionRulesResult: added
 - NullableNetworkTokenTriggeredRiskRule: added
+- NullablePaymentInstrumentStatus: added
+- NullablePaymentInstrumentStatusReason: added
+- NullablePaymentInstrumentType: added
+- NullablePaymentNotificationRequestType: added
 - NullablePayoutScheduleBANotificationRequest: added
+- NullablePayoutScheduleBANotificationRequestType: added
 - NullablePayoutScheduleBPNotificationRequest: added
+- NullablePayoutScheduleBPNotificationRequestType: added
 - NullablePayoutScheduleStateNotificationRequest: added
+- NullablePayoutScheduleStateNotificationRequestType: added
 - NullablePayoutStateWebhookData: added
+- NullablePayoutStateWebhookDataResult: added
+- NullablePhoneNumberPhoneType: added
+- NullablePhoneType: added
 - NullablePlatformPayoutConfigWebhookData: added
 - NullableResourceReference: added
 - NullableResultDetails: added
 - NullableScoreNotificationRequest: added
+- NullableScoreNotificationRequestType: added
+- NullableSweepConfigurationNotificationRequestType: added
+- NullableSweepConfigurationV2Category: added
+- NullableSweepConfigurationV2Priorities: added
+- NullableSweepConfigurationV2Reason: added
+- NullableSweepConfigurationV2Status: added
+- NullableSweepConfigurationV2Type: added
 - NullableSweepExecutionNotificationData: added
+- NullableSweepExecutionNotificationDataResult: added
 - NullableSweepExecutionNotificationRequest: added
+- NullableSweepExecutionNotificationRequestType: added
 - NullableSweepResultDetails: added
+- NullableSweepScheduleType: added
 - NullableTokenAuthentication: added
 - NullableTopUpConfigurationEventRequest: added
+- NullableTopUpConfigurationEventRequestType: added
 - NullableTopUpConfigurationUpdatedEventRequest: added
+- NullableTopUpConfigurationUpdatedEventRequestType: added
 - NullableTopUpUpdatedWebhookData: added
 - NullableTopUpWebhookData: added
 - NullableUKLocalMandateAccountIdentification: added
+- NullableUKLocalMandateAccountIdentificationType: added
 - NullableValidationFacts: added
+- NullableValidationFactsResult: added
+- NullableVerificationDeadlineCapabilities: added
+- NullableVerificationErrorCapabilities: added
+- NullableVerificationErrorRecursiveCapabilities: added
+- NullableVerificationErrorRecursiveType: added
+- NullableVerificationErrorType: added
 - NullableWallet: added
+- NullableWalletRecommendationReasons: added
 - NullableWebhookAmount: added
 - NullableWebhookTopUpAmount: added
 - NullableWebhookTopUpConfiguration: added
+- NullableWebhookTopUpConfigurationStatus: added
 - NullableWebhookTopUpConfigurationUpdated: added
+- NullableWebhookTopUpConfigurationUpdatedStatus: added
 - NullableWebhookTopUpCounterparty: added
 - NullableWebhookTopUpMandate: added
 - NullableWebhookTopUpTrigger: added
+- NullableWebhookTopUpTriggerSchedule: added
+- PaymentInstrumentStatus: added
 - PaymentInstrumentStatusActive: added
 - PaymentInstrumentStatusClosed: added
 - PaymentInstrumentStatusInactive: added
+- PaymentInstrumentStatusReason: added
 - PaymentInstrumentStatusReasonAccountClosure: added
 - PaymentInstrumentStatusReasonDamaged: added
 - PaymentInstrumentStatusReasonEndOfLife: added
@@ -328,49 +731,62 @@ Compatible changes:
 - PaymentInstrumentStatusReasonSuspectedFraud: added
 - PaymentInstrumentStatusReasonTransactionRule: added
 - PaymentInstrumentStatusSuspended: added
+- PaymentInstrumentType: added
 - PaymentInstrumentTypeBankAccount: added
 - PaymentInstrumentTypeCard: added
+- PaymentNotificationRequestType: added
 - PaymentNotificationRequestTypeBalancePlatformPaymentInstrumentCreated: added
 - PaymentNotificationRequestTypeBalancePlatformPaymentInstrumentUpdated: added
 - PayoutScheduleBANotificationRequest: added
+- PayoutScheduleBANotificationRequestType: added
 - PayoutScheduleBANotificationRequestTypeBalancePlatformBalanceAccountPayoutScheduleCreated: added
 - PayoutScheduleBANotificationRequestTypeBalancePlatformBalanceAccountPayoutScheduleDeleted: added
 - PayoutScheduleBANotificationRequestTypeBalancePlatformBalanceAccountPayoutScheduleUpdated: added
 - PayoutScheduleBPNotificationRequest: added
+- PayoutScheduleBPNotificationRequestType: added
 - PayoutScheduleBPNotificationRequestTypeBalancePlatformBalancePlatformPayoutScheduleCreated: added
 - PayoutScheduleBPNotificationRequestTypeBalancePlatformBalancePlatformPayoutScheduleDeleted: added
 - PayoutScheduleBPNotificationRequestTypeBalancePlatformBalancePlatformPayoutScheduleUpdated: added
 - PayoutScheduleStateNotificationRequest: added
+- PayoutScheduleStateNotificationRequestType: added
 - PayoutScheduleStateNotificationRequestTypeBalancePlatformBalanceAccountPayoutScheduleExecutionFailed: added
 - PayoutScheduleStateNotificationRequestTypeBalancePlatformBalanceAccountPayoutScheduleExecutionSkipped: added
 - PayoutScheduleStateNotificationRequestTypeBalancePlatformBalanceAccountPayoutScheduleExecutionSucceeded: added
 - PayoutStateWebhookData: added
+- PayoutStateWebhookDataResult: added
 - PayoutStateWebhookDataResultFailed: added
 - PayoutStateWebhookDataResultSkipped: added
 - PayoutStateWebhookDataResultSucceeded: added
+- PhoneNumberPhoneType: added
 - PhoneNumberPhoneTypeFax: added
 - PhoneNumberPhoneTypeLandline: added
 - PhoneNumberPhoneTypeMobile: added
 - PhoneNumberPhoneTypeSIP: added
+- PhoneType: added
 - PhoneTypeLandline: added
 - PhoneTypeMobile: added
 - PlatformPayoutConfigWebhookData: added
 - ResourceReference: added
 - ResultDetails: added
 - ScoreNotificationRequest: added
+- ScoreNotificationRequestType: added
 - ScoreNotificationRequestTypeBalancePlatformScoreTriggered: added
+- SweepConfigurationNotificationRequestType: added
 - SweepConfigurationNotificationRequestTypeBalancePlatformBalanceAccountSweepCreated: added
 - SweepConfigurationNotificationRequestTypeBalancePlatformBalanceAccountSweepDeleted: added
 - SweepConfigurationNotificationRequestTypeBalancePlatformBalanceAccountSweepUpdated: added
+- SweepConfigurationV2Category: added
 - SweepConfigurationV2CategoryBank: added
 - SweepConfigurationV2CategoryInternal: added
 - SweepConfigurationV2CategoryPlatformPayment: added
+- SweepConfigurationV2Priorities: added
 - SweepConfigurationV2PrioritiesCrossBorder: added
 - SweepConfigurationV2PrioritiesFast: added
 - SweepConfigurationV2PrioritiesInstant: added
 - SweepConfigurationV2PrioritiesInternal: added
 - SweepConfigurationV2PrioritiesRegular: added
 - SweepConfigurationV2PrioritiesWire: added
+- SweepConfigurationV2Reason: added
 - SweepConfigurationV2ReasonAccountHierarchyNotActive: added
 - SweepConfigurationV2ReasonAmountLimitExceeded: added
 - SweepConfigurationV2ReasonApproved: added
@@ -387,19 +803,24 @@ Compatible changes:
 - SweepConfigurationV2ReasonRouteNotFound: added
 - SweepConfigurationV2ReasonTransferInstrumentDoesNotExist: added
 - SweepConfigurationV2ReasonUnknown: added
+- SweepConfigurationV2Status: added
 - SweepConfigurationV2StatusActive: added
 - SweepConfigurationV2StatusInactive: added
+- SweepConfigurationV2Type: added
 - SweepConfigurationV2TypePull: added
 - SweepConfigurationV2TypePush: added
 - SweepExecutionNotificationData: added
+- SweepExecutionNotificationDataResult: added
 - SweepExecutionNotificationDataResultFailed: added
 - SweepExecutionNotificationDataResultSkipped: added
 - SweepExecutionNotificationDataResultSucceeded: added
 - SweepExecutionNotificationRequest: added
+- SweepExecutionNotificationRequestType: added
 - SweepExecutionNotificationRequestTypeBalancePlatformBalanceAccountSweepExecutionFailed: added
 - SweepExecutionNotificationRequestTypeBalancePlatformBalanceAccountSweepExecutionSkipped: added
 - SweepExecutionNotificationRequestTypeBalancePlatformBalanceAccountSweepExecutionSucceeded: added
 - SweepResultDetails: added
+- SweepScheduleType: added
 - SweepScheduleTypeBalance: added
 - SweepScheduleTypeCron: added
 - SweepScheduleTypeDaily: added
@@ -407,20 +828,25 @@ Compatible changes:
 - SweepScheduleTypeWeekly: added
 - TokenAuthentication: added
 - TopUpConfigurationEventRequest: added
+- TopUpConfigurationEventRequestType: added
 - TopUpConfigurationEventRequestTypeBalancePlatformBalanceAccountRecurringTopUpCreated: added
 - TopUpConfigurationEventRequestTypeBalancePlatformBalanceAccountRecurringTopUpDeleted: added
 - TopUpConfigurationUpdatedEventRequest: added
+- TopUpConfigurationUpdatedEventRequestType: added
 - TopUpConfigurationUpdatedEventRequestTypeBalancePlatformBalanceAccountRecurringTopUpUpdated: added
 - TopUpUpdatedWebhookData: added
 - TopUpWebhookData: added
 - UKLocalMandateAccountIdentification: added
 - UKLocalMandateAccountIdentificationAsMandateBankAccountAccountIdentification: added
+- UKLocalMandateAccountIdentificationType: added
 - UKLocalMandateAccountIdentificationTypeUkLocal: added
 - ValidationFacts: added
+- ValidationFactsResult: added
 - ValidationFactsResultInvalid: added
 - ValidationFactsResultNotApplicable: added
 - ValidationFactsResultNotValidated: added
 - ValidationFactsResultValid: added
+- VerificationDeadlineCapabilities: added
 - VerificationDeadlineCapabilitiesAcceptExternalFunding: added
 - VerificationDeadlineCapabilitiesAcceptPspFunding: added
 - VerificationDeadlineCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -476,6 +902,7 @@ Compatible changes:
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationDeadlineCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorCapabilities: added
 - VerificationErrorCapabilitiesAcceptExternalFunding: added
 - VerificationErrorCapabilitiesAcceptPspFunding: added
 - VerificationErrorCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -531,6 +958,7 @@ Compatible changes:
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationErrorCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorRecursiveCapabilities: added
 - VerificationErrorRecursiveCapabilitiesAcceptExternalFunding: added
 - VerificationErrorRecursiveCapabilitiesAcceptPspFunding: added
 - VerificationErrorRecursiveCapabilitiesAcceptTransactionInRestrictedCountries: added
@@ -586,15 +1014,18 @@ Compatible changes:
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountries: added
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountriesCommercial: added
 - VerificationErrorRecursiveCapabilitiesWithdrawFromAtmInRestrictedCountriesConsumer: added
+- VerificationErrorRecursiveType: added
 - VerificationErrorRecursiveTypeDataMissing: added
 - VerificationErrorRecursiveTypeDataReview: added
 - VerificationErrorRecursiveTypeInvalidInput: added
 - VerificationErrorRecursiveTypePendingStatus: added
+- VerificationErrorType: added
 - VerificationErrorTypeDataMissing: added
 - VerificationErrorTypeDataReview: added
 - VerificationErrorTypeInvalidInput: added
 - VerificationErrorTypePendingStatus: added
 - Wallet: added
+- WalletRecommendationReasons: added
 - WalletRecommendationReasonsAccountCardTooNew: added
 - WalletRecommendationReasonsAccountHighRisk: added
 - WalletRecommendationReasonsAccountRecentlyChanged: added
@@ -639,14 +1070,17 @@ Compatible changes:
 - WebhookAmount: added
 - WebhookTopUpAmount: added
 - WebhookTopUpConfiguration: added
+- WebhookTopUpConfigurationStatus: added
 - WebhookTopUpConfigurationStatusActive: added
 - WebhookTopUpConfigurationStatusInactive: added
 - WebhookTopUpConfigurationUpdated: added
+- WebhookTopUpConfigurationUpdatedStatus: added
 - WebhookTopUpConfigurationUpdatedStatusActive: added
 - WebhookTopUpConfigurationUpdatedStatusInactive: added
 - WebhookTopUpCounterparty: added
 - WebhookTopUpMandate: added
 - WebhookTopUpTrigger: added
+- WebhookTopUpTriggerSchedule: added
 - WebhookTopUpTriggerScheduleMonthly: added
 - WebhookTopUpTriggerScheduleWeekdays: added
 - WebhookTopUpTriggerScheduleWeekly: added

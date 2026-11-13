@@ -1,4 +1,15 @@
+Incompatible changes:
+- (*SubjectErasureResponse).GetResult: changed from func() string to func() SubjectErasureResponseResult
+- (*SubjectErasureResponse).GetResultOk: changed from func() (*string, bool) to func() (*SubjectErasureResponseResult, bool)
+- (*SubjectErasureResponse).SetResult: changed from func(string) to func(SubjectErasureResponseResult)
+- GeneralApi.Client: changed from *github.com/adyen/adyen-go-api-library/v21/src/common.Client to *github.com/adyen/adyen-go-api-library/v21/common.Client
+- SubjectErasureResponse.Result: changed from *string to *SubjectErasureResponseResult
 Compatible changes:
+- AllowedSubjectErasureResponseResultEnumValues: added
+- NewNullableSubjectErasureResponseResult: added
+- NewSubjectErasureResponseResultFromValue: added
+- NullableSubjectErasureResponseResult: added
+- SubjectErasureResponseResult: added
 - SubjectErasureResponseResultACTIVERECURRINGTOKENEXISTS: added
 - SubjectErasureResponseResultALREADYPROCESSED: added
 - SubjectErasureResponseResultPAYMENTNOTFOUND: added

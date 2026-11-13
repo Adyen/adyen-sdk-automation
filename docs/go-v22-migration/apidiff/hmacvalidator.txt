@@ -1,0 +1,2 @@
+Incompatible changes:
+- ValidateHmac: changed from func(github.com/adyen/adyen-go-api-library/v21/src/webhook.NotificationRequestItem, string) bool to func(github.com/adyen/adyen-go-api-library/v21/webhook.NotificationRequestItem, string) bool
