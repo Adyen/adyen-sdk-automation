@@ -1,0 +1,14 @@
+Compatible changes:
+- CostEstimateRequestShopperInteractionContAuth: added
+- CostEstimateRequestShopperInteractionEcommerce: added
+- CostEstimateRequestShopperInteractionMoto: added
+- CostEstimateRequestShopperInteractionPOS: added
+- RecurringContractEXTERNAL: added
+- RecurringContractONECLICK: added
+- RecurringContractONECLICKRECURRING: added
+- RecurringContractPAYOUT: added
+- RecurringContractRECURRING: added
+- RecurringTokenServiceAMEXTOKENSERVICE: added
+- RecurringTokenServiceMCTOKENSERVICE: added
+- RecurringTokenServiceTOKENSHARING: added
+- RecurringTokenServiceVISATOKENSERVICE: added

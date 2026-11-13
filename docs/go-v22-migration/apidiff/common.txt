@@ -2,9 +2,11 @@ Compatible changes:
 - Config.CapitalEndpoint: added
 - Config.DocumentCollectorEndpoint: added
 - Config.ForeignExchangeEndpoint: added
+- Config.Logger: added
 - Config.PosMobileEndpoint: added
 - Config.SessionAuthenticationEndpoint: added
 - Config.SoftPOSConfigurationEndpoint: added
 - NewMultipartBody: added
 - NewNullableSlice: added
 - NullableSlice: added
+- Ptr: added

@@ -1,2 +1,10 @@
 Compatible changes:
+- DisputeEventNotificationTypeCancelled: added
+- DisputeEventNotificationTypeDuplicate: added
+- DisputeEventNotificationTypeFraud: added
+- DisputeEventNotificationTypeNotAsDescribed: added
+- DisputeEventNotificationTypeNotDelivered: added
+- DisputeEventNotificationTypeOther: added
+- DisputeNotificationRequestTypeBalancePlatformDisputeCreated: added
+- DisputeNotificationRequestTypeBalancePlatformDisputeUpdated: added
 - HandleDisputeNotificationRequest: added

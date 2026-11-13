@@ -36,7 +36,7 @@ states; see "Nullable arrays" below.
 ## Increment 5: regenerated services, Management and Balance Platform restored
 
 Full `apidiff` reports against v21.2.3 are in [`apidiff/`](apidiff/) (one file per package with
-changes). Packages not listed there have no exported change. All changes below come from the
+changes, refreshed with every later increment). Packages not listed there have no exported change. All changes below come from the
 specs unless the cause says otherwise; for every package except Management and Balance Platform
 this was confirmed by `apidiff` against the 6.5.0 regeneration of the same specs (zero generator
 changes). Management and Balance Platform had no 6.5.0 regeneration (excluded from Go); their
@@ -141,3 +141,27 @@ keep compiling and do not send it.
 
 `apidiff` against v21.2.3: Management has 285 incompatible changes (284 in increment 5 plus
 `TerminalSettings.Gratuities`); no other package gains an incompatible change.
+
+## Idiomatic Go additions
+
+Additive changes that make the generated code read like hand-written Go. `apidiff` against
+v21.2.3 shows the same incompatible changes as before this section; everything below is a
+compatible addition.
+
+| Area | Change | Cause | Compatibility |
+|------|--------|-------|---------------|
+| Fields with a fixed set of values (4,840 values in all packages) | A constant per value, named after the model, the field, and the value in Go case: `checkout.PaymentRequestShopperInteractionEcommerce`, `checkout.PaymentRequestChannelIOS`, `recurring.RecurringContractONECLICKRECURRING`. Array items get constants too. Field types stay `string` / `*string` | generator (template) | Additive. The 8 values of `payments.ModificationResult.Response` start with `[` and keep an underscore (`ModificationResultResponse_CaptureReceived`) |
+| Generated doc comments | Parameter descriptions are no longer HTML-escaped (`` `sessionResult` `` instead of `&#x60;sessionResult&#x60;`) | generator (template) | Documentation only |
+| Generated and handwritten code | `any` instead of `interface{}` (identical types); `io` instead of the deprecated `io/ioutil` | generator (template, `typeMappings`), handwritten | No API change. The frozen `posterminalmanagement` package and the `webhook` package are unchanged |
+| `common.Ptr[T]` | Generic pointer helper next to `PtrString`, `PtrInt64`, and the others, which stay | handwritten | Additive |
+| `common.Config.Logger` | Optional `*slog.Logger` for the `Debug` request and response dumps (debug level, API key and `Authorization` masked) and the `Log3XXError`/`Log4XXError`/`Log5XXError` error bodies (warn level, error level for 5XX) | handwritten | Additive; `json:"-"` |
+| `Log3XXError`, `Log4XXError`, `Log5XXError` without `Logger` | Print the error response body to stdout. Before, they printed the address of the body reader (`&{0xc000...}`), not its content | handwritten | Fix |
+| Godoc examples | Runnable examples for a Checkout payment, error details, the logger (`adyen`), and HMAC validation of standard and Balance Platform webhooks (`hmacvalidator`) | handwritten | Documentation; checked by `go test` |
+| README | Uses `common.Ptr` and the value constants; documents `Logger` and the constants | docs | |
+
+### Decisions
+
+- The `isValid<Field>()` helpers stay. Discriminator-less `oneOf` decoding calls `isValidType()`
+  through an interface assertion, and a template cannot keep only that one.
+- Constants use plain string constants, not typed enums, so existing `Set<Field>(string)` calls and
+  struct literals keep compiling.

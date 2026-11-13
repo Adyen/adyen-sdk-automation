@@ -1,2 +1,4 @@
 Compatible changes:
+- BalanceAccountBalanceNotificationRequestTypeBalancePlatformBalanceAccountBalanceUpdated: added
 - HandleReleasedBlockedBalanceNotificationRequest: added
+- ReleasedBlockedBalanceNotificationRequestTypeBalancePlatformBalanceAccountBalanceBlockReleased: added

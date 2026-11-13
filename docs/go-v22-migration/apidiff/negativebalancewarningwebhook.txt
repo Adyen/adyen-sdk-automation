@@ -1,2 +1,3 @@
 Compatible changes:
 - HandleNegativeBalanceCompensationWarningNotificationRequest: added
+- NegativeBalanceCompensationWarningNotificationRequestTypeBalancePlatformNegativeBalanceCompensationWarningScheduled: added

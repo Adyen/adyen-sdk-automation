@@ -1,0 +1,10 @@
+Compatible changes:
+- RecurringContractEXTERNAL: added
+- RecurringContractONECLICK: added
+- RecurringContractONECLICKRECURRING: added
+- RecurringContractPAYOUT: added
+- RecurringContractRECURRING: added
+- RecurringTokenServiceAMEXTOKENSERVICE: added
+- RecurringTokenServiceMCTOKENSERVICE: added
+- RecurringTokenServiceTOKENSHARING: added
+- RecurringTokenServiceVISATOKENSERVICE: added

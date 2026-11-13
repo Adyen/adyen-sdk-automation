@@ -46,7 +46,12 @@
           "amounts": { "type": "object", "additionalProperties": { "$ref": "#/components/schemas/Amount" } },
           "requiredMap": { "type": "object", "additionalProperties": { "type": "string" } },
           "tags": { "type": "array", "items": { "type": "string" } },
-          "freeForm": { "type": "object" }
+          "freeForm": { "type": "object" },
+          "channel": {
+            "type": "string",
+            "enum": ["iOS", "Android", "POS", "delayedCharge", "TOKEN_SHARING", "ONECLICK,RECURRING", "application/pdf", "[capture-received]"]
+          },
+          "channels": { "type": "array", "items": { "type": "string", "enum": ["web", "app"] } }
         }
       },
       "ShopperIdPaymentMethod": {

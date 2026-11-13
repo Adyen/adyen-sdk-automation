@@ -1,0 +1,5 @@
+Compatible changes:
+- SubjectErasureResponseResultACTIVERECURRINGTOKENEXISTS: added
+- SubjectErasureResponseResultALREADYPROCESSED: added
+- SubjectErasureResponseResultPAYMENTNOTFOUND: added
+- SubjectErasureResponseResultSUCCESS: added

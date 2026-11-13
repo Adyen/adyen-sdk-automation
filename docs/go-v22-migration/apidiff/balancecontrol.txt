@@ -1,0 +1,17 @@
+Compatible changes:
+- BalanceTransferRequestTypeAdjustment: added
+- BalanceTransferRequestTypeCredit: added
+- BalanceTransferRequestTypeDebit: added
+- BalanceTransferRequestTypeFee: added
+- BalanceTransferRequestTypeTax: added
+- BalanceTransferRequestTypeTerminalSale: added
+- BalanceTransferResponseStatusError: added
+- BalanceTransferResponseStatusFailed: added
+- BalanceTransferResponseStatusNotEnoughBalance: added
+- BalanceTransferResponseStatusTransferred: added
+- BalanceTransferResponseTypeAdjustment: added
+- BalanceTransferResponseTypeCredit: added
+- BalanceTransferResponseTypeDebit: added
+- BalanceTransferResponseTypeFee: added
+- BalanceTransferResponseTypeTax: added
+- BalanceTransferResponseTypeTerminalSale: added
