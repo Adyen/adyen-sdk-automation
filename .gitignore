@@ -15,6 +15,7 @@ __pycache__/
 # OpenAPI specs
 schema
 PaymentMethodOverview.md
+/sdk-coverage.md
 
 # SDK upstream repository
 repo
