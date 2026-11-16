@@ -2,6 +2,10 @@ name: SDK Coverage
 run-name: SDK Coverage
 
 on:
+  # Temporary: validate this branch before merging. Remove after validation.
+  push:
+    branches:
+      - coverage-report-missing-new-services
   schedule:
     # GitHub Actions cron uses UTC: one run every day at 07:30 UTC.
     - cron: '30 7 * * *'

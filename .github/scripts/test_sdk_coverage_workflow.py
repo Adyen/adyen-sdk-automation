@@ -83,9 +83,16 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
         self.assertIn("- cron: '30 7 * * *'", triggers)
         self.assertIn("  workflow_dispatch:\n", triggers)
         self.assertIn("      services:\n", triggers)
-        for trigger in ("pull_request:", "push:", "pull_request_target:"):
+        for trigger in ("pull_request:", "pull_request_target:"):
             with self.subTest(trigger=trigger):
                 self.assertNotIn(trigger, triggers)
+
+    def test_temporary_push_trigger_only_runs_on_validation_branch(self) -> None:
+        self.assertRegex(
+            self.workflow,
+            r"(?m)^  push:\n    branches:\n"
+            r"      - coverage-report-missing-new-services\n(?=  \S)",
+        )
 
     def test_workflow_is_read_only_and_actions_are_pinned(self) -> None:
         self.assertIn("permissions:\n  contents: read\n", self.workflow)
