@@ -2,9 +2,9 @@
 
 """Propose catalog entries for published specs that no SDK covers.
 
-check_spec_coverage.py reports the gap. This turns each `uncovered-spec` finding
-into a concrete edit of config/services.json, so a new API reaches review as a
-diff instead of a line in a log.
+The shared spec evaluator reports the gap. This turns each `uncovered-spec`
+finding into a concrete edit of config/services.json, so a new API reaches
+review as a diff instead of a line in a log.
 
 Only the mechanical part is automated. The target service name is a product
 decision: 17 of the 30 existing entries have a name that cannot be derived from
@@ -22,7 +22,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import check_spec_coverage as checker
+import spec_coverage_core as coverage_core
 
 # Mirrors test_services_catalog.py, which rejects any other name on every PR.
 VALID_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9]*$")
@@ -137,7 +137,7 @@ def candidate_names(specs_dir: Path, spec: str, version: int) -> tuple[str, str]
 
 
 def build_plan(
-    findings: list[checker.Finding],
+    findings: list[coverage_core.Finding],
     specs: dict[str, list[int]],
     services: list[dict],
     specs_dir: Path,
@@ -147,7 +147,7 @@ def build_plan(
     taken = {service["name"].lower() for service in services}
 
     for finding in findings:
-        if finding.kind != checker.UNCOVERED or finding.accepted:
+        if finding.kind != coverage_core.UNCOVERED or finding.accepted:
             continue
 
         version = public_version(specs_dir, finding.spec, specs[finding.spec])
@@ -261,9 +261,18 @@ def render_text(plan: Plan) -> str:
 
 def parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--catalog", type=Path, default=checker.DEFAULT_CATALOG, help="Path to config/services.json")
-    parser.add_argument("--specs", type=Path, default=checker.DEFAULT_SPECS, help="Directory holding the published specs")
-    parser.add_argument("--baseline", type=Path, default=checker.DEFAULT_BASELINE, help="Path to the accepted-gaps baseline")
+    parser.add_argument(
+        "--catalog", type=Path, default=coverage_core.DEFAULT_CATALOG, help="Path to config/services.json"
+    )
+    parser.add_argument(
+        "--specs", type=Path, default=coverage_core.DEFAULT_SPECS, help="Directory holding the published specs"
+    )
+    parser.add_argument(
+        "--baseline",
+        type=Path,
+        default=coverage_core.DEFAULT_BASELINE,
+        help="Path to the accepted-gaps baseline",
+    )
     parser.add_argument("--write", action="store_true", help="Apply the proposals to the catalog")
     parser.add_argument("--pr-body", type=Path, help="Write the pull request body to this file")
     return parser.parse_args(argv)
@@ -273,14 +282,14 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
 
     try:
-        specs = checker.discover_specs(args.specs)
-        baseline = checker.load_baseline(args.baseline)
-    except (FileNotFoundError, checker.BaselineError) as error:
+        specs = coverage_core.discover_specs(args.specs)
+        baseline = coverage_core.load_baseline(args.baseline)
+    except (FileNotFoundError, coverage_core.BaselineError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
 
-    services = checker.load_catalog(args.catalog)
-    plan = build_plan(checker.evaluate(specs, services, baseline), specs, services, args.specs)
+    services = coverage_core.load_catalog(args.catalog)
+    plan = build_plan(coverage_core.evaluate(specs, services, baseline), specs, services, args.specs)
 
     print(render_text(plan))
 

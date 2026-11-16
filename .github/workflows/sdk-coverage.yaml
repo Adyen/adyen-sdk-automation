@@ -3,32 +3,14 @@ run-name: SDK Coverage
 
 on:
   schedule:
-    - cron: '30 7 * * 1-5'
+    # GitHub Actions cron uses UTC: one run every day at 07:30 UTC.
+    - cron: '30 7 * * *'
   workflow_dispatch:
     inputs:
       services:
         description: 'Comma-separated services (e.g. checkout,management). Leave empty for all.'
         required: false
         default: ''
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'config/services.json'
-      - 'config/spec-coverage-baseline.json'
-      - '.github/scripts/sdk_coverage.py'
-      - '.github/scripts/check_spec_coverage.py'
-      - '.github/scripts/test_sdk_coverage.py'
-      - '.github/scripts/test_sdk_coverage_workflow.py'
-      - '.github/scripts/test_check_spec_coverage.py'
-      - '.github/workflows/sdk-coverage.yaml'
-      - 'build.gradle.kts'
-      - 'buildSrc/**'
-      - 'gradle.properties'
-      - 'gradle/**'
-      - 'gradlew'
-      - '*/build.gradle.kts'
-      - '*/gradle.properties'
-      - '*/config.yaml'
 
 permissions:
   contents: read

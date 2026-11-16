@@ -91,43 +91,26 @@ Every reviewer must have access to all target SDK repositories. The `ADYEN_AUTOM
 
 ### Checking SDK coverage
 
-There are two checks: a quick check of the service list and a detailed check that
-generates SDK code.
-
-#### Check the service list
-
-This compares the published OpenAPI specs with `config/services.json`. It shows
-APIs missing from the list, newer API versions, and missing spec files.
-
-```shell
-./gradlew specs
-python3 .github/scripts/check_spec_coverage.py
-```
-
-These findings are warnings, so they do not fail the check. Invalid configuration
-or specs that cannot be read do fail it.
+The SDK coverage report includes an OpenAPI catalog audit and a detailed check
+that generates SDK code. The audit compares published specs with
+`config/services.json`, and reports uncatalogued APIs, newer spec versions,
+missing spec files, and stale baseline entries.
 
 `config/spec-coverage-baseline.json` records known gaps and their reasons.
 `UNREVIEWED` means the reason still needs review. When you add a missing service
 or update an older version, remove the matching baseline entry.
 
-When looking for the latest public version, the check skips specs marked
+When looking for the latest public version, the audit skips specs marked
 `info.x-publicVersion: false`. It still checks that every spec file named in the
 service list exists.
-
-The **Spec Coverage** GitHub Action runs every weekday at **07:30 UTC**, on pull
-requests that change its watched files, or when started manually. Results appear
-in the run summary. It does not change files or open pull requests.
-
-#### Generate a detailed SDK report
 
 This check creates temporary SDK clones, generates code, and compares the result
 with the code already in each SDK. Your existing SDK checkouts are not changed.
 
-In GitHub, the **SDK Coverage** workflow runs every weekday at **07:30 UTC** and
-on pull requests to `main` that change the coverage checks, service catalog,
-baseline, or generation inputs. Scheduled runs check all services across all
-seven SDKs and start once the workflow is merged into the default branch.
+In GitHub, the **SDK Coverage** workflow runs daily at **07:30 UTC** or manually
+from Actions. Scheduled runs check all services across all seven SDKs and start
+once the workflow is merged into the default branch. It does not run on pull
+requests or pushes.
 Open its completed run to see the per-language table in the **Summary**, or
 download the **sdk-coverage** artifact for the Markdown report and generation log.
 Detailed generation diagnostics are saved in the artifact's `sdk-coverage.log`
@@ -145,6 +128,10 @@ For example, to check Checkout and Management:
 ```shell
 python3 .github/scripts/sdk_coverage.py --services checkout,management --jobs 2 --output /tmp/sdk-coverage.md
 ```
+
+Use JDK 21, as in CI. The script respects `JAVA_HOME`; when unset, it uses the
+JVM selected by `java` on `PATH` for both Gradle and Maven. This prevents Maven
+from silently using a different JDK, which can break Java formatting.
 
 - Leave out `--services` to check all services in `config/services.json`.
 - `--jobs 2` checks up to two SDKs at the same time.

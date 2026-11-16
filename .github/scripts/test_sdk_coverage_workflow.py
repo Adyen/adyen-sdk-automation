@@ -68,33 +68,24 @@ class TestSdkCoverageWorkflow(unittest.TestCase):
             check=False,
         )
 
-    def test_coverage_workflows_have_distinct_run_names(self) -> None:
-        for filename, name in (
-            ("sdk-coverage.yaml", "SDK Coverage"),
-            ("spec-coverage.yaml", "Spec Coverage"),
-        ):
-            with self.subTest(workflow=filename):
-                content = (WORKFLOW.parent / filename).read_text()
-                self.assertRegex(content, rf"(?m)^run-name: {re.escape(name)}$")
+    def test_workflow_runs_the_sdk_report_with_spec_audit(self) -> None:
+        self.assertRegex(self.workflow, r"(?m)^run-name: SDK Coverage$")
+        self.assertIn("  coverage:\n", self.workflow)
+        self.assertIn("python3 -u .github/scripts/sdk_coverage.py", self.workflow)
+        self.assertNotIn("  spec-audit:\n", self.workflow)
+        self.assertNotIn("check_spec_coverage.py", self.workflow)
+        self.assertFalse((WORKFLOW.parent / "spec-coverage.yaml").exists())
 
-    def test_manual_and_scoped_pull_request_triggers(self) -> None:
-        self.assertIn("  workflow_dispatch:\n", self.workflow)
-        self.assertIn("  pull_request:\n", self.workflow)
-        self.assertIn('    branches: [ "main" ]\n', self.workflow)
-        for path in (
-            "config/services.json",
-            "config/spec-coverage-baseline.json",
-            ".github/scripts/sdk_coverage.py",
-            ".github/scripts/check_spec_coverage.py",
-            ".github/workflows/sdk-coverage.yaml",
-            "buildSrc/**",
-        ):
-            with self.subTest(path=path):
-                self.assertIn(f"      - '{path}'\n", self.workflow)
-        self.assertNotRegex(self.workflow, r"(?m)^  (push|pull_request_target):")
-
-    def test_weekday_morning_schedule(self) -> None:
-        self.assertIn("  schedule:\n    - cron: '30 7 * * 1-5'\n", self.workflow)
+    def test_workflow_runs_daily_and_can_be_started_manually(self) -> None:
+        triggers = self.workflow.split("jobs:\n", 1)[0]
+        self.assertIn("  schedule:\n", triggers)
+        self.assertEqual(triggers.count("cron:"), 1)
+        self.assertIn("- cron: '30 7 * * *'", triggers)
+        self.assertIn("  workflow_dispatch:\n", triggers)
+        self.assertIn("      services:\n", triggers)
+        for trigger in ("pull_request:", "push:", "pull_request_target:"):
+            with self.subTest(trigger=trigger):
+                self.assertNotIn(trigger, triggers)
 
     def test_workflow_is_read_only_and_actions_are_pinned(self) -> None:
         self.assertIn("permissions:\n  contents: read\n", self.workflow)

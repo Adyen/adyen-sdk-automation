@@ -17,7 +17,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import check_spec_coverage as checker
+import spec_coverage_core as coverage_core
 import propose_new_services as proposer
 
 CATALOG_TEXT = """{
@@ -164,7 +164,7 @@ class TestBuildPlan(unittest.TestCase):
 
     def plan_for(self, specs: dict[str, list[int]], baseline: dict | None = None) -> proposer.Plan:
         baseline = baseline or {"uncoveredSpecs": {}, "pinnedVersions": {}}
-        findings = checker.evaluate(specs, self.services, baseline)
+        findings = coverage_core.evaluate(specs, self.services, baseline)
         return proposer.build_plan(findings, specs, self.services, self.specs_dir)
 
     def test_uncovered_spec_becomes_a_proposal_at_its_newest_version(self) -> None:

@@ -17,7 +17,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-import check_spec_coverage as checker
+import spec_coverage_core as coverage_core
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -241,6 +241,33 @@ def run_command(command, cwd):
         stderr=subprocess.STDOUT,
         check=False,
     )
+
+
+def configure_java_home():
+    """Keep Gradle and Maven on the same JVM, respecting an explicit JAVA_HOME."""
+
+    if os.environ.get("JAVA_HOME"):
+        return True
+
+    # Maven launchers can choose their own bundled JDK when JAVA_HOME is unset,
+    # even when Gradle and `java` on PATH use a different, supported runtime.
+    try:
+        result = run_command(
+            ["java", "-XshowSettings:properties", "-version"],
+            ROOT,
+        )
+    except OSError as error:
+        print(f"Could not determine JAVA_HOME: {error}")
+        return False
+
+    match = re.search(r"^\s*java\.home\s*=\s*(.+)$", result.stdout, re.MULTILINE)
+    if result.returncode != 0 or not match:
+        print("Could not determine JAVA_HOME. Set JAVA_HOME to JDK 21 and retry.")
+        return False
+
+    os.environ["JAVA_HOME"] = match.group(1).strip()
+    print(f"Using JAVA_HOME={os.environ['JAVA_HOME']}")
+    return True
 
 
 def has_format_action(repo):
@@ -601,7 +628,7 @@ def load_services(root=ROOT):
     them.
     """
 
-    return checker.load_catalog(root / "config/services.json")
+    return coverage_core.load_catalog(root / "config/services.json")
 
 
 def select_services(all_services, requested_value):
@@ -678,10 +705,7 @@ def get_spec_name(service):
     differently.
     """
 
-    return service.get(
-        "spec",
-        f"{service['name']}Service",
-    )
+    return coverage_core.spec_name(service)
 
 
 def lower_camel(value):
@@ -707,33 +731,33 @@ def discover_openapi_families(schema_directory):
 
     return {
         family: max(versions)
-        for family, versions in checker.discover_specs(
+        for family, versions in coverage_core.discover_specs(
             schema_directory, public_only=True
         ).items()
     }
 
 
-def audit_catalog(all_services, openapi_families, schema_directory):
+def audit_catalog(all_services, openapi_families, schema_directory, baseline=None):
     """Compare the service catalog with the OpenAPI repository.
 
-    Produces three review lists: OpenAPI families the
-    catalog never mentions, catalogued services pinned to
-    an older version than OpenAPI currently publishes,
-    and catalog entries whose expected spec file is
-    missing entirely.
+    Uses the shared evaluator for uncovered families,
+    outdated pins, missing files, and stale baseline entries.
     """
 
-    catalog_by_spec = {
-        get_spec_name(service): service
-        for service in all_services
-    }
-
+    baseline = baseline or {"uncoveredSpecs": {}, "pinnedVersions": {}}
+    specs = {family: [version] for family, version in openapi_families.items()}
+    findings = coverage_core.evaluate(
+        specs,
+        all_services,
+        baseline,
+        available_specs=coverage_core.discover_specs(schema_directory),
+    )
+    services_by_name = {service["name"]: service for service in all_services}
     uncatalogued = sorted(
         [
-            (family_name, version)
-            for family_name, version
-            in openapi_families.items()
-            if family_name not in catalog_by_spec
+            (finding.spec, openapi_families[finding.spec])
+            for finding in findings
+            if finding.kind == coverage_core.UNCOVERED
         ],
         key=lambda item: item[0],
     )
@@ -741,34 +765,20 @@ def audit_catalog(all_services, openapi_families, schema_directory):
     catalog_versions_behind = sorted(
         [
             (
-                service,
-                openapi_families[
-                    get_spec_name(service)
-                ],
+                services_by_name[finding.service_name],
+                openapi_families[finding.spec],
             )
-            for service in all_services
-            if (
-                get_spec_name(service)
-                in openapi_families
-                and openapi_families[
-                    get_spec_name(service)
-                ]
-                > service["version"]
-        )
+            for finding in findings
+            if finding.kind == coverage_core.BEHIND
         ],
         key=lambda item: item[0]["name"],
     )
 
     missing_specifications = sorted(
         [
-            service
-            for service in all_services
-            if (
-                not (
-                    schema_directory
-                    / f"{get_spec_name(service)}-v{service['version']}.json"
-                ).is_file()
-        )
+            services_by_name[finding.service_name]
+            for finding in findings
+            if finding.kind == coverage_core.MISSING
         ],
         key=lambda service: service["name"],
     )
@@ -777,6 +787,7 @@ def audit_catalog(all_services, openapi_families, schema_directory):
         uncatalogued,
         catalog_versions_behind,
         missing_specifications,
+        [finding for finding in findings if finding.kind == coverage_core.STALE],
     )
 
 
@@ -1892,17 +1903,19 @@ def build_audit_lines(
         family_findings,
         duplicate_families,
         baseline=None,
+        stale_findings=None,
 ):
     """Build the OpenAPI catalog audit section.
 
-    Three findings follow a fixed review order: services
+    Catalog differences follow a fixed review order: services
     catalogued against an outdated spec version, OpenAPI
     families the catalog never mentions (with the SDKs
-    that already ship them), and catalog entries whose
-    spec file is missing from OpenAPI.
+    that already ship them), catalog entries whose spec file
+    is missing, then baseline entries that should be pruned.
     """
 
     baseline = baseline or {"uncoveredSpecs": {}, "pinnedVersions": {}}
+    stale_findings = stale_findings or []
     uncovered_entries = baseline["uncoveredSpecs"]
     pinned_entries = baseline["pinnedVersions"]
 
@@ -2003,6 +2016,27 @@ def build_audit_lines(
                 f"{service['version']} |"
             )
 
+        lines.append("")
+
+    if stale_findings:
+        lines.extend(
+            [
+                "### Stale baseline entries",
+                "",
+                "Remove or update these entries in `config/spec-coverage-baseline.json`.",
+                "",
+                "| Spec | Baseline section | Finding | Recorded reason |",
+                "|---|---|---|---|",
+            ]
+        )
+        for finding in stale_findings:
+            reason = baseline_reason({"reason": finding.reason})
+            if finding.ticket and reason:
+                reason += f" ({finding.ticket})"
+            lines.append(
+                f"| {finding.spec} | `{finding.baseline_section}` "
+                f"| {finding.detail} | {reason} |"
+            )
         lines.append("")
 
     return lines
@@ -2144,6 +2178,7 @@ def build_report(
         baseline=None,
         service_prs=None,
         report_time=None,
+        stale_findings=None,
 ):
     """Assemble the complete Markdown report.
 
@@ -2269,6 +2304,7 @@ def build_report(
             family_findings,
             duplicate_families,
             baseline,
+            stale_findings,
         )
     )
 
@@ -2701,6 +2737,9 @@ def main():
 
     args = parser.parse_args()
 
+    if not configure_java_home():
+        return 1
+
     results = {}
     worker_failed = False
     family_findings = {}
@@ -2725,10 +2764,10 @@ def main():
         # catalog and baseline, not uncommitted edits in the caller's working tree.
         try:
             all_services = load_services(workspace)
-            baseline = checker.load_baseline(
+            baseline = coverage_core.load_baseline(
                 workspace / "config/spec-coverage-baseline.json"
             )
-        except (OSError, ValueError, checker.BaselineError) as error:
+        except (OSError, ValueError, coverage_core.BaselineError) as error:
             print(f"Could not read the service catalog or spec coverage baseline: {error}")
             return 1
         try:
@@ -2769,10 +2808,12 @@ def main():
             uncatalogued,
             catalog_versions_behind,
             missing_specifications,
+            stale_findings,
         ) = audit_catalog(
             all_services,
             openapi_families,
             schema_directory,
+            baseline,
         )
 
         family_titles = load_family_titles(
@@ -2855,6 +2896,7 @@ def main():
         duplicate_families,
         baseline,
         service_prs=service_prs,
+        stale_findings=stale_findings,
     )
 
     report_path = args.output

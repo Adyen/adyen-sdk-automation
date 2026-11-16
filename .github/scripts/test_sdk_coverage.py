@@ -15,6 +15,56 @@ from unittest import mock
 import sdk_coverage
 
 
+class TestConfigureJavaHome(unittest.TestCase):
+    def test_preserves_explicit_java_home(self) -> None:
+        with mock.patch.dict(os.environ, {"JAVA_HOME": "/chosen/jdk"}):
+            with mock.patch.object(sdk_coverage, "run_command") as run:
+                self.assertTrue(sdk_coverage.configure_java_home())
+                self.assertEqual(os.environ["JAVA_HOME"], "/chosen/jdk")
+                run.assert_not_called()
+
+    def test_uses_path_jvm_home_including_spaces(self) -> None:
+        result = mock.Mock(
+            returncode=0,
+            stdout="Property settings:\n    java.home = /path with spaces/jdk\n",
+        )
+        with mock.patch.dict(os.environ, {"JAVA_HOME": ""}, clear=True):
+            with mock.patch.object(sdk_coverage, "run_command", return_value=result) as run:
+                self.assertTrue(sdk_coverage.configure_java_home())
+                self.assertEqual(os.environ["JAVA_HOME"], "/path with spaces/jdk")
+                run.assert_called_once_with(
+                    ["java", "-XshowSettings:properties", "-version"],
+                    sdk_coverage.ROOT,
+                )
+
+    def test_fails_if_java_home_cannot_be_determined(self) -> None:
+        for result in (
+            mock.Mock(returncode=1, stdout="java.home = /invalid"),
+            mock.Mock(returncode=0, stdout="No property settings"),
+        ):
+            with self.subTest(result=result):
+                with mock.patch.dict(os.environ, {}, clear=True):
+                    with mock.patch.object(sdk_coverage, "run_command", return_value=result):
+                        self.assertFalse(sdk_coverage.configure_java_home())
+                        self.assertNotIn("JAVA_HOME", os.environ)
+
+    def test_fails_if_java_is_missing(self) -> None:
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with mock.patch.object(sdk_coverage, "run_command", side_effect=FileNotFoundError):
+                self.assertFalse(sdk_coverage.configure_java_home())
+                self.assertNotIn("JAVA_HOME", os.environ)
+
+    def test_main_configures_java_before_starting_work(self) -> None:
+        with (
+            mock.patch("sys.argv", ["sdk_coverage.py"]),
+            mock.patch.object(sdk_coverage, "configure_java_home", return_value=False) as configure,
+            mock.patch.object(sdk_coverage, "clone_automation_repo") as clone,
+        ):
+            self.assertEqual(sdk_coverage.main(), 1)
+            configure.assert_called_once_with()
+            clone.assert_not_called()
+
+
 class TestCheckFormatPrerequisites(unittest.TestCase):
     def setUp(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory()
@@ -772,7 +822,7 @@ class TestCoverageInputs(unittest.TestCase):
         service = {"name": "Checkout", "version": 73}
         self.assertEqual(
             sdk_coverage.audit_catalog([service], {"CheckoutService": 72}, self.schema),
-            ([], [], [service]),
+            ([], [], [service], []),
         )
 
     def test_missing_historical_version_is_reported(self) -> None:
@@ -782,6 +832,43 @@ class TestCoverageInputs(unittest.TestCase):
             sdk_coverage.audit_catalog([service], {"CheckoutService": 72}, self.schema)[2],
             [service],
         )
+
+    def test_audit_uses_shared_evaluator_for_stale_baseline_entries(self) -> None:
+        (self.schema / "CheckoutService-v72.json").write_text("{}")
+        service = {"name": "Checkout", "version": 72}
+        baseline = {
+            "uncoveredSpecs": {
+                "CheckoutService": {"reason": "previously excluded"},
+            },
+            "pinnedVersions": {},
+        }
+
+        audit = sdk_coverage.audit_catalog(
+            [service], {"CheckoutService": 72}, self.schema, baseline,
+        )
+
+        self.assertEqual(
+            [(finding.kind, finding.baseline_section) for finding in audit[3]],
+            [(sdk_coverage.coverage_core.STALE, "uncoveredSpecs")],
+        )
+
+    def test_report_includes_stale_baseline_findings(self) -> None:
+        stale = sdk_coverage.coverage_core.Finding(
+            sdk_coverage.coverage_core.STALE,
+            "CheckoutService",
+            "now in the catalog, remove it from uncoveredSpecs",
+            reason="previously excluded",
+            baseline_section="uncoveredSpecs",
+        )
+
+        report = sdk_coverage.build_report(
+            [], {}, [], [], [], {}, {},
+            stale_findings=[stale],
+        )
+
+        self.assertIn("### Stale baseline entries", report)
+        self.assertIn("previously excluded", report)
+        self.assertIn("remove it from uncoveredSpecs", report)
 
     def test_workspace_applies_each_languages_generator_properties(self) -> None:
         source = self.root / "source"
@@ -834,6 +921,7 @@ class TestCoverageInputs(unittest.TestCase):
 
         with (
             mock.patch.object(sdk_coverage, "ROOT", self.root),
+            mock.patch.object(sdk_coverage, "configure_java_home", return_value=True),
             mock.patch.object(sdk_coverage, "PROJECTS", ["java"]),
             mock.patch.object(sdk_coverage, "clone_automation_repo", side_effect=clone),
             mock.patch.object(sdk_coverage, "run_command", return_value=mock.Mock(returncode=0, stdout="abc123")),
